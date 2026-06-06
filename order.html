@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم ثبت درخواست نصب LM Studio | SofiaAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        header h1 {
+            color: #333;
+        }
+        .nav-bar {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .nav-bar a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .payment-info {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .payment-info h3 {
+            color: #2e7d32;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-link a {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="index.html">🏠 صفحه اصلی</a>
+            <a href="lmstudio.html">🚀 خدمات LM Studio</a>
+            <a href="order.html" style="color:#764ba2;">📝 ثبت درخواست</a>
+        </div>
+
+        <header>
+            <h1>📋 فرم ثبت درخواست نصب</h1>
+            <p>لطفاً اطلاعات زیر را کامل کنید</p>
+        </header>
+
+        <form action="#" method="POST" class="order-form">
+            <div class="form-group">
+                <label>نام و نام خانوادگی *</label>
+                <input type="text" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label>شماره تماس *</label>
+                <input type="tel" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label>ایمیل</label>
+                <input type="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label>سیستم عامل شما *</label>
+                <select name="os" required>
+                    <option value="">انتخاب کنید...</option>
+                    <option value="windows">ویندوز 10/11</option>
+                    <option value="mac-intel">مک (پردازنده اینتل)</option>
+                    <option value="mac-silicon">مک (پردازنده M1/M2/M3)</option>
+                    <option value="linux">لینوکس</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>میزان رم (RAM) *</label>
+                <select name="ram" required>
+                    <option value="">انتخاب کنید...</option>
+                    <option value="8">8 گیگابایت</option>
+                    <option value="16">16 گیگابایت</option>
+                    <option value="32">32 گیگابایت</option>
+                    <option value="64">64 گیگابایت یا بیشتر</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>توضیحات اضافه</label>
+                <textarea name="notes" rows="3" placeholder="اگر نکته خاصی هست بنویسید..."></textarea>
+            </div>
+
+            <div class="payment-info">
+                <h3>💰 مبلغ قابل پرداخت: ۳۵۰,۰۰۰ تومان</h3>
+                <p>پس از ثبت درخواست، با شما تماس می‌گیریم و لینک پرداخت ارسال می‌شود.</p>
+            </div>
+
+            <button type="submit" class="btn" onclick="alert('درخواست شما ثبت شد! به زودی با شما تماس می‌گیریم.')">📝 ثبت درخواست</button>
+        </form>
+
+        <div class="back-link">
+            <a href="lmstudio.html">← بازگشت به صفحه خدمات</a>
+        </div>
+
+        <footer>
+            <p>پس از ثبت، حداکثر ۲۴ ساعت با شما تماس گرفته می‌شود</p>
+        </footer>
+    </div>
+</body>
+</html>
