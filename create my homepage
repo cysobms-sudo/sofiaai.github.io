@@ -1,28 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سایت من - SofiaAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SofiaAI - خدمات هوش مصنوعی</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Vazir', Tahoma, sans-serif;
-            text-align: center;
-            padding: 50px;
+            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         h1 {
+            color: #667eea;
             font-size: 3em;
+            margin-bottom: 20px;
         }
         p {
+            color: #666;
             font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        .services {
+            margin-top: 40px;
+            text-align: right;
+        }
+        .services h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .services ul {
+            padding-right: 30px;
+        }
+        .services li {
+            margin: 10px 0;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <h1>سلام! به سایت من خوش آمدید</h1>
-    <p>این سایت با GitHub Pages ساخته شده است</p>
-    <p>نام من: SofiaAI</p>
-    <p>❤️</p>
+    <div class="container">
+        <h1>✨ SofiaAI ✨</h1>
+        <p>به سایت رسمی سوفیاایآی خوش آمدید<br>ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
+        
+        <a href="lmstudio.html" class="btn">🚀 خدمات نصب LM Studio</a>
+        <a href="order.html" class="btn btn-outline">📝 ثبت درخواست</a>
+        
+        <div class="services">
+            <h2>خدمات ما:</h2>
+            <ul>
+                <li>✅ نصب و راه‌اندازی حرفه‌ای LM Studio</li>
+                <li>✅ تنظیمات بهینه برای سخت‌افزار شما</li>
+                <li>✅ آموزش کار با مدل‌های هوش مصنوعی</li>
+                <li>✅ پشتیبانی ۷ روزه بعد از نصب</li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
