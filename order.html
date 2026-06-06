@@ -91,6 +91,9 @@
             cursor: pointer;
             width: 100%;
         }
+        .btn:hover {
+            opacity: 0.9;
+        }
         footer {
             text-align: center;
             margin-top: 30px;
@@ -104,6 +107,12 @@
         }
         .back-link a {
             color: #667eea;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
         }
     </style>
 </head>
@@ -120,10 +129,20 @@
             <p>لطفاً اطلاعات زیر را کامل کنید</p>
         </header>
 
-        <form action="#" method="POST" class="order-form">
+        <!-- 
+            ✅ اینجا فرم به Formspree متصل شده است
+            اطلاعات سفارش‌ها به ایمیل شما ارسال می‌شود
+        -->
+        <form action="https://formspree.io/f/xpqeqkgk" method="POST" class="order-form">
+            <!-- این فیلد مخفی برای مشخص کردن موضوع ایمیل است -->
+            <input type="hidden" name="_subject" value="🆕 سفارش جدید نصب ایجنت هوش مصنوعی - SofiaAI">
+            
+            <!-- کاربر بعد از ثبت به این صفحه هدایت می‌شود -->
+            <input type="hidden" name="_next" value="https://cysobms-sudo.github.io/sofiaai.github.io/thankyou.html">
+
             <div class="form-group">
                 <label>نام و نام خانوادگی *</label>
-                <input type="text" name="fullname" required>
+                <input type="text" name="name" required>
             </div>
 
             <div class="form-group">
@@ -138,7 +157,7 @@
 
             <div class="form-group">
                 <label>سیستم عامل شما *</label>
-                <select name="os" required>
+                <select name="operating_system" required>
                     <option value="">انتخاب کنید...</option>
                     <option value="windows">ویندوز 10/11</option>
                     <option value="mac-intel">مک (پردازنده اینتل)</option>
@@ -165,10 +184,10 @@
 
             <div class="payment-info">
                 <h3>💰 مبلغ قابل پرداخت: ۳,۵۰۰,۰۰۰ تومان</h3>
-                <p>پس از ثبت درخواست، با شما تماس می‌گیریم .</p>
+                <p>پس از ثبت درخواست، با شما تماس می‌گیریم.</p>
             </div>
 
-            <button type="submit" class="btn" onclick="alert('درخواست شما ثبت شد! به زودی با شما تماس می‌گیریم.')">📝 ثبت درخواست</button>
+            <button type="submit" class="btn">📝 ثبت درخواست</button>
         </form>
 
         <div class="back-link">
