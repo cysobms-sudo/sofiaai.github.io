@@ -22,7 +22,7 @@ This is my website: sofiaai
     </style>
 </head>
 <body>
-    <h1>سلام! به سایت من خوش آمدید</h1>
+    <h1>سلام! به سایت SofiaAI خوش آمدید</h1>
     <p>این سایت با GitHub Pages ساخته شده است</p>
     <p>نام من: SofiaAI</p>
     <p>❤️</p>
