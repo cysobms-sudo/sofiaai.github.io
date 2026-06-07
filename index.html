@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia AI | هوش مصنوعی پیشرفته</title>
+    <title>Sofia AI | خدمات تخصصی هوش مصنوعی</title>
     <style>
         * {
             margin: 0;
@@ -13,254 +13,174 @@
 
         body {
             font-family: 'Tahoma', 'Segoe UI', 'Vazir', system-ui, sans-serif;
-            min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* افکت پس‌زمینه متحرک */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2000"><path fill="rgba(255,255,255,0.05)" d="M0,0 L2000,0 L2000,2000 L0,2000 Z M100,100 L1900,100 L1900,1900 L100,1900 Z"/><circle cx="500" cy="500" r="100" fill="rgba(255,255,255,0.03)"/><circle cx="1500" cy="1500" r="150" fill="rgba(255,255,255,0.03)"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            direction: rtl;
         }
 
-        .hero {
-            text-align: center;
-            max-width: 900px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        h1 {
-            font-size: 3.5em;
-            color: white;
-            text-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-        }
-
-        .highlight {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: none;
-        }
-
-        .subtitle {
-            font-size: 1.3em;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 50px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 35px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #764ba2;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-3px);
-        }
-
-        .btn-glass {
+        /* ========== منوی بالایی ========== */
+        .navbar {
             background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .btn-glass:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-3px);
-        }
-
-        /* مودال (پنجره محاوره‌ای) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
+            backdrop-filter: blur(12px);
+            padding: 15px 30px;
+            position: sticky;
             top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 25px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
-            animation: slideIn 0.3s ease;
-            color: #333;
-            text-align: right;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        .modal-header h2 {
-            color: #667eea;
-            font-size: 1.8em;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 30px;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.2s;
-        }
-
-        .close-btn:hover {
-            color: #764ba2;
-        }
-
-        .modal-body {
-            line-height: 1.8;
-        }
-
-        .modal-body h3 {
-            color: #764ba2;
-            margin: 20px 0 10px 0;
-        }
-
-        .modal-body ul {
-            padding-right: 20px;
-            margin: 10px 0;
-        }
-
-        .modal-body li {
-            margin: 10px 0;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .logo {
+            font-size: 1.6em;
+            font-weight: bold;
             color: white;
-            padding: 5px 12px;
+        }
+
+        .logo span {
+            color: #FFD700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* ========== نوار کرکره‌ای (Dropdown) خدمات ========== */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            min-width: 280px;
             border-radius: 20px;
-            font-size: 0.8em;
-            margin: 5px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            z-index: 100;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background: #f5f5f5;
+            color: #667eea;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* دکمه ثبت درخواست در منو */
+        .request-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333 !important;
+            font-weight: bold;
+        }
+
+        .request-btn:hover {
+            background: linear-gradient(135deg, #FFE44D, #FFB347) !important;
+            transform: scale(1.02);
+        }
+
+        /* ========== محتوای اصلی ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* بخش اصلی hero */
+        .hero {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            color: #667eea;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
             margin-top: 40px;
             padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.2);
+            border-top: 1px solid #eee;
         }
 
         .stat {
@@ -270,140 +190,301 @@
         .stat-number {
             font-size: 2em;
             font-weight: bold;
-            display: block;
+            color: #764ba2;
         }
 
         .stat-label {
+            color: #666;
             font-size: 0.9em;
+        }
+
+        /* دکمه‌های اصلی */
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 35px 0 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.03);
+        }
+
+        /* بخش پیشنمایش خدمات */
+        .services-preview {
+            margin-top: 30px;
+        }
+
+        .services-preview h3 {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .preview-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .preview-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .preview-icon {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+        }
+
+        .preview-card h4 {
+            margin-bottom: 8px;
+        }
+
+        .preview-card p {
+            font-size: 0.85em;
             opacity: 0.8;
         }
 
-        footer {
+        /* بخش تماس */
+        .contact-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 35px;
+            text-align: center;
             margin-top: 50px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8em;
+        }
+
+        .contact-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .contact-info p {
+            color: #555;
+        }
+
+        .contact-info a {
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            padding: 30px;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2em; }
-            .logo { font-size: 3.5em; }
-            .subtitle { font-size: 1em; }
-            .btn-group { gap: 10px; }
-            .btn { padding: 12px 25px; font-size: 0.9em; }
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-menu {
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 1.8em;
+            }
+            .hero {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="hero">
-            <div class="logo">✨</div>
-            <h1>Sofia <span class="highlight">AI</span></h1>
-            <p class="subtitle">
-                هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>
-                نصب، راه‌اندازی و پشتیبانی تخصصی
-            </p>
+    <!-- منوی بالایی با گزینه‌های کامل -->
+    <div class="navbar">
+        <div class="logo">Sofia<span>AI</span></div>
+        <div class="nav-menu">
+            <a href="index.html">🏠 خانه</a>
             
-            <div class="btn-group">
-                <a href="lmstudio.html" class="btn btn-primary">🚀 خدمات نصب ایجنت هوش مصنوعی</a>
-                <a href="order.html" class="btn btn-outline">📝 ثبت درخواست</a>
-                <button onclick="showModal()" class="btn btn-glass">💡 مزایا و کاربردها</button>
+            <!-- نوار کرکره‌ای خدمات -->
+            <div class="dropdown">
+                <div class="dropdown-btn">🛠 خدمات ▼</div>
+                <div class="dropdown-content">
+                    <a href="service-rag.html">🧠 سیستم RAG و پرسش و پاسخ</a>
+                    <a href="service-vision.html">👁️ بینایی ماشین و تشخیص اشیا</a>
+                    <a href="service-automation.html">⚙️ اتوماسیون هوشمند با n8n</a>
+                    <a href="service-llm.html">🎓 مشاوره و آموزش LLM</a>
+                    <a href="service-lmstudio.html">🚀 نصب ایجنت هوش مصنوعی</a>
+                    <a href="service-data.html">📊 تحلیل داده و پیشنهاددهنده</a>
+                </div>
+            </div>
+            
+            <a href="#about">📖 درباره ما</a>
+            <a href="order.html" class="request-btn">📝 ثبت درخواست</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- بخش اصلی -->
+        <div class="hero">
+            <h1>✨ Sofia AI ✨</h1>
+            <p>هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>نصب، راه‌اندازی و پشتیبانی تخصصی</p>
+            
+            <div class="hero-buttons">
+                <button onclick="showModal()" class="btn-outline">💡 مزایا و کاربردها</button>
+                <a href="order.html" class="btn-primary">📝 ثبت درخواست</a>
             </div>
 
             <div class="stats">
                 <div class="stat">
-                    <span class="stat-number">۲۴/۷</span>
-                    <span class="stat-label">پشتیبانی</span>
+                    <div class="stat-number">۵۰+</div>
+                    <div class="stat-label">مدل هوش مصنوعی</div>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">۱۰۰٪</span>
-                    <span class="stat-label">خصوصی و آفلاین</span>
+                    <div class="stat-number">۱۰۰%</div>
+                    <div class="stat-label">حریم خصوصی و آفلاین</div>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">+۵۰</span>
-                    <span class="stat-label">مدل هوش مصنوعی</span>
+                    <div class="stat-number">۲۴/۷</div>
+                    <div class="stat-label">پشتیبانی</div>
                 </div>
             </div>
-
-            <footer>
-                <p>© 2026 Sofia AI - ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
-            </footer>
         </div>
+
+        <!-- بخش پیشنمایش خدمات -->
+        <div class="services-preview">
+            <h3>⚡ خدمات تخصصی من</h3>
+            <div class="preview-grid">
+                <a href="service-rag.html" class="preview-card">
+                    <div class="preview-icon">🧠</div>
+                    <h4>سیستم RAG</h4>
+                    <p>پرسش و پاسخ هوشمند از اسناد</p>
+                </a>
+                <a href="service-vision.html" class="preview-card">
+                    <div class="preview-icon">👁️</div>
+                    <h4>بینایی ماشین</h4>
+                    <p>تشخیص اشیا و پردازش تصویر</p>
+                </a>
+                <a href="service-automation.html" class="preview-card">
+                    <div class="preview-icon">⚙️</div>
+                    <h4>اتوماسیون هوشمند</h4>
+                    <p>طراحی workflow با n8n</p>
+                </a>
+                <a href="service-llm.html" class="preview-card">
+                    <div class="preview-icon">🎓</div>
+                    <h4>مشاوره LLM</h4>
+                    <p>آموزش و پیاده‌سازی</p>
+                </a>
+                <a href="service-lmstudio.html" class="preview-card">
+                    <div class="preview-icon">🚀</div>
+                    <h4>نصب ایجنت AI</h4>
+                    <p>راه‌اندازی LM Studio</p>
+                </a>
+                <a href="service-data.html" class="preview-card">
+                    <div class="preview-icon">📊</div>
+                    <h4>تحلیل داده</h4>
+                    <p>پیش‌بینی و پیشنهاددهنده</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- بخش درباره ما -->
+        <div class="contact-section" id="about">
+            <h3>📖 درباره ما</h3>
+            <p>سلام! من علیرضا دربندی، کارشناس ارشد هوش مصنوعی با ۹ سال سابقه هستم.<br>
+            تخصص من در معماری RAG، بینایی ماشین، اتوماسیون هوشمند و پیاده‌سازی مدل‌های زبانی بزرگ است.<br>
+            هدف من کمک به کسب‌وکارها برای بهره‌گیری از قدرت هوش مصنوعی به صورت مقرون‌به‌صرفه و خصوصی است.</p>
+            
+            <div class="contact-info">
+                <p>📧 <a href="mailto:Cysobms@gmail.com">Cysobms@gmail.com</a></p>
+                <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
+                <p>📍 اصفهان</p>
+            </div>
+            <a href="order.html" style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:12px 35px; border-radius:30px; text-decoration:none; font-weight:bold;">ثبت درخواست همکاری →</a>
+        </div>
+
+        <footer>
+            <p>© 2026 Sofia AI - ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
+        </footer>
     </div>
 
-    <!-- مودال نمایش مزایا و کاربردها -->
-    <div id="benefitsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>💡 مزایا و کاربردهای ایجنت هوش مصنوعی</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h3>✨ مزایای شگفت‌انگیز:</h3>
-                <ul>
-                    <li>🔒 <strong>حریم خصوصی کامل</strong> - تمام اطلاعات روی کامپیوتر شخصی شما می‌ماند</li>
-                    <li>📡 <strong>کاربری آفلاین</strong> - بدون نیاز به اینترنت، هر جا که هستید</li>
-                    <li>💰 <strong>اقتصادی و مقرون‌به‌صرفه</strong> - بدون هزینه‌های ماهیانه سرویس‌های ابری</li>
-                    <li>⚡ <strong>سرعت بالا</strong> - اجرای مدل‌ها با حداکثر سرعت سخت‌افزار شما</li>
-                    <li>🎯 <strong>دلخواه‌سازی کامل</strong> - قابلیت تنظیم برای نیازهای خاص شما</li>
-                </ul>
-
-                <h3>🚀 کاربردهای عملی:</h3>
-                <ul>
-                    <li>📝 <strong>تولید محتوا</strong> - نوشتن مقالات، ایمیل‌ها، کپشن‌های شبکه‌های اجتماعی</li>
-                    <li>💻 <strong>کدنویسی و دیباگ</strong> - کمک به برنامه‌نویسی و پیدا کردن خطاهای کد</li>
-                    <li>📊 <strong>تحلیل داده</strong> - پردازش و تحلیل فایل‌های اکسل، CSV و دیتابیس</li>
-                    <li>🎓 <strong>آموزش و یادگیری</strong> - دستیار شخصی برای یادگیری زبان، برنامه‌نویسی و دروس مختلف</li>
-                    <li>📄 <strong>خلاصه‌سازی اسناد</strong> - تحلیل و خلاصه کردن فایل‌های PDF، Word و متون بلند</li>
-                    <li>💬 <strong>چت‌بات هوشمند</strong> - پاسخگویی به سوالات مشتریان ۲۴ ساعته</li>
-                    <li>📧 <strong>پردازش ایمیل</strong> - دسته‌بندی و پاسخ به ایمیل‌ها به صورت خودکار</li>
-                </ul>
-
-                <h3>🎯 چه کسانی به این خدمات نیاز دارند؟</h3>
-                <div style="margin: 15px 0;">
-                    <span class="badge">فریلنسرها</span>
-                    <span class="badge">برنامه‌نویسان</span>
-                    <span class="badge">صاحبان کسب‌وکار</span>
-                    <span class="badge">محققان</span>
-                    <span class="badge">مترجمان</span>
-                    <span class="badge">نویسندگان</span>
-                    <span class="badge">دانشجویان</span>
-                    <span class="badge">پزشکان</span>
-                    <span class="badge">حقوق دانان</span>
-                </div>
-
-                <p style="background: #f0f0f0; padding: 15px; border-radius: 15px; margin-top: 20px;">
-                    <strong>💎 کافیست یک بار نصب کنید،</strong> تا صاحب قدرتمندترین ابزار هوش مصنوعی روی کامپیوتر خود شوید. بدون نگرانی از قطع اینترنت یدون پرداخت هزینه‌های ماهیانه!
-                </p>
+    <!-- مودال مزایا و کاربردها -->
+    <div id="benefitsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:2000; align-items:center; justify-content:center;">
+        <div style="background:white; max-width:500px; width:90%; border-radius:25px; padding:30px; position:relative; text-align:right;">
+            <button onclick="closeModal()" style="position:absolute; left:20px; top:15px; background:none; border:none; font-size:25px; cursor:pointer;">&times;</button>
+            <h2 style="color:#667eea; margin-bottom:20px;">💡 مزایا و کاربردها</h2>
+            <ul style="padding-right:20px;">
+                <li>🔒 حریم خصوصی کامل - اطلاعات روی سیستم شما می‌ماند</li>
+                <li>📡 کاربرد آفلاین - بدون نیاز به اینترنت</li>
+                <li>💰 مقرون‌به‌صرفه - بدون هزینه ماهیانه</li>
+                <li>⚡ سرعت بالا - اجرا روی سخت‌افزار خودتان</li>
+                <li>🎯 دلخواه‌سازی کامل برای نیازهای خاص</li>
+            </ul>
+            <div style="margin-top:25px; text-align:center;">
+                <a href="order.html" style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:10px 30px; border-radius:30px; text-decoration:none;">درخواست خدمات</a>
             </div>
         </div>
     </div>
 
     <script>
         function showModal() {
-            document.getElementById('benefitsModal').classList.add('show');
-            // جلوگیری از اسکرول صفحه پشت مودال
+            document.getElementById('benefitsModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
-            document.getElementById('benefitsModal').classList.remove('show');
+            document.getElementById('benefitsModal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-
-        // بستن مودال با کلیک روی پس‌زمینه
         window.onclick = function(event) {
             const modal = document.getElementById('benefitsModal');
-            if (event.target === modal) {
-                closeModal();
-            }
+            if (event.target === modal) closeModal();
         }
-
-        // بستن با کلید Escape
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
