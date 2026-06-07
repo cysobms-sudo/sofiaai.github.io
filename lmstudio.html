@@ -3,150 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدمات نصب و راه اندازی ایجنت هوش مصنوعی | SofiaAI</title>
+    <title>نصب و راه‌اندازی ایجنت هوش مصنوعی | Sofia AI</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
             direction: rtl;
+            padding: 20px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
             border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
         }
-        header h1 {
-            color: #333;
-            font-size: 2.5em;
+        .service-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
         }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
+        h2 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
         }
-        .feature-card {
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        .feature-list li::before {
+            content: "✅ ";
+            color: #667eea;
+        }
+        .benefits-box {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
             padding: 25px;
-            border-radius: 15px;
-            text-align: center;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-right: 4px solid #667eea;
         }
-        .feature-card h3 {
+        .benefits-box h3 {
             color: #667eea;
             margin-bottom: 15px;
         }
-        .price {
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .price-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
+            text-align: center;
             margin: 30px 0;
         }
-        .price span {
+        .price-box .price {
             font-size: 2em;
             font-weight: bold;
         }
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             padding: 15px 40px;
             text-decoration: none;
             border-radius: 50px;
-            font-size: 1.2em;
             font-weight: bold;
-            margin: 20px auto;
-            text-align: center;
+            margin-top: 20px;
         }
-        .btn:hover {
-            transform: scale(1.05);
-        }
-        .nav-bar {
+        .contact-info {
             background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
             text-align: center;
-        }
-        .nav-bar a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
         }
         footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #666;
+            margin-top: 30px;
+            color: #999;
         }
-        @media (max-width: 768px) {
-            .container { padding: 20px; }
-            header h1 { font-size: 1.8em; }
+        .warning {
+            background: #fff3cd;
+            border-right: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="nav-bar">
-            <a href="index.html">🏠 صفحه اصلی</a>
-            <a href="lmstudio.html" style="color:#764ba2;">🚀 خدمات ایجنت هوش مصنوعی</a>
-            <a href="order.html">📝 ثبت درخواست</a>
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+        <div class="service-icon">🚀</div>
+        <h1>نصب و راه‌اندازی ایجنت هوش مصنوعی (LM Studio)</h1>
+        
+        <h2>🤖 LM Studio چیست؟</h2>
+        <p>LM Studio یک نرم‌افزار قدرتمند دسکتاپ است که به شما امکان می‌دهد مدل‌های زبانی بزرگ (مثل Llama، DeepSeek، Mistral و...) را به صورت کاملاً خصوصی و آفلاین روی کامپیوتر شخصی خود اجرا کنید. بدون نیاز به اینترنت و بدون نگرانی از حریم خصوصی!</p>
+        
+        <!-- ========== بخش مزایا که از صفحه اصلی منتقل شده ========== -->
+        <div class="benefits-box">
+            <h3>💡 مزایای استفاده از ایجنت هوش مصنوعی</h3>
+            <ul class="feature-list">
+                <li><strong>🔒 حریم خصوصی کامل</strong> - تمام اطلاعات روی کامپیوتر شخصی شما می‌ماند و جایی ارسال نمی‌شود</li>
+                <li><strong>📡 کاربرد آفلاین</strong> - بدون نیاز به اینترنت، هر جا که هستید از هوش مصنوعی استفاده کنید</li>
+                <li><strong>💰 مقرون‌به‌صرفه</strong> - بدون هزینه‌های ماهیانه سرویس‌های ابری، یک بار نصب، همیشه رایگان</li>
+                <li><strong>⚡ سرعت بالا</strong> - اجرای مدل‌ها با حداکثر سرعت سخت‌افزار شما، بدون تأخیر شبکه</li>
+                <li><strong>🎯 دلخواه‌سازی کامل</strong> - قابلیت تنظیم و سفارشی‌سازی برای نیازهای خاص شما</li>
+                <li><strong>📊 مدیریت منابع</strong> - کنترل کامل روی مصرف رم و پردازنده</li>
+            </ul>
         </div>
-
-        <header>
-            <h1>🚀  خدمات نصب و راه اندازی ایجنت هوش مصنوعی</h1>
-            <p>ایجنت هوش مصنوعی قدرتمند را روی لب تاب یا کامپیوتر شخصی‌تان نصب و راه‌اندازی کنید</p>
-        </header>
-
-        <div class="features">
-            <div class="feature-card">
-                <h3>🔒 حریم خصوصی کامل</h3>
-                <p>تمام داده‌ها روی کامپیوتر شما می‌ماند</p>
-            </div>
-            <div class="feature-card">
-                <h3>📡 کاملاً آفلاین</h3>
-                <p>بدون نیاز به اینترنت کار می‌کند</p>
-            </div>
-            <div class="feature-card">
-                <h3>💰 کاملاً رایگان</h3>
-                <p>فقط بابت خدمات نصب هزینه می‌پردازید</p>
-            </div>
-            <div class="feature-card">
-                <h3>🖥 همه سیستم‌ها</h3>
-                <p>ویندوز، مک و لینوکس</p>
-            </div>
+        
+        <h2>✨ این خدمت شامل چه مواردی است؟</h2>
+        <ul class="feature-list">
+            <li>نصب و راه‌اندازی کامل LM Studio روی سیستم شما</li>
+            <li>بررسی و بهینه‌سازی تنظیمات برای سخت‌افزارتان (RAM، GPU، CPU)</li>
+            <li>دانلود و نصب مدل‌های دلخواه شما (بسته به فضای خالی)</li>
+            <li>آموزش کامل کار با نرم‌افزار (نحوه بارگذاری مدل، مکالمه، تنظیمات)</li>
+            <li>آموزش مهندسی پرامپت برای دریافت بهترین پاسخ‌ها</li>
+            <li>پشتیبانی ۷ روزه بعد از نصب (از طریق تلفن یا واتساپ)</li>
+            <li>عیب‌یابی مشکلات احتمالی و رفع خطاها</li>
+        </ul>
+        
+        <div class="warning">
+            <strong>⚠️ نکته مهم:</strong> مدل‌های هوش مصنوعی به فضای ذخیره‌سازی و رم قابل توجهی نیاز دارند.
         </div>
-
-        <div class="price">
-            <h2>💰 هزینه خدمات نصب: <span>۳,۵,۰۰,۰۰۰ تومان</span></h2>
-            <p>نصب کامل + تنظیمات + آموزش + پشتیبانی یک هفته‌ای</p>
+        
+        <h2>💻 حداقل سیستم مورد نیاز:</h2>
+        <ul class="feature-list">
+            <li>رم (RAM): حداقل ۸ گیگابایت (۱۶ گیگابایت یا بیشتر توصیه می‌شود)</li>
+            <li>فضای خالی: حداقل ۲۰ گیگابایت (برای مدل‌های کوچک)</li>
+            <li>سیستم‌عامل: ویندوز 10/11، macOS 11+ (سیلیکون یا اینتل)، یا لینوکس</li>
+        </ul>
+        
+        <div class="price-box">
+            <h3>💰 هزینه خدمات نصب و راه‌اندازی</h3>
+            <div class="price">۳,۵۰۰,۰۰۰ تومان</div>
+            <p>شامل نصب کامل + آموزش + یک هفته پشتیبانی</p>
         </div>
-
+        
         <div style="text-align: center;">
-            <a href="order.html" class="btn">📝 ثبت درخواست نصب</a>
+            <a href="order.html?service=lmstudio" class="btn">📝 ثبت درخواست نصب</a>
         </div>
-
+        
+        <div class="contact-info">
+            <p>📞 سوالی دارید؟ تماس بگیرید: <strong>۰۹۱۳۰۷۷۱۱۲۸</strong></p>
+            <p>✉️ یا ایمیل: <strong>Cysobms@gmail.com</strong></p>
+        </div>
+        
         <footer>
-            <p>سوالی دارید؟ تماس بگیرید: 09130771128  | ایمیل: cysobms@gmail.com</p>
+            <p>© 2026 Sofia AI - علیرضا دربندی، متخصص ارشد هوش مصنوعی</p>
         </footer>
     </div>
 </body>
