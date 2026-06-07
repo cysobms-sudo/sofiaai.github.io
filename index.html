@@ -10,66 +10,53 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Tahoma', 'Segoe UI', 'Vazir', system-ui, sans-serif;
+            font-family: 'Tahoma', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
+            padding: 20px;
         }
-
-        /* ========== منوی بالایی ========== */
         .navbar {
             background: rgba(255,255,255,0.15);
             backdrop-filter: blur(12px);
             padding: 15px 30px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
-
         .logo {
             font-size: 1.6em;
             font-weight: bold;
             color: white;
         }
-
         .logo span {
             color: #FFD700;
         }
-
         .nav-menu {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             align-items: center;
         }
-
-        .nav-menu > a {
+        .nav-menu a {
             color: white;
             text-decoration: none;
             padding: 8px 18px;
             border-radius: 30px;
             transition: all 0.3s;
-            font-weight: 500;
         }
-
-        .nav-menu > a:hover {
+        .nav-menu a:hover {
             background: rgba(255,255,255,0.25);
         }
-
-        /* ========== نوار کرکره‌ای (Dropdown) ========== */
         .dropdown {
             position: relative;
             display: inline-block;
         }
-
         .dropdown-btn {
             background: rgba(255,255,255,0.2);
             color: white;
@@ -77,98 +64,55 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
             border: none;
             font-size: 1em;
-            font-family: inherit;
         }
-
-        .dropdown-btn:hover {
-            background: rgba(255,255,255,0.35);
-        }
-
         .dropdown-content {
             display: none;
             position: absolute;
             top: 45px;
             right: 0;
             background: white;
-            min-width: 280px;
+            min-width: 250px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            z-index: 1001;
-            overflow: hidden;
+            z-index: 100;
         }
-
         .dropdown-content a {
             color: #333;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding: 12px 20px;
+            display: block;
             border-bottom: 1px solid #eee;
-            transition: background 0.2s;
         }
-
         .dropdown-content a:hover {
             background: #f0f0f0;
             color: #667eea;
         }
-
-        .dropdown-content a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-content.show {
+        .dropdown:hover .dropdown-content {
             display: block;
         }
-
-        /* دکمه ثبت درخواست در منو */
         .request-btn {
             background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #333 !important;
             font-weight: bold;
         }
-
-        .request-btn:hover {
-            background: linear-gradient(135deg, #FFE44D, #FFB347) !important;
-            transform: scale(1.02);
-        }
-
-        /* ========== محتوای اصلی ========== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
         .hero {
             background: white;
             border-radius: 30px;
-            padding: 50px 40px;
-            margin-bottom: 50px;
+            padding: 50px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 50px;
         }
-
         .hero h1 {
             color: #667eea;
             font-size: 2.8em;
             margin-bottom: 15px;
         }
-
         .hero p {
             color: #555;
             font-size: 1.1em;
             line-height: 1.8;
-            max-width: 700px;
-            margin: 0 auto;
         }
-
         .stats {
             display: flex;
             justify-content: center;
@@ -178,30 +122,17 @@
             padding-top: 30px;
             border-top: 1px solid #eee;
         }
-
         .stat {
             text-align: center;
         }
-
         .stat-number {
             font-size: 2em;
             font-weight: bold;
             color: #764ba2;
         }
-
         .stat-label {
             color: #666;
-            font-size: 0.9em;
         }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 35px 0 20px;
-        }
-
         .btn-primary {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -209,64 +140,38 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            transition: transform 0.3s;
             display: inline-block;
+            margin: 20px 0;
         }
-
-        .btn-primary:hover {
-            transform: scale(1.03);
-        }
-
-        .services-preview {
-            margin-top: 30px;
-        }
-
         .services-preview h3 {
             text-align: center;
             color: white;
             font-size: 1.5em;
             margin-bottom: 25px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-
         .preview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
-
         .preview-card {
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
             border-radius: 20px;
             padding: 20px;
             text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
             text-decoration: none;
             color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+            display: block;
         }
-
         .preview-card:hover {
             background: rgba(255,255,255,0.2);
             transform: translateY(-5px);
         }
-
         .preview-icon {
             font-size: 2.5em;
             margin-bottom: 12px;
         }
-
-        .preview-card h4 {
-            margin-bottom: 8px;
-        }
-
-        .preview-card p {
-            font-size: 0.85em;
-            opacity: 0.8;
-        }
-
         .about-section {
             background: rgba(255,255,255,0.95);
             border-radius: 25px;
@@ -274,52 +179,32 @@
             text-align: center;
             margin-top: 50px;
         }
-
         .about-section h3 {
             color: #667eea;
             margin-bottom: 15px;
-            font-size: 1.5em;
         }
-
         .contact-info {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
-            margin: 20px 0;
+            margin-top: 20px;
         }
-
-        .contact-info p {
-            color: #555;
-        }
-
         .contact-info a {
             color: #764ba2;
             text-decoration: none;
         }
-
-        /* بخش ثبت درخواست همکاری */
         .request-section {
-            background: linear-gradient(135deg, #667eea20, #764ba220);
+            background: linear-gradient(135deg, #667eea30, #764ba230);
             border-radius: 25px;
             padding: 35px;
             text-align: center;
             margin-top: 30px;
-            border: 2px solid rgba(255,255,255,0.3);
         }
-
         .request-section h3 {
-            color: #fff;
+            color: white;
             margin-bottom: 15px;
-            font-size: 1.5em;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-
-        .request-section p {
-            color: rgba(255,255,255,0.95);
-            margin-bottom: 20px;
-        }
-
         .btn-request-large {
             display: inline-block;
             background: linear-gradient(135deg, #FFD700, #FFA500);
@@ -329,28 +214,18 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 1.2em;
-            transition: transform 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
         }
-
-        .btn-request-large:hover {
-            transform: scale(1.05);
-        }
-
         footer {
             text-align: center;
             color: rgba(255,255,255,0.7);
             padding: 30px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
-
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                text-align: center;
-            }
-            .nav-menu {
-                justify-content: center;
+                border-radius: 20px;
             }
             .hero h1 {
                 font-size: 1.8em;
@@ -366,130 +241,62 @@
         <div class="logo">Sofia<span>AI</span></div>
         <div class="nav-menu">
             <a href="index.html">🏠 خانه</a>
-            
-            <div class="dropdown" id="servicesDropdown">
-                <button class="dropdown-btn" id="dropdownBtn">🛠 خدمات ▼</button>
-                <div class="dropdown-content" id="dropdownContent">
-                    <a href="service-rag.html">🧠 سیستم RAG و پرسش و پاسخ</a>
-                    <a href="service-vision.html">👁️ بینایی ماشین و تشخیص اشیا</a>
-                    <a href="service-automation.html">⚙️ اتوماسیون هوشمند با n8n</a>
-                    <a href="service-llm.html">🎓 مشاوره و آموزش LLM</a>
-                    <a href="service-lmstudio.html">🚀 نصب ایجنت هوش مصنوعی</a>
-                    <a href="service-data.html">📊 تحلیل داده و پیشنهاددهنده</a>
+            <div class="dropdown">
+                <button class="dropdown-btn">🛠 خدمات ▼</button>
+                <div class="dropdown-content">
+                    <a href="service-rag.html">🧠 سیستم RAG</a>
+                    <a href="service-vision.html">👁️ بینایی ماشین</a>
+                    <a href="service-automation.html">⚙️ اتوماسیون</a>
+                    <a href="service-llm.html">🎓 مشاوره LLM</a>
+                    <a href="service-lmstudio.html">🚀 نصب ایجنت</a>
+                    <a href="service-data.html">📊 تحلیل داده</a>
                 </div>
             </div>
-            
             <a href="#about">📖 درباره ما</a>
             <a href="order.html" class="request-btn">📝 ثبت درخواست</a>
         </div>
     </div>
 
-    <div class="container">
-        <div class="hero">
-            <h1>✨ Sofia AI ✨</h1>
-            <p>هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>نصب، راه‌اندازی و پشتیبانی تخصصی</p>
-            
-            <div class="hero-buttons">
-                <a href="service-lmstudio.html" class="btn-primary">🚀 خدمات نصب ایجنت هوش مصنوعی</a>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number">۵۰+</div>
-                    <div class="stat-label">مدل هوش مصنوعی</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">۱۰۰%</div>
-                    <div class="stat-label">حریم خصوصی و آفلاین</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">۲۴/۷</div>
-                    <div class="stat-label">پشتیبانی</div>
-                </div>
-            </div>
+    <div class="hero">
+        <h1>✨ Sofia AI ✨</h1>
+        <p>هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>نصب، راه‌اندازی و پشتیبانی تخصصی</p>
+        <a href="service-lmstudio.html" class="btn-primary">🚀 خدمات نصب ایجنت هوش مصنوعی</a>
+        <div class="stats">
+            <div class="stat"><div class="stat-number">۵۰+</div><div class="stat-label">مدل هوش مصنوعی</div></div>
+            <div class="stat"><div class="stat-number">۱۰۰%</div><div class="stat-label">حریم خصوصی</div></div>
+            <div class="stat"><div class="stat-number">۲۴/۷</div><div class="stat-label">پشتیبانی</div></div>
         </div>
-
-        <div class="services-preview">
-            <h3>⚡ خدمات تخصصی من</h3>
-            <div class="preview-grid">
-                <a href="service-rag.html" class="preview-card">
-                    <div class="preview-icon">🧠</div>
-                    <h4>سیستم RAG</h4>
-                    <p>پرسش و پاسخ هوشمند از اسناد</p>
-                </a>
-                <a href="service-vision.html" class="preview-card">
-                    <div class="preview-icon">👁️</div>
-                    <h4>بینایی ماشین</h4>
-                    <p>تشخیص اشیا و پردازش تصویر</p>
-                </a>
-                <a href="service-automation.html" class="preview-card">
-                    <div class="preview-icon">⚙️</div>
-                    <h4>اتوماسیون هوشمند</h4>
-                    <p>طراحی workflow با n8n</p>
-                </a>
-                <a href="service-llm.html" class="preview-card">
-                    <div class="preview-icon">🎓</div>
-                    <h4>مشاوره LLM</h4>
-                    <p>آموزش و پیاده‌سازی</p>
-                </a>
-                <a href="service-lmstudio.html" class="preview-card">
-                    <div class="preview-icon">🚀</div>
-                    <h4>نصب ایجنت AI</h4>
-                    <p>راه‌اندازی LM Studio</p>
-                </a>
-                <a href="service-data.html" class="preview-card">
-                    <div class="preview-icon">📊</div>
-                    <h4>تحلیل داده</h4>
-                    <p>پیش‌بینی و پیشنهاددهنده</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- بخش درباره ما -->
-        <div class="about-section" id="about">
-            <h3>📖 درباره من</h3>
-            <p>سلام! من علیرضا دربندی، کارشناس ارشد هوش مصنوعی با ۹ سال سابقه هستم.<br>
-            تخصص من در معماری RAG، بینایی ماشین، اتوماسیون هوشمند و پیاده‌سازی مدل‌های زبانی بزرگ است.<br>
-            هدف من کمک به کسب‌وکارها برای بهره‌گیری از قدرت هوش مصنوعی به صورت مقرون‌به‌صرفه و خصوصی است.</p>
-            
-            <div class="contact-info">
-                <p>📧 <a href="mailto:Cysobms@gmail.com">Cysobms@gmail.com</a></p>
-                <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
-                <p>📍 اصفهان</p>
-            </div>
-        </div>
-
-        <!-- بخش ثبت درخواست همکاری (جدید) -->
-        <div class="request-section">
-            <h3>📝 درخواست همکاری و مشاوره</h3>
-            <p>برای دریافت مشاوره رایگان و ثبت سفارش، روی دکمه زیر کلیک کنید</p>
-            <a href="order.html" class="btn-request-large">✨ ثبت درخواست همکاری ✨</a>
-            <div class="contact-info" style="margin-top: 20px;">
-                <p>📞 یا تماس مستقیم: <strong style="color:#FFD700;">۰۹۱۳۰۷۷۱۱۲۸</strong></p>
-                <p>✉️ ایمیل: <strong style="color:#FFD700;">Cysobms@gmail.com</strong></p>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2026 Sofia AI - ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
-        </footer>
     </div>
 
-    <script>
-        // منوی کرکره‌ای
-        const dropdownBtn = document.getElementById('dropdownBtn');
-        const dropdownContent = document.getElementById('dropdownContent');
-        
-        dropdownBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdownContent.classList.toggle('show');
-        });
-        
-        document.addEventListener('click', function(e) {
-            if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
-                dropdownContent.classList.remove('show');
-            }
-        });
-    </script>
+    <div class="services-preview">
+        <h3>⚡ خدمات تخصصی من</h3>
+        <div class="preview-grid">
+            <a href="service-rag.html" class="preview-card"><div class="preview-icon">🧠</div><h4>سیستم RAG</h4><p>پرسش و پاسخ هوشمند</p></a>
+            <a href="service-vision.html" class="preview-card"><div class="preview-icon">👁️</div><h4>بینایی ماشین</h4><p>تشخیص اشیا</p></a>
+            <a href="service-automation.html" class="preview-card"><div class="preview-icon">⚙️</div><h4>اتوماسیون</h4><p>طراحی workflow</p></a>
+            <a href="service-llm.html" class="preview-card"><div class="preview-icon">🎓</div><h4>مشاوره LLM</h4><p>آموزش و پیاده‌سازی</p></a>
+            <a href="service-lmstudio.html" class="preview-card"><div class="preview-icon">🚀</div><h4>نصب ایجنت</h4><p>راه‌اندازی LM Studio</p></a>
+            <a href="service-data.html" class="preview-card"><div class="preview-icon">📊</div><h4>تحلیل داده</h4><p>پیش‌بینی</p></a>
+        </div>
+    </div>
+
+    <div class="about-section" id="about">
+        <h3>📖 درباره من</h3>
+        <p>علیرضا دربندی، کارشناس ارشد هوش مصنوعی با ۹ سال سابقه در معماری RAG، بینایی ماشین و LLM.</p>
+        <div class="contact-info">
+            <p>📧 <a href="mailto:Cysobms@gmail.com">Cysobms@gmail.com</a></p>
+            <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
+        </div>
+    </div>
+
+    <div class="request-section">
+        <h3>📝 درخواست همکاری و مشاوره</h3>
+        <p>برای مشاوره رایگان و ثبت سفارش، روی دکمه زیر کلیک کنید</p>
+        <a href="order.html" class="btn-request-large">✨ ثبت درخواست همکاری ✨</a>
+    </div>
+
+    <footer>
+        <p>© 2026 Sofia AI - ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
+    </footer>
 </body>
 </html>
