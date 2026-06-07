@@ -2,49 +2,170 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>نصب ایجنت هوش مصنوعی | Sofia AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نصب و راه‌اندازی ایجنت هوش مصنوعی | Sofia AI</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:Tahoma,sans-serif;background:linear-gradient(135deg,#667eea,#764ba2);direction:rtl;padding:20px;}
-        .container{max-width:1000px;margin:0 auto;background:white;border-radius:25px;padding:40px;}
-        .back-link{color:#667eea;text-decoration:none;}
-        h1{color:#667eea;margin:20px 0;border-bottom:3px solid #667eea;padding-bottom:15px;}
-        h2{color:#764ba2;margin:25px 0 15px;}
-        p{color:#555;line-height:1.8;margin:15px 0;}
-        ul{list-style:none;padding:0;}
-        li{padding:10px 0;border-bottom:1px solid #eee;}
-        li::before{content:"✅ ";color:#667eea;}
-        .price-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:20px;border-radius:15px;text-align:center;margin:30px 0;}
-        .price{font-size:2em;font-weight:bold;}
-        .btn{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:15px 40px;border-radius:50px;text-decoration:none;margin-top:20px;}
-        footer{text-align:center;margin-top:30px;color:#999;}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        .service-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+        }
+        p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        .feature-list li::before {
+            content: "✅ ";
+            color: #667eea;
+        }
+        .price-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .price-box h3 {
+            margin-bottom: 10px;
+        }
+        .price-box .price {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+        }
+        .warning {
+            background: #fff3cd;
+            border-right: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <a href="index.html" class="back-link">← بازگشت</a>
-    <h1>🚀 نصب و راه‌اندازی ایجنت هوش مصنوعی</h1>
-    <h2>✨ مزایا:</h2>
-    <ul>
-        <li>حریم خصوصی کامل - اطلاعات روی کامپیوتر شما می‌ماند</li>
-        <li>کاربری آفلاین - بدون نیاز به اینترنت</li>
-        <li>مقرون‌به‌صرفه - بدون هزینه ماهیانه</li>
-        <li>سرعت بالا - اجرا روی سخت‌افزار خودتان</li>
-    </ul>
-    <h2>این خدمت شامل:</h2>
-    <ul>
-        <li>نصب کامل LM Studio</li>
-        <li>بهینه‌سازی تنظیمات برای سخت‌افزار شما</li>
-        <li>دانلود و نصب مدل‌های دلخواه</li>
-        <li>آموزش کامل کار با نرم‌افزار</li>
-        <li>پشتیبانی ۷ روزه</li>
-    </ul>
-    <div class="price-box">
-        <div class="price">۳,۵۰۰,۰۰۰ تومان</div>
-        <p>شامل نصب کامل + آموزش + یک هفته پشتیبانی</p>
+    <div class="container">
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+        <div class="service-icon">🚀</div>
+        <h1>نصب و راه‌اندازی ایجنت هوش مصنوعی (LM Studio)</h1>
+        
+        <h2>🤖 LM Studio چیست؟</h2>
+        <p>LM Studio یک نرم‌افزار قدرتمند دسکتاپ است که به شما امکان می‌دهد مدل‌های زبانی بزرگ (مثل Llama، DeepSeek، Mistral و...) را به صورت کاملاً خصوصی و آفلاین روی کامپیوتر شخصی خود اجرا کنید. بدون نیاز به اینترنت و بدون نگرانی از حریم خصوصی!</p>
+        
+        <h2>✨ مزایای استفاده از ایجنت هوش مصنوعی:</h2>
+        <ul class="feature-list">
+            <li>حریم خصوصی کامل - تمام اطلاعات روی کامپیوتر شخصی شما می‌ماند</li>
+            <li>کاربری آفلاین - بدون نیاز به اینترنت، هر جا که هستید</li>
+            <li>مقرون‌به‌صرفه - بدون هزینه‌های ماهیانه سرویس‌های ابری</li>
+            <li>سرعت بالا - اجرای مدل‌ها با حداکثر سرعت سخت‌افزار شما</li>
+            <li>دلخواه‌سازی کامل - قابلیت تنظیم برای نیازهای خاص شما</li>
+        </ul>
+        
+        <div class="warning">
+            <strong>⚠️ نکته مهم:</strong> مدل‌های هوش مصنوعی به فضای ذخیره‌سازی و رم قابل توجهی نیاز دارند. قبل از ثبت سفارش، از تأمین حداقل سیستم مورد نیاز اطمینان حاصل کنید.
+        </div>
+        
+        <h2>✨ این خدمت شامل چه مواردی است؟</h2>
+        <ul class="feature-list">
+            <li>نصب و راه‌اندازی کامل LM Studio روی سیستم شما</li>
+            <li>بررسی و بهینه‌سازی تنظیمات برای سخت‌افزارتان (RAM، GPU، CPU)</li>
+            <li>دانلود و نصب مدل‌های دلخواه شما (بسته به فضای خالی)</li>
+            <li>آموزش کامل کار با نرم‌افزار (نحوه بارگذاری مدل، مکالمه، تنظیمات)</li>
+            <li>آموزش مهندسی پرامپت برای دریافت بهترین پاسخ‌ها</li>
+            <li>پشتیبانی ۷ روزه بعد از نصب (از طریق تلفن یا واتساپ)</li>
+            <li>عیب‌یابی مشکلات احتمالی و رفع خطاها</li>
+        </ul>
+        
+        <h2>💻 حداقل سیستم مورد نیاز:</h2>
+        <ul class="feature-list">
+            <li>رم (RAM): حداقل ۸ گیگابایت (۱۶ گیگابایت یا بیشتر توصیه می‌شود)</li>
+            <li>فضای خالی: حداقل ۲۰ گیگابایت (برای مدل‌های کوچک)</li>
+            <li>سیستم‌عامل: ویندوز 10/11، macOS 11+ (سیلیکون یا اینتل)، یا لینوکس</li>
+            <li>GPU (کارت گرافیک): اختیاری اما برای مدل‌های بزرگ مفید است</li>
+        </ul>
+        
+        <div class="price-box">
+            <h3>💰 هزینه خدمات نصب و راه‌اندازی</h3>
+            <div class="price">۳,۵۰۰,۰۰۰ تومان</div>
+            <p>شامل نصب کامل + آموزش + یک هفته پشتیبانی</p>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="order.html?service=lmstudio" class="btn">📝 ثبت درخواست نصب</a>
+        </div>
+        
+        <div class="contact-info">
+            <p>📞 سوالی دارید؟ تماس بگیرید: <strong>۰۹۱۳۰۷۷۱۱۲۸</strong></p>
+            <p>✉️ یا ایمیل: <strong>Cysobms@gmail.com</strong></p>
+        </div>
+        
+        <footer>
+            <p>© 2026 Sofia AI - هلدینگ هوش مصنوعی سوفیا</p>
+        </footer>
     </div>
-    <div style="text-align:center"><a href="order.html" class="btn">📝 ثبت درخواست نصب</a></div>
-    <footer>© 2026 Sofia AI</footer>
-</div>
 </body>
 </html>
