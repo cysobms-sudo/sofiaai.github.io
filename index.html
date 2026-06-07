@@ -51,7 +51,7 @@
             align-items: center;
         }
 
-        .nav-menu a {
+        .nav-menu > a {
             color: white;
             text-decoration: none;
             padding: 8px 18px;
@@ -60,11 +60,11 @@
             font-weight: 500;
         }
 
-        .nav-menu a:hover {
+        .nav-menu > a:hover {
             background: rgba(255,255,255,0.25);
         }
 
-        /* ========== نوار کرکره‌ای (Dropdown) خدمات ========== */
+        /* ========== نوار کرکره‌ای (Dropdown) با جاوااسکریپت ========== */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -81,6 +81,9 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s;
+            border: none;
+            font-size: 1em;
+            font-family: inherit;
         }
 
         .dropdown-btn:hover {
@@ -96,9 +99,8 @@
             min-width: 280px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            z-index: 100;
+            z-index: 1001;
             overflow: hidden;
-            animation: fadeIn 0.3s ease;
         }
 
         .dropdown-content a {
@@ -113,7 +115,7 @@
         }
 
         .dropdown-content a:hover {
-            background: #f5f5f5;
+            background: #f0f0f0;
             color: #667eea;
         }
 
@@ -121,13 +123,9 @@
             border-bottom: none;
         }
 
-        .dropdown:hover .dropdown-content {
+        /* کلاس برای نمایش منو */
+        .dropdown-content.show {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* دکمه ثبت درخواست در منو */
@@ -218,22 +216,6 @@
             display: inline-block;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
-            padding: 12px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-
         .btn-primary:hover {
             transform: scale(1.03);
         }
@@ -289,7 +271,7 @@
             opacity: 0.8;
         }
 
-        /* بخش تماس */
+        /* بخش درباره ما */
         .contact-section {
             background: rgba(255,255,255,0.95);
             border-radius: 25px;
@@ -342,6 +324,9 @@
             .hero {
                 padding: 30px 20px;
             }
+            .dropdown-content {
+                right: -20px;
+            }
         }
     </style>
 </head>
@@ -352,10 +337,10 @@
         <div class="nav-menu">
             <a href="index.html">🏠 خانه</a>
             
-            <!-- نوار کرکره‌ای خدمات -->
-            <div class="dropdown">
-                <div class="dropdown-btn">🛠 خدمات ▼</div>
-                <div class="dropdown-content">
+            <!-- نوار کرکره‌ای خدمات (با کلیک باز می‌شود) -->
+            <div class="dropdown" id="servicesDropdown">
+                <button class="dropdown-btn" id="dropdownBtn">🛠 خدمات ▼</button>
+                <div class="dropdown-content" id="dropdownContent">
                     <a href="service-rag.html">🧠 سیستم RAG و پرسش و پاسخ</a>
                     <a href="service-vision.html">👁️ بینایی ماشین و تشخیص اشیا</a>
                     <a href="service-automation.html">⚙️ اتوماسیون هوشمند با n8n</a>
@@ -366,7 +351,7 @@
             </div>
             
             <a href="#about">📖 درباره ما</a>
-            <a href="order.html" class="request-btn">📝 ثبت درخواست</a>
+            <a href="#order-section" class="request-btn" id="orderMenuLink">📝 ثبت درخواست</a>
         </div>
     </div>
 
@@ -377,8 +362,7 @@
             <p>هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>نصب، راه‌اندازی و پشتیبانی تخصصی</p>
             
             <div class="hero-buttons">
-                <button onclick="showModal()" class="btn-outline">💡 مزایا و کاربردها</button>
-                <a href="order.html" class="btn-primary">📝 ثبت درخواست</a>
+                <a href="service-lmstudio.html" class="btn-primary">🚀 خدمات نصب ایجنت هوش مصنوعی</a>
             </div>
 
             <div class="stats">
@@ -446,7 +430,17 @@
                 <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
                 <p>📍 اصفهان</p>
             </div>
-            <a href="order.html" style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:12px 35px; border-radius:30px; text-decoration:none; font-weight:bold;">ثبت درخواست همکاری →</a>
+        </div>
+
+        <!-- بخش ثبت درخواست (محلی برای هدایت منو) -->
+        <div id="order-section" class="contact-section" style="background: linear-gradient(135deg, #667eea20, #764ba220); margin-top: 30px;">
+            <h3>📝 ثبت درخواست همکاری</h3>
+            <p>برای دریافت مشاوره رایگان و ثبت سفارش، فرم زیر را پر کنید یا با ما تماس بگیرید</p>
+            <div class="contact-info">
+                <p>📧 <a href="mailto:Cysobms@gmail.com">Cysobms@gmail.com</a></p>
+                <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
+            </div>
+            <a href="order.html" style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:12px 35px; border-radius:30px; text-decoration:none; font-weight:bold; margin-top:15px;">ثبت درخواست آنلاین →</a>
         </div>
 
         <footer>
@@ -454,37 +448,29 @@
         </footer>
     </div>
 
-    <!-- مودال مزایا و کاربردها -->
-    <div id="benefitsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:2000; align-items:center; justify-content:center;">
-        <div style="background:white; max-width:500px; width:90%; border-radius:25px; padding:30px; position:relative; text-align:right;">
-            <button onclick="closeModal()" style="position:absolute; left:20px; top:15px; background:none; border:none; font-size:25px; cursor:pointer;">&times;</button>
-            <h2 style="color:#667eea; margin-bottom:20px;">💡 مزایا و کاربردها</h2>
-            <ul style="padding-right:20px;">
-                <li>🔒 حریم خصوصی کامل - اطلاعات روی سیستم شما می‌ماند</li>
-                <li>📡 کاربرد آفلاین - بدون نیاز به اینترنت</li>
-                <li>💰 مقرون‌به‌صرفه - بدون هزینه ماهیانه</li>
-                <li>⚡ سرعت بالا - اجرا روی سخت‌افزار خودتان</li>
-                <li>🎯 دلخواه‌سازی کامل برای نیازهای خاص</li>
-            </ul>
-            <div style="margin-top:25px; text-align:center;">
-                <a href="order.html" style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:10px 30px; border-radius:30px; text-decoration:none;">درخواست خدمات</a>
-            </div>
-        </div>
-    </div>
-
     <script>
-        function showModal() {
-            document.getElementById('benefitsModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal() {
-            document.getElementById('benefitsModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        window.onclick = function(event) {
-            const modal = document.getElementById('benefitsModal');
-            if (event.target === modal) closeModal();
-        }
+        // ========== مدیریت منوی کرکره‌ای با کلیک ==========
+        const dropdownBtn = document.getElementById('dropdownBtn');
+        const dropdownContent = document.getElementById('dropdownContent');
+        
+        dropdownBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownContent.classList.toggle('show');
+        });
+        
+        // بستن منو با کلیک روی جای دیگر صفحه
+        document.addEventListener('click', function(e) {
+            if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+        
+        // ========== اسکرول به بخش ثبت درخواست با کلیک روی منو ==========
+        document.getElementById('orderMenuLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            const orderSection = document.getElementById('order-section');
+            orderSection.scrollIntoView({ behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
