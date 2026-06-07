@@ -8,30 +8,95 @@
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:Tahoma;background:linear-gradient(135deg,#667eea,#764ba2);direction:rtl;padding:20px;}
         .container{max-width:700px;margin:0 auto;background:white;border-radius:25px;padding:40px;}
-        h1{color:#667eea;text-align:center;margin-bottom:30px;}
+        h1{color:#667eea;text-align:center;margin-bottom:10px;}
+        .subtitle{text-align:center;color:#666;margin-bottom:30px;font-size:0.9em;}
         .form-group{margin-bottom:20px;}
         label{display:block;margin-bottom:8px;font-weight:bold;color:#333;}
-        input,select,textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:1em;}
+        label .required{color:red;}
+        input,select,textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:1em;font-family:Tahoma;}
         input:focus,select:focus,textarea:focus{border-color:#667eea;outline:none;}
         .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:15px;border:none;border-radius:50px;font-size:1.2em;font-weight:bold;cursor:pointer;width:100%;}
+        .btn:hover{opacity:0.9;}
         .back-link{display:block;text-align:center;margin-top:20px;color:#667eea;text-decoration:none;}
-        footer{text-align:center;margin-top:30px;color:#999;}
+        .cooperation-link{display:block;text-align:center;margin-top:15px;color:#764ba2;text-decoration:none;font-weight:bold;}
+        footer{text-align:center;margin-top:30px;color:#999;font-size:0.8em;}
+        hr{margin:20px 0;border:1px solid #eee;}
+        .service-option{padding-right:5px;}
     </style>
 </head>
 <body>
 <div class="container">
     <h1>📋 فرم ثبت درخواست</h1>
+    <div class="subtitle">لطفاً اطلاعات خود را وارد کنید</div>
+    
     <form action="https://formspree.io/f/xpqeqkgk" method="POST">
         <input type="hidden" name="_subject" value="سفارش جدید از سایت Sofia AI">
-        <div class="form-group"><label>نام و نام خانوادگی *</label><input type="text" name="name" required></div>
-        <div class="form-group"><label>شماره تماس *</label><input type="tel" name="phone" required></div>
-        <div class="form-group"><label>ایمیل</label><input type="email" name="email"></div>
-        <div class="form-group"><label>سیستم عامل *</label><select name="os" required><option value="">انتخاب کنید...</option><option value="windows">ویندوز</option><option value="mac">مک</option><option value="linux">لینوکس</option></select></div>
-        <div class="form-group"><label>میزان رم *</label><select name="ram" required><option value="">انتخاب کنید...</option><option value="8">8GB</option><option value="16">16GB</option><option value="32">32GB</option></select></div>
-        <div class="form-group"><label>توضیحات</label><textarea name="notes" rows="3"></textarea></div>
+        
+        <!-- منوی کرکره‌ای انتخاب خدمات - کامل -->
+        <div class="form-group">
+            <label>نوع درخواست <span class="required">*</span></label>
+            <select name="request_type" required style="padding:12px;">
+                <option value="" disabled selected>── لطفاً خدمت مورد نظر را انتخاب کنید ──</option>
+                <option value="rag" class="service-option">🧠 سیستم RAG (پرسش و پاسخ هوشمند از اسناد)</option>
+                <option value="vision" class="service-option">👁️ بینایی ماشین (تشخیص اشیا، چهره، آنالیز تصاویر)</option>
+                <option value="automation" class="service-option">⚙️ اتوماسیون هوشمند (طراحی workflow با n8n)</option>
+                <option value="llm" class="service-option">🎓 مشاوره و آموزش LLM (مهندسی پرامپت، Fine-tuning)</option>
+                <option value="lmstudio" class="service-option">🚀 نصب ایجنت هوش مصنوعی (راه‌اندازی LM Studio)</option>
+                <option value="data" class="service-option">📊 تحلیل داده و سیستم پیشنهاددهنده</option>
+                <option value="other" class="service-option">🔧 سایر خدمات (لطفاً در توضیحات بنویسید)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>نام و نام خانوادگی <span class="required">*</span></label>
+            <input type="text" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label>شماره تماس <span class="required">*</span></label>
+            <input type="tel" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label>ایمیل</label>
+            <input type="email" name="email" placeholder="example@gmail.com">
+        </div>
+        
+        <div class="form-group">
+            <label>سیستم عامل <span class="required">*</span></label>
+            <select name="os" required>
+                <option value="" disabled selected>── انتخاب کنید ──</option>
+                <option value="windows">ویندوز 10/11</option>
+                <option value="mac">مک (MacOS)</option>
+                <option value="linux">لینوکس</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>میزان رم (RAM) <span class="required">*</span></label>
+            <select name="ram" required>
+                <option value="" disabled selected>── انتخاب کنید ──</option>
+                <option value="4">4 گیگابایت</option>
+                <option value="8">8 گیگابایت</option>
+                <option value="16">16 گیگابایت</option>
+                <option value="32">32 گیگابایت</option>
+                <option value="64">64 گیگابایت یا بیشتر</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>توضیحات اضافه</label>
+            <textarea name="notes" rows="4" placeholder="اگر نکته خاصی هست یا درخواست شما غیر از گزینه‌های بالا است، اینجا بنویسید..."></textarea>
+        </div>
+        
         <button type="submit" class="btn">📝 ثبت درخواست</button>
     </form>
+    
+    <hr>
+    
+    <a href="cooperation.html" class="cooperation-link">🤝 می‌خواهید با ما همکاری کنید؟ کلیک کنید</a>
     <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+    
     <footer>پس از ثبت، حداکثر 24 ساعت با شما تماس می‌گیریم</footer>
 </div>
 </body>
