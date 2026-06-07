@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم همکاری | Sofia AI</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:Tahoma;background:linear-gradient(135deg,#667eea,#764ba2);direction:rtl;padding:20px;}
+        .container{max-width:700px;margin:0 auto;background:white;border-radius:25px;padding:40px;}
+        h1{color:#667eea;text-align:center;margin-bottom:10px;}
+        .subtitle{text-align:center;color:#666;margin-bottom:30px;font-size:0.9em;}
+        .form-group{margin-bottom:20px;}
+        label{display:block;margin-bottom:8px;font-weight:bold;color:#333;}
+        input,select,textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:1em;font-family:Tahoma;}
+        input:focus,select:focus,textarea:focus{border-color:#667eea;outline:none;}
+        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:15px;border:none;border-radius:50px;font-size:1.2em;font-weight:bold;cursor:pointer;width:100%;}
+        .btn:hover{opacity:0.9;}
+        .back-link{display:block;text-align:center;margin-top:20px;color:#667eea;text-decoration:none;}
+        footer{text-align:center;margin-top:30px;color:#999;font-size:0.8em;}
+        .note{background:#f0f8ff;padding:15px;border-radius:10px;margin-bottom:20px;font-size:0.85em;color:#555;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🤝 فرم همکاری با ما</h1>
+    <div class="subtitle">اگر تخصصی در حوزه هوش مصنوعی دارید و می‌خواهید با ما همکاری کنید، فرم زیر را پر کنید</div>
+    
+    <div class="note">
+        📌 ما به دنبال همکاران متخصص در زمینه‌های: برنامه‌نویسی پایتون، هوش مصنوعی، یادگیری ماشین، بینایی ماشین، و مدل‌های زبانی هستیم.
+    </div>
+    
+    <form action="https://formspree.io/f/xpqeqkgk" method="POST">
+        <input type="hidden" name="_subject" value="درخواست همکاری جدید - Sofia AI">
+        
+        <div class="form-group">
+            <label>نوع همکاری *</label>
+            <select name="cooperation_type" required>
+                <option value="">انتخاب کنید...</option>
+                <option value="fulltime">همکاری تمام وقت</option>
+                <option value="parttime">همکاری پاره وقت</option>
+                <option value="freelance">پروژه‌ای (فریلنسری)</option>
+                <option value="internship">کارآموزی</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>نام و نام خانوادگی *</label>
+            <input type="text" name="fullname" required>
+        </div>
+        
+        <div class="form-group">
+            <label>شماره تماس *</label>
+            <input type="tel" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label>ایمیل *</label>
+            <input type="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label>مدرک تحصیلی *</label>
+            <select name="education" required>
+                <option value="">انتخاب کنید...</option>
+                <option value="diplom">دیپلم</option>
+                <option value="associate">کاردانی</option>
+                <option value="bachelor">کارشناسی</option>
+                <option value="master">کارشناسی ارشد</option>
+                <option value="phd">دکتری</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>رشته تحصیلی</label>
+            <input type="text" name="field_of_study" placeholder="مثال: مهندسی کامپیوتر - هوش مصنوعی">
+        </div>
+        
+        <div class="form-group">
+            <label>زمینه تخصصی *</label>
+            <select name="expertise" required>
+                <option value="">انتخاب کنید...</option>
+                <option value="python">برنامه‌نویسی پایتون</option>
+                <option value="ml">یادگیری ماشین (Machine Learning)</option>
+                <option value="dl">یادگیری عمیق (Deep Learning)</option>
+                <option value="nlp">پردازش زبان طبیعی (NLP)</option>
+                <option value="computer_vision">بینایی ماشین (Computer Vision)</option>
+                <option value="llm">مدل‌های زبانی بزرگ (LLM)</option>
+                <option value="rag">سیستم‌های RAG</option>
+                <option value="automation">اتوماسیون (n8n)</option>
+                <option value="other">سایر</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>سال‌های سابقه کار *</label>
+            <select name="experience_years" required>
+                <option value="">انتخاب کنید...</option>
+                <option value="0">کمتر از 1 سال</option>
+                <option value="1">1 سال</option>
+                <option value="2">2 سال</option>
+                <option value="3">3 سال</option>
+                <option value="4">4 سال</option>
+                <option value="5">5 سال</option>
+                <option value="10">بیش از 5 سال</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>لینک رزومه یا نمونه کارها *</label>
+            <input type="text" name="resume_link" placeholder="لینک Google Drive, Dropbox, LinkedIn یا GitHub" required>
+            <small style="color:#999;">لطفاً لینک رزومه خود را وارد کنید (Google Drive, Dropbox, LinkedIn, GitHub)</small>
+        </div>
+        
+        <div class="form-group">
+            <label>نمونه پروژه‌های انجام شده</label>
+            <textarea name="projects" rows="3" placeholder="لطفاً چند نمونه از پروژه‌هایی که انجام داده‌اید را توضیح دهید..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>توضیحات اضافه</label>
+            <textarea name="notes" rows="3" placeholder="هر نکته دیگری که به نظرتان مهم است..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn">📤 ارسال درخواست همکاری</button>
+    </form>
+    
+    <a href="order.html" class="back-link">← بازگشت به فرم ثبت درخواست خدمات</a>
+    <footer>پس از ثبت، حداکثر 48 ساعت با شما تماس می‌گیریم</footer>
+</div>
+</body>
+</html>
