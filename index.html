@@ -64,7 +64,7 @@
             background: rgba(255,255,255,0.25);
         }
 
-        /* ========== نوار کرکره‌ای (Dropdown) با جاوااسکریپت ========== */
+        /* ========== نوار کرکره‌ای (Dropdown) ========== */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -123,7 +123,6 @@
             border-bottom: none;
         }
 
-        /* کلاس برای نمایش منو */
         .dropdown-content.show {
             display: block;
         }
@@ -147,7 +146,6 @@
             padding: 40px 20px;
         }
 
-        /* بخش اصلی hero */
         .hero {
             background: white;
             border-radius: 30px;
@@ -196,7 +194,6 @@
             font-size: 0.9em;
         }
 
-        /* دکمه‌های اصلی */
         .hero-buttons {
             display: flex;
             justify-content: center;
@@ -220,7 +217,6 @@
             transform: scale(1.03);
         }
 
-        /* بخش پیشنمایش خدمات */
         .services-preview {
             margin-top: 30px;
         }
@@ -271,7 +267,6 @@
             opacity: 0.8;
         }
 
-        /* بخش درباره ما */
         .contact-section {
             background: rgba(255,255,255,0.95);
             border-radius: 25px;
@@ -324,20 +319,15 @@
             .hero {
                 padding: 30px 20px;
             }
-            .dropdown-content {
-                right: -20px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- منوی بالایی با گزینه‌های کامل -->
     <div class="navbar">
         <div class="logo">Sofia<span>AI</span></div>
         <div class="nav-menu">
             <a href="index.html">🏠 خانه</a>
             
-            <!-- نوار کرکره‌ای خدمات (با کلیک باز می‌شود) -->
             <div class="dropdown" id="servicesDropdown">
                 <button class="dropdown-btn" id="dropdownBtn">🛠 خدمات ▼</button>
                 <div class="dropdown-content" id="dropdownContent">
@@ -351,12 +341,11 @@
             </div>
             
             <a href="#about">📖 درباره ما</a>
-            <a href="#order-section" class="request-btn" id="orderMenuLink">📝 ثبت درخواست</a>
+            <a href="order.html" class="request-btn">📝 ثبت درخواست</a>
         </div>
     </div>
 
     <div class="container">
-        <!-- بخش اصلی -->
         <div class="hero">
             <h1>✨ Sofia AI ✨</h1>
             <p>هوشمندترین ایجنت هوش مصنوعی برای کسب‌وکار شما<br>نصب، راه‌اندازی و پشتیبانی تخصصی</p>
@@ -381,7 +370,6 @@
             </div>
         </div>
 
-        <!-- بخش پیشنمایش خدمات -->
         <div class="services-preview">
             <h3>⚡ خدمات تخصصی من</h3>
             <div class="preview-grid">
@@ -418,7 +406,6 @@
             </div>
         </div>
 
-        <!-- بخش درباره ما -->
         <div class="contact-section" id="about">
             <h3>📖 درباره ما</h3>
             <p>سلام! من علیرضا دربندی، کارشناس ارشد هوش مصنوعی با ۹ سال سابقه هستم.<br>
@@ -432,24 +419,13 @@
             </div>
         </div>
 
-        <!-- بخش ثبت درخواست (محلی برای هدایت منو) -->
-        <div id="order-section" class="contact-section" style="background: linear-gradient(135deg, #667eea20, #764ba220); margin-top: 30px;">
-            <h3>📝 ثبت درخواست همکاری</h3>
-            <p>برای دریافت مشاوره رایگان و ثبت سفارش، فرم زیر را پر کنید یا با ما تماس بگیرید</p>
-            <div class="contact-info">
-                <p>📧 <a href="mailto:Cysobms@gmail.com">Cysobms@gmail.com</a></p>
-                <p>📱 <a href="tel:09130771128">۰۹۱۳۰۷۷۱۱۲۸</a></p>
-            </div>
-            <a href="order.html" style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:12px 35px; border-radius:30px; text-decoration:none; font-weight:bold; margin-top:15px;">ثبت درخواست آنلاین →</a>
-        </div>
-
         <footer>
             <p>© 2026 Sofia AI - ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
         </footer>
     </div>
 
     <script>
-        // ========== مدیریت منوی کرکره‌ای با کلیک ==========
+        // منوی کرکره‌ای
         const dropdownBtn = document.getElementById('dropdownBtn');
         const dropdownContent = document.getElementById('dropdownContent');
         
@@ -458,18 +434,10 @@
             dropdownContent.classList.toggle('show');
         });
         
-        // بستن منو با کلیک روی جای دیگر صفحه
         document.addEventListener('click', function(e) {
             if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
                 dropdownContent.classList.remove('show');
             }
-        });
-        
-        // ========== اسکرول به بخش ثبت درخواست با کلیک روی منو ==========
-        document.getElementById('orderMenuLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            const orderSection = document.getElementById('order-section');
-            orderSection.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
