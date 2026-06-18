@@ -98,6 +98,70 @@
             margin-top: 30px;
             color: #999;
         }
+
+        /* استایل بخش تحلیل احساسات */
+        .sentiment-section {
+            background: linear-gradient(135deg, #f0f4ff, #e8edf5);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border-right: 6px solid #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .sentiment-section .text {
+            flex: 1;
+            min-width: 200px;
+        }
+        .sentiment-section .text h3 {
+            color: #667eea;
+            font-size: 24px;
+            margin: 0 0 5px 0;
+        }
+        .sentiment-section .text p {
+            color: #555;
+            margin: 5px 0 0 0;
+        }
+        .sentiment-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .sentiment-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+        .sentiment-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        @media (max-width: 600px) {
+            .sentiment-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .sentiment-btn {
+                white-space: normal;
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -111,13 +175,36 @@
         
         <h2>✨ قابلیت‌های این خدمت:</h2>
         <ul class="feature-list">
-            <li>تحلیل احساسات (Sentiment Analysis) نظرات و بازخورد مشتریان</li>
+            <li>
+                🧠 تحلیل احساسات (Sentiment Analysis) نظرات و بازخورد مشتریان
+                <span style="display: block; font-size: 14px; color: #999; margin-top: 5px;">
+                    👆 <a href="https://huggingface.co/spaces/cysobms/sentimental-analysis" target="_blank" style="color: #667eea;">کلیک کنید و ابزار تحلیل احساسات را امتحان کنید</a>
+                </span>
+            </li>
             <li>خلاصه‌سازی خودکار متون بلند و اسناد</li>
             <li>طبقه‌بندی متون و دسته‌بندی خودکار محتوا</li>
             <li>تشخیص موجودیت‌های نامدار (NER) مانند نام افراد، سازمان‌ها، مکان‌ها</li>
             <li>ترجمه ماشینی بین زبان‌های مختلف</li>
             <li>پاسخ به سوالات از روی متون (Question Answering)</li>
         </ul>
+
+        <!-- ============================================ -->
+        <!-- بخش تحلیل احساسات - متصل به برنامه Hugging Face -->
+        <!-- ============================================ -->
+        <div class="sentiment-section">
+            <div class="text">
+                <h3>🧠 تحلیل احساسات (Sentiment Analysis)</h3>
+                <p>نظرات، بازخوردها و اخبار مالی خود را به صورت هوشمند تحلیل کنید.</p>
+            </div>
+            <div>
+                <a href="https://huggingface.co/spaces/cysobms/sentimental-analysis" target="_blank" class="sentiment-btn">
+                    📊 شروع تحلیل احساسات
+                </a>
+                <span style="display: block; font-size: 12px; color: #999; margin-top: 8px; text-align: center;">
+                    ✨ رایگان • بدون نیاز به ثبت‌نام
+                </span>
+            </div>
+        </div>
         
         <h2>🎯 کاربردها در صنایع مختلف:</h2>
         <ul class="feature-list">
