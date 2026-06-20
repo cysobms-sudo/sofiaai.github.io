@@ -85,6 +85,27 @@
             border-radius: 50px;
             font-weight: bold;
             margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-chat {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 18px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2em;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-chat:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
         }
         .contact-info {
             background: #f8f9fa;
@@ -93,10 +114,64 @@
             margin-top: 30px;
             text-align: center;
         }
+        .chat-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .chat-box h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .chat-box p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .chat-demo {
+            border: 3px dashed #764ba2;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            background: white;
+        }
+        .chat-demo .message {
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .chat-demo .user {
+            background: #667eea;
+            color: white;
+            margin-right: auto;
+            text-align: right;
+        }
+        .chat-demo .bot {
+            background: #f0f0f0;
+            color: #333;
+            margin-left: auto;
+            text-align: right;
+        }
+        .badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
         footer {
             text-align: center;
             margin-top: 30px;
             color: #999;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.6em; }
         }
     </style>
 </head>
@@ -127,6 +202,36 @@
             <li>آموزش کسب درآمد با هوش مصنوعی DeepSeek</li>
             <li>آموزش مدیریت محصول هوش مصنوعی</li>
         </ul>
+
+        <!-- بخش چت‌بات سفارشی -->
+        <div class="chat-box">
+            <h3>🤖 چت‌بات هوشمند سفارشی</h3>
+            <p>با چت‌بات اختصاصی ما آشنا شوید! این چت‌بات با استفاده از مدل‌های زبانی پیشرفته ساخته شده و پاسخ‌های هوشمندی به سوالات شما می‌دهد.</p>
+            
+            <div class="chat-demo">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="font-weight: bold; color: #764ba2;">💬 نمونه گفتگو</span>
+                    <span class="badge">⚡ آنلاین</span>
+                </div>
+                <div class="message user">سلام! چطوری؟</div>
+                <div class="message bot">سلام! خوبم، ممنون! شما چطورید؟</div>
+                <div class="message user">چه خدماتی ارائه می‌دید؟</div>
+                <div class="message bot">ما مشاوره و آموزش مدل‌های زبانی، ساخت چت‌بات سفارشی و دوره‌های تخصصی هوش مصنوعی ارائه می‌دهیم.</div>
+            </div>
+            
+            <p style="font-weight: bold; color: #764ba2; font-size: 1.1em;">
+                ⚡ چت‌بات هوشمند ما آماده پاسخگویی به شماست!
+            </p>
+            
+            <a href="https://huggingface.co/spaces/cysobms/simple-chat" 
+               target="_blank" 
+               class="btn-chat">
+                🚀 امتحان چت‌بات هوشمند
+            </a>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #888;">
+                🔒 کاملاً رایگان و بدون نیاز به ثبت‌نام
+            </p>
+        </div>
         
         <div class="price-box">
             <h3>💰 هزینه خدمات مشاوره و آموزش</h3>
