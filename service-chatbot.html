@@ -94,6 +94,60 @@
             transform: scale(1.05);
         }
 
+        /* ===== خدمات ما ===== */
+        .services-section {
+            margin: 40px 0 50px;
+        }
+
+        .services-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f0f2f8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
         /* ===== بنر مدیریتی ===== */
         .management-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -182,6 +236,7 @@
             padding: 25px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border: 1px solid #e8ecf4;
+            overflow-x: auto;
         }
 
         .admin-panel-preview .preview-card .stats {
@@ -213,6 +268,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.9em;
+            min-width: 600px;
         }
 
         .admin-panel-preview .preview-card table th {
@@ -251,6 +307,12 @@
             border-radius: 12px;
             font-size: 0.8em;
             font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table .blur-phone {
+            filter: blur(4px);
+            user-select: none;
+            cursor: default;
         }
 
         .admin-panel-preview .preview-card .preview-footer {
@@ -604,6 +666,9 @@
             .header .subtitle {
                 font-size: 1em;
             }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
             .products-grid {
                 grid-template-columns: 1fr 1fr;
             }
@@ -626,6 +691,7 @@
             }
             .admin-panel-preview .preview-card table {
                 font-size: 0.75em;
+                min-width: 500px;
             }
             .admin-panel-preview .preview-card .stats .stat-box .number {
                 font-size: 1.5em;
@@ -642,6 +708,9 @@
             }
             .header .main-icon {
                 font-size: 3.5em;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
             }
             .products-grid {
                 grid-template-columns: 1fr;
@@ -677,6 +746,7 @@
             }
             .admin-panel-preview .preview-card table {
                 font-size: 0.65em;
+                min-width: 400px;
             }
             .admin-panel-preview .preview-card table th,
             .admin-panel-preview .preview-card table td {
@@ -699,19 +769,56 @@
             <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
         </div>
 
-        <!-- ===== بنر مدیریتی ===== -->
-        <div class="management-banner">
-            <div class="info">
-                <span class="icon">📊</span>
-                <div class="text">
-                    <h3>🎯 پنل مدیریت اختصاصی</h3>
-                    <p>با تهیه چت‌بات، به یک پنل مدیریت کامل دسترسی دارید که تمام اطلاعات مشتریان بالقوه شما را جمع‌آوری و ذخیره می‌کند.</p>
+        <!-- ===== خدمات ما ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>طراحی چت‌بات متناسب با نیاز و برند کسب‌وکار شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📊</span>
+                    <h3>پنل مدیریت</h3>
+                    <p>داشبورد کامل برای مدیریت و تحلیل داده‌های مشتریان</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔒</span>
+                    <h3>امنیت بالا</h3>
+                    <p>ذخیره‌سازی امن اطلاعات با دسترسی محدود به مدیر</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📱</span>
+                    <h3>نمایش در موبایل</h3>
+                    <p>طراحی واکنش‌گرا و سازگار با تمام دستگاه‌ها</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">⚡</span>
+                    <h3>پاسخ‌دهی سریع</h3>
+                    <p>پاسخ‌دهی آنی به کاربران و تجربه کاربری عالی</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل پس از راه‌اندازی و بروزرسانی‌ها</p>
                 </div>
             </div>
-            <div class="badge-group">
-                <span class="badge">📋 ذخیره اطلاعات</span>
-                <span class="badge">👤 شناسایی سمت کاربر</span>
-                <span class="badge">📊 گزارش‌گیری</span>
+        </div>
+
+        <!-- ===== دکمه‌های نمونه ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های آماده چت‌بات</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
+                    ⚖️ حقوقی <span class="badge">جدید</span>
+                </a>
+                <a href="#" class="demo-btn">✈️ مسافرتی</a>
+                <a href="#" class="demo-btn">🏨 هتلداری</a>
+                <a href="#" class="demo-btn">🛒 فروشگاهی</a>
+                <a href="#" class="demo-btn">🏥 پزشکی</a>
+                <a href="#" class="demo-btn">📚 آموزشی</a>
             </div>
         </div>
 
@@ -743,17 +850,17 @@
                         <tr>
                             <td>۱</td>
                             <td><strong>علی</strong></td>
-                            <td dir="ltr">۰۹۱۲۳۴۵۶۷۸۹</td>
-                            <td><span class="role-tag" style="background:#999;">ثبت نشده</span></td>
-                            <td><span class="topic-tag">هیچ</span></td>
+                            <td><span class="blur-phone">۰۹۱۲۳۴۵۶۷۸۹</span></td>
+                            <td><span class="role-tag" style="background:linear-gradient(135deg,#f093fb,#f5576c);">خواهان</span></td>
+                            <td><span class="topic-tag">چک برگشتی</span></td>
                             <td>۱۴۰۵-۰۴-۰۷ ۱۹:۰۱:۲۶</td>
                         </tr>
                         <tr>
                             <td>۲</td>
                             <td><strong>هدی</strong></td>
-                            <td dir="ltr">۰۹۱۲۳۴۵۶۷۸۸</td>
-                            <td><span class="role-tag" style="background:linear-gradient(135deg,#f093fb,#f5576c);">خواهان</span></td>
-                            <td><span class="topic-tag">حقوق خانواده</span></td>
+                            <td><span class="blur-phone">۰۹۱۲۳۴۵۶۷۸۸</span></td>
+                            <td><span class="role-tag" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">خوانده</span></td>
+                            <td><span class="topic-tag">وصول چک</span></td>
                             <td>۱۴۰۵-۰۴-۰۷ ۱۸:۴۸:۵۰</td>
                         </tr>
                     </tbody>
@@ -764,24 +871,8 @@
             </div>
         </div>
 
-        <!-- ===== دکمه‌های نمونه ===== -->
-        <div class="demo-section">
-            <h2>🎯 نمونه‌های آماده چت‌بات</h2>
-            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
-            <div class="demo-buttons">
-                <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
-                    ⚖️ حقوقی <span class="badge">جدید</span>
-                </a>
-                <a href="#" class="demo-btn">✈️ مسافرتی</a>
-                <a href="#" class="demo-btn">🏨 هتلداری</a>
-                <a href="#" class="demo-btn">🛒 فروشگاهی</a>
-                <a href="#" class="demo-btn">🏥 پزشکی</a>
-                <a href="#" class="demo-btn">📚 آموزشی</a>
-            </div>
-        </div>
-
         <!-- ===== محصولات ===== -->
-        <h2 class="section-title">✨ خدمات ما</h2>
+        <h2 class="section-title">🚀 چت‌بات‌های اختصاصی</h2>
         <div class="products-grid">
 
             <!-- ===== چت‌بات حقوقی ===== -->
