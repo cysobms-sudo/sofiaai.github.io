@@ -94,6 +94,62 @@
             transform: scale(1.05);
         }
 
+        /* ===== بنر مدیریت ===== */
+        .management-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .management-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .management-banner .info .icon {
+            font-size: 2.5em;
+        }
+
+        .management-banner .info .text h3 {
+            font-size: 1.2em;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .management-banner .info .text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .management-banner .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .management-banner .badge-group .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         /* ===== دکمه‌های نمونه ===== */
         .demo-section {
             margin: 50px 0;
@@ -164,7 +220,7 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin: 30px 0;
         }
@@ -177,6 +233,24 @@
             transition: all 0.4s ease;
             border: 2px solid #f0f2f8;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
         }
 
         .product-card:hover {
@@ -200,10 +274,31 @@
 
         .product-card p {
             color: #666;
-            font-size: 1em;
+            font-size: 0.95em;
             line-height: 1.9;
             margin-bottom: 15px;
             font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✅";
+            color: #667eea;
         }
 
         .product-card .price-tag {
@@ -236,6 +331,18 @@
             background: #764ba2;
             transform: scale(1.05);
             box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        /* ویژگی مدیریتی روی کارت */
+        .product-card .admin-tag {
+            display: inline-block;
+            background: #f093fb;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         /* ===== ویژگی‌ها ===== */
@@ -365,6 +472,14 @@
             .header h1 {
                 font-size: 2.6em;
             }
+            .management-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .management-banner .info {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -393,6 +508,10 @@
             .demo-btn {
                 padding: 10px 20px;
                 font-size: 0.95em;
+            }
+            .management-banner .badge-group .badge {
+                font-size: 0.8em;
+                padding: 5px 12px;
             }
         }
 
@@ -436,6 +555,9 @@
             .product-card .icon {
                 font-size: 3em;
             }
+            .management-banner .info .icon {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
@@ -450,12 +572,27 @@
             <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
         </div>
 
+        <!-- ===== بنر مدیریتی ===== -->
+        <div class="management-banner">
+            <div class="info">
+                <span class="icon">📊</span>
+                <div class="text">
+                    <h3>🎯 پنل مدیریت اختصاصی</h3>
+                    <p>با تهیه چت‌بات، به یک پنل مدیریت کامل دسترسی دارید که تمام اطلاعات مشتریان بالقوه شما را جمع‌آوری و ذخیره می‌کند.</p>
+                </div>
+            </div>
+            <div class="badge-group">
+                <span class="badge">📋 ذخیره اطلاعات</span>
+                <span class="badge">👤 شناسایی سمت کاربر</span>
+                <span class="badge">📊 گزارش‌گیری</span>
+            </div>
+        </div>
+
         <!-- ===== دکمه‌های نمونه ===== -->
         <div class="demo-section">
             <h2>🎯 نمونه‌های آماده چت‌بات</h2>
             <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
             <div class="demo-buttons">
-                <!-- ✅ لینک نمونه حقوقی با آدرس صحیح اسپیس -->
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
                     ⚖️ حقوقی <span class="badge">جدید</span>
                 </a>
@@ -471,51 +608,98 @@
         <h2 class="section-title">✨ خدمات ما</h2>
         <div class="products-grid">
 
-            <!-- ✅ لینک کارت حقوقی با آدرس صحیح اسپیس -->
+            <!-- ===== چت‌بات حقوقی ===== -->
             <div class="product-card">
                 <span class="icon">⚖️</span>
                 <h3>چت‌بات حقوقی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>مشاوره حقوقی در حوزه‌های خانواده، چک، کیفری، کار، ملکی و بیمه</p>
+                <ul class="features-list">
+                    <li>ذخیره اطلاعات کاربران</li>
+                    <li>شناسایی سمت کاربر (خواهان، خوانده، شاکی و ...)</li>
+                    <li>گزارش‌گیری از مشتریان بالقوه</li>
+                    <li>راهنمای اقدام حقوقی تخصصی</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
-                <a href="https://cysobms-chatbot_hoghoghi.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
+                <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
             </div>
 
+            <!-- ===== چت‌بات مسافرتی ===== -->
             <div class="product-card">
                 <span class="icon">✈️</span>
                 <h3>چت‌بات مسافرتی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>رزرو هتل، تورهای گردشگری، بلیط هواپیما و خدمات سفر</p>
+                <ul class="features-list">
+                    <li>ثبت درخواست‌های مسافرتی</li>
+                    <li>ذخیره اطلاعات مشتریان</li>
+                    <li>گزارش‌گیری از تقاضاها</li>
+                    <li>مدیریت رزروها</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ===== چت‌بات هتلداری ===== -->
             <div class="product-card">
                 <span class="icon">🏨</span>
                 <h3>چت‌بات هتلداری</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>رزرو آنلاین اتاق، نمایش امکانات، قیمت‌گذاری و مدیریت مهمانان</p>
+                <ul class="features-list">
+                    <li>ثبت درخواست رزرو</li>
+                    <li>ذخیره اطلاعات مهمانان</li>
+                    <li>مدیریت ظرفیت هتل</li>
+                    <li>گزارش‌گیری از رزروها</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ===== چت‌بات فروشگاهی ===== -->
             <div class="product-card">
                 <span class="icon">🛒</span>
                 <h3>چت‌بات فروشگاهی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>راهنمای خرید، نمایش محصولات، مشاوره قیمت و پشتیبانی فروش</p>
+                <ul class="features-list">
+                    <li>ثبت درخواست‌های خرید</li>
+                    <li>ذخیره اطلاعات مشتریان</li>
+                    <li>مدیریت سبد خرید</li>
+                    <li>گزارش فروش</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ===== چت‌بات پزشکی ===== -->
             <div class="product-card">
                 <span class="icon">🏥</span>
                 <h3>چت‌بات پزشکی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>نوبت‌دهی آنلاین، مشاوره اولیه، معرفی پزشکان و خدمات درمانی</p>
+                <ul class="features-list">
+                    <li>ثبت درخواست نوبت</li>
+                    <li>ذخیره اطلاعات بیماران</li>
+                    <li>مدیریت نوبت‌ها</li>
+                    <li>گزارش‌گیری از مراجعات</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ===== چت‌بات آموزشی ===== -->
             <div class="product-card">
                 <span class="icon">📚</span>
                 <h3>چت‌بات آموزشی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
                 <p>معرفی دوره‌ها، مشاوره تحصیلی، برنامه‌ریزی آموزشی و پشتیبانی دانشجویان</p>
+                <ul class="features-list">
+                    <li>ثبت درخواست مشاوره</li>
+                    <li>ذخیره اطلاعات دانشجویان</li>
+                    <li>مدیریت ثبت‌نام‌ها</li>
+                    <li>گزارش‌گیری از متقاضیان</li>
+                </ul>
                 <div class="price-tag">قابل مذاکره</div>
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
@@ -547,14 +731,41 @@
                     <p>نمایش عالی در تمام دستگاه‌ها</p>
                 </div>
                 <div class="feature-item">
-                    <span class="icon">🛠️</span>
-                    <h4>پشتیبانی</h4>
-                    <p>۷ روز هفته، ۲۴ ساعته</p>
+                    <span class="icon">📊</span>
+                    <h4>پنل مدیریت</h4>
+                    <p>دسترسی کامل به اطلاعات مشتریان</p>
                 </div>
                 <div class="feature-item">
                     <span class="icon">💰</span>
                     <h4>مقرون‌به‌صرفه</h4>
                     <p>قیمت‌های رقابتی و منصفانه</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== بخش اطلاعات پنل مدیریت ===== -->
+        <div style="background: #f8f9fe; border-radius: 20px; padding: 30px; margin: 30px 0; border: 2px solid #e8ecf4;">
+            <h3 style="color: #764ba2; font-size: 1.5em; margin-bottom: 15px; text-align: center;">📊 پنل مدیریت چیست و چه کاربردی دارد؟</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                    <h4 style="color: #2d3748; margin-bottom: 8px;">شناسایی کاربران</h4>
+                    <p style="color: #666; font-size: 0.95em;">نام، شماره تماس، موضوع درخواست و سمت کاربر (خواهان، خوانده، شاکی و ...) ذخیره می‌شود.</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📋</div>
+                    <h4 style="color: #2d3748; margin-bottom: 8px;">ذخیره اطلاعات</h4>
+                    <p style="color: #666; font-size: 0.95em;">همه اطلاعات مشتریان بالقوه در پنل مدیریت ذخیره شده و قابل مشاهده است.</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                    <h4 style="color: #2d3748; margin-bottom: 8px;">گزارش‌گیری</h4>
+                    <p style="color: #666; font-size: 0.95em;">امکان مشاهده آمار کاربران، موضوعات پرطرفدار و تحلیل داده‌ها.</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔐</div>
+                    <h4 style="color: #2d3748; margin-bottom: 8px;">امنیت بالا</h4>
+                    <p style="color: #666; font-size: 0.95em;">دسترسی به پنل مدیریت با نام کاربری و رمز عبور محافظت می‌شود.</p>
                 </div>
             </div>
         </div>
