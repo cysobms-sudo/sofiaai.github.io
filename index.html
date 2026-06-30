@@ -48,7 +48,7 @@
         }
 
         /* ============================================
-                   لوگوی پیشرفته و جذاب
+                   لوگو
                    ============================================ */
         .logo-wrapper {
             display: flex;
@@ -59,7 +59,6 @@
             position: relative;
         }
 
-        /* دایره لوگو با گرادیان و انیمیشن */
         .logo-circle {
             width: 56px;
             height: 56px;
@@ -78,7 +77,6 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* انیمیشن چرخش دایره خارجی */
         .logo-circle::before {
             content: '';
             position: absolute;
@@ -93,7 +91,6 @@
             animation: spinLogo 3s linear infinite;
         }
 
-        /* دایره داخلی دوم */
         .logo-circle::after {
             content: '';
             position: absolute;
@@ -121,7 +118,6 @@
             border-right-color: #FFD700;
         }
 
-        /* نقطه‌های نورانی دور لوگو */
         .logo-dot {
             position: absolute;
             width: 6px;
@@ -214,7 +210,7 @@
             transform: translateY(-2px);
         }
 
-        /* ===== منوی کشویی با پس‌زمینه سفید ===== */
+        /* ===== منوی کشویی ===== */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -281,7 +277,6 @@
             margin: 4px 12px;
         }
 
-        /* نمایش منو */
         @media (min-width: 769px) {
             .dropdown:hover .dropdown-content {
                 display: block;
@@ -317,16 +312,62 @@
         }
 
         /* ============================================
-                   بخش قهرمان
+                   بخش قهرمان با تصویر 2.png در پس‌زمینه
                    ============================================ */
         .hero {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.9));
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.92));
             border-radius: 32px;
             padding: 60px 50px;
             text-align: center;
             margin-bottom: 45px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        /* تصویر 2.png در پس‌زمینه با شفافیت مناسب */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('2.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero .hero-bg-decoration {
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.05), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
@@ -374,6 +415,8 @@
             margin-top: 35px;
             padding-top: 28px;
             border-top: 2px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 1;
         }
 
         .stat-item {
@@ -617,6 +660,7 @@
             }
             .hero {
                 padding: 40px 30px;
+                min-height: 280px;
             }
             .logo-text .main {
                 font-size: 1.6em;
@@ -625,6 +669,9 @@
                 width: 48px;
                 height: 48px;
                 font-size: 1.2em;
+            }
+            .hero::before {
+                opacity: 0.06;
             }
         }
 
@@ -644,6 +691,10 @@
             .hero {
                 padding: 30px 20px;
                 border-radius: 20px;
+                min-height: 220px;
+            }
+            .hero::before {
+                opacity: 0.05;
             }
             .section-title {
                 font-size: 1.5em;
@@ -701,6 +752,9 @@
             .logo-dot {
                 display: none;
             }
+            .hero-bg-decoration {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -712,6 +766,13 @@
             }
             .hero p {
                 font-size: 0.95em;
+            }
+            .hero {
+                min-height: 180px;
+                padding: 25px 15px;
+            }
+            .hero::before {
+                opacity: 0.04;
             }
             .services-grid {
                 grid-template-columns: 1fr;
@@ -790,9 +851,11 @@
                 font-size: 0.75em;
                 padding: 5px 12px;
             }
+            .hero::after {
+                display: none;
+            }
         }
 
-        /* اسکرول برای منوی کشویی */
         .dropdown-content::-webkit-scrollbar {
             width: 5px;
         }
@@ -859,26 +922,29 @@
         </div>
     </div>
 
-    <!-- ===== بخش قهرمان ===== -->
+    <!-- ===== بخش قهرمان با تصویر 2.png در پس‌زمینه ===== -->
     <div class="hero">
-        <div class="hero-badge">✨ هوش مصنوعی پیشرفته برای کسب‌وکار شما</div>
-        <h1>✨ هوش مصنوعی سوفیا ✨</h1>
-        <p>
-            ارائه‌دهنده خدمات تخصصی هوش مصنوعی متناسب با <span class="highlight-text">کسب‌وکار شما</span><br>
-            از طراحی مدل تا نصب، راه‌اندازی و پشتیبانی حرفه‌ای
-        </p>
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-number">۸۰<span class="plus">+</span></span>
-                <span class="stat-label">مدل هوش مصنوعی</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">۱۰۰<span class="plus">%</span></span>
-                <span class="stat-label">حریم خصوصی و آفلاین</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">۲۴/۷</span>
-                <span class="stat-label">پشتیبانی تخصصی</span>
+        <div class="hero-bg-decoration"></div>
+        <div class="hero-content">
+            <div class="hero-badge">✨ هوش مصنوعی پیشرفته برای کسب‌وکار شما</div>
+            <h1>✨ هوش مصنوعی سوفیا ✨</h1>
+            <p>
+                ارائه‌دهنده خدمات تخصصی هوش مصنوعی متناسب با <span class="highlight-text">کسب‌وکار شما</span><br>
+                از طراحی مدل تا نصب، راه‌اندازی و پشتیبانی حرفه‌ای
+            </p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">۸۰<span class="plus">+</span></span>
+                    <span class="stat-label">مدل هوش مصنوعی</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۱۰۰<span class="plus">%</span></span>
+                    <span class="stat-label">حریم خصوصی و آفلاین</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۲۴/۷</span>
+                    <span class="stat-label">پشتیبانی تخصصی</span>
+                </div>
             </div>
         </div>
     </div>
