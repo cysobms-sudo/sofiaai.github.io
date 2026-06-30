@@ -216,12 +216,13 @@
             color: #FFE44D;
         }
 
+        /* ===== منوی کشویی با پس‌زمینه مشکی ===== */
         .dropdown-content {
             display: none;
             position: absolute;
             top: 46px;
             right: 0;
-            background: rgba(15, 15, 40, 0.96);
+            background: #1a1a2e;
             backdrop-filter: blur(20px);
             min-width: 300px;
             border-radius: 14px;
@@ -609,10 +610,7 @@
         }
 
         @media (max-width: 480px) {
-            body { 
-                padding: 10px; 
-                font-size: 14px; 
-            }
+            body { padding: 10px; font-size: 14px; }
             .hero h1 { font-size: 1.6em; }
             .hero p { font-size: 0.95em; }
             .hero { min-height: 160px; padding: 18px 12px; }
@@ -695,7 +693,8 @@
                     <a href="health.html">🏥 هوش مصنوعی در سلامت و پزشکی</a>
                     <a href="content.html">✍️ تولید خودکار محتوا</a>
                     <a href="beauty.html">💄 هوش مصنوعی در صنعت زیبایی</a>
-                    <a href="int.html">🏠 هوش مصنوعی در دکوراسیون داخلی</a>
+                    <!-- لینک interior.html با مسیر کامل -->
+                    <a href="/interior.html">🏠 هوش مصنوعی در دکوراسیون داخلی</a>
                     <a href="site.html">🌐 طراحی سایت با هوش مصنوعی</a>
                 </div>
             </div>
@@ -821,7 +820,8 @@
             <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.1);">
+        <!-- لینک interior.html در کارت خدمات -->
+        <a href="/interior.html" class="service-card" style="border-color: rgba(200,150,100,0.1);">
             <span class="service-icon">🏠</span>
             <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
             <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
@@ -868,7 +868,6 @@
 
 </div>
 
-<!-- ===== جاوااسکریپت ===== -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dropdown = document.getElementById('servicesDropdown');
