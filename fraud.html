@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تشخیص کلاهبرداری و امنیت سایبری با هوش مصنوعی سوفیا | Sofia AI Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== هدر ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .header .main-icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
+            color: #555;
+            font-size: 1.3em;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .header .phone-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header .phone-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== هیرو با تصویر ===== */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 28px;
+            padding: 40px;
+            border: 2px solid #e8ecf4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hero-content h2 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .hero-buttons .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-content .hero-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-content .hero-buttons .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .hero-buttons .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+            background: white;
+            padding: 15px;
+            border: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup:hover {
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .hero-image .mockup .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8f9fc;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup .mockup-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) { background: #ff5f57; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) { background: #ffbd2e; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) { background: #28c840; }
+
+        .hero-image .mockup .mockup-header .title {
+            font-size: 0.8em;
+            color: #666;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .hero-image .mockup .mockup-body {
+            padding: 15px;
+        }
+
+        .hero-image .mockup .mockup-body .security-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fe;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid #e8ecf4;
+            margin-bottom: 8px;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-icon {
+            font-size: 1.3em;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-info {
+            flex: 1;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-info .item-title {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-info .item-desc {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-status {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #28c840;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-status.danger {
+            color: #ff6b6b;
+        }
+
+        .hero-image .mockup .mockup-body .security-item .item-status.warning {
+            color: #ffbd2e;
+        }
+
+        .hero-image .mockup .mockup-body .security-result {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .hero-image .floating-badge {
+            position: absolute;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+
+        .hero-image .floating-badge:nth-child(2) { top: 5%; left: -10%; animation-delay: 1s; }
+        .hero-image .floating-badge:nth-child(3) { bottom: 10%; right: -10%; animation-delay: 2s; }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== متن معرفی جذاب ===== */
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 45px 40px;
+            margin-bottom: 50px;
+            border: 2px solid #e8ecf4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .intro-section .intro-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .intro-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-section .intro-desc {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .intro-section .highlight-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .intro-section .highlight-item {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #e8ecf4;
+        }
+
+        .intro-section .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .intro-section .highlight-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .intro-section .highlight-item h4 {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .intro-section .highlight-item p {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== محصولات ===== */
+        .section-title {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #f0f2f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .product-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-card h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✅";
+            color: #667eea;
+        }
+
+        .product-card .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .order-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-card .order-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        .product-card .admin-tag {
+            display: inline-block;
+            background: #f093fb;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* ===== صنایع ===== */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 2px solid #f0f2f8;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .industry-card .icon {
+            font-size: 3.5em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .industry-card .use-cases {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        .industry-card .use-cases li {
+            padding: 4px 0;
+            color: #555;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .industry-card .use-cases li::before {
+            content: "🛡️";
+            font-size: 0.9em;
+        }
+
+        /* ===== بنر مدیریتی ===== */
+        .management-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .management-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .management-banner .info .icon {
+            font-size: 2.5em;
+        }
+
+        .management-banner .info .text h3 {
+            font-size: 1.2em;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .management-banner .info .text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .management-banner .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .management-banner .badge-group .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== نمونه پنل مدیریت ===== */
+        .admin-panel-preview {
+            background: #f8f9fe;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-panel-preview .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel-preview .preview-title h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-title p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .admin-panel-preview .preview-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8ecf4;
+            overflow-x: auto;
+        }
+
+        .admin-panel-preview .preview-card .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .number {
+            font-size: 2em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .admin-panel-preview .preview-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+
+        .admin-panel-preview .preview-card table th {
+            background: #667eea;
+            color: white;
+            padding: 10px 12px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e8ecf4;
+            color: #333;
+        }
+
+        .admin-panel-preview .preview-card table tr:nth-child(even) {
+            background: #f8f9fc;
+        }
+
+        .admin-panel-preview .preview-card table .status-safe {
+            color: #28c840;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table .status-danger {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table .status-warning {
+            color: #ffbd2e;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card .preview-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e8ecf4;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== نمونه‌ها ===== */
+        .demo-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .demo-section .desc {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            background: white;
+            border: 2.5px solid #667eea;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+            border-color: transparent;
+        }
+
+        .demo-btn .badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== خدمات ===== */
+        .services-section {
+            margin: 40px 0 30px;
+        }
+
+        .services-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f0f2f8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            margin: 50px 0;
+            background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .features-section h2 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            color: #777;
+            font-size: 0.95em;
+            font-weight: 300;
+        }
+
+        /* ===== باکس تماس ===== */
+        .contact-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+        }
+
+        .contact-box h3 {
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .contact-box .phone {
+            font-size: 2.2em;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-box .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-box .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== سفارش ===== */
+        .order-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+        }
+
+        .order-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .order-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .order-section .order-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 16px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .order-section .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #e8ecf4;
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        footer strong {
+            color: #667eea;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 992px) {
+            .container { padding: 30px; }
+            .header h1 { font-size: 2.6em; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding: 30px; }
+            .hero-content .hero-buttons { justify-content: center; }
+            .hero-image .floating-badge { display: none; }
+            .management-banner { flex-direction: column; text-align: center; }
+            .management-banner .info { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; border-radius: 20px; }
+            .header h1 { font-size: 2em; }
+            .header .subtitle { font-size: 1em; }
+            .hero-content h2 { font-size: 1.8em; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .industry-grid { grid-template-columns: 1fr 1fr; }
+            .contact-box .phone { font-size: 1.8em; }
+            .demo-buttons { gap: 10px; }
+            .demo-btn { padding: 10px 20px; font-size: 0.95em; }
+            .management-banner .badge-group .badge { font-size: 0.8em; padding: 5px 12px; }
+            .admin-panel-preview .preview-card table { font-size: 0.75em; min-width: 500px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.5em; }
+            .intro-section { padding: 25px 20px; }
+            .intro-section h2 { font-size: 1.5em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr 1fr; }
+            .order-section { padding: 25px 20px; }
+            .order-section h2 { font-size: 1.5em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; border-radius: 16px; }
+            .header h1 { font-size: 1.6em; }
+            .header .main-icon { font-size: 3.5em; }
+            .hero-content h2 { font-size: 1.4em; }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-secondary {
+                padding: 10px 25px;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-content .hero-buttons { flex-direction: column; align-items: stretch; }
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: 1fr; }
+            .demo-buttons { flex-direction: column; align-items: stretch; }
+            .demo-btn { text-align: center; width: 100%; }
+            .contact-box .phone { font-size: 1.4em; }
+            .contact-box h3 { font-size: 1.4em; }
+            .section-title { font-size: 1.6em; }
+            .product-card { padding: 20px; }
+            .product-card .icon { font-size: 3em; }
+            .management-banner .info .icon { font-size: 2em; }
+            .admin-panel-preview .preview-card table { font-size: 0.65em; min-width: 400px; }
+            .admin-panel-preview .preview-card table th,
+            .admin-panel-preview .preview-card table td { padding: 5px 6px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.2em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr; }
+            .intro-section h2 { font-size: 1.3em; }
+            .intro-section .intro-desc { font-size: 0.95em; }
+            .hero-image .mockup { max-width: 280px; }
+            .order-section { padding: 20px 15px; }
+            .order-section h2 { font-size: 1.3em; }
+            .order-section .order-btn { padding: 12px 30px; font-size: 1em; }
+            .industry-card .icon { font-size: 2.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== هدر ===== -->
+        <div class="header">
+            <span class="main-icon">🛡️</span>
+            <h1>تشخیص کلاهبرداری و امنیت سایبری با هوش مصنوعی سوفیا</h1>
+            <p class="subtitle">✨ محافظت هوشمند از کسب‌وکار شما در برابر تهدیدات</p>
+            <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
+        </div>
+
+        <!-- ===== هیرو با تصویر ===== -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">🔥 هوش مصنوعی امنیتی در خدمت کسب‌وکار شما</span>
+                <h2>با تشخیص هوشمند، <span>کلاهبرداری و حملات سایبری</span> را قبل از وقوع متوقف کنید</h2>
+                <p>سیستم‌های تشخیص کلاهبرداری و امنیت سایبری سوفیا با استفاده از الگوریتم‌های پیشرفته یادگیری ماشین، رفتارهای مشکوک را در لحظه شناسایی کرده و از تراکنش‌های کلاهبرداری، حملات سایبری و نفوذ به سیستم‌های شما جلوگیری می‌کنند.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">🚀 مشاهده محصولات</a>
+                    <a href="#contact" class="btn-secondary">📞 مشاوره رایگان</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="title">سیستم امنیتی سوفیا</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="security-item">
+                            <span class="item-icon">💰</span>
+                            <div class="item-info">
+                                <div class="item-title">تشخیص تراکنش مشکوک</div>
+                                <div class="item-desc">مبلغ ۱۲,۰۰۰,۰۰۰ تومان</div>
+                            </div>
+                            <span class="item-status danger">⚠️ مسدود شد</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="item-icon">🌐</span>
+                            <div class="item-info">
+                                <div class="item-title">تشخیص نفوذ به شبکه</div>
+                                <div class="item-desc">IP مشکوک: ۱۹۲.۱۶۸.۱.۱</div>
+                            </div>
+                            <span class="item-status warning">🔄 در حال بررسی</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="item-icon">👤</span>
+                            <div class="item-info">
+                                <div class="item-title">احراز هویت کاربر</div>
+                                <div class="item-desc">ورود از دستگاه جدید</div>
+                            </div>
+                            <span class="item-status">✅ تأیید شد</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="item-icon">📧</span>
+                            <div class="item-info">
+                                <div class="item-title">تشخیص ایمیل فیشینگ</div>
+                                <div class="item-desc">ایمیل جعلی شناسایی شد</div>
+                            </div>
+                            <span class="item-status danger">⚠️ مسدود شد</span>
+                        </div>
+                        <div class="security-result">
+                            🛡️ ۱۲ تهدید شناسایی شد · ۰ تهدید فعال
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">
+                    🎯 دقت ۹۷.۲٪
+                </div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">
+                    ⚡ شناسایی لحظه‌ای
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== متن معرفی جذاب ===== -->
+        <div class="intro-section">
+            <span class="intro-icon">🛡️</span>
+            <h2>امنیت سایبری سوفیا؛ سپر هوشمند کسب‌وکار شما</h2>
+            <p class="intro-desc">
+                سیستم‌های تشخیص کلاهبرداری و امنیت سایبری سوفیا با استفاده از شبکه‌های عصبی عمیق و الگوریتم‌های تشخیص ناهنجاری، تهدیدات را در لحظه شناسایی کرده و از کسب‌وکار شما محافظت می‌کنند. از تشخیص تراکنش‌های کلاهبرداری و حملات فیشینگ تا شناسایی نفوذ به شبکه و حملات سایبری پیشرفته.
+                <strong>با امنیت سایبری سوفیا، کسب‌وکار خود را در برابر تهدیدات هوشمند ایمن کنید.</strong>
+            </p>
+
+            <div class="highlight-box">
+                <div class="highlight-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت فوق‌العاده</h4>
+                    <p>تشخیص تهدیدات با دقت بیش از ۹۷٪</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش لحظه‌ای</h4>
+                    <p>شناسایی تهدیدات در کمتر از ۰.۲ ثانیه</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📊</span>
+                    <h4>یادگیری عمیق</h4>
+                    <p>استفاده از شبکه‌های عصبی پیشرفته</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهبود مستمر</h4>
+                    <p>یادگیری از تهدیدات جدید و افزایش دقت</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت چندلایه</h4>
+                    <p>محافظت کامل در تمام سطوح</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📱</span>
+                    <h4>پوشش کامل</h4>
+                    <p>حفاظت از وب‌سایت، شبکه و اپلیکیشن‌ها</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== صنایع ===== -->
+        <h2 class="section-title">🏭 <span>صنایع و کاربردهای امنیت سایبری</span></h2>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <span class="icon">🏦</span>
+                <h3>بانکداری و مالی</h3>
+                <p>تشخیص تراکنش‌های کلاهبرداری و تأمین امنیت مالی</p>
+                <ul class="use-cases">
+                    <li>تشخیص تراکنش‌های مشکوک</li>
+                    <li>پیش‌گیری از کلاهبرداری کارت‌های اعتباری</li>
+                    <li>امنیت بانکداری آنلاین</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏢</span>
+                <h3>سازمان‌های دولتی</h3>
+                <p>حفاظت از اطلاعات حساس و زیرساخت‌های حیاتی</p>
+                <ul class="use-cases">
+                    <li>امنیت زیرساخت‌های حیاتی</li>
+                    <li>حفاظت از اطلاعات طبقه‌بندی‌شده</li>
+                    <li>پیش‌گیری از حملات سایبری</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🛒</span>
+                <h3>تجارت الکترونیک</h3>
+                <p>پیش‌گیری از کلاهبرداری و حفاظت از مشتریان</p>
+                <ul class="use-cases">
+                    <li>تشخیص خریدهای جعلی</li>
+                    <li>حفاظت از اطلاعات مشتریان</li>
+                    <li>پیش‌گیری از حملات فیشینگ</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏥</span>
+                <h3>پزشکی و سلامت</h3>
+                <p>حفاظت از داده‌های پزشکی و بیماران</p>
+                <ul class="use-cases">
+                    <li>امنیت پرونده‌های الکترونیک سلامت</li>
+                    <li>حفاظت از اطلاعات بیماران</li>
+                    <li>پیش‌گیری از حملات باج‌افزاری</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">📱</span>
+                <h3>فناوری اطلاعات</h3>
+                <p>امنیت شبکه، سرورها و اپلیکیشن‌ها</p>
+                <ul class="use-cases">
+                    <li>تشخیص نفوذ به شبکه</li>
+                    <li>امنیت سرورها و دیتابیس‌ها</li>
+                    <li>حفاظت از APIها</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🔌</span>
+                <h3>انرژی و زیرساخت</h3>
+                <p>حفاظت از زیرساخت‌های انرژی و صنعتی</p>
+                <ul class="use-cases">
+                    <li>امنیت شبکه‌های برق و آب</li>
+                    <li>حفاظت از سیستم‌های SCADA</li>
+                    <li>پیش‌گیری از حملات صنعتی</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== محصولات ===== -->
+        <h2 class="section-title" id="products">🚀 <span>محصولات امنیت سایبری سوفیا</span></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <span class="icon">💰</span>
+                <h3>تشخیص کلاهبرداری مالی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تشخیص خودکار تراکنش‌های کلاهبرداری و مشکوک</p>
+                <ul class="features-list">
+                    <li>تشخیص لحظه‌ای تراکنش‌های مشکوک</li>
+                    <li>پیش‌گیری از کلاهبرداری کارت‌های اعتباری</li>
+                    <li>گزارش‌های تحلیلی دقیق</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🌐</span>
+                <h3>تشخیص نفوذ به شبکه</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>شناسایی و جلوگیری از حملات سایبری به شبکه</p>
+                <ul class="features-list">
+                    <li>تشخیص حملات DDoS و نفوذ</li>
+                    <li>تحلیل ترافیک شبکه</li>
+                    <li>هشدار لحظه‌ای</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📧</span>
+                <h3>تشخیص فیشینگ و ایمیل‌های جعلی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>شناسایی خودکار ایمیل‌های فیشینگ و کلاهبرداری</p>
+                <ul class="features-list">
+                    <li>تشخیص ایمیل‌های جعلی</li>
+                    <li>شناسایی لینک‌های مخرب</li>
+                    <li>پیش‌گیری از حملات فیشینگ</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🛡️</span>
+                <h3>سیستم احراز هویت پیشرفته</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>احراز هویت چندعاملی با تشخیص رفتار کاربر</p>
+                <ul class="features-list">
+                    <li>تشخیص ورود از دستگاه جدید</li>
+                    <li>احراز هویت بیومتریک</li>
+                    <li>تحلیل رفتار کاربر</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🤖</span>
+                <h3>حفاظت از وب‌اپلیکیشن‌ها</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>امنیت اپلیکیشن‌های وب و APIها</p>
+                <ul class="features-list">
+                    <li>تشخیص حملات XSS و SQL Injection</li>
+                    <li>حفاظت از APIها</li>
+                    <li>امنیت لایه برنامه</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📊</span>
+                <h3>تحلیل تهدیدات سایبری</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تحلیل و پیش‌بینی حملات سایبری آینده</p>
+                <ul class="features-list">
+                    <li>تحلیل الگوهای حمله</li>
+                    <li>پیش‌بینی تهدیدات آینده</li>
+                    <li>گزارش‌های امنیتی پیشرفته</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+        </div>
+
+        <!-- ===== بنر مدیریتی ===== -->
+        <div class="management-banner">
+            <div class="info">
+                <span class="icon">📊</span>
+                <div class="text">
+                    <h3>🎯 پنل مدیریت امنیتی اختصاصی</h3>
+                    <p>با تهیه سیستم امنیت سایبری، به یک پنل مدیریت کامل دسترسی دارید که تمام تهدیدات و رویدادهای امنیتی را به صورت لحظه‌ای نمایش می‌دهد.</p>
+                </div>
+            </div>
+            <div class="badge-group">
+                <span class="badge">📋 ذخیره رویدادها</span>
+                <span class="badge">📊 گزارش‌های امنیتی</span>
+                <span class="badge">🎯 هشدار لحظه‌ای</span>
+            </div>
+        </div>
+
+        <!-- ===== نمونه پنل مدیریت ===== -->
+        <div class="admin-panel-preview">
+            <div class="preview-title">
+                <h2>📊 نمونه پنل مدیریت امنیتی</h2>
+                <p>همه رویدادها و تهدیدات امنیتی در این پنل قابل مشاهده است</p>
+            </div>
+            <div class="preview-card">
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number">۱۲</div>
+                        <div class="label">تهدیدات شناسایی شده</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <div class="number">۰</div>
+                        <div class="label">تهدیدات فعال</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <div class="number">۹۷.۲٪</div>
+                        <div class="label">دقت تشخیص</div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نوع تهدید</th>
+                            <th>منبع</th>
+                            <th>وضعیت</th>
+                            <th>سطح خطر</th>
+                            <th>تاریخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>۱</td>
+                            <td><span style="display:inline-block;background:#ff6b6b;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">تراکنش مشکوک</span></td>
+                            <td>کارت ۴۵۶۷-۱۲۳۴</td>
+                            <td><span class="status-danger">⚠️ مسدود شد</span></td>
+                            <td><span style="color:#ff6b6b;font-weight:700;">بالا</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۲</td>
+                            <td><span style="display:inline-block;background:#ffbd2e;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">نفوذ به شبکه</span></td>
+                            <td>IP: ۱۹۲.۱۶۸.۱.۱</td>
+                            <td><span class="status-warning">🔄 در حال بررسی</span></td>
+                            <td><span style="color:#ffbd2e;font-weight:700;">متوسط</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۳</td>
+                            <td><span style="display:inline-block;background:#ff6b6b;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">ایمیل فیشینگ</span></td>
+                            <td>info@secure-bank.xyz</td>
+                            <td><span class="status-danger">⚠️ مسدود شد</span></td>
+                            <td><span style="color:#ff6b6b;font-weight:700;">بالا</span></td>
+                            <td>۱۴۰۵-۰۴-۰۶</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="preview-footer">
+                    🔒 دسترسی به پنل مدیریت با نام کاربری و رمز عبور محافظت می‌شود
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== نمونه‌ها ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های امنیت سایبری</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">💰 تشخیص کلاهبرداری <span class="badge">جدید</span></a>
+                <a href="#" class="demo-btn">🌐 تشخیص نفوذ</a>
+                <a href="#" class="demo-btn">📧 تشخیص فیشینگ</a>
+                <a href="#" class="demo-btn">🛡️ احراز هویت</a>
+            </div>
+        </div>
+
+        <!-- ===== خدمات ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>سیستم امنیتی متناسب با نیاز شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔧</span>
+                    <h3>پیاده‌سازی و نصب</h3>
+                    <p>نصب و راه‌اندازی روی سرور یا ابر</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📚</span>
+                    <h3>آموزش</h3>
+                    <p>آموزش تیم شما برای استفاده حداکثری</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل و بروزرسانی مداوم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ویژگی‌ها ===== -->
+        <div class="features-section">
+            <h2>⭐ چرا امنیت سایبری سوفیا؟</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت بالا</h4>
+                    <p>تشخیص با دقت بیش از ۹۷٪</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش لحظه‌ای</h4>
+                    <p>تشخیص تهدیدات در کسری از ثانیه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📊</span>
+                    <h4>یادگیری عمیق</h4>
+                    <p>استفاده از شبکه‌های عصبی پیشرفته</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت چندلایه</h4>
+                    <p>محافظت کامل در تمام سطوح</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهبود مستمر</h4>
+                    <p>یادگیری از تهدیدات جدید</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>بازگشت سرمایه</h4>
+                    <p>کاهش خسارت‌های مالی و اعتباری</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== سفارش ===== -->
+        <div class="order-section" id="order">
+            <h2>📝 ثبت سفارش سیستم امنیت سایبری</h2>
+            <p>
+                برای سفارش سیستم امنیت سایبری اختصاصی، فرم زیر را تکمیل کنید.<br>
+                تیم ما در اسرع وقت با شما تماس می‌گیرد.
+            </p>
+            <a href="order.html" class="order-btn">🚀 ثبت سفارش</a>
+        </div>
+
+        <!-- ===== باکس تماس ===== -->
+        <div class="contact-box" id="contact">
+            <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
+            <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
+            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
+        </div>
+
+        <!-- ===== فوتر ===== -->
+        <footer>
+            <p>© ۱۴۰۶ - تمامی حقوق برای <strong>تشخیص کلاهبرداری و امنیت سایبری با هوش مصنوعی سوفیا</strong> محفوظ است</p>
+            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
+        </footer>
+
+    </div>
+</body>
+</html>
