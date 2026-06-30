@@ -2,149 +2,1441 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اتوماسیون هوشمند فرآیندها | Sofia AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>اتوماسیون هوشمند سوفیا | Sofia AI Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
             padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        h1 {
-            color: #667eea;
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 15px;
-        }
-        .service-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #764ba2;
-            margin: 25px 0 15px 0;
-        }
-        p {
-            color: #555;
             line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== هدر ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .header .main-icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
+            color: #555;
+            font-size: 1.3em;
+            font-weight: 300;
             margin-bottom: 15px;
         }
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        .feature-list li::before {
-            content: "✅ ";
-            color: #667eea;
-        }
-        .price-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-        }
-        .price-box h3 {
-            margin-bottom: 10px;
-        }
-        .price-box .price {
-            font-size: 2em;
-            font-weight: bold;
-        }
-        .btn {
+
+        .header .phone-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 15px 40px;
-            text-decoration: none;
+            padding: 10px 30px;
             border-radius: 50px;
-            font-weight: bold;
-            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
         }
-        .contact-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
+
+        .header .phone-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== هیرو با تصویر ===== */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 28px;
+            padding: 40px;
+            border: 2px solid #e8ecf4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hero-content h2 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .hero-buttons .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-content .hero-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-content .hero-buttons .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .hero-buttons .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+            background: white;
+            padding: 15px;
+            border: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup:hover {
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .hero-image .mockup .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8f9fc;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup .mockup-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) {
+            background: #ff5f57;
+        }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) {
+            background: #ffbd2e;
+        }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) {
+            background: #28c840;
+        }
+
+        .hero-image .mockup .mockup-header .title {
+            font-size: 0.8em;
+            color: #666;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .hero-image .mockup .mockup-body {
+            padding: 15px;
+        }
+
+        .hero-image .mockup .mockup-body .automation-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-body .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fe;
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup .mockup-body .flow-step .step-icon {
+            font-size: 1.3em;
+        }
+
+        .hero-image .mockup .mockup-body .flow-step .step-text {
+            font-size: 0.75em;
+            color: #333;
+            flex: 1;
+        }
+
+        .hero-image .mockup .mockup-body .flow-step .step-status {
+            font-size: 0.7em;
+            color: #4caf50;
+            font-weight: 700;
+        }
+
+        .hero-image .mockup .mockup-body .flow-result {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .hero-image .floating-badge {
+            position: absolute;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+
+        .hero-image .floating-badge:nth-child(2) {
+            top: 5%;
+            left: -10%;
+            animation-delay: 1s;
+        }
+
+        .hero-image .floating-badge:nth-child(3) {
+            bottom: 10%;
+            right: -10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float-badge {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ===== متن معرفی جذاب ===== */
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 45px 40px;
+            margin-bottom: 50px;
+            border: 2px solid #e8ecf4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .intro-section .intro-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .intro-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-section .intro-desc {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .intro-section .highlight-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .intro-section .highlight-item {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #e8ecf4;
+        }
+
+        .intro-section .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .intro-section .highlight-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .intro-section .highlight-item h4 {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .intro-section .highlight-item p {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== صنایع و کاربردها ===== */
+        .section-title {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 2px solid #f0f2f8;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
             text-align: center;
         }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .industry-card .icon {
+            font-size: 3.5em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .industry-card .use-cases {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        .industry-card .use-cases li {
+            padding: 4px 0;
+            color: #555;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .industry-card .use-cases li::before {
+            content: "⚙️";
+            font-size: 0.9em;
+        }
+
+        /* ===== محصولات اتوماسیون ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #f0f2f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .product-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-card h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✅";
+            color: #667eea;
+        }
+
+        .product-card .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .order-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-card .order-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        /* ===== نمونه‌ها ===== */
+        .demo-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .demo-section .desc {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            background: white;
+            border: 2.5px solid #667eea;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+            border-color: transparent;
+        }
+
+        .demo-btn .badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== خدمات ===== */
+        .services-section {
+            margin: 40px 0 30px;
+        }
+
+        .services-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f0f2f8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            margin: 50px 0;
+            background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .features-section h2 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            color: #777;
+            font-size: 0.95em;
+            font-weight: 300;
+        }
+
+        /* ===== سفارش ===== */
+        .order-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+        }
+
+        .order-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .order-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .order-section .order-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 16px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .order-section .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        /* ===== باکس تماس ===== */
+        .contact-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+        }
+
+        .contact-box h3 {
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .contact-box .phone {
+            font-size: 2.2em;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-box .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-box .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== فوتر ===== */
         footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #e8ecf4;
             color: #999;
+            font-size: 0.95em;
+        }
+
+        footer strong {
+            color: #667eea;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 992px) {
+            .container {
+                padding: 30px;
+            }
+            .header h1 {
+                font-size: 2.6em;
+            }
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 30px;
+            }
+            .hero-content .hero-buttons {
+                justify-content: center;
+            }
+            .hero-image .floating-badge {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .header .subtitle {
+                font-size: 1em;
+            }
+            .hero-content h2 {
+                font-size: 1.8em;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .industry-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .contact-box .phone {
+                font-size: 1.8em;
+            }
+            .demo-buttons {
+                gap: 10px;
+            }
+            .demo-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+            .intro-section {
+                padding: 25px 20px;
+            }
+            .intro-section h2 {
+                font-size: 1.5em;
+            }
+            .intro-section .highlight-box {
+                grid-template-columns: 1fr 1fr;
+            }
+            .order-section {
+                padding: 25px 20px;
+            }
+            .order-section h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                border-radius: 16px;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .header .main-icon {
+                font-size: 3.5em;
+            }
+            .hero-content h2 {
+                font-size: 1.4em;
+            }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-secondary {
+                padding: 10px 25px;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-content .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .industry-grid {
+                grid-template-columns: 1fr;
+            }
+            .demo-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .demo-btn {
+                text-align: center;
+                width: 100%;
+            }
+            .contact-box .phone {
+                font-size: 1.4em;
+            }
+            .contact-box h3 {
+                font-size: 1.4em;
+            }
+            .section-title {
+                font-size: 1.6em;
+            }
+            .product-card {
+                padding: 20px;
+            }
+            .product-card .icon {
+                font-size: 3em;
+            }
+            .intro-section .highlight-box {
+                grid-template-columns: 1fr;
+            }
+            .intro-section h2 {
+                font-size: 1.3em;
+            }
+            .intro-section .intro-desc {
+                font-size: 0.95em;
+            }
+            .hero-image .mockup {
+                max-width: 280px;
+            }
+            .order-section {
+                padding: 20px 15px;
+            }
+            .order-section h2 {
+                font-size: 1.3em;
+            }
+            .order-section .order-btn {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+            .industry-card {
+                padding: 20px 15px;
+            }
+            .industry-card .icon {
+                font-size: 2.8em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
-        <div class="service-icon">⚙️</div>
-        <h1>اتوماسیون هوشمند فرآیندها با n8n</h1>
-        
-        <h2>🤖 اتوماسیون هوشمند چیست؟</h2>
-        <p>اتوماسیون هوشمند به معنی خودکارسازی فرآیندهای تکراری و زمان‌بر سازمانی با استفاده از ابزارهای پیشرفته مثل n8n است. این کار باعث کاهش خطاهای انسانی، صرفه‌جویی در زمان و افزایش بهره‌وری می‌شود.</p>
-        
-        <h2>✨ قابلیت‌های این خدمت:</h2>
-        <ul class="feature-list">
-            <li>طراحی و پیاده‌سازی گردش‌های کاری (Workflow) سفارشی</li>
-            <li>اتصال بین سرویس‌های مختلف (Gmail، تلگرام، دیتابیس، APIها و...)</li>
-            <li>یکپارچه‌سازی با سیستم‌های Legacy سازمان شما</li>
-            <li>اتوماسیون پاسخگویی به ایمیل‌ها و پیام‌ها</li>
-            <li>گزارش‌گیری خودکار و ارسال به موقع</li>
-            <li>همگام‌سازی اطلاعات بین سیستم‌های مختلف</li>
-        </ul>
-        
-        <h2>🎯 نمونه پروژه‌های انجام شده:</h2>
-        <ul class="feature-list">
-            <li>اتوماسیون پشتیبانی: پاسخ خودکار به ایمیل‌های مشتریان بر اساس کلمات کلیدی</li>
-            <li>گزارش‌گیری خودکار: استخراج داده از دیتابیس و ارسال گزارش روزانه به مدیریت</li>
-            <li>ربات تلگرامی: ارتباط خودکار با مشتریان از طریق ربات تلگرام</li>
-            <li>همگام‌سازی: انتقال خودکار اطلاعات بین CRM و سیستم حسابداری</li>
-        </ul>
-        
-        <div class="price-box">
-            <h3>💰 هزینه مشاوره و پیاده‌سازی</h3>
-            <div class="price">با توجه به پروژه - قابل مذاکره</div>
-            <p>تماس بگیرید تا پس از بررسی نیاز شما، قیمت دقیق اعلام شود</p>
+
+        <!-- ===== هدر ===== -->
+        <div class="header">
+            <span class="main-icon">⚙️</span>
+            <h1>اتوماسیون هوشمند سوفیا</h1>
+            <p class="subtitle">✨ خودکارسازی فرآیندهای کسب‌وکار با هوش مصنوعی</p>
+            <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
         </div>
-        
-        <div style="text-align: center;">
-            <a href="order.html?service=automation" class="btn">📝 ثبت درخواست و مشاوره رایگان</a>
+
+        <!-- ===== هیرو با تصویر ===== -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">🔥 اتوماسیون هوشمند در خدمت شما</span>
+                <h2>با اتوماسیون هوشمند، <span>کارایی کسب‌وکار</span> خود را چندین برابر کنید</h2>
+                <p>اتوماسیون هوشمند با ترکیب هوش مصنوعی و ابزارهای پیشرفته، فرآیندهای تکراری و زمان‌بر را خودکار می‌کند تا تیم شما روی رشد و نوآوری متمرکز شود.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">🚀 مشاهده محصولات</a>
+                    <a href="#contact" class="btn-secondary">📞 مشاوره رایگان</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="title">اتوماسیون هوشمند سوفیا</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="automation-flow">
+                            <div class="flow-step">
+                                <span class="step-icon">📥</span>
+                                <span class="step-text">دریافت خودکار ایمیل‌ها</span>
+                                <span class="step-status">✅ انجام شد</span>
+                            </div>
+                            <div class="flow-step">
+                                <span class="step-icon">🧠</span>
+                                <span class="step-text">تحلیل و دسته‌بندی هوشمند</span>
+                                <span class="step-status">✅ انجام شد</span>
+                            </div>
+                            <div class="flow-step">
+                                <span class="step-icon">📤</span>
+                                <span class="step-text">ارسال پاسخ هوشمند</span>
+                                <span class="step-status">⏳ در حال اجرا</span>
+                            </div>
+                            <div class="flow-step">
+                                <span class="step-icon">📊</span>
+                                <span class="step-text">ثبت و گزارش‌گیری</span>
+                                <span class="step-status">⏳ در انتظار</span>
+                            </div>
+                            <div class="flow-result">
+                                ✅ ۴۲ ایمیل در ۵ دقیقه پردازش شد
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">
+                    ⚡ پردازش خودکار
+                </div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">
+                    📊 گزارش‌گیری لحظه‌ای
+                </div>
+            </div>
         </div>
-        
-        <div class="contact-info">
-            <p>📞 سوالی دارید؟ تماس بگیرید: <strong>۰۹۱۳۰۷۷۱۱۲۸</strong></p>
-            <p>✉️ یا ایمیل: <strong>Cysobms@gmail.com</strong></p>
+
+        <!-- ===== متن معرفی جذاب ===== -->
+        <div class="intro-section">
+            <span class="intro-icon">⚙️</span>
+            <h2>اتوماسیون هوشمند سوفیا؛ کارایی بی‌نهایت برای کسب‌وکار شما</h2>
+            <p class="intro-desc">
+                اتوماسیون هوشمند با استفاده از هوش مصنوعی، فرآیندهای تکراری و زمان‌بر را به‌صورت خودکار انجام می‌دهد. از مدیریت ایمیل‌ها و پیام‌ها تا پردازش اسناد و گزارش‌گیری، اتوماسیون هوشمند سوفیا به شما کمک می‌کند تا زمان و هزینه را ذخیره کنید و روی کارهای استراتژیک تمرکز کنید.
+                <strong>با اتوماسیون هوشمند سوفیا، بهره‌وری خود را چندین برابر کنید.</strong>
+            </p>
+
+            <div class="highlight-box">
+                <div class="highlight-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش خودکار</h4>
+                    <p>انجام خودکار کارهای تکراری و زمان‌بر</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🧠</span>
+                    <h4>هوشمند و دقیق</h4>
+                    <p>کاهش خطاهای انسانی با تصمیم‌گیری هوشمند</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">💰</span>
+                    <h4>صرفه‌جویی اقتصادی</h4>
+                    <p>کاهش هزینه‌های عملیاتی تا ۷۰٪</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">⏰</span>
+                    <h4>سرعت فوق‌العاده</h4>
+                    <p>انجام کارها در کسری از زمان معمول</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📊</span>
+                    <h4>گزارش‌گیری لحظه‌ای</h4>
+                    <p>دسترسی به گزارش‌های دقیق و آنی</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔄</span>
+                    <h4>یکپارچه‌سازی کامل</h4>
+                    <p>اتصال به تمام ابزارها و سامانه‌های شما</p>
+                </div>
+            </div>
         </div>
-        
+
+        <!-- ===== صنایع و کاربردها ===== -->
+        <h2 class="section-title">🏭 <span>صنایع و کاربردهای اتوماسیون هوشمند</span></h2>
+        <div class="industry-grid">
+
+            <div class="industry-card">
+                <span class="icon">🏢</span>
+                <h3>مدیریت سازمانی</h3>
+                <p>اتوماسیون فرآیندهای اداری، مدیریت اسناد و گردش کار</p>
+                <ul class="use-cases">
+                    <li>مدیریت خودکار مکاتبات</li>
+                    <li>پردازش و تایید اسناد</li>
+                    <li>گردش کار خودکار</li>
+                </ul>
+            </div>
+
+            <div class="industry-card">
+                <span class="icon">🛒</span>
+                <h3>فروش و بازاریابی</h3>
+                <p>اتوماسیون بازاریابی، مدیریت مشتریان و فروش</p>
+                <ul class="use-cases">
+                    <li>ارسال خودکار ایمیل‌های بازاریابی</li>
+                    <li>مدیریت سرنخ‌های فروش</li>
+                    <li>شخصی‌سازی کمپین‌ها</li>
+                </ul>
+            </div>
+
+            <div class="industry-card">
+                <span class="icon">🏥</span>
+                <h3>صنعت پزشکی</h3>
+                <p>اتوماسیون نوبت‌دهی، مدیریت بیماران و پرونده‌ها</p>
+                <ul class="use-cases">
+                    <li>نوبت‌دهی خودکار</li>
+                    <li>یادآوری و پیگیری بیماران</li>
+                    <li>مدیریت پرونده‌ها</li>
+                </ul>
+            </div>
+
+            <div class="industry-card">
+                <span class="icon">🏦</span>
+                <h3>صنعت بانکداری</h3>
+                <p>اتوماسیون خدمات مشتریان، اعتبارسنجی و گزارش‌دهی</p>
+                <ul class="use-cases">
+                    <li>پردازش خودکار درخواست‌ها</li>
+                    <li>اعتبارسنجی هوشمند</li>
+                    <li>گزارش‌گیری لحظه‌ای</li>
+                </ul>
+            </div>
+
+            <div class="industry-card">
+                <span class="icon">🏭</span>
+                <h3>صنعت تولید</h3>
+                <p>اتوماسیون خط تولید، کنترل کیفیت و تعمیرات</p>
+                <ul class="use-cases">
+                    <li>کنترل کیفیت خودکار</li>
+                    <li>تعمیرات پیش‌بینی‌کننده</li>
+                    <li>مدیریت موجودی</li>
+                </ul>
+            </div>
+
+            <div class="industry-card">
+                <span class="icon">📚</span>
+                <h3>صنعت آموزش</h3>
+                <p>اتوماسیون ثبت‌نام، مدیریت کلاس‌ها و ارزیابی</p>
+                <ul class="use-cases">
+                    <li>ثبت‌نام خودکار دانشجویان</li>
+                    <li>مدیریت کلاس‌ها</li>
+                    <li>ارسال خودکار اعلان‌ها</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ===== محصولات اتوماسیون ===== -->
+        <h2 class="section-title" id="products">🚀 <span>محصولات اتوماسیون هوشمند سوفیا</span></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <span class="icon">📧</span>
+                <h3>اتوماسیون ایمیل</h3>
+                <p>مدیریت خودکار ایمیل‌ها، پاسخ‌دهی و دسته‌بندی هوشمند</p>
+                <ul class="features-list">
+                    <li>پاسخ‌دهی خودکار به ایمیل‌ها</li>
+                    <li>دسته‌بندی هوشمند پیام‌ها</li>
+                    <li>پیگیری و یادآوری خودکار</li>
+                    <li>گزارش‌گیری از مکاتبات</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📊</span>
+                <h3>اتوماسیون گزارش‌دهی</h3>
+                <p>تولید خودکار گزارش‌های تحلیلی و مدیریتی</p>
+                <ul class="features-list">
+                    <li>گزارش‌گیری خودکار از داده‌ها</li>
+                    <li>داشبوردهای تعاملی</li>
+                    <li>ارسال خودکار به مدیران</li>
+                    <li>تحلیل روندها و الگوها</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">👥</span>
+                <h3>اتوماسیون CRM</h3>
+                <p>مدیریت خودکار ارتباط با مشتریان و سرنخ‌های فروش</p>
+                <ul class="features-list">
+                    <li>مدیریت خودکار سرنخ‌ها</li>
+                    <li>پیگیری خودکار مشتریان</li>
+                    <li>ارسال پیام‌های شخصی‌سازی‌شده</li>
+                    <li>تحلیل رفتار مشتریان</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📄</span>
+                <h3>اتوماسیون اسناد</h3>
+                <p>پردازش خودکار اسناد، استخراج اطلاعات و دسته‌بندی</p>
+                <ul class="features-list">
+                    <li>استخراج اطلاعات از اسناد</li>
+                    <li>دسته‌بندی خودکار اسناد</li>
+                    <li>تبدیل اسناد به داده</li>
+                    <li>جستجوی هوشمند در اسناد</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🔔</span>
+                <h3>اتوماسیون اعلان‌ها</h3>
+                <p>ارسال خودکار اعلان‌ها و پیام‌ها به کاربران</p>
+                <ul class="features-list">
+                    <li>ارسال خودکار پیام‌ها</li>
+                    <li>یادآوری‌های هوشمند</li>
+                    <li>شخصی‌سازی پیام‌ها</li>
+                    <li>گزارش‌گیری از تعاملات</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🔄</span>
+                <h3>اتوماسیون یکپارچه</h3>
+                <p>اتصال و هماهنگی تمام سیستم‌های سازمانی</p>
+                <ul class="features-list">
+                    <li>اتصال به تمام سامانه‌ها</li>
+                    <li>هماهنگی بین سیستم‌ها</li>
+                    <li>اجرای خودکار گردش‌کار</li>
+                    <li>مدیریت یکپارچه داده‌ها</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+        </div>
+
+        <!-- ===== نمونه‌ها ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های اتوماسیون هوشمند</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">📧 اتوماسیون ایمیل <span class="badge">جدید</span></a>
+                <a href="#" class="demo-btn">📊 اتوماسیون گزارش‌دهی</a>
+                <a href="#" class="demo-btn">👥 اتوماسیون CRM</a>
+                <a href="#" class="demo-btn">📄 اتوماسیون اسناد</a>
+            </div>
+        </div>
+
+        <!-- ===== خدمات ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>طراحی اتوماسیون متناسب با نیاز و فرآیندهای شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔧</span>
+                    <h3>پیاده‌سازی و نصب</h3>
+                    <p>نصب و راه‌اندازی کامل روی سیستم شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📚</span>
+                    <h3>آموزش</h3>
+                    <p>آموزش کامل کار با سیستم و مدیریت آن</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل پس از راه‌اندازی و بروزرسانی‌ها</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ویژگی‌ها ===== -->
+        <div class="features-section">
+            <h2>⭐ چرا اتوماسیون هوشمند سوفیا؟</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت بالا</h4>
+                    <p>داده‌های شما کاملاً محافظت‌شده</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h4>سرعت بالا</h4>
+                    <p>پردازش خودکار در کسری از ثانیه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت بالا</h4>
+                    <p>کاهش خطاهای انسانی به صفر</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📱</span>
+                    <h4>سازگاری کامل</h4>
+                    <p>قابل اجرا روی تمام سیستم‌ها</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h4>یکپارچه‌سازی</h4>
+                    <p>اتصال به تمام ابزارهای شما</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>مقرون‌به‌صرفه</h4>
+                    <p>کاهش هزینه‌های عملیاتی تا ۷۰٪</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== سفارش ===== -->
+        <div class="order-section" id="order">
+            <h2>📝 ثبت سفارش اتوماسیون هوشمند</h2>
+            <p>
+                برای سفارش سیستم اتوماسیون اختصاصی خود، فرم زیر را تکمیل کنید.<br>
+                تیم ما در اسرع وقت با شما تماس می‌گیرد.
+            </p>
+            <a href="order.html" class="order-btn">🚀 ثبت سفارش</a>
+        </div>
+
+        <!-- ===== باکس تماس ===== -->
+        <div class="contact-box" id="contact">
+            <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
+            <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
+            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
+        </div>
+
+        <!-- ===== فوتر ===== -->
         <footer>
-            <p>© 2026 Sofia AI -  هوش مصنوعی سوفیا</p>
+            <p>© ۱۴۰۶ - تمامی حقوق برای <strong>اتوماسیون هوشمند سوفیا</strong> محفوظ است</p>
+            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
         </footer>
+
     </div>
 </body>
 </html>
