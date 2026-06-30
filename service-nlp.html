@@ -2,237 +2,1575 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پردازش زبان طبیعی | Sofia AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>پردازش زبان طبیعی و مدل‌های زبانی سوفیا | Sofia AI NLP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
             padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        h1 {
-            color: #667eea;
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 15px;
-        }
-        .service-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #764ba2;
-            margin: 25px 0 15px 0;
-        }
-        p {
-            color: #555;
             line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        .feature-list li::before {
-            content: "✅ ";
-            color: #667eea;
-        }
-        .price-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-        }
-        .price-box h3 {
-            margin-bottom: 10px;
-        }
-        .price-box .price {
-            font-size: 2em;
-            font-weight: bold;
-        }
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .contact-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #999;
         }
 
-        /* استایل بخش تحلیل احساسات */
-        .sentiment-section {
-            background: linear-gradient(135deg, #f0f4ff, #e8edf5);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 30px 0;
-            border-right: 6px solid #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .sentiment-section .text {
-            flex: 1;
-            min-width: 200px;
+
+        /* ===== هدر ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.3);
         }
-        .sentiment-section .text h3 {
-            color: #667eea;
-            font-size: 24px;
-            margin: 0 0 5px 0;
+
+        .header .main-icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
         }
-        .sentiment-section .text p {
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
             color: #555;
-            margin: 5px 0 0 0;
+            font-size: 1.3em;
+            font-weight: 300;
+            margin-bottom: 15px;
         }
-        .sentiment-btn {
+
+        .header .phone-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 16px 40px;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header .phone-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== هیرو با تصویر ===== */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 28px;
+            padding: 40px;
+            border: 2px solid #e8ecf4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hero-content h2 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .hero-buttons .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 35px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            font-weight: 700;
             transition: all 0.3s ease;
-            white-space: nowrap;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
-        .sentiment-btn:hover {
+
+        .hero-content .hero-buttons .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
         }
-        .sentiment-badge {
+
+        .hero-content .hero-buttons .btn-secondary {
             display: inline-block;
-            background: #10b981;
+            background: white;
+            color: #667eea;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .hero-buttons .btn-secondary:hover {
+            background: #667eea;
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+            background: white;
+            padding: 15px;
+            border: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup:hover {
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .hero-image .mockup .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8f9fc;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup .mockup-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) { background: #ff5f57; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) { background: #ffbd2e; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) { background: #28c840; }
+
+        .hero-image .mockup .mockup-header .title {
+            font-size: 0.8em;
+            color: #666;
+            font-weight: 500;
             margin-right: 10px;
         }
-        @media (max-width: 600px) {
-            .sentiment-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .sentiment-btn {
-                white-space: normal;
+
+        .hero-image .mockup .mockup-body {
+            padding: 15px;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fe;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid #e8ecf4;
+            margin-bottom: 8px;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item .item-icon {
+            font-size: 1.3em;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item .item-info {
+            flex: 1;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item .item-info .item-title {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item .item-info .item-desc {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-item .item-status {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .hero-image .mockup .mockup-body .nlp-result {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .hero-image .floating-badge {
+            position: absolute;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+
+        .hero-image .floating-badge:nth-child(2) { top: 5%; left: -10%; animation-delay: 1s; }
+        .hero-image .floating-badge:nth-child(3) { bottom: 10%; right: -10%; animation-delay: 2s; }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== متن معرفی جذاب ===== */
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 45px 40px;
+            margin-bottom: 50px;
+            border: 2px solid #e8ecf4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .intro-section .intro-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .intro-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-section .intro-desc {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .intro-section .highlight-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .intro-section .highlight-item {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #e8ecf4;
+        }
+
+        .intro-section .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .intro-section .highlight-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .intro-section .highlight-item h4 {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .intro-section .highlight-item p {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== محصولات ===== */
+        .section-title {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #f0f2f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .product-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-card h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✅";
+            color: #667eea;
+        }
+
+        .product-card .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .order-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-card .order-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        .product-card .admin-tag {
+            display: inline-block;
+            background: #f093fb;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* ===== صنایع ===== */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 2px solid #f0f2f8;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .industry-card .icon {
+            font-size: 3.5em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .industry-card .use-cases {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        .industry-card .use-cases li {
+            padding: 4px 0;
+            color: #555;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .industry-card .use-cases li::before {
+            content: "📝";
+            font-size: 0.9em;
+        }
+
+        /* ===== بنر مدیریتی ===== */
+        .management-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .management-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .management-banner .info .icon {
+            font-size: 2.5em;
+        }
+
+        .management-banner .info .text h3 {
+            font-size: 1.2em;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .management-banner .info .text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .management-banner .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .management-banner .badge-group .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== نمونه پنل مدیریت ===== */
+        .admin-panel-preview {
+            background: #f8f9fe;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-panel-preview .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel-preview .preview-title h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-title p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .admin-panel-preview .preview-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8ecf4;
+            overflow-x: auto;
+        }
+
+        .admin-panel-preview .preview-card .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .number {
+            font-size: 2em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .admin-panel-preview .preview-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+
+        .admin-panel-preview .preview-card table th {
+            background: #667eea;
+            color: white;
+            padding: 10px 12px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e8ecf4;
+            color: #333;
+        }
+
+        .admin-panel-preview .preview-card table tr:nth-child(even) {
+            background: #f8f9fc;
+        }
+
+        .admin-panel-preview .preview-card .preview-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e8ecf4;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== نمونه‌ها ===== */
+        .demo-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .demo-section .desc {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            background: white;
+            border: 2.5px solid #667eea;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+            border-color: transparent;
+        }
+
+        .demo-btn .badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== خدمات ===== */
+        .services-section {
+            margin: 40px 0 30px;
+        }
+
+        .services-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f0f2f8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            margin: 50px 0;
+            background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .features-section h2 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            color: #777;
+            font-size: 0.95em;
+            font-weight: 300;
+        }
+
+        /* ===== باکس تماس ===== */
+        .contact-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+        }
+
+        .contact-box h3 {
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .contact-box .phone {
+            font-size: 2.2em;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-box .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-box .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== سفارش ===== */
+        .order-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+        }
+
+        .order-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .order-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .order-section .order-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 16px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .order-section .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #e8ecf4;
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        footer strong {
+            color: #667eea;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 992px) {
+            .container { padding: 30px; }
+            .header h1 { font-size: 2.6em; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding: 30px; }
+            .hero-content .hero-buttons { justify-content: center; }
+            .hero-image .floating-badge { display: none; }
+            .management-banner { flex-direction: column; text-align: center; }
+            .management-banner .info { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; border-radius: 20px; }
+            .header h1 { font-size: 2em; }
+            .header .subtitle { font-size: 1em; }
+            .hero-content h2 { font-size: 1.8em; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .industry-grid { grid-template-columns: 1fr 1fr; }
+            .contact-box .phone { font-size: 1.8em; }
+            .demo-buttons { gap: 10px; }
+            .demo-btn { padding: 10px 20px; font-size: 0.95em; }
+            .management-banner .badge-group .badge { font-size: 0.8em; padding: 5px 12px; }
+            .admin-panel-preview .preview-card table { font-size: 0.75em; min-width: 500px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.5em; }
+            .intro-section { padding: 25px 20px; }
+            .intro-section h2 { font-size: 1.5em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr 1fr; }
+            .order-section { padding: 25px 20px; }
+            .order-section h2 { font-size: 1.5em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; border-radius: 16px; }
+            .header h1 { font-size: 1.6em; }
+            .header .main-icon { font-size: 3.5em; }
+            .hero-content h2 { font-size: 1.4em; }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-secondary {
+                padding: 10px 25px;
+                font-size: 0.9em;
                 width: 100%;
                 text-align: center;
             }
+            .hero-content .hero-buttons { flex-direction: column; align-items: stretch; }
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: 1fr; }
+            .demo-buttons { flex-direction: column; align-items: stretch; }
+            .demo-btn { text-align: center; width: 100%; }
+            .contact-box .phone { font-size: 1.4em; }
+            .contact-box h3 { font-size: 1.4em; }
+            .section-title { font-size: 1.6em; }
+            .product-card { padding: 20px; }
+            .product-card .icon { font-size: 3em; }
+            .management-banner .info .icon { font-size: 2em; }
+            .admin-panel-preview .preview-card table { font-size: 0.65em; min-width: 400px; }
+            .admin-panel-preview .preview-card table th,
+            .admin-panel-preview .preview-card table td { padding: 5px 6px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.2em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr; }
+            .intro-section h2 { font-size: 1.3em; }
+            .intro-section .intro-desc { font-size: 0.95em; }
+            .hero-image .mockup { max-width: 280px; }
+            .order-section { padding: 20px 15px; }
+            .order-section h2 { font-size: 1.3em; }
+            .order-section .order-btn { padding: 12px 30px; font-size: 1em; }
+            .industry-card .icon { font-size: 2.8em; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
-        <div class="service-icon">💬</div>
-        <h1>پردازش زبان طبیعی (NLP)</h1>
-        
-        <h2>🔍 پردازش زبان طبیعی چیست؟</h2>
-        <p>پردازش زبان طبیعی شاخه‌ای از هوش مصنوعی است که به کامپیوترها توانایی درک، تفسیر و تولید زبان انسانی را می‌دهد. با استفاده از NLP، می‌توانید متن‌های خود را به صورت هوشمند تحلیل کنید و از داده‌های متنی خود ارزش استخراج نمایید.</p>
-        
-        <h2>✨ قابلیت‌های این خدمت:</h2>
-        <ul class="feature-list">
-            <li>
-                🧠 تحلیل احساسات (Sentiment Analysis) نظرات و بازخورد مشتریان
-                <span style="display: block; font-size: 14px; color: #999; margin-top: 5px;">
-                    👆 <a href="https://huggingface.co/spaces/cysobms/sentimental-analysis" target="_blank" style="color: #667eea;">کلیک کنید و ابزار تحلیل احساسات را امتحان کنید</a>
-                </span>
-            </li>
-            <li>خلاصه‌سازی خودکار متون بلند و اسناد</li>
-            <li>طبقه‌بندی متون و دسته‌بندی خودکار محتوا</li>
-            <li>تشخیص موجودیت‌های نامدار (NER) مانند نام افراد، سازمان‌ها، مکان‌ها</li>
-            <li>ترجمه ماشینی بین زبان‌های مختلف</li>
-            <li>پاسخ به سوالات از روی متون (Question Answering)</li>
-        </ul>
 
-        <!-- ============================================ -->
-        <!-- بخش تحلیل احساسات - متصل به برنامه Hugging Face -->
-        <!-- ============================================ -->
-        <div class="sentiment-section">
-            <div class="text">
-                <h3>🧠 تحلیل احساسات (Sentiment Analysis)</h3>
-                <p>نظرات، بازخوردها و اخبار مالی خود را به صورت هوشمند تحلیل کنید.</p>
+        <!-- ===== هدر ===== -->
+        <div class="header">
+            <span class="main-icon">📝</span>
+            <h1>پردازش زبان طبیعی و مدل‌های زبانی سوفیا</h1>
+            <p class="subtitle">✨ درک و تحلیل زبان انسان با قدرت هوش مصنوعی</p>
+            <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
+        </div>
+
+        <!-- ===== هیرو با تصویر ===== -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">🔥 هوش مصنوعی زبانی در خدمت کسب‌وکار شما</span>
+                <h2>با پردازش زبان طبیعی، <span>متون و گفتار</span> را به بینش‌های ارزشمند تبدیل کنید</h2>
+                <p>سیستم‌های پردازش زبان طبیعی (NLP) سوفیا با استفاده از مدل‌های زبانی پیشرفته مانند GPT، BERT و Transformer، متون و گفتار را تحلیل کرده و اطلاعات ارزشمندی از آن‌ها استخراج می‌کنند. از تحلیل احساسات و خلاصه‌سازی متون تا ترجمه ماشینی و تولید محتوا.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">🚀 مشاهده محصولات</a>
+                    <a href="#contact" class="btn-secondary">📞 مشاوره رایگان</a>
+                </div>
             </div>
-            <div>
-                <a href="https://huggingface.co/spaces/cysobms/sentimental-analysis" target="_blank" class="sentiment-btn">
-                    📊 شروع تحلیل احساسات
-                </a>
-                <span style="display: block; font-size: 12px; color: #999; margin-top: 8px; text-align: center;">
-                    ✨ رایگان • بدون نیاز به ثبت‌نام
-                </span>
+            <div class="hero-image">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="title">سیستم NLP سوفیا</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="nlp-item">
+                            <span class="item-icon">🔍</span>
+                            <div class="item-info">
+                                <div class="item-title">تحلیل احساسات</div>
+                                <div class="item-desc">نظر مثبت مشتریان</div>
+                            </div>
+                            <span class="item-status">✅ مثبت</span>
+                        </div>
+                        <div class="nlp-item">
+                            <span class="item-icon">📄</span>
+                            <div class="item-info">
+                                <div class="item-title">خلاصه‌سازی متن</div>
+                                <div class="item-desc">چکیده‌سازی خودکار</div>
+                            </div>
+                            <span class="item-status">✅ انجام شد</span>
+                        </div>
+                        <div class="nlp-item">
+                            <span class="item-icon">🌐</span>
+                            <div class="item-info">
+                                <div class="item-title">ترجمه ماشینی</div>
+                                <div class="item-desc">فارسی به انگلیسی</div>
+                            </div>
+                            <span class="item-status">✅ ترجمه شد</span>
+                        </div>
+                        <div class="nlp-item">
+                            <span class="item-icon">🤖</span>
+                            <div class="item-info">
+                                <div class="item-title">تولید محتوا</div>
+                                <div class="item-desc">متن تبلیغاتی</div>
+                            </div>
+                            <span class="item-status">✅ تولید شد</span>
+                        </div>
+                        <div class="nlp-result">
+                            🎯 دقت تحلیل: ۹۴.۷٪ · پشتیبانی از ۱۰۰+ زبان
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">
+                    🎯 دقت بالا
+                </div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">
+                    ⚡ پردازش سریع
+                </div>
             </div>
         </div>
-        
-        <h2>🎯 کاربردها در صنایع مختلف:</h2>
-        <ul class="feature-list">
-            <li>تحلیل نظرات مشتریان در شبکه‌های اجتماعی</li>
-            <li>دسته‌بندی خودکار تیکت‌های پشتیبانی</li>
-            <li>استخراج اطلاعات از اسناد حقوقی و پزشکی</li>
-            <li>ربات‌های گفتگوی هوشمند (چت‌بات)</li>
-            <li>تحلیل اخبار و روندهای بازار</li>
-        </ul>
-        
-        <div class="price-box">
-            <h3>💰 هزینه مشاوره و پیاده‌سازی</h3>
-            <div class="price">با توجه به پروژه - قابل مذاکره</div>
-            <p>تماس بگیرید تا پس از بررسی نیاز شما، قیمت دقیق اعلام شود</p>
+
+        <!-- ===== متن معرفی جذاب ===== -->
+        <div class="intro-section">
+            <span class="intro-icon">📝</span>
+            <h2>پردازش زبان طبیعی سوفیا؛ درک عمیق زبان انسان</h2>
+            <p class="intro-desc">
+                سیستم‌های پردازش زبان طبیعی سوفیا با استفاده از مدل‌های زبانی پیشرفته و شبکه‌های عصبی عمیق، متون و گفتار را در کسری از ثانیه تحلیل می‌کنند. این سیستم‌ها قادر به تحلیل احساسات، خلاصه‌سازی متون، ترجمه ماشینی، تشخیص نیت، تولید محتوا و بسیاری کاربردهای دیگر با دقتی فراتر از روش‌های سنتی هستند.
+                <strong>با پردازش زبان طبیعی سوفیا، به عمق متون و گفتار خود بینش پیدا کنید.</strong>
+            </p>
+
+            <div class="highlight-box">
+                <div class="highlight-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت فوق‌العاده</h4>
+                    <p>تحلیل متون با دقت بیش از ۹۴٪</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش سریع</h4>
+                    <p>تحلیل متون در کسری از ثانیه</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🌐</span>
+                    <h4>پشتیبانی از زبان‌های مختلف</h4>
+                    <p>بیش از ۱۰۰ زبان زنده دنیا</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📊</span>
+                    <h4>مدل‌های پیشرفته</h4>
+                    <p>استفاده از GPT، BERT، Transformer</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔄</span>
+                    <h4>یادگیری مستمر</h4>
+                    <p>بهبود مداوم با داده‌های جدید</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت بالا</h4>
+                    <p>پردازش امن و محافظت از داده‌ها</p>
+                </div>
+            </div>
         </div>
-        
-        <div style="text-align: center;">
-            <a href="order.html?service=nlp" class="btn">📝 ثبت درخواست و مشاوره رایگان</a>
+
+        <!-- ===== صنایع ===== -->
+        <h2 class="section-title">🏭 <span>صنایع و کاربردهای پردازش زبان طبیعی</span></h2>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <span class="icon">📞</span>
+                <h3>مراکز تماس و پشتیبانی</h3>
+                <p>تحلیل مکالمات، تشخیص احساسات و پاسخ‌دهی خودکار</p>
+                <ul class="use-cases">
+                    <li>تحلیل احساسات مشتریان</li>
+                    <li>پاسخ‌دهی خودکار به سوالات</li>
+                    <li>خلاصه‌سازی مکالمات</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">📰</span>
+                <h3>رسانه و خبرگزاری</h3>
+                <p>تحلیل اخبار، خلاصه‌سازی و تولید محتوا</p>
+                <ul class="use-cases">
+                    <li>خلاصه‌سازی خودکار اخبار</li>
+                    <li>تحلیل احساسات مخاطبان</li>
+                    <li>تولید محتوای خودکار</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏢</span>
+                <h3>مدیریت کسب‌وکار</h3>
+                <p>تحلیل بازخورد مشتریان و بهبود محصولات</p>
+                <ul class="use-cases">
+                    <li>تحلیل نظرات مشتریان</li>
+                    <li>دسته‌بندی خودکار بازخوردها</li>
+                    <li>شناسایی نیازهای مشتریان</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🌐</span>
+                <h3>ترجمه و محلی‌سازی</h3>
+                <p>ترجمه ماشینی و محلی‌سازی محتوا</p>
+                <ul class="use-cases">
+                    <li>ترجمه خودکار متون</li>
+                    <li>محلی‌سازی وب‌سایت‌ها</li>
+                    <li>ترجمه همزمان گفتار</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🎓</span>
+                <h3>آموزش و یادگیری</h3>
+                <p>تحلیل متون آموزشی و شخصی‌سازی یادگیری</p>
+                <ul class="use-cases">
+                    <li>تحلیل متون درسی</li>
+                    <li>شخصی‌سازی محتوای آموزشی</li>
+                    <li>تولید سوالات خودکار</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏥</span>
+                <h3>پزشکی و سلامت</h3>
+                <p>تحلیل پرونده‌های پزشکی و تشخیص بیماری‌ها</p>
+                <ul class="use-cases">
+                    <li>تحلیل پرونده‌های الکترونیک</li>
+                    <li>تشخیص بیماری از روی علائم</li>
+                    <li>خلاصه‌سازی گزارش‌های پزشکی</li>
+                </ul>
+            </div>
         </div>
-        
-        <div class="contact-info">
-            <p>📞 سوالی دارید؟ تماس بگیرید: <strong>۰۹۱۳۰۷۷۱۱۲۸</strong></p>
-            <p>✉️ یا ایمیل: <strong>Cysobms@gmail.com</strong></p>
+
+        <!-- ===== محصولات ===== -->
+        <h2 class="section-title" id="products">🚀 <span>محصولات NLP سوفیا</span></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <span class="icon">🔍</span>
+                <h3>تحلیل احساسات</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تشخیص احساسات و نظرات از متن‌های کاربران</p>
+                <ul class="features-list">
+                    <li>تشخیص مثبت، منفی، خنثی</li>
+                    <li>تحلیل احساسات لحظه‌ای</li>
+                    <li>گزارش‌گیری از نظرات</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📄</span>
+                <h3>خلاصه‌سازی متن</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>خلاصه‌سازی خودکار متون بلند و گزارش‌ها</p>
+                <ul class="features-list">
+                    <li>خلاصه‌سازی اخبار و مقالات</li>
+                    <li>چکیده‌سازی گزارش‌ها</li>
+                    <li>استخراج نکات کلیدی</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🌐</span>
+                <h3>ترجمه ماشینی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>ترجمه خودکار متون به بیش از ۱۰۰ زبان</p>
+                <ul class="features-list">
+                    <li>ترجمه فارسی به انگلیسی و برعکس</li>
+                    <li>پشتیبانی از ۱۰۰+ زبان</li>
+                    <li>ترجمه همزمان گفتار</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🤖</span>
+                <h3>تولید محتوا</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تولید خودکار محتوای متنی با کیفیت بالا</p>
+                <ul class="features-list">
+                    <li>تولید مقالات و مطالب</li>
+                    <li>تولید متن تبلیغاتی</li>
+                    <li>تولید ایمیل و نامه</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🎯</span>
+                <h3>تشخیص نیت</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تشخیص نیت و هدف کاربر از متن</p>
+                <ul class="features-list">
+                    <li>تشخیص نیت خرید</li>
+                    <li>تشخیص نیت پشتیبانی</li>
+                    <li>دسته‌بندی خودکار درخواست‌ها</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📊</span>
+                <h3>طبقه‌بندی متن</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>دسته‌بندی خودکار متون در موضوعات مختلف</p>
+                <ul class="features-list">
+                    <li>دسته‌بندی اخبار</li>
+                    <li>طبقه‌بندی ایمیل‌ها</li>
+                    <li>برچسب‌گذاری خودکار</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
         </div>
-        
+
+        <!-- ===== بنر مدیریتی ===== -->
+        <div class="management-banner">
+            <div class="info">
+                <span class="icon">📊</span>
+                <div class="text">
+                    <h3>🎯 پنل مدیریت اختصاصی</h3>
+                    <p>با تهیه سیستم NLP، به یک پنل مدیریت کامل دسترسی دارید که تمام تحلیل‌ها و پردازش‌ها را به صورت لحظه‌ای نمایش می‌دهد.</p>
+                </div>
+            </div>
+            <div class="badge-group">
+                <span class="badge">📋 ذخیره تحلیل‌ها</span>
+                <span class="badge">📊 گزارش‌های تحلیلی</span>
+                <span class="badge">🎯 آمار دقت</span>
+            </div>
+        </div>
+
+        <!-- ===== نمونه پنل مدیریت ===== -->
+        <div class="admin-panel-preview">
+            <div class="preview-title">
+                <h2>📊 نمونه پنل مدیریت</h2>
+                <p>همه تحلیل‌ها و پردازش‌های متنی در این پنل قابل مشاهده است</p>
+            </div>
+            <div class="preview-card">
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number">۲۴,۵۶۷</div>
+                        <div class="label">تعداد کل پردازش‌ها</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <div class="number">۹۴.۷٪</div>
+                        <div class="label">دقت تحلیل</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <div class="number">۱۰۰+</div>
+                        <div class="label">زبان‌های پشتیبانی</div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نوع پردازش</th>
+                            <th>متن</th>
+                            <th>نتیجه</th>
+                            <th>دقت</th>
+                            <th>تاریخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>۱</td>
+                            <td><span style="display:inline-block;background:#667eea;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">احساسات</span></td>
+                            <td>«محصول عالی بود»</td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ مثبت</span></td>
+                            <td><span style="font-weight:700;">۹۸.۲٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۲</td>
+                            <td><span style="display:inline-block;background:#f093fb;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">خلاصه‌سازی</span></td>
+                            <td>«متن بلند مقاله...»</td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ خلاصه شد</span></td>
+                            <td><span style="font-weight:700;">۹۵.۶٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۳</td>
+                            <td><span style="display:inline-block;background:#4facfe;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">ترجمه</span></td>
+                            <td>«سلام، چطور هستید؟»</td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ ترجمه شد</span></td>
+                            <td><span style="font-weight:700;">۹۷.۴٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۶</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="preview-footer">
+                    🔒 دسترسی به پنل مدیریت با نام کاربری و رمز عبور محافظت می‌شود
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== نمونه‌ها ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های پردازش زبان طبیعی</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">🔍 تحلیل احساسات <span class="badge">جدید</span></a>
+                <a href="#" class="demo-btn">📄 خلاصه‌سازی متن</a>
+                <a href="#" class="demo-btn">🌐 ترجمه ماشینی</a>
+                <a href="#" class="demo-btn">🤖 تولید محتوا</a>
+            </div>
+        </div>
+
+        <!-- ===== خدمات ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>سیستم NLP متناسب با نیاز شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔧</span>
+                    <h3>پیاده‌سازی و نصب</h3>
+                    <p>نصب و راه‌اندازی روی سرور یا ابر</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📚</span>
+                    <h3>آموزش</h3>
+                    <p>آموزش تیم شما برای استفاده حداکثری</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل و بروزرسانی مداوم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ویژگی‌ها ===== -->
+        <div class="features-section">
+            <h2>⭐ چرا پردازش زبان طبیعی سوفیا؟</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت بالا</h4>
+                    <p>تحلیل با دقت بیش از ۹۴٪</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش سریع</h4>
+                    <p>تحلیل متون در کسری از ثانیه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🌐</span>
+                    <h4>پشتیبانی از زبان‌های مختلف</h4>
+                    <p>بیش از ۱۰۰ زبان زنده</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت داده</h4>
+                    <p>محافظت کامل از اطلاعات متنی</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهبود مستمر</h4>
+                    <p>یادگیری از داده‌های جدید</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>بازگشت سرمایه</h4>
+                    <p>کاهش هزینه‌ها و افزایش بهره‌وری</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== سفارش ===== -->
+        <div class="order-section" id="order">
+            <h2>📝 ثبت سفارش سیستم NLP</h2>
+            <p>
+                برای سفارش سیستم پردازش زبان طبیعی اختصاصی، فرم زیر را تکمیل کنید.<br>
+                تیم ما در اسرع وقت با شما تماس می‌گیرد.
+            </p>
+            <a href="order.html" class="order-btn">🚀 ثبت سفارش</a>
+        </div>
+
+        <!-- ===== باکس تماس ===== -->
+        <div class="contact-box" id="contact">
+            <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
+            <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
+            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
+        </div>
+
+        <!-- ===== فوتر ===== -->
         <footer>
-            <p>© 2026 Sofia AI -  هوش مصنوعی سوفیا</p>
+            <p>© ۱۴۰۶ - تمامی حقوق برای <strong>پردازش زبان طبیعی و مدل‌های زبانی سوفیا</strong> محفوظ است</p>
+            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
         </footer>
+
     </div>
 </body>
 </html>
