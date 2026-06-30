@@ -6,7 +6,6 @@
     <title>هوش مصنوعی در سلامت و پزشکی سوفیا | Sofia AI Healthcare</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== تنظیمات پایه ===== */
         * {
             margin: 0;
             padding: 0;
@@ -33,7 +32,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* ===== هدر ===== */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -89,7 +87,6 @@
             transform: scale(1.05);
         }
 
-        /* ===== هیرو با تصویر ===== */
         .hero-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -330,7 +327,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* ===== متن معرفی جذاب ===== */
         .intro-section {
             background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
             border-radius: 24px;
@@ -414,7 +410,6 @@
             line-height: 1.6;
         }
 
-        /* ===== محصولات ===== */
         .section-title {
             color: #764ba2;
             font-size: 2.2em;
@@ -557,7 +552,6 @@
             margin-bottom: 10px;
         }
 
-        /* ===== صنایع ===== */
         .industry-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -622,7 +616,6 @@
             font-size: 0.9em;
         }
 
-        /* ===== بنر مدیریتی ===== */
         .management-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
@@ -678,7 +671,6 @@
             gap: 8px;
         }
 
-        /* ===== نمونه پنل مدیریت ===== */
         .admin-panel-preview {
             background: #f8f9fe;
             border-radius: 20px;
@@ -774,7 +766,6 @@
             font-size: 0.9em;
         }
 
-        /* ===== نمونه‌ها ===== */
         .demo-section {
             margin: 50px 0;
             text-align: center;
@@ -833,7 +824,6 @@
             font-weight: 700;
         }
 
-        /* ===== خدمات ===== */
         .services-section {
             margin: 40px 0 30px;
         }
@@ -887,7 +877,6 @@
             line-height: 1.7;
         }
 
-        /* ===== ویژگی‌ها ===== */
         .features-section {
             margin: 50px 0;
             background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
@@ -942,7 +931,6 @@
             font-weight: 300;
         }
 
-        /* ===== باکس تماس ===== */
         .contact-box {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -992,7 +980,6 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
         }
 
-        /* ===== سفارش ===== */
         .order-section {
             background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
             border-radius: 24px;
@@ -1034,7 +1021,6 @@
             box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
         }
 
-        /* ===== فوتر ===== */
         footer {
             text-align: center;
             margin-top: 45px;
@@ -1048,7 +1034,6 @@
             color: #667eea;
         }
 
-        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
             .container { padding: 30px; }
             .header h1 { font-size: 2.6em; }
