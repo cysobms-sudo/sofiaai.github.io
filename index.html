@@ -32,63 +32,47 @@
                    نوار ناوبری
                    ============================================ */
         .navbar {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            padding: 12px 28px;
-            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 10px 25px;
+            border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            gap: 10px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         /* ============================================
-                   لوگوی جدید مینیمال و شیک
+                   لوگوی ساده و زیبا
                    ============================================ */
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
-            flex-shrink: 0;
         }
 
-        .logo-box {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4em;
+            font-size: 1.2em;
             font-weight: 900;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            transition: all 0.4s ease;
-            flex-shrink: 0;
-            position: relative;
+            color: #fff;
+            box-shadow: 0 3px 12px rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s;
         }
 
-        .logo-box::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 8px;
-            right: 8px;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            filter: blur(3px);
-        }
-
-        .logo-wrapper:hover .logo-box {
+        .logo-wrapper:hover .logo-icon {
             transform: scale(1.05) rotate(-5deg);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
         }
 
         .logo-text {
@@ -98,9 +82,9 @@
         }
 
         .logo-text .main {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: 900;
-            color: white;
+            color: #fff;
             letter-spacing: 0.5px;
         }
 
@@ -109,13 +93,15 @@
         }
 
         .logo-text .sub {
-            font-size: 0.5em;
+            font-size: 0.45em;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
-        /* ===== منوی اصلی ===== */
+        /* ============================================
+                   منوی اصلی
+                   ============================================ */
         .nav-menu {
             display: flex;
             gap: 4px;
@@ -124,84 +110,82 @@
         }
 
         .nav-menu > a {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            padding: 7px 16px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
+            padding: 6px 14px;
+            border-radius: 25px;
+            transition: all 0.3s;
             font-weight: 500;
             font-size: 0.85em;
         }
 
         .nav-menu > a:hover {
             background: rgba(255, 255, 255, 0.12);
-            color: white;
+            color: #fff;
         }
 
-        /* ===== منوی کشویی با پس‌زمینه سفید ===== */
+        /* ===== منوی کشویی ===== */
         .dropdown {
             position: relative;
-            display: inline-block;
         }
 
         .dropdown-btn {
-            background: rgba(255, 215, 0, 0.12);
+            background: rgba(255, 215, 0, 0.1);
             color: #FFD700;
-            padding: 7px 16px;
-            border-radius: 30px;
+            padding: 6px 14px;
+            border-radius: 25px;
             cursor: pointer;
-            border: 1px solid rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 215, 0, 0.1);
             font-size: 0.85em;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .dropdown-btn:hover {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.18);
             color: #FFE44D;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 44px;
+            top: 40px;
             right: 0;
             background: #ffffff;
-            min-width: 300px;
-            border-radius: 14px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            min-width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
             z-index: 9999;
             overflow: hidden;
-            max-height: 460px;
+            max-height: 400px;
             overflow-y: auto;
             border: 1px solid #e8ecf4;
-            padding: 4px 0;
         }
 
         .dropdown-content a {
             color: #2d3748 !important;
-            padding: 10px 18px !important;
+            padding: 10px 16px !important;
             display: block !important;
             border-bottom: 1px solid #f0f2f8 !important;
-            font-size: 0.88em !important;
+            font-size: 0.85em !important;
             text-decoration: none !important;
             font-weight: 400 !important;
-            transition: all 0.2s ease !important;
-            background: transparent !important;
+            background: #ffffff !important;
+            transition: all 0.2s !important;
         }
 
         .dropdown-content a:hover {
             background: #f0f2f8 !important;
             color: #667eea !important;
-            padding-right: 24px !important;
+            padding-right: 22px !important;
         }
 
         .dropdown-content .menu-divider {
             border: 0;
             height: 1px;
             background: #e8ecf4;
-            margin: 4px 12px;
+            margin: 4px 10px;
         }
 
         @media (min-width: 769px) {
@@ -214,17 +198,18 @@
             display: block;
         }
 
-        /* ===== دکمه‌های ویژه ===== */
+        /* ===== دکمه‌ها ===== */
         .btn-request {
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #fff !important;
             font-weight: 700 !important;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 3px 15px rgba(255, 215, 0, 0.2);
         }
 
         .btn-request:hover {
             transform: translateY(-2px) !important;
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4) !important;
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.35) !important;
+            color: #fff !important;
         }
 
         .cooperation-btn {
@@ -238,56 +223,31 @@
         }
 
         /* ============================================
-                   بخش قهرمان با تصویر پس‌زمینه
+                   بخش قهرمان
                    ============================================ */
         .hero {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
-            border-radius: 28px;
-            padding: 55px 45px;
+            border-radius: 24px;
+            padding: 50px 40px;
             text-align: center;
-            margin-bottom: 45px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            min-height: 320px;
+            min-height: 280px;
         }
 
-        /* تصویر 2.png در پس‌زمینه با شفافیت مناسب و قرارگیری کامل */
         .hero::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: url('2.png') no-repeat center center;
-            background-size: contain;
-            opacity: 0.1;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .hero-bg-decoration {
-            position: absolute;
-            top: -80px;
-            right: -80px;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.04), transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
-        .hero-bg-decoration2 {
-            position: absolute;
-            bottom: -80px;
-            left: -80px;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(118, 75, 162, 0.04), transparent 70%);
-            border-radius: 50%;
+            background-size: 70%;
+            opacity: 0.08;
             z-index: 0;
         }
 
@@ -299,31 +259,29 @@
         .hero-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 24px;
+            color: #fff;
+            padding: 4px 20px;
             border-radius: 50px;
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
+            margin-bottom: 14px;
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.2);
         }
 
         .hero h1 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 3em;
+            font-size: 2.8em;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .hero p {
             color: #555;
-            font-size: 1.1em;
-            line-height: 2;
-            font-weight: 400;
-            max-width: 650px;
+            font-size: 1.05em;
+            line-height: 1.9;
+            max-width: 600px;
             margin: 0 auto;
         }
 
@@ -336,22 +294,15 @@
         .stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 35px;
             flex-wrap: wrap;
-            margin-top: 30px;
-            padding-top: 25px;
+            margin-top: 25px;
+            padding-top: 22px;
             border-top: 2px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 0 8px;
         }
 
         .stat-number {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 900;
             color: #764ba2;
             display: block;
@@ -364,8 +315,7 @@
 
         .stat-label {
             color: #777;
-            font-size: 0.85em;
-            font-weight: 400;
+            font-size: 0.8em;
         }
 
         /* ============================================
@@ -373,20 +323,20 @@
                    ============================================ */
         .section-title {
             text-align: center;
-            color: white;
-            font-size: 1.8em;
+            color: #fff;
+            font-size: 1.7em;
             font-weight: 900;
-            margin-bottom: 28px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            margin-bottom: 25px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 70px;
+            width: 60px;
             height: 3px;
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
-            margin: 10px auto 0;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            margin: 8px auto 0;
             border-radius: 10px;
         }
 
@@ -395,58 +345,58 @@
                    ============================================ */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+            margin-bottom: 35px;
         }
 
         .service-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
-            border-radius: 22px;
-            padding: 25px 20px;
+            border-radius: 20px;
+            padding: 22px 18px;
             text-align: center;
             text-decoration: none;
-            color: white;
-            transition: all 0.35s ease;
+            color: #fff;
+            transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .service-card:hover {
             background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            border-color: rgba(255, 215, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            border-color: rgba(255, 215, 0, 0.12);
         }
 
         .service-icon {
-            font-size: 2.8em;
-            margin-bottom: 10px;
+            font-size: 2.5em;
+            margin-bottom: 8px;
             display: block;
         }
 
         .service-card h4 {
-            font-size: 1.05em;
+            font-size: 1em;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .service-card p {
-            font-size: 0.85em;
-            opacity: 0.85;
+            font-size: 0.8em;
+            opacity: 0.8;
             font-weight: 300;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         .service-card .card-badge {
             display: inline-block;
             background: rgba(255, 215, 0, 0.15);
             color: #FFD700;
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 50px;
-            font-size: 0.6em;
+            font-size: 0.55em;
             font-weight: 700;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
         /* ============================================
@@ -454,29 +404,27 @@
                    ============================================ */
         .about-box {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 26px;
-            padding: 40px 45px;
+            border-radius: 24px;
+            padding: 35px 40px;
             text-align: center;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            margin-top: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
         }
 
         .about-box h3 {
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 18px;
-            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-size: 1.5em;
             font-weight: 900;
         }
 
         .about-box p {
             color: #555;
-            line-height: 2.2;
-            font-size: 0.95em;
-            font-weight: 400;
-            max-width: 750px;
+            line-height: 2;
+            font-size: 0.9em;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -486,20 +434,20 @@
         .contact-row {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 18px;
         }
 
         .contact-row a {
             color: #764ba2;
             text-decoration: none;
             font-weight: 500;
-            padding: 6px 18px;
+            padding: 5px 16px;
             border-radius: 50px;
             background: rgba(118, 75, 162, 0.05);
             transition: all 0.3s;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         .contact-row a:hover {
@@ -512,43 +460,42 @@
         .request-box {
             background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(8px);
-            border-radius: 26px;
-            padding: 40px 35px;
+            border-radius: 24px;
+            padding: 35px 30px;
             text-align: center;
-            margin-top: 32px;
+            margin-top: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .request-box h3 {
-            color: white;
-            margin-bottom: 10px;
-            font-size: 1.5em;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.4em;
             font-weight: 900;
         }
 
         .request-box p {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95em;
-            font-weight: 400;
+            font-size: 0.9em;
         }
 
         .btn-large {
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #fff;
-            padding: 14px 50px;
+            padding: 12px 45px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1em;
+            font-size: 0.95em;
             display: inline-block;
-            margin-top: 18px;
+            margin-top: 16px;
             transition: all 0.3s;
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 5px 18px rgba(255, 215, 0, 0.2);
         }
 
         .btn-large:hover {
             transform: scale(1.04);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.35);
+            box-shadow: 0 8px 28px rgba(255, 215, 0, 0.35);
         }
 
         /* ============================================
@@ -557,17 +504,17 @@
         footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.4);
-            padding: 25px 0 12px;
-            margin-top: 30px;
+            padding: 20px 0 10px;
+            margin-top: 28px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         footer p {
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         footer .sub {
-            font-size: 0.75em;
+            font-size: 0.7em;
             margin-top: 4px;
             opacity: 0.6;
         }
@@ -584,29 +531,20 @@
                 font-size: 2.4em;
             }
             .hero {
-                padding: 40px 30px;
-                min-height: 260px;
+                padding: 35px 25px;
+                min-height: 230px;
             }
             .hero::before {
-                width: 90%;
-                height: 90%;
-                opacity: 0.08;
-            }
-            .logo-text .main {
-                font-size: 1.5em;
-            }
-            .logo-box {
-                width: 42px;
-                height: 42px;
-                font-size: 1.2em;
+                background-size: 80%;
+                opacity: 0.06;
             }
         }
 
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                border-radius: 24px;
-                padding: 14px 18px;
+                border-radius: 20px;
+                padding: 12px 16px;
             }
             .logo-wrapper {
                 width: 100%;
@@ -616,72 +554,63 @@
                 font-size: 2em;
             }
             .hero {
-                padding: 28px 20px;
-                border-radius: 20px;
-                min-height: 200px;
+                padding: 25px 18px;
+                min-height: 180px;
             }
             .hero::before {
-                width: 95%;
-                height: 95%;
-                opacity: 0.06;
+                background-size: 90%;
+                opacity: 0.05;
             }
             .section-title {
                 font-size: 1.4em;
             }
             .dropdown-content {
-                min-width: 210px;
-                right: -40px;
-                max-height: 320px;
+                min-width: 200px;
+                right: -30px;
+                max-height: 300px;
             }
             .stats {
-                gap: 20px;
+                gap: 18px;
             }
             .stat-number {
-                font-size: 1.6em;
+                font-size: 1.5em;
             }
             .about-box {
-                padding: 28px 20px;
-            }
-            .request-box {
-                padding: 28px 20px;
+                padding: 25px 18px;
             }
             .services-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 14px;
+                gap: 12px;
             }
             .service-card {
-                padding: 18px 14px;
+                padding: 16px 12px;
             }
             .service-icon {
-                font-size: 2.2em;
+                font-size: 2em;
             }
             .nav-menu {
                 justify-content: center;
                 width: 100%;
             }
             .nav-menu > a {
-                padding: 5px 11px;
-                font-size: 0.78em;
+                padding: 4px 10px;
+                font-size: 0.75em;
             }
             .dropdown-btn {
-                padding: 5px 11px;
-                font-size: 0.78em;
+                padding: 4px 10px;
+                font-size: 0.75em;
             }
-            .logo-box {
-                width: 38px;
-                height: 38px;
+            .logo-icon {
+                width: 34px;
+                height: 34px;
                 font-size: 1em;
-                border-radius: 10px;
+                border-radius: 8px;
             }
             .logo-text .main {
-                font-size: 1.3em;
+                font-size: 1.2em;
             }
             .logo-text .sub {
                 font-size: 0.4em;
-            }
-            .hero-bg-decoration,
-            .hero-bg-decoration2 {
-                display: none;
             }
         }
 
@@ -693,16 +622,15 @@
                 font-size: 1.6em;
             }
             .hero p {
-                font-size: 0.9em;
+                font-size: 0.85em;
             }
             .hero {
-                min-height: 170px;
-                padding: 22px 14px;
+                min-height: 150px;
+                padding: 18px 12px;
             }
             .hero::before {
                 opacity: 0.04;
-                width: 100%;
-                height: 100%;
+                background-size: 100%;
             }
             .services-grid {
                 grid-template-columns: 1fr;
@@ -714,73 +642,72 @@
                 font-size: 1.3em;
             }
             .stat-label {
-                font-size: 0.75em;
+                font-size: 0.7em;
             }
             .contact-row {
-                gap: 8px;
+                gap: 6px;
             }
             .contact-row a {
-                padding: 4px 12px;
-                font-size: 0.75em;
+                padding: 3px 10px;
+                font-size: 0.7em;
             }
             .btn-large {
-                padding: 11px 28px;
-                font-size: 0.9em;
+                padding: 10px 28px;
+                font-size: 0.85em;
             }
             .about-box h3 {
                 font-size: 1.3em;
             }
             .about-box p {
-                font-size: 0.85em;
+                font-size: 0.8em;
             }
             .section-title {
                 font-size: 1.2em;
             }
             .dropdown-content {
-                min-width: 180px;
-                right: -15px;
+                min-width: 170px;
+                right: -10px;
                 max-height: 250px;
             }
             .dropdown-content a {
-                font-size: 0.78em !important;
+                font-size: 0.75em !important;
                 padding: 8px 12px !important;
             }
             .service-card h4 {
-                font-size: 0.95em;
+                font-size: 0.9em;
             }
             .service-card p {
-                font-size: 0.78em;
+                font-size: 0.75em;
             }
             .request-box h3 {
                 font-size: 1.2em;
             }
             .logo-text .main {
-                font-size: 1.1em;
+                font-size: 1em;
             }
             .logo-text .sub {
                 font-size: 0.35em;
-                letter-spacing: 2px;
             }
-            .logo-box {
-                width: 34px;
-                height: 34px;
-                font-size: 0.85em;
-                border-radius: 8px;
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8em;
+                border-radius: 6px;
             }
             .hero-badge {
                 font-size: 0.6em;
-                padding: 4px 14px;
+                padding: 3px 12px;
             }
             .navbar {
-                padding: 10px 12px;
+                padding: 8px 10px;
             }
             .dropdown-btn {
-                font-size: 0.72em;
-                padding: 4px 10px;
+                font-size: 0.7em;
+                padding: 3px 8px;
             }
             .nav-menu > a {
-                font-size: 0.72em;
-                padding: 4px 10px;
+                font-size: 0.7em;
+                padding: 3px 8px;
             }
         }
 
@@ -806,7 +733,7 @@
     <!-- ===== نوار ناوبری ===== -->
     <div class="navbar">
         <a href="index.html" class="logo-wrapper">
-            <div class="logo-box">✦</div>
+            <div class="logo-icon">✦</div>
             <div class="logo-text">
                 <span class="main">Sofia<span class="highlight">AI</span></span>
                 <span class="sub">✦ هوش مصنوعی سوفیا ✦</span>
@@ -846,8 +773,6 @@
 
     <!-- ===== بخش قهرمان ===== -->
     <div class="hero">
-        <div class="hero-bg-decoration"></div>
-        <div class="hero-bg-decoration2"></div>
         <div class="hero-content">
             <div class="hero-badge">✨ هوش مصنوعی پیشرفته برای کسب‌وکار شما</div>
             <h1>✨ هوش مصنوعی سوفیا ✨</h1>
@@ -927,48 +852,48 @@
             <h4>سیستم پیشنهاددهنده</h4>
             <p>توصیه محصول و محتوای شخصی‌سازی شده</p>
         </a>
-        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.15);">
+        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.12);">
             <span class="service-icon">🛡️</span>
             <h4>تشخیص کلاهبرداری و امنیت سایبری</h4>
             <p>تشخیص تراکنش‌های مشکوک و حملات سایبری</p>
         </a>
-        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.15);">
+        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.12);">
             <span class="service-icon">📢</span>
             <h4>هوش مصنوعی در بازاریابی دیجیتال</h4>
             <p>شخصی‌سازی کمپین‌ها و تحلیل رفتار مشتری</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.15);">
+        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.12);">
             <span class="service-icon">🧠</span>
             <h4>مدیریت دانش و هوش کسب‌وکار</h4>
             <p>استخراج دانش و داشبوردهای هوشمند</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.15);">
+        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.12);">
             <span class="service-icon">🏥</span>
             <h4>هوش مصنوعی در سلامت و پزشکی</h4>
             <p>تشخیص بیماری، تحلیل تصاویر پزشکی</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.15);">
+        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.12);">
             <span class="service-icon">✍️</span>
             <h4>تولید خودکار محتوا</h4>
             <p>تولید مقاله، ایمیل، کپشن و گزارش</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.15);">
+        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.12);">
             <span class="service-icon">💄</span>
             <h4>هوش مصنوعی در صنعت زیبایی</h4>
             <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.15);">
+        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.12);">
             <span class="service-icon">🏠</span>
             <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
             <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.15);">
+        <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.12);">
             <span class="service-icon">🌐</span>
             <h4>طراحی سایت با هوش مصنوعی</h4>
             <p>طراحی قالب، فروشگاه، اپلیکیشن وب و بهینه‌سازی سئو</p>
