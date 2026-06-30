@@ -30,160 +30,6 @@
         }
 
         /* ============================================
-                   لوگوی اختصاصی سوفیا (با الهام از Resplina)
-                   ============================================ */
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-            position: relative;
-        }
-
-        /* حلقه لوگو */
-        .logo-ring-container {
-            position: relative;
-            width: 56px;
-            height: 56px;
-            flex-shrink: 0;
-        }
-
-        .logo-ring-outer {
-            position: absolute;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: 2.5px solid rgba(255, 215, 0, 0.25);
-            animation: spin 10s linear infinite;
-        }
-
-        .logo-ring-outer::before {
-            content: '';
-            position: absolute;
-            top: -2.5px;
-            left: -2.5px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: 2.5px solid transparent;
-            border-top-color: #FFD700;
-            border-right-color: rgba(255, 215, 0, 0.3);
-            animation: spin 2.5s linear infinite;
-        }
-
-        .logo-ring-inner {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-ring-inner .logo-icon {
-            font-size: 1.6em;
-            animation: pulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.12); }
-        }
-
-        /* ذرات درخشان */
-        .logo-sparkle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #FFD700;
-            border-radius: 50%;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
-            animation: sparkle 2.8s ease-in-out infinite;
-        }
-
-        .logo-sparkle:nth-child(3) { top: -4px; right: 6px; animation-delay: 0s; }
-        .logo-sparkle:nth-child(4) { top: -4px; left: 6px; animation-delay: 0.7s; }
-        .logo-sparkle:nth-child(5) { bottom: -4px; right: 6px; animation-delay: 1.4s; }
-        .logo-sparkle:nth-child(6) { bottom: -4px; left: 6px; animation-delay: 2.1s; }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.3); }
-        }
-
-        /* متن لوگو */
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.15;
-        }
-
-        .logo-text .main {
-            font-size: 1.8em;
-            font-weight: 900;
-            color: white;
-            letter-spacing: 1px;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-        }
-
-        .logo-text .main .highlight {
-            color: #FFD700;
-            position: relative;
-        }
-
-        .logo-text .main .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border-radius: 10px;
-            width: 0;
-            transition: width 0.5s;
-        }
-
-        .logo-wrapper:hover .logo-text .main .highlight::after {
-            width: 100%;
-        }
-
-        .logo-text .sub {
-            font-size: 0.55em;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.55);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .logo-text .sub .dot {
-            color: #FFD700;
-            margin: 0 4px;
-        }
-
-        /* خط زیر لوگو (دکوراتیو) */
-        .logo-underline {
-            position: absolute;
-            bottom: -4px;
-            right: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-            border-radius: 10px;
-        }
-
-        /* ============================================
                    نوار ناوبری
                    ============================================ */
         .navbar {
@@ -200,47 +46,83 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
             position: relative;
-            overflow: hidden;
         }
 
-        .navbar::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -20%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.03), transparent 70%);
-            border-radius: 50%;
+        /* ===== لوگو با تصویر 2.png ===== */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px;
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .logo-wrapper:hover .logo-image {
+            transform: scale(1.05) rotate(-3deg);
+            border-color: #FFD700;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .logo-text .main {
+            font-size: 1.6em;
+            font-weight: 900;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text .main .highlight {
+            color: #FFD700;
+        }
+
+        .logo-text .sub {
+            font-size: 0.5em;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* ===== منوی اصلی ===== */
         .nav-menu {
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
             align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
-        .nav-menu a {
+        .nav-menu > a {
             color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             padding: 8px 16px;
             border-radius: 30px;
             transition: all 0.3s ease;
             font-weight: 500;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-size: 0.9em;
             position: relative;
         }
 
-        .nav-menu a:hover {
+        .nav-menu > a:hover {
             background: rgba(255, 255, 255, 0.12);
             color: white;
             transform: translateY(-2px);
         }
 
+        /* ===== منوی کشویی ===== */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -274,7 +156,7 @@
             min-width: 290px;
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-            z-index: 100;
+            z-index: 999;
             overflow: hidden;
             max-height: 480px;
             overflow-y: auto;
@@ -288,7 +170,6 @@
             border-bottom: 1px solid #f0f0f0;
             font-size: 0.88em;
             text-decoration: none;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-weight: 400;
             transition: all 0.25s ease;
         }
@@ -306,10 +187,19 @@
             margin: 4px 12px;
         }
 
-        .dropdown:hover .dropdown-content {
+        /* نمایش منو هنگام هاور (دسکتاپ) */
+        @media (min-width: 769px) {
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        }
+
+        /* نمایش منو هنگام کلیک (موبایل و دسکتاپ) */
+        .dropdown.active .dropdown-content {
             display: block;
         }
 
+        /* ===== دکمه‌های ویژه ===== */
         .btn-request {
             background: linear-gradient(135deg, #FFD700, #F4A460);
             color: #333 !important;
@@ -320,10 +210,6 @@
         .btn-request:hover {
             transform: translateY(-3px) !important;
             box-shadow: 0 8px 35px rgba(255, 215, 0, 0.45) !important;
-        }
-
-        .btn-request::after {
-            display: none !important;
         }
 
         .cooperation-btn {
@@ -351,28 +237,6 @@
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -120px;
-            right: -120px;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.04), transparent 70%);
-            border-radius: 50%;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -120px;
-            left: -120px;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(118, 75, 162, 0.04), transparent 70%);
-            border-radius: 50%;
-        }
-
         .hero-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -383,8 +247,6 @@
             font-weight: 700;
             margin-bottom: 18px;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
-            position: relative;
-            z-index: 1;
         }
 
         .hero h1 {
@@ -395,9 +257,6 @@
             font-size: 3em;
             font-weight: 900;
             margin-bottom: 12px;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            position: relative;
-            z-index: 1;
         }
 
         .hero p {
@@ -405,11 +264,8 @@
             font-size: 1.15em;
             line-height: 2;
             font-weight: 400;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             max-width: 700px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .hero .highlight-text {
@@ -426,8 +282,6 @@
             margin-top: 35px;
             padding-top: 28px;
             border-top: 2px solid rgba(0, 0, 0, 0.06);
-            position: relative;
-            z-index: 1;
         }
 
         .stat-item {
@@ -439,7 +293,6 @@
             font-size: 2.2em;
             font-weight: 900;
             color: #764ba2;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             display: block;
         }
 
@@ -452,7 +305,6 @@
             color: #777;
             font-size: 0.9em;
             font-weight: 400;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         /* ============================================
@@ -465,8 +317,6 @@
             font-weight: 900;
             margin-bottom: 30px;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            position: relative;
         }
 
         .section-title::after {
@@ -499,21 +349,6 @@
             color: white;
             transition: all 0.35s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            opacity: 0;
-            transition: opacity 0.35s;
         }
 
         .service-card:hover {
@@ -522,33 +357,22 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
         .service-icon {
             font-size: 3em;
             margin-bottom: 12px;
             display: block;
-            transition: transform 0.35s;
-        }
-
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(-5deg);
         }
 
         .service-card h4 {
             font-size: 1.1em;
             font-weight: 700;
             margin-bottom: 6px;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         .service-card p {
             font-size: 0.88em;
             opacity: 0.85;
             font-weight: 300;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             line-height: 1.7;
         }
 
@@ -573,17 +397,6 @@
             text-align: center;
             margin-top: 45px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-box::before {
-            content: '💡';
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            font-size: 2.5em;
-            opacity: 0.06;
         }
 
         .about-box h3 {
@@ -594,7 +407,6 @@
             margin-bottom: 20px;
             font-size: 1.7em;
             font-weight: 900;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         .about-box p {
@@ -602,7 +414,6 @@
             line-height: 2.2;
             font-size: 1em;
             font-weight: 400;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             max-width: 800px;
             margin: 0 auto;
         }
@@ -622,7 +433,6 @@
             color: #764ba2;
             text-decoration: none;
             font-weight: 500;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             padding: 8px 22px;
             border-radius: 50px;
             background: rgba(118, 75, 162, 0.06);
@@ -653,19 +463,14 @@
             margin-bottom: 12px;
             font-size: 1.6em;
             font-weight: 900;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         .request-box p {
             color: rgba(255, 255, 255, 0.85);
             font-size: 1em;
             font-weight: 400;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
-        /* ============================================
-                   دکمه بزرگ
-                   ============================================ */
         .btn-large {
             background: linear-gradient(135deg, #FFD700, #F4A460);
             color: #333;
@@ -677,7 +482,6 @@
             display: inline-block;
             margin-top: 22px;
             transition: all 0.3s;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
         }
 
@@ -694,7 +498,6 @@
             color: rgba(255, 255, 255, 0.5);
             padding: 30px 0 15px;
             margin-top: 35px;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -719,14 +522,15 @@
             .hero h1 {
                 font-size: 2.4em;
             }
-            .container {
-                padding: 0 10px;
-            }
             .hero {
                 padding: 40px 30px;
             }
             .logo-text .main {
-                font-size: 1.5em;
+                font-size: 1.4em;
+            }
+            .logo-image {
+                width: 42px;
+                height: 42px;
             }
         }
 
@@ -746,10 +550,6 @@
             .hero {
                 padding: 30px 20px;
                 border-radius: 20px;
-            }
-            .hero::before,
-            .hero::after {
-                display: none;
             }
             .section-title {
                 font-size: 1.5em;
@@ -785,7 +585,7 @@
                 justify-content: center;
                 width: 100%;
             }
-            .nav-menu a {
+            .nav-menu > a {
                 padding: 6px 12px;
                 font-size: 0.82em;
             }
@@ -793,36 +593,15 @@
                 padding: 6px 12px;
                 font-size: 0.82em;
             }
-            .logo-ring-container {
-                width: 44px;
-                height: 44px;
-            }
-            .logo-ring-outer {
-                width: 44px;
-                height: 44px;
-            }
-            .logo-ring-outer::before {
-                width: 44px;
-                height: 44px;
-            }
-            .logo-ring-inner {
-                width: 34px;
-                height: 34px;
-                top: 5px;
-                left: 5px;
-            }
-            .logo-ring-inner .logo-icon {
-                font-size: 1.2em;
+            .logo-image {
+                width: 36px;
+                height: 36px;
             }
             .logo-text .main {
-                font-size: 1.3em;
+                font-size: 1.2em;
             }
             .logo-text .sub {
-                font-size: 0.5em;
-            }
-            .logo-sparkle {
-                width: 4px;
-                height: 4px;
+                font-size: 0.45em;
             }
         }
 
@@ -877,32 +656,16 @@
                 font-size: 1.2em;
             }
             .logo-text .main {
-                font-size: 1.1em;
+                font-size: 1em;
             }
             .logo-text .sub {
-                font-size: 0.45em;
-                letter-spacing: 1.5px;
+                font-size: 0.4em;
+                letter-spacing: 1px;
             }
-            .logo-ring-container {
-                width: 36px;
-                height: 36px;
-            }
-            .logo-ring-outer {
-                width: 36px;
-                height: 36px;
-            }
-            .logo-ring-outer::before {
-                width: 36px;
-                height: 36px;
-            }
-            .logo-ring-inner {
-                width: 28px;
-                height: 28px;
-                top: 4px;
-                left: 4px;
-            }
-            .logo-ring-inner .logo-icon {
-                font-size: 1em;
+            .logo-image {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
             }
             .hero-badge {
                 font-size: 0.65em;
@@ -933,19 +696,10 @@
 
 <div class="container">
 
-    <!-- ===== نوار ناوبری با لوگوی جدید ===== -->
+    <!-- ===== نوار ناوبری ===== -->
     <div class="navbar">
         <a href="index.html" class="logo-wrapper">
-            <div class="logo-ring-container">
-                <div class="logo-ring-outer"></div>
-                <div class="logo-ring-inner">
-                    <span class="logo-icon">✨</span>
-                </div>
-                <div class="logo-sparkle"></div>
-                <div class="logo-sparkle"></div>
-                <div class="logo-sparkle"></div>
-                <div class="logo-sparkle"></div>
-            </div>
+            <img src="2.png" alt="سوفیا هوش مصنوعی" class="logo-image">
             <div class="logo-text">
                 <span class="main">Sofia<span class="highlight">AI</span></span>
                 <span class="sub">✦ هوش مصنوعی سوفیا ✦</span>
@@ -953,8 +707,8 @@
         </a>
         <div class="nav-menu">
             <a href="index.html">🏠 خانه</a>
-            <div class="dropdown">
-                <button class="dropdown-btn">🛠 خدمات ▼</button>
+            <div class="dropdown" id="servicesDropdown">
+                <button class="dropdown-btn" id="servicesBtn">🛠 خدمات ▼</button>
                 <div class="dropdown-content">
                     <a href="service-rag.html">🧠 سیستم RAG</a>
                     <a href="service-vision.html">👁️ بینایی ماشین</a>
@@ -1142,6 +896,51 @@
     </footer>
 
 </div>
+
+<!-- ===== جاوااسکریپت برای منوی کشویی در موبایل ===== -->
+<script>
+    // منوی خدمات - برای کار در موبایل و دسکتاپ
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.getElementById('servicesDropdown');
+        const btn = document.getElementById('servicesBtn');
+
+        if (dropdown && btn) {
+            // کلیک روی دکمه منو
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+
+            // بستن منو با کلیک خارج از آن
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            // بستن منو با کلیک روی لینک‌های داخل آن
+            dropdown.querySelectorAll('.dropdown-content a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    dropdown.classList.remove('active');
+                });
+            });
+
+            // برای دسکتاپ: هاور باز کردن منو
+            dropdown.addEventListener('mouseenter', function() {
+                if (window.innerWidth > 768) {
+                    dropdown.classList.add('active');
+                }
+            });
+
+            dropdown.addEventListener('mouseleave', function() {
+                if (window.innerWidth > 768) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
