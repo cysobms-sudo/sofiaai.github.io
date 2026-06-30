@@ -47,7 +47,7 @@
         }
 
         /* ============================================
-                   لوگوی انیمیشنی هوش مصنوعی
+                   لوگوی انیمیشنی با حرف S
                    ============================================ */
         .logo-wrapper {
             display: flex;
@@ -58,16 +58,16 @@
 
         .logo-container {
             position: relative;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             flex-shrink: 0;
         }
 
         /* حلقه بیرونی چرخان */
         .logo-ring-outer {
             position: absolute;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 2.5px solid rgba(255, 215, 0, 0.15);
             animation: ringSpin 4s linear infinite;
@@ -78,8 +78,8 @@
             position: absolute;
             top: -2.5px;
             left: -2.5px;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 2.5px solid transparent;
             border-top-color: #FFD700;
@@ -90,8 +90,8 @@
         /* حلقه داخلی */
         .logo-ring-inner {
             position: absolute;
-            top: 6px;
-            left: 6px;
+            top: 7px;
+            left: 7px;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -104,12 +104,14 @@
             animation: ringSpin 6s linear infinite reverse;
         }
 
-        /* آیکون مرکزی با انیمیشن پالس */
-        .logo-center-icon {
-            font-size: 1.2em;
+        /* حرف S با انیمیشن پالس */
+        .logo-letter {
+            font-size: 1.3em;
+            font-weight: 900;
             color: #FFD700;
-            animation: pulseIcon 2s ease-in-out infinite;
+            animation: pulseLetter 2s ease-in-out infinite;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         /* نقطه‌های درخشان */
@@ -133,9 +135,9 @@
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulseIcon {
+        @keyframes pulseLetter {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.15); color: #FFE44D; }
         }
 
         @keyframes dotFlash {
@@ -156,7 +158,7 @@
             animation-duration: 3s;
         }
 
-        .logo-wrapper:hover .logo-center-icon {
+        .logo-wrapper:hover .logo-letter {
             animation-duration: 1s;
             color: #FFE44D;
         }
@@ -214,7 +216,7 @@
             color: #fff;
         }
 
-        /* ===== منوی کشویی ===== */
+        /* ===== منوی کشویی با پس‌زمینه تیره و خوانا ===== */
         .dropdown {
             position: relative;
         }
@@ -242,25 +244,25 @@
             position: absolute;
             top: 42px;
             right: 0;
-            background: rgba(20, 20, 50, 0.92);
+            background: rgba(15, 15, 40, 0.95);
             backdrop-filter: blur(16px);
             min-width: 280px;
             border-radius: 14px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
             z-index: 9999;
             overflow: hidden;
-            max-height: 400px;
+            max-height: 420px;
             overflow-y: auto;
             border: 1px solid rgba(255, 215, 0, 0.06);
             padding: 4px 0;
         }
 
         .dropdown-content a {
-            color: #e8ecf4 !important;
-            padding: 10px 18px !important;
+            color: #f0f2f8 !important;
+            padding: 11px 18px !important;
             display: block !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-            font-size: 0.85em !important;
+            font-size: 0.88em !important;
             text-decoration: none !important;
             font-weight: 400 !important;
             background: transparent !important;
@@ -308,7 +310,7 @@
         }
 
         /* ============================================
-                   بخش قهرمان
+                   بخش قهرمان با تصویر پس‌زمینه با وضوح بهتر
                    ============================================ */
         .hero {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
@@ -331,8 +333,8 @@
             right: 0;
             bottom: 0;
             background: url('2.png') no-repeat center center;
-            background-size: 50%;
-            opacity: 0.1;
+            background-size: 55%;
+            opacity: 0.18;
             z-index: 0;
         }
 
@@ -515,7 +517,7 @@
         }
 
         /* ============================================
-                   تماس
+                   تماس با اضافه شدن پیام‌رسان بله
                    ============================================ */
         .contact-row {
             display: flex;
@@ -538,6 +540,7 @@
 
         .contact-row a:hover {
             background: rgba(118, 75, 162, 0.1);
+            transform: translateY(-2px);
         }
 
         /* ============================================
@@ -622,7 +625,7 @@
             }
             .hero::before {
                 background-size: 60%;
-                opacity: 0.08;
+                opacity: 0.14;
             }
             .logo-text .main {
                 font-size: 1.4em;
@@ -640,13 +643,13 @@
                 height: 42px;
             }
             .logo-ring-inner {
-                width: 32px;
-                height: 32px;
-                top: 5px;
-                left: 5px;
+                width: 30px;
+                height: 30px;
+                top: 6px;
+                left: 6px;
             }
-            .logo-center-icon {
-                font-size: 1em;
+            .logo-letter {
+                font-size: 1.1em;
             }
             .logo-dot {
                 display: none;
@@ -672,7 +675,7 @@
             }
             .hero::before {
                 background-size: 75%;
-                opacity: 0.06;
+                opacity: 0.1;
             }
             .section-title {
                 font-size: 1.4em;
@@ -726,13 +729,13 @@
                 height: 38px;
             }
             .logo-ring-inner {
-                width: 28px;
-                height: 28px;
-                top: 5px;
-                left: 5px;
+                width: 26px;
+                height: 26px;
+                top: 6px;
+                left: 6px;
             }
-            .logo-center-icon {
-                font-size: 0.9em;
+            .logo-letter {
+                font-size: 0.95em;
             }
             .logo-text .main {
                 font-size: 1.2em;
@@ -757,7 +760,7 @@
                 padding: 18px 12px;
             }
             .hero::before {
-                opacity: 0.05;
+                opacity: 0.08;
                 background-size: 90%;
             }
             .services-grid {
@@ -834,14 +837,14 @@
                 left: -2px;
             }
             .logo-ring-inner {
-                width: 24px;
-                height: 24px;
-                top: 4px;
-                left: 4px;
+                width: 22px;
+                height: 22px;
+                top: 5px;
+                left: 5px;
                 border-width: 1.5px;
             }
-            .logo-center-icon {
-                font-size: 0.75em;
+            .logo-letter {
+                font-size: 0.8em;
             }
             .hero-badge {
                 font-size: 0.55em;
@@ -885,7 +888,7 @@
             <div class="logo-container">
                 <div class="logo-ring-outer"></div>
                 <div class="logo-ring-inner">
-                    <span class="logo-center-icon">✦</span>
+                    <span class="logo-letter">S</span>
                 </div>
                 <div class="logo-dot"></div>
                 <div class="logo-dot"></div>
@@ -1069,10 +1072,11 @@
             <strong style="color:#667eea;">هدف ما کمک به سازمان‌ها برای بهره‌گیری از قدرت هوش مصنوعی به صورت خصوصی، آفلاین و اقتصادی می‌باشد.</strong>
         </p>
         <div class="contact-row">
-            <a href="mailto:Cysobms@gmail.com">📧 Cysobms@gmail.com</a>
-            <a href="tel:09130771128">📱 ۰۹۱۳۰۷۷۱۱۲۸</a>
+            <a href="mailto:Cysobms@gmail.com">📧 ایمیل</a>
+            <a href="tel:09130771128">📱 تلفن</a>
             <a href="#">💬 واتس‌اپ</a>
             <a href="#">📱 تلگرام</a>
+            <a href="#">🟣 بله</a>
         </div>
     </div>
 
@@ -1098,21 +1102,18 @@
         const btn = document.getElementById('servicesBtn');
 
         if (dropdown && btn) {
-            // کلیک روی دکمه منو
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 dropdown.classList.toggle('active');
             });
 
-            // بستن منو با کلیک خارج از آن
             document.addEventListener('click', function(e) {
                 if (!dropdown.contains(e.target)) {
                     dropdown.classList.remove('active');
                 }
             });
 
-            // بستن منو با کلیک روی لینک‌های داخل آن
             dropdown.querySelectorAll('.dropdown-content a').forEach(function(link) {
                 link.addEventListener('click', function() {
                     dropdown.classList.remove('active');
