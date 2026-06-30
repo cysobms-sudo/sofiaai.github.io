@@ -49,7 +49,7 @@
         }
 
         /* ============================================
-                   لوگو با انیمیشن S پاره پاره
+                   لوگوی ساده با حرف S و Zoom In/Out
                    ============================================ */
         .logo-wrapper {
             display: flex;
@@ -60,19 +60,19 @@
 
         .logo-container {
             position: relative;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             flex-shrink: 0;
         }
 
-        /* حلقه بیرونی چرخان - بسیار کند */
+        /* حلقه بیرونی - چرخش بسیار کند */
         .logo-ring-outer {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             border: 2.5px solid rgba(255, 215, 0, 0.12);
-            animation: ringSpin 12s linear infinite;
+            animation: ringSpin 15s linear infinite;
         }
 
         .logo-ring-outer::before {
@@ -80,13 +80,13 @@
             position: absolute;
             top: -2.5px;
             left: -2.5px;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             border: 2.5px solid transparent;
             border-top-color: #FFD700;
-            border-right-color: rgba(255, 215, 0, 0.25);
-            animation: ringSpin 5s linear infinite;
+            border-right-color: rgba(255, 215, 0, 0.2);
+            animation: ringSpin 6s linear infinite;
         }
 
         @keyframes ringSpin {
@@ -94,115 +94,43 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* حلقه داخلی - بسیار کند */
+        /* حلقه داخلی - چرخش معکوس بسیار کند */
         .logo-ring-inner {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            width: 44px;
-            height: 44px;
+            top: 7px;
+            left: 7px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.05);
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: ringSpin 18s linear infinite reverse;
+            animation: ringSpin 20s linear infinite reverse;
         }
 
-        /* ===== SVG انیمیشن S با مکث ===== */
-        .logo-svg {
-            width: 34px;
-            height: 34px;
+        /* حرف S با انیمیشن Zoom In/Out بسیار آرام */
+        .logo-letter {
+            font-size: 1.6em;
+            font-weight: 900;
+            color: #FFD700;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            animation: zoomLetter 4s ease-in-out infinite;
         }
 
-        .logo-svg .s-piece {
-            fill: #FFD700;
-        }
-
-        /* انیمیشن: پاره شدن → مکث → جمع شدن → مکث طولانی */
-        .logo-svg .s-piece.p1 { animation: shatter1 6s ease-in-out infinite; }
-        .logo-svg .s-piece.p2 { animation: shatter2 6s ease-in-out infinite 0.15s; }
-        .logo-svg .s-piece.p3 { animation: shatter3 6s ease-in-out infinite 0.3s; }
-        .logo-svg .s-piece.p4 { animation: shatter4 6s ease-in-out infinite 0.45s; }
-        .logo-svg .s-piece.p5 { animation: shatter5 6s ease-in-out infinite 0.6s; }
-        .logo-svg .s-piece.p6 { animation: shatter6 6s ease-in-out infinite 0.75s; }
-        .logo-svg .s-piece.p7 { animation: shatter7 6s ease-in-out infinite 0.9s; }
-        .logo-svg .s-piece.p8 { animation: shatter8 6s ease-in-out infinite 1.05s; }
-
-        /* زمان‌بندی جدید: 0-20% پاره شدن، 20-40% مکث پراکنده، 40-70% جمع شدن، 70-100% مکث کامل */
-        @keyframes shatter1 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(-5px, -4px) rotate(-15deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(-9px, -7px) rotate(-30deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(-9px, -7px) rotate(-30deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(-4px, -3px) rotate(-12deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter2 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(4px, -5px) rotate(14deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(7px, -9px) rotate(28deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(7px, -9px) rotate(28deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(3px, -4px) rotate(10deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter3 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(-7px, 3px) rotate(-22deg) scale(0.7); opacity: 0.7; }
-            20% { transform: translate(-11px, 5px) rotate(-40deg) scale(0.4); opacity: 0.3; }
-            35% { transform: translate(-11px, 5px) rotate(-40deg) scale(0.4); opacity: 0.3; }
-            50% { transform: translate(-5px, 2px) rotate(-16deg) scale(0.7); opacity: 0.7; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter4 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(5px, 4px) rotate(18deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(9px, 6px) rotate(35deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(9px, 6px) rotate(35deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(4px, 3px) rotate(12deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter5 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(-3px, -7px) rotate(-14deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(-6px, -11px) rotate(-28deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(-6px, -11px) rotate(-28deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(-2px, -5px) rotate(-8deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter6 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(7px, -2px) rotate(24deg) scale(0.7); opacity: 0.7; }
-            20% { transform: translate(11px, -4px) rotate(42deg) scale(0.4); opacity: 0.3; }
-            35% { transform: translate(11px, -4px) rotate(42deg) scale(0.4); opacity: 0.3; }
-            50% { transform: translate(5px, -1px) rotate(14deg) scale(0.7); opacity: 0.7; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter7 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(-4px, 5px) rotate(-16deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(-7px, 9px) rotate(-30deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(-7px, 9px) rotate(-30deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(-3px, 4px) rotate(-10deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-        }
-        @keyframes shatter8 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            10% { transform: translate(3px, 7px) rotate(12deg) scale(0.8); opacity: 0.8; }
-            20% { transform: translate(5px, 11px) rotate(24deg) scale(0.5); opacity: 0.4; }
-            35% { transform: translate(5px, 11px) rotate(24deg) scale(0.5); opacity: 0.4; }
-            50% { transform: translate(2px, 5px) rotate(6deg) scale(0.8); opacity: 0.8; }
-            65% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+        @keyframes zoomLetter {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.9;
+            }
+            50% { 
+                transform: scale(1.25); 
+                opacity: 1;
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            }
         }
 
         /* نقطه‌های درخشان */
@@ -212,35 +140,39 @@
             height: 5px;
             background: #FFD700;
             border-radius: 50%;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
             animation: dotFlash 3s ease-in-out infinite;
         }
 
-        .logo-dot:nth-child(5) { top: -2px; right: 10px; animation-delay: 0s; }
-        .logo-dot:nth-child(6) { top: -2px; left: 10px; animation-delay: 0.7s; }
-        .logo-dot:nth-child(7) { bottom: -2px; right: 10px; animation-delay: 1.4s; }
-        .logo-dot:nth-child(8) { bottom: -2px; left: 10px; animation-delay: 2.1s; }
+        .logo-dot:nth-child(4) { top: -2px; right: 10px; animation-delay: 0s; }
+        .logo-dot:nth-child(5) { top: -2px; left: 10px; animation-delay: 0.7s; }
+        .logo-dot:nth-child(6) { bottom: -2px; right: 10px; animation-delay: 1.4s; }
+        .logo-dot:nth-child(7) { bottom: -2px; left: 10px; animation-delay: 2.1s; }
 
         @keyframes dotFlash {
             0%, 100% { opacity: 0.2; transform: scale(0.5); }
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* هاور لوگو - افزایش سرعت */
+        /* هاور لوگو - سرعت بیشتر */
+        .logo-wrapper:hover .logo-letter {
+            animation-duration: 2s;
+        }
+
         .logo-wrapper:hover .logo-ring-outer {
-            animation-duration: 6s;
+            animation-duration: 8s;
         }
 
         .logo-wrapper:hover .logo-ring-outer::before {
-            animation-duration: 2.5s;
+            animation-duration: 3s;
         }
 
         .logo-wrapper:hover .logo-ring-inner {
-            animation-duration: 9s;
+            animation-duration: 10s;
         }
 
-        .logo-wrapper:hover .logo-svg .s-piece {
-            animation-duration: 3s !important;
+        .logo-wrapper:hover .logo-letter {
+            text-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
         }
 
         .logo-text {
@@ -712,26 +644,25 @@
                 font-size: 1.4em;
             }
             .logo-container {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
             }
             .logo-ring-outer {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
             }
             .logo-ring-outer::before {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
             }
             .logo-ring-inner {
                 width: 36px;
                 height: 36px;
-                top: 7px;
-                left: 7px;
+                top: 6px;
+                left: 6px;
             }
-            .logo-svg {
-                width: 28px;
-                height: 28px;
+            .logo-letter {
+                font-size: 1.3em;
             }
             .logo-dot {
                 display: none;
@@ -799,26 +730,25 @@
                 font-size: 0.75em;
             }
             .logo-container {
-                width: 42px;
-                height: 42px;
+                width: 40px;
+                height: 40px;
             }
             .logo-ring-outer {
-                width: 42px;
-                height: 42px;
+                width: 40px;
+                height: 40px;
             }
             .logo-ring-outer::before {
-                width: 42px;
-                height: 42px;
+                width: 40px;
+                height: 40px;
             }
             .logo-ring-inner {
                 width: 30px;
                 height: 30px;
-                top: 6px;
-                left: 6px;
+                top: 5px;
+                left: 5px;
             }
-            .logo-svg {
-                width: 24px;
-                height: 24px;
+            .logo-letter {
+                font-size: 1.1em;
             }
             .logo-text .main {
                 font-size: 1.2em;
@@ -904,31 +834,30 @@
                 letter-spacing: 2px;
             }
             .logo-container {
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
             }
             .logo-ring-outer {
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
                 border-width: 2px;
             }
             .logo-ring-outer::before {
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
                 border-width: 2px;
                 top: -2px;
                 left: -2px;
             }
             .logo-ring-inner {
-                width: 26px;
-                height: 26px;
+                width: 24px;
+                height: 24px;
                 top: 5px;
                 left: 5px;
                 border-width: 1.5px;
             }
-            .logo-svg {
-                width: 20px;
-                height: 20px;
+            .logo-letter {
+                font-size: 0.9em;
             }
             .hero-badge {
                 font-size: 0.55em;
@@ -972,24 +901,7 @@
             <div class="logo-container">
                 <div class="logo-ring-outer"></div>
                 <div class="logo-ring-inner">
-                    <svg class="logo-svg" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="s-piece p1" d="M7 5 L14 5 L14 8 L7 8 L7 5Z" fill="#FFD700"/>
-                        <path class="s-piece p2" d="M14 5 L21 5 L21 8 L14 8 L14 5Z" fill="#FFD700"/>
-                        <path class="s-piece p3" d="M21 5 L27 5 L27 8 L21 8 L21 5Z" fill="#FFD700"/>
-                        <path class="s-piece p4" d="M27 8 L27 14 L24 14 L24 8 L27 8Z" fill="#FFD700"/>
-                        <path class="s-piece p5" d="M24 14 L27 14 L27 20 L24 20 L24 14Z" fill="#FFD700"/>
-                        <path class="s-piece p6" d="M7 14 L14 14 L14 17 L7 17 L7 14Z" fill="#FFD700"/>
-                        <path class="s-piece p7" d="M14 14 L21 14 L21 17 L14 17 L14 14Z" fill="#FFD700"/>
-                        <path class="s-piece p8" d="M7 17 L14 17 L14 20 L7 20 L7 17Z" fill="#FFD700"/>
-                        <path class="s-piece p1" d="M7 20 L21 20 L21 23 L7 23 L7 20Z" fill="#FFD700"/>
-                        <path class="s-piece p2" d="M21 20 L27 20 L27 23 L21 23 L21 20Z" fill="#FFD700"/>
-                        <path class="s-piece p3" d="M7 23 L14 23 L14 26 L7 26 L7 23Z" fill="#FFD700"/>
-                        <path class="s-piece p4" d="M14 23 L21 23 L21 26 L14 26 L14 23Z" fill="#FFD700"/>
-                        <path class="s-piece p5" d="M21 23 L27 23 L27 26 L21 26 L21 23Z" fill="#FFD700"/>
-                        <path class="s-piece p6" d="M7 26 L14 26 L14 29 L7 29 L7 26Z" fill="#FFD700"/>
-                        <path class="s-piece p7" d="M14 26 L21 26 L21 29 L14 26 L14 26Z" fill="#FFD700"/>
-                        <path class="s-piece p8" d="M21 26 L27 26 L27 29 L21 29 L21 26Z" fill="#FFD700"/>
-                    </svg>
+                    <span class="logo-letter">S</span>
                 </div>
                 <div class="logo-dot"></div>
                 <div class="logo-dot"></div>
