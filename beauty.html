@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>هوش مصنوعی در صنعت زیبایی و پزشکی زیبایی سوفیا | Sofia AI Beauty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== هدر ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid rgba(245, 87, 108, 0.3);
+        }
+
+        .header .main-icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
+            color: #555;
+            font-size: 1.3em;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .header .phone-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header .phone-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== هیرو با تصویر ===== */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #fef9ff 0%, #fde8ef 100%);
+            border-radius: 28px;
+            padding: 40px;
+            border: 2px solid #f8d0da;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(240, 147, 251, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hero-content h2 span {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .hero-buttons .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .hero-content .hero-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        .hero-content .hero-buttons .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #f5576c;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .hero-buttons .btn-secondary:hover {
+            background: #f5576c;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+            background: white;
+            padding: 15px;
+            border: 1px solid #f8d0da;
+        }
+
+        .hero-image .mockup:hover {
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .hero-image .mockup .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #fef9ff;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #f8d0da;
+        }
+
+        .hero-image .mockup .mockup-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) { background: #ff5f57; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) { background: #ffbd2e; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) { background: #28c840; }
+
+        .hero-image .mockup .mockup-header .title {
+            font-size: 0.8em;
+            color: #666;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .hero-image .mockup .mockup-body {
+            padding: 15px;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fef9ff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid #f8d0da;
+            margin-bottom: 8px;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item .item-icon {
+            font-size: 1.3em;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item .item-info {
+            flex: 1;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item .item-info .item-title {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item .item-info .item-desc {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-item .item-status {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #f5576c;
+            background: rgba(245, 87, 108, 0.08);
+            padding: 2px 12px;
+            border-radius: 30px;
+        }
+
+        .hero-image .mockup .mockup-body .beauty-result {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .hero-image .floating-badge {
+            position: absolute;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+
+        .hero-image .floating-badge:nth-child(2) { top: 5%; left: -10%; animation-delay: 1s; }
+        .hero-image .floating-badge:nth-child(3) { bottom: 10%; right: -10%; animation-delay: 2s; }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== متن معرفی جذاب ===== */
+        .intro-section {
+            background: linear-gradient(135deg, #fef9ff 0%, #fde8ef 100%);
+            border-radius: 24px;
+            padding: 45px 40px;
+            margin-bottom: 50px;
+            border: 2px solid #f8d0da;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .intro-section .intro-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .intro-section h2 {
+            color: #f5576c;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-section .intro-desc {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .intro-section .highlight-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .intro-section .highlight-item {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #f8d0da;
+        }
+
+        .intro-section .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.12);
+            border-color: #f5576c;
+        }
+
+        .intro-section .highlight-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .intro-section .highlight-item h4 {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .intro-section .highlight-item p {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== محصولات ===== */
+        .section-title {
+            color: #f5576c;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #f8d0da;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(245, 87, 108, 0.2);
+            border-color: #f5576c;
+        }
+
+        .product-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-card h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✨";
+            color: #f5576c;
+        }
+
+        .product-card .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .order-btn {
+            display: inline-block;
+            background: #f5576c;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .product-card .order-btn:hover {
+            background: #f093fb;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4);
+        }
+
+        .product-card .admin-tag {
+            display: inline-block;
+            background: #f093fb;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* ===== صنایع ===== */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 2px solid #f8d0da;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(245, 87, 108, 0.12);
+            border-color: #f5576c;
+        }
+
+        .industry-card .icon {
+            font-size: 3.5em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .industry-card .use-cases {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        .industry-card .use-cases li {
+            padding: 4px 0;
+            color: #555;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .industry-card .use-cases li::before {
+            content: "💄";
+            font-size: 0.9em;
+        }
+
+        /* ===== بنر مدیریتی ===== */
+        .management-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .management-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .management-banner .info .icon {
+            font-size: 2.5em;
+        }
+
+        .management-banner .info .text h3 {
+            font-size: 1.2em;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .management-banner .info .text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .management-banner .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .management-banner .badge-group .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== نمونه پنل مدیریت ===== */
+        .admin-panel-preview {
+            background: #fef9ff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #f8d0da;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-panel-preview .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel-preview .preview-title h2 {
+            color: #f5576c;
+            font-size: 1.8em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-title p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .admin-panel-preview .preview-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f8d0da;
+            overflow-x: auto;
+        }
+
+        .admin-panel-preview .preview-card .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .number {
+            font-size: 2em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .admin-panel-preview .preview-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+
+        .admin-panel-preview .preview-card table th {
+            background: #f5576c;
+            color: white;
+            padding: 10px 12px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f8d0da;
+            color: #333;
+        }
+
+        .admin-panel-preview .preview-card table tr:nth-child(even) {
+            background: #fef9ff;
+        }
+
+        .admin-panel-preview .preview-card .preview-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f8d0da;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== نمونه‌ها ===== */
+        .demo-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            color: #f5576c;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .demo-section .desc {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            background: white;
+            border: 2.5px solid #f5576c;
+            color: #f5576c;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(245, 87, 108, 0.35);
+            border-color: transparent;
+        }
+
+        .demo-btn .badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== خدمات ===== */
+        .services-section {
+            margin: 40px 0 30px;
+        }
+
+        .services-section h2 {
+            color: #f5576c;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f8d0da;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(245, 87, 108, 0.15);
+            border-color: #f5576c;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            margin: 50px 0;
+            background: linear-gradient(135deg, #fef9ff 0%, #fde8ef 100%);
+            border-radius: 24px;
+            padding: 40px;
+            border: 2px solid #f8d0da;
+        }
+
+        .features-section h2 {
+            color: #f5576c;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f8d0da;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-color: #f5576c;
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            color: #777;
+            font-size: 0.95em;
+            font-weight: 300;
+        }
+
+        /* ===== باکس تماس ===== */
+        .contact-box {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(245, 87, 108, 0.35);
+        }
+
+        .contact-box h3 {
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .contact-box .phone {
+            font-size: 2.2em;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-box .btn {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-box .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== سفارش ===== */
+        .order-section {
+            background: linear-gradient(135deg, #fef9ff 0%, #fde8ef 100%);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid #f8d0da;
+        }
+
+        .order-section h2 {
+            color: #f5576c;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .order-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .order-section .order-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 16px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .order-section .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #f8d0da;
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        footer strong {
+            color: #f5576c;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 992px) {
+            .container { padding: 30px; }
+            .header h1 { font-size: 2.6em; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding: 30px; }
+            .hero-content .hero-buttons { justify-content: center; }
+            .hero-image .floating-badge { display: none; }
+            .management-banner { flex-direction: column; text-align: center; }
+            .management-banner .info { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; border-radius: 20px; }
+            .header h1 { font-size: 2em; }
+            .header .subtitle { font-size: 1em; }
+            .hero-content h2 { font-size: 1.8em; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .industry-grid { grid-template-columns: 1fr 1fr; }
+            .contact-box .phone { font-size: 1.8em; }
+            .demo-buttons { gap: 10px; }
+            .demo-btn { padding: 10px 20px; font-size: 0.95em; }
+            .management-banner .badge-group .badge { font-size: 0.8em; padding: 5px 12px; }
+            .admin-panel-preview .preview-card table { font-size: 0.75em; min-width: 500px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.5em; }
+            .intro-section { padding: 25px 20px; }
+            .intro-section h2 { font-size: 1.5em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr 1fr; }
+            .order-section { padding: 25px 20px; }
+            .order-section h2 { font-size: 1.5em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; border-radius: 16px; }
+            .header h1 { font-size: 1.6em; }
+            .header .main-icon { font-size: 3.5em; }
+            .hero-content h2 { font-size: 1.4em; }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-secondary {
+                padding: 10px 25px;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-content .hero-buttons { flex-direction: column; align-items: stretch; }
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: 1fr; }
+            .demo-buttons { flex-direction: column; align-items: stretch; }
+            .demo-btn { text-align: center; width: 100%; }
+            .contact-box .phone { font-size: 1.4em; }
+            .contact-box h3 { font-size: 1.4em; }
+            .section-title { font-size: 1.6em; }
+            .product-card { padding: 20px; }
+            .product-card .icon { font-size: 3em; }
+            .management-banner .info .icon { font-size: 2em; }
+            .admin-panel-preview .preview-card table { font-size: 0.65em; min-width: 400px; }
+            .admin-panel-preview .preview-card table th,
+            .admin-panel-preview .preview-card table td { padding: 5px 6px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.2em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr; }
+            .intro-section h2 { font-size: 1.3em; }
+            .intro-section .intro-desc { font-size: 0.95em; }
+            .hero-image .mockup { max-width: 280px; }
+            .order-section { padding: 20px 15px; }
+            .order-section h2 { font-size: 1.3em; }
+            .order-section .order-btn { padding: 12px 30px; font-size: 1em; }
+            .industry-card .icon { font-size: 2.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== هدر ===== -->
+        <div class="header">
+            <span class="main-icon">💄</span>
+            <h1>هوش مصنوعی در صنعت زیبایی و پزشکی زیبایی سوفیا</h1>
+            <p class="subtitle">✨ تحولی نوین در زیبایی با قدرت هوش مصنوعی</p>
+            <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
+        </div>
+
+        <!-- ===== هیرو با تصویر ===== -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">🔥 هوش مصنوعی در خدمت زیبایی شما</span>
+                <h2>با هوش مصنوعی پزشکی زیبایی، <span>زیبایی را علمی</span> و دقیق تجربه کنید</h2>
+                <p>سیستم‌های هوش مصنوعی در صنعت زیبایی و پزشکی زیبایی سوفیا با استفاده از الگوریتم‌های پیشرفته تشخیص تصویر و یادگیری عمیق، به متخصصان زیبایی در تشخیص دقیق‌تر، طراحی درمان شخصی‌سازی‌شده و پیش‌بینی نتایج کمک می‌کنند. از تحلیل پوست تا شبیه‌سازی نتایج جراحی.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">🚀 مشاهده محصولات</a>
+                    <a href="#contact" class="btn-secondary">📞 مشاوره رایگان</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="title">سیستم زیبایی هوشمند سوفیا</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="beauty-item">
+                            <span class="item-icon">🧏‍♀️</span>
+                            <div class="item-info">
+                                <div class="item-title">تحلیل پوست</div>
+                                <div class="item-desc">نوع پوست: مختلط · چین و چروک: کم</div>
+                            </div>
+                            <span class="item-status">✅ تحلیل شد</span>
+                        </div>
+                        <div class="beauty-item">
+                            <span class="item-icon">👩‍⚕️</span>
+                            <div class="item-info">
+                                <div class="item-title">شبیه‌سازی جراحی</div>
+                                <div class="item-desc">پیش‌نمایش بینی جدید</div>
+                            </div>
+                            <span class="item-status">✅ آماده</span>
+                        </div>
+                        <div class="beauty-item">
+                            <span class="item-icon">💉</span>
+                            <div class="item-info">
+                                <div class="item-title">طراحی تزریق</div>
+                                <div class="item-desc">نقاط تزریق بوتاکس</div>
+                            </div>
+                            <span class="item-status">✅ طراحی شد</span>
+                        </div>
+                        <div class="beauty-item">
+                            <span class="item-icon">📊</span>
+                            <div class="item-info">
+                                <div class="item-title">پیش‌بینی نتیجه</div>
+                                <div class="item-desc">رضایت ۹۵٪ پیش‌بینی شده</div>
+                            </div>
+                            <span class="item-status">✅ مثبت</span>
+                        </div>
+                        <div class="beauty-result">
+                            ✨ ۹۶.۸٪ دقت تحلیل · بیش از ۵۰۰۰ بیمار
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">
+                    ✨ دقت ۹۶.۸٪
+                </div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">
+                    🎯 شخصی‌سازی شده
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== متن معرفی جذاب ===== -->
+        <div class="intro-section">
+            <span class="intro-icon">💄</span>
+            <h2>هوش مصنوعی زیبایی سوفیا؛ همراه هوشمند متخصصان زیبایی</h2>
+            <p class="intro-desc">
+                سیستم‌های هوش مصنوعی در صنعت زیبایی و پزشکی زیبایی سوفیا با استفاده از شبکه‌های عصبی عمیق و الگوریتم‌های پیشرفته تشخیص تصویر، به متخصصان زیبایی در ارائه خدمات دقیق‌تر و شخصی‌سازی‌شده کمک می‌کنند. از تحلیل پوست و تشخیص مشکلات آن تا شبیه‌سازی نتایج جراحی و طراحی درمان‌های غیرتهاجمی.
+                <strong>با هوش مصنوعی زیبایی سوفیا، نتایجی دقیق‌تر و رضایتمندی بالاتر برای بیماران خود رقم بزنید.</strong>
+            </p>
+
+            <div class="highlight-box">
+                <div class="highlight-item">
+                    <span class="icon">🎯</span>
+                    <h4>تشخیص دقیق</h4>
+                    <p>تحلیل پوست و تشخیص مشکلات با دقت بالا</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🖼️</span>
+                    <h4>شبیه‌سازی نتایج</h4>
+                    <p>پیش‌نمایش نتایج جراحی و درمان‌ها</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">👤</span>
+                    <h4>درمان شخصی‌سازی‌شده</h4>
+                    <p>طراحی درمان متناسب با هر بیمار</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📊</span>
+                    <h4>پیش‌بینی رضایت</h4>
+                    <p>برآورد میزان رضایت بیمار از نتایج</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔄</span>
+                    <h4>یادگیری مستمر</h4>
+                    <p>بهبود مداوم با داده‌های جدید</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت اطلاعات</h4>
+                    <p>محافظت کامل از داده‌های بیماران</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== صنایع ===== -->
+        <h2 class="section-title">🏭 <span>صنایع و کاربردهای هوش مصنوعی در زیبایی</span></h2>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <span class="icon">🏥</span>
+                <h3>کلینیک‌های پزشکی زیبایی</h3>
+                <p>تشخیص و درمان مشکلات پوستی و زیبایی</p>
+                <ul class="use-cases">
+                    <li>تحلیل پوست و تشخیص مشکلات</li>
+                    <li>طراحی درمان شخصی‌سازی‌شده</li>
+                    <li>پیش‌بینی نتایج درمان</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">💉</span>
+                <h3>مراکز تزریقات زیبایی</h3>
+                <p>طراحی دقیق تزریق بوتاکس و فیلر</p>
+                <ul class="use-cases">
+                    <li>نقاط تزریق دقیق</li>
+                    <li>پیش‌نمایش نتایج</li>
+                    <li>کاهش عوارض جانبی</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🧏‍♀️</span>
+                <h3>سالن‌های زیبایی و پوست</h3>
+                <p>تحلیل پوست و ارائه خدمات شخصی‌سازی‌شده</p>
+                <ul class="use-cases">
+                    <li>تحلیل نوع پوست</li>
+                    <li>پیشنهاد محصولات مناسب</li>
+                    <li>طراحی روتین مراقبتی</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🛍️</span>
+                <h3>برندهای لوازم آرایشی</h3>
+                <p>تطابق رنگ و پیشنهاد محصولات</p>
+                <ul class="use-cases">
+                    <li>تطابق رنگ پوست با محصولات</li>
+                    <li>پیشنهاد محصولات آرایشی</li>
+                    <li>شبیه‌سازی آرایش</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">📱</span>
+                <h3>اپلیکیشن‌های زیبایی</h3>
+                <p>مشاوره آنلاین و تحلیل از راه دور</p>
+                <ul class="use-cases">
+                    <li>مشاوره آنلاین زیبایی</li>
+                    <li>تحلیل پوست از طریق عکس</li>
+                    <li>شبیه‌سازی نتایج درمان</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏨</span>
+                <h3>اسپا و مراکز سلامت</h3>
+                <p>ارائه خدمات شخصی‌سازی‌شده زیبایی</p>
+                <ul class="use-cases">
+                    <li>تحلیل نیازهای زیبایی</li>
+                    <li>طراحی بسته‌های درمانی</li>
+                    <li>پایش پیشرفت درمان</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== محصولات ===== -->
+        <h2 class="section-title" id="products">🚀 <span>محصولات هوش مصنوعی زیبایی سوفیا</span></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <span class="icon">🧏‍♀️</span>
+                <h3>تحلیل هوشمند پوست</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تحلیل دقیق پوست و تشخیص مشکلات با هوش مصنوعی</p>
+                <ul class="features-list">
+                    <li>تشخیص چین و چروک و لک</li>
+                    <li>تعیین نوع پوست و نیازها</li>
+                    <li>پیشنهاد محصولات مناسب</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">👩‍⚕️</span>
+                <h3>شبیه‌سازی جراحی زیبایی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>پیش‌نمایش نتایج جراحی‌های زیبایی</p>
+                <ul class="features-list">
+                    <li>شبیه‌سازی رینوپلاستی</li>
+                    <li>شبیه‌سازی لیفت صورت</li>
+                    <li>پیش‌نمایش نتایج واقعی</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">💉</span>
+                <h3>طراحی تزریق هوشمند</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>طراحی دقیق نقاط تزریق بوتاکس و فیلر</p>
+                <ul class="features-list">
+                    <li>تعیین نقاط تزریق دقیق</li>
+                    <li>پیش‌بینی نتایج تزریق</li>
+                    <li>کاهش عوارض جانبی</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🛍️</span>
+                <h3>تطابق رنگ هوشمند</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تطابق رنگ پوست با لوازم آرایشی</p>
+                <ul class="features-list">
+                    <li>تشخیص رنگ پوست</li>
+                    <li>پیشنهاد کد رنگ مناسب</li>
+                    <li>تطابق با محصولات برندها</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📊</span>
+                <h3>پیش‌بینی رضایت بیمار</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>پیش‌بینی میزان رضایت بیمار از نتایج درمان</p>
+                <ul class="features-list">
+                    <li>تحلیل انتظارات بیمار</li>
+                    <li>پیش‌بینی میزان رضایت</li>
+                    <li>بهبود فرآیند مشاوره</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📱</span>
+                <h3>اپلیکیشن مشاوره زیبایی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>مشاوره آنلاین و تحلیل از راه دور</p>
+                <ul class="features-list">
+                    <li>مشاوره ویدیویی با متخصصان</li>
+                    <li>تحلیل پوست از طریق عکس</li>
+                    <li>پیگیری روند درمان</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+        </div>
+
+        <!-- ===== بنر مدیریتی ===== -->
+        <div class="management-banner">
+            <div class="info">
+                <span class="icon">📊</span>
+                <div class="text">
+                    <h3>🎯 پنل مدیریت زیبایی اختصاصی</h3>
+                    <p>با تهیه سیستم هوش مصنوعی زیبایی، به یک پنل مدیریت کامل دسترسی دارید که تمام تحلیل‌ها و اطلاعات بیماران را به صورت لحظه‌ای نمایش می‌دهد.</p>
+                </div>
+            </div>
+            <div class="badge-group">
+                <span class="badge">📋 ذخیره تحلیل‌ها</span>
+                <span class="badge">📊 گزارش‌های تحلیلی</span>
+                <span class="badge">🎯 آمار دقت</span>
+            </div>
+        </div>
+
+        <!-- ===== نمونه پنل مدیریت ===== -->
+        <div class="admin-panel-preview">
+            <div class="preview-title">
+                <h2>📊 نمونه پنل مدیریت زیبایی</h2>
+                <p>همه تحلیل‌ها و اطلاعات بیماران در این پنل قابل مشاهده است</p>
+            </div>
+            <div class="preview-card">
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number">۵,۲۴۷</div>
+                        <div class="label">تعداد کل بیماران</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <div class="number">۹۶.۸٪</div>
+                        <div class="label">دقت تحلیل</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <div class="number">۹۵٪</div>
+                        <div class="label">رضایت بیماران</div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نام بیمار</th>
+                            <th>نوع تحلیل</th>
+                            <th>نتیجه</th>
+                            <th>دقت</th>
+                            <th>تاریخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>۱</td>
+                            <td><strong>سارا احمدی</strong></td>
+                            <td><span style="display:inline-block;background:#f093fb;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">پوست</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ نرمال</span></td>
+                            <td><span style="font-weight:700;">۹۸.۲٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۲</td>
+                            <td><strong>مریم کریمی</strong></td>
+                            <td><span style="display:inline-block;background:#f5576c;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">رینوپلاستی</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ شبیه‌سازی شد</span></td>
+                            <td><span style="font-weight:700;">۹۷.۵٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۶</td>
+                        </tr>
+                        <tr>
+                            <td>۳</td>
+                            <td><strong>ندا رضایی</strong></td>
+                            <td><span style="display:inline-block;background:#4facfe;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">تزریق</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">✅ طراحی شد</span></td>
+                            <td><span style="font-weight:700;">۹۶.۸٪</span></td>
+                            <td>۱۴۰۵-۰۴-۰۵</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="preview-footer">
+                    🔒 دسترسی به پنل مدیریت با نام کاربری و رمز عبور محافظت می‌شود
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== نمونه‌ها ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های هوش مصنوعی در زیبایی</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">🧏‍♀️ تحلیل پوست <span class="badge">جدید</span></a>
+                <a href="#" class="demo-btn">👩‍⚕️ شبیه‌سازی جراحی</a>
+                <a href="#" class="demo-btn">💉 طراحی تزریق</a>
+                <a href="#" class="demo-btn">🛍️ تطابق رنگ</a>
+            </div>
+        </div>
+
+        <!-- ===== خدمات ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>سیستم زیبایی متناسب با نیاز شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔧</span>
+                    <h3>پیاده‌سازی و نصب</h3>
+                    <p>نصب و راه‌اندازی روی سرور یا ابر</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📚</span>
+                    <h3>آموزش</h3>
+                    <p>آموزش تیم شما برای استفاده حداکثری</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل و بروزرسانی مداوم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ویژگی‌ها ===== -->
+        <div class="features-section">
+            <h2>⭐ چرا هوش مصنوعی زیبایی سوفیا؟</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🎯</span>
+                    <h4>دقت بالا</h4>
+                    <p>تحلیل با دقت بیش از ۹۶٪</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h4>تحلیل سریع</h4>
+                    <p>نتایج در کسری از ثانیه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">👤</span>
+                    <h4>شخصی‌سازی</h4>
+                    <p>درمان متناسب با هر بیمار</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت اطلاعات</h4>
+                    <p>محافظت کامل از داده‌ها</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهبود مستمر</h4>
+                    <p>یادگیری از داده‌های جدید</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>بازگشت سرمایه</h4>
+                    <p>افزایش رضایت و درآمد</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== سفارش ===== -->
+        <div class="order-section" id="order">
+            <h2>📝 ثبت سفارش سیستم هوش مصنوعی زیبایی</h2>
+            <p>
+                برای سفارش سیستم هوش مصنوعی زیبایی اختصاصی، فرم زیر را تکمیل کنید.<br>
+                تیم ما در اسرع وقت با شما تماس می‌گیرد.
+            </p>
+            <a href="order.html" class="order-btn">🚀 ثبت سفارش</a>
+        </div>
+
+        <!-- ===== باکس تماس ===== -->
+        <div class="contact-box" id="contact">
+            <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
+            <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
+            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
+        </div>
+
+        <!-- ===== فوتر ===== -->
+        <footer>
+            <p>© ۱۴۰۶ - تمامی حقوق برای <strong>هوش مصنوعی در صنعت زیبایی و پزشکی زیبایی سوفیا</strong> محفوظ است</p>
+            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
+        </footer>
+
+    </div>
+</body>
+</html>
