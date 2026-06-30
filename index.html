@@ -29,61 +29,201 @@
             margin: 0 auto;
         }
 
-        /* ===== نوار ناوبری ===== */
+        /* ============================================
+                   لوگوی اختصاصی سوفیا
+                   ============================================ */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* حلقه بیرونی لوگو */
+        .logo-ring {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            animation: spin 8s linear infinite;
+        }
+
+        .logo-ring::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #FFD700;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* حلقه داخلی */
+        .logo-inner-ring {
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        /* آیکون مرکزی */
+        .logo-center-icon {
+            position: relative;
+            z-index: 2;
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ذرات درخشان دور لوگو */
+        .logo-sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FFD700, 0 0 20px rgba(255, 215, 0, 0.3);
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .logo-sparkle:nth-child(1) {
+            top: -5px;
+            right: 5px;
+            animation-delay: 0s;
+        }
+        .logo-sparkle:nth-child(2) {
+            top: -5px;
+            left: 5px;
+            animation-delay: 0.8s;
+        }
+        .logo-sparkle:nth-child(3) {
+            bottom: -5px;
+            right: 5px;
+            animation-delay: 1.6s;
+        }
+        .logo-sparkle:nth-child(4) {
+            bottom: -5px;
+            left: 5px;
+            animation-delay: 2.4s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text .main {
+            font-size: 1.7em;
+            font-weight: 900;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text .main span {
+            color: #FFD700;
+        }
+
+        .logo-text .sub {
+            font-size: 0.6em;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+        }
+
+        /* ============================================
+                   نوار ناوبری
+                   ============================================ */
         .navbar {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 14px 28px;
-            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            padding: 12px 28px;
+            border-radius: 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .logo {
-            font-size: 1.6em;
-            font-weight: 900;
-            color: white;
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            color: #FFD700;
-        }
-
-        .logo .logo-icon {
-            font-size: 0.8em;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .nav-menu {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
             align-items: center;
         }
 
         .nav-menu a {
-            color: white;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 30px;
             transition: all 0.3s;
             font-weight: 500;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            font-size: 0.95em;
+            font-size: 0.9em;
+            position: relative;
         }
 
         .nav-menu a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
             transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #FFD700;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 60%;
         }
 
         .dropdown {
@@ -92,43 +232,46 @@
         }
 
         .dropdown-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 16px;
             border-radius: 30px;
             cursor: pointer;
             border: none;
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-weight: 500;
             transition: all 0.3s;
         }
 
         .dropdown-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 42px;
+            top: 44px;
             right: 0;
-            background: white;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
             min-width: 290px;
             border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             z-index: 100;
             overflow: hidden;
-            max-height: 500px;
+            max-height: 480px;
             overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .dropdown-content a {
             color: #333;
-            padding: 12px 18px;
+            padding: 11px 18px;
             display: block;
-            border-bottom: 1px solid #eee;
-            font-size: 0.9em;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.88em;
             text-decoration: none;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-weight: 400;
@@ -144,7 +287,7 @@
         .dropdown-content .menu-divider {
             border: 0;
             height: 1px;
-            background: #eee;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
             margin: 4px 12px;
         }
 
@@ -153,56 +296,80 @@
         }
 
         .btn-request {
-            background: #FFD700;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #333 !important;
             font-weight: 700 !important;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
         }
 
         .btn-request:hover {
-            background: #FFE44D !important;
-            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5) !important;
+        }
+
+        .btn-request::after {
+            display: none !important;
         }
 
         .cooperation-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .cooperation-btn:hover {
-            background: rgba(255, 255, 255, 0.3) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
         }
 
-        /* ===== بخش قهرمان ===== */
+        /* ============================================
+                   بخش قهرمان
+                   ============================================ */
         .hero {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.88));
             border-radius: 32px;
-            padding: 65px 50px;
+            padding: 60px 50px;
             text-align: center;
             margin-bottom: 45px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
         }
 
         .hero::before {
-            content: '✨';
+            content: '';
             position: absolute;
-            top: 20px;
-            left: 40px;
-            font-size: 3em;
-            opacity: 0.15;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05), transparent 70%);
+            border-radius: 50%;
         }
 
         .hero::after {
-            content: '🚀';
+            content: '';
             position: absolute;
-            bottom: 20px;
-            right: 40px;
-            font-size: 3em;
-            opacity: 0.15;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.05), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 24px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
@@ -210,10 +377,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 2.8em;
+            font-size: 3em;
             font-weight: 900;
             margin-bottom: 15px;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            position: relative;
+            z-index: 1;
         }
 
         .hero p {
@@ -224,6 +393,8 @@
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             max-width: 700px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero .highlight-text {
@@ -235,19 +406,22 @@
         .stats {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 50px;
             flex-wrap: wrap;
             margin-top: 35px;
             padding-top: 30px;
             border-top: 2px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 1;
         }
 
         .stat-item {
             text-align: center;
+            padding: 0 10px;
         }
 
         .stat-number {
-            font-size: 2em;
+            font-size: 2.2em;
             font-weight: 900;
             color: #764ba2;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
@@ -266,7 +440,9 @@
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
-        /* ===== عنوان بخش ===== */
+        /* ============================================
+                   عنوان بخش
+                   ============================================ */
         .section-title {
             text-align: center;
             color: white;
@@ -288,7 +464,9 @@
             border-radius: 10px;
         }
 
-        /* ===== شبکه خدمات ===== */
+        /* ============================================
+                   شبکه خدمات
+                   ============================================ */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -300,12 +478,12 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
             border-radius: 24px;
-            padding: 30px 24px;
+            padding: 28px 22px;
             text-align: center;
             text-decoration: none;
             color: white;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             position: relative;
             overflow: hidden;
@@ -345,14 +523,14 @@
         }
 
         .service-card h4 {
-            font-size: 1.15em;
+            font-size: 1.1em;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
         .service-card p {
-            font-size: 0.9em;
+            font-size: 0.88em;
             opacity: 0.85;
             font-weight: 300;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
@@ -365,12 +543,14 @@
             color: #FFD700;
             padding: 2px 14px;
             border-radius: 50px;
-            font-size: 0.7em;
+            font-size: 0.65em;
             font-weight: 700;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
-        /* ===== باکس درباره ما ===== */
+        /* ============================================
+                   درباره ما
+                   ============================================ */
         .about-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 28px;
@@ -378,6 +558,17 @@
             text-align: center;
             margin-top: 45px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-box::before {
+            content: '💡';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 2.5em;
+            opacity: 0.08;
         }
 
         .about-box h3 {
@@ -401,11 +592,13 @@
             margin: 0 auto;
         }
 
-        /* ===== تماس ===== */
+        /* ============================================
+                   تماس
+                   ============================================ */
         .contact-row {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 15px;
             flex-wrap: wrap;
             margin-top: 25px;
         }
@@ -419,6 +612,7 @@
             border-radius: 50px;
             background: rgba(118, 75, 162, 0.06);
             transition: all 0.3s;
+            font-size: 0.95em;
         }
 
         .contact-row a:hover {
@@ -427,7 +621,9 @@
             transform: translateY(-2px);
         }
 
-        /* ===== باکس درخواست ===== */
+        /* ============================================
+                   باکس درخواست
+                   ============================================ */
         .request-box {
             background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(8px);
@@ -435,7 +631,7 @@
             padding: 45px 40px;
             text-align: center;
             margin-top: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .request-box h3 {
@@ -453,7 +649,9 @@
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
 
-        /* ===== دکمه بزرگ ===== */
+        /* ============================================
+                   دکمه بزرگ
+                   ============================================ */
         .btn-large {
             background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #333;
@@ -474,7 +672,9 @@
             box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
         }
 
-        /* ===== فوتر ===== */
+        /* ============================================
+                   فوتر
+                   ============================================ */
         footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.5);
@@ -498,10 +698,12 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* ===== واکنش‌گرایی ===== */
+        /* ============================================
+                   واکنش‌گرایی
+                   ============================================ */
         @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2.2em;
+                font-size: 2.4em;
             }
             .container {
                 padding: 0 10px;
@@ -509,16 +711,23 @@
             .hero {
                 padding: 40px 30px;
             }
+            .logo-text .main {
+                font-size: 1.4em;
+            }
         }
 
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                border-radius: 20px;
+                border-radius: 24px;
                 padding: 15px 20px;
             }
+            .logo-wrapper {
+                width: 100%;
+                justify-content: center;
+            }
             .hero h1 {
-                font-size: 1.8em;
+                font-size: 2em;
             }
             .hero {
                 padding: 30px 20px;
@@ -537,7 +746,7 @@
                 max-height: 350px;
             }
             .stats {
-                gap: 30px;
+                gap: 25px;
             }
             .stat-number {
                 font-size: 1.6em;
@@ -558,8 +767,36 @@
             .service-icon {
                 font-size: 2.4em;
             }
-            .logo {
-                font-size: 1.4em;
+            .nav-menu {
+                justify-content: center;
+                width: 100%;
+            }
+            .nav-menu a {
+                padding: 6px 12px;
+                font-size: 0.82em;
+            }
+            .dropdown-btn {
+                padding: 6px 12px;
+                font-size: 0.82em;
+            }
+            .logo-icon-container {
+                width: 40px;
+                height: 40px;
+            }
+            .logo-ring {
+                width: 40px;
+                height: 40px;
+            }
+            .logo-ring::before {
+                width: 40px;
+                height: 40px;
+            }
+            .logo-inner-ring {
+                width: 30px;
+                height: 30px;
+            }
+            .logo-center-icon {
+                font-size: 1.2em;
             }
         }
 
@@ -568,7 +805,7 @@
                 padding: 10px;
             }
             .hero h1 {
-                font-size: 1.5em;
+                font-size: 1.6em;
             }
             .hero p {
                 font-size: 0.95em;
@@ -576,29 +813,18 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
-            .nav-menu {
-                justify-content: center;
-            }
-            .nav-menu a {
-                padding: 6px 12px;
-                font-size: 0.8em;
-            }
-            .dropdown-btn {
-                padding: 6px 12px;
-                font-size: 0.8em;
-            }
             .stats {
-                gap: 20px;
+                gap: 15px;
             }
             .stat-number {
                 font-size: 1.3em;
             }
             .contact-row {
-                gap: 12px;
-                font-size: 0.85em;
+                gap: 10px;
             }
             .contact-row a {
                 padding: 5px 12px;
+                font-size: 0.8em;
             }
             .btn-large {
                 padding: 12px 30px;
@@ -610,13 +836,10 @@
             .section-title {
                 font-size: 1.2em;
             }
-            .logo {
-                font-size: 1.2em;
-            }
             .dropdown-content {
                 min-width: 200px;
                 right: -20px;
-                max-height: 300px;
+                max-height: 280px;
             }
             .service-card h4 {
                 font-size: 1em;
@@ -626,6 +849,39 @@
             }
             .request-box h3 {
                 font-size: 1.2em;
+            }
+            .logo-text .main {
+                font-size: 1.2em;
+            }
+            .logo-text .sub {
+                font-size: 0.5em;
+            }
+            .logo-icon-container {
+                width: 34px;
+                height: 34px;
+            }
+            .logo-ring {
+                width: 34px;
+                height: 34px;
+            }
+            .logo-ring::before {
+                width: 34px;
+                height: 34px;
+            }
+            .logo-inner-ring {
+                width: 26px;
+                height: 26px;
+            }
+            .logo-center-icon {
+                font-size: 1em;
+            }
+            .logo-sparkle {
+                width: 4px;
+                height: 4px;
+            }
+            .hero-badge {
+                font-size: 0.7em;
+                padding: 4px 16px;
             }
         }
 
@@ -648,12 +904,23 @@
 
 <div class="container">
 
-    <!-- ===== نوار ناوبری ===== -->
+    <!-- ===== نوار ناوبری با لوگوی جدید ===== -->
     <div class="navbar">
-        <div class="logo">
-            <span class="logo-icon">✨</span>
-            Sofia<span>AI</span>
-        </div>
+        <a href="index.html" class="logo-wrapper">
+            <div class="logo-icon-container">
+                <div class="logo-ring"></div>
+                <div class="logo-inner-ring"></div>
+                <div class="logo-sparkle"></div>
+                <div class="logo-sparkle"></div>
+                <div class="logo-sparkle"></div>
+                <div class="logo-sparkle"></div>
+                <span class="logo-center-icon">✨</span>
+            </div>
+            <div class="logo-text">
+                <span class="main">Sofia<span>AI</span></span>
+                <span class="sub">✦ هوش مصنوعی سوفیا ✦</span>
+            </div>
+        </a>
         <div class="nav-menu">
             <a href="index.html">🏠 خانه</a>
             <div class="dropdown">
@@ -688,6 +955,7 @@
 
     <!-- ===== بخش قهرمان ===== -->
     <div class="hero">
+        <div class="hero-badge">✨ هوش مصنوعی پیشرفته برای کسب‌وکار شما</div>
         <h1>✨ هوش مصنوعی سوفیا ✨</h1>
         <p>
             ارائه‌دهنده خدمات تخصصی هوش مصنوعی متناسب با <span class="highlight-text">کسب‌وکار شما</span><br>
@@ -764,48 +1032,48 @@
             <h4>سیستم پیشنهاددهنده</h4>
             <p>توصیه محصول و محتوای شخصی‌سازی شده</p>
         </a>
-        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.3);">
+        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.25);">
             <span class="service-icon">🛡️</span>
             <h4>تشخیص کلاهبرداری و امنیت سایبری</h4>
             <p>تشخیص تراکنش‌های مشکوک و حملات سایبری</p>
         </a>
-        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.3);">
+        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.25);">
             <span class="service-icon">📢</span>
             <h4>هوش مصنوعی در بازاریابی دیجیتال</h4>
             <p>شخصی‌سازی کمپین‌ها و تحلیل رفتار مشتری</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.3);">
+        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.25);">
             <span class="service-icon">🧠</span>
             <h4>مدیریت دانش و هوش کسب‌وکار</h4>
             <p>استخراج دانش و داشبوردهای هوشمند</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.3);">
+        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.25);">
             <span class="service-icon">🏥</span>
             <h4>هوش مصنوعی در سلامت و پزشکی</h4>
             <p>تشخیص بیماری، تحلیل تصاویر پزشکی</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.3);">
+        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.25);">
             <span class="service-icon">✍️</span>
             <h4>تولید خودکار محتوا</h4>
             <p>تولید مقاله، ایمیل، کپشن و گزارش</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.3);">
+        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.25);">
             <span class="service-icon">💄</span>
             <h4>هوش مصنوعی در صنعت زیبایی</h4>
             <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.3);">
+        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.25);">
             <span class="service-icon">🏠</span>
             <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
             <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
             <span class="card-badge">💎 جدید</span>
         </a>
-        <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.3);">
+        <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.25);">
             <span class="service-icon">🌐</span>
             <h4>طراحی سایت با هوش مصنوعی</h4>
             <p>طراحی قالب، فروشگاه، اپلیکیشن وب و بهینه‌سازی سئو</p>
