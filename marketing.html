@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>هوش مصنوعی در بازاریابی دیجیتال سوفیا | Sofia AI Marketing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== هدر ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .header .main-icon {
+            font-size: 5em;
+            margin-bottom: 10px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header .subtitle {
+            color: #555;
+            font-size: 1.3em;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .header .phone-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header .phone-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== هیرو با تصویر ===== */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 28px;
+            padding: 40px;
+            border: 2px solid #e8ecf4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hero-content h2 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .hero-buttons .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-content .hero-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-content .hero-buttons .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .hero-buttons .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease;
+            background: white;
+            padding: 15px;
+            border: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup:hover {
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .hero-image .mockup .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8f9fc;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid #e8ecf4;
+        }
+
+        .hero-image .mockup .mockup-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hero-image .mockup .mockup-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) { background: #ff5f57; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) { background: #ffbd2e; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) { background: #28c840; }
+
+        .hero-image .mockup .mockup-header .title {
+            font-size: 0.8em;
+            color: #666;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .hero-image .mockup .mockup-body {
+            padding: 15px;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fe;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid #e8ecf4;
+            margin-bottom: 8px;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-icon {
+            font-size: 1.3em;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-info {
+            flex: 1;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-info .item-title {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-info .item-desc {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-value {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.08);
+            padding: 2px 12px;
+            border-radius: 30px;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-item .item-value.green {
+            color: #28c840;
+        }
+
+        .hero-image .mockup .mockup-body .marketing-result {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .hero-image .floating-badge {
+            position: absolute;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+
+        .hero-image .floating-badge:nth-child(2) { top: 5%; left: -10%; animation-delay: 1s; }
+        .hero-image .floating-badge:nth-child(3) { bottom: 10%; right: -10%; animation-delay: 2s; }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== متن معرفی جذاب ===== */
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 45px 40px;
+            margin-bottom: 50px;
+            border: 2px solid #e8ecf4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .intro-section .intro-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .intro-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-section .intro-desc {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .intro-section .highlight-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .intro-section .highlight-item {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #e8ecf4;
+        }
+
+        .intro-section .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .intro-section .highlight-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .intro-section .highlight-item h4 {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .intro-section .highlight-item p {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== محصولات ===== */
+        .section-title {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #f0f2f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .product-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-card h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .product-card .features-list {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .product-card .features-list li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-card .features-list li::before {
+            content: "✅";
+            color: #667eea;
+        }
+
+        .product-card .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .order-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-card .order-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        .product-card .admin-tag {
+            display: inline-block;
+            background: #f093fb;
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* ===== صنایع ===== */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .industry-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 2px solid #f0f2f8;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.12);
+            border-color: #667eea;
+        }
+
+        .industry-card .icon {
+            font-size: 3.5em;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .industry-card .use-cases {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        .industry-card .use-cases li {
+            padding: 4px 0;
+            color: #555;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .industry-card .use-cases li::before {
+            content: "📢";
+            font-size: 0.9em;
+        }
+
+        /* ===== بنر مدیریتی ===== */
+        .management-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .management-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .management-banner .info .icon {
+            font-size: 2.5em;
+        }
+
+        .management-banner .info .text h3 {
+            font-size: 1.2em;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .management-banner .info .text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .management-banner .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .management-banner .badge-group .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== نمونه پنل مدیریت ===== */
+        .admin-panel-preview {
+            background: #f8f9fe;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-panel-preview .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel-preview .preview-title h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-title p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .admin-panel-preview .preview-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8ecf4;
+            overflow-x: auto;
+        }
+
+        .admin-panel-preview .preview-card .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .number {
+            font-size: 2em;
+            font-weight: 900;
+        }
+
+        .admin-panel-preview .preview-card .stats .stat-box .label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .admin-panel-preview .preview-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+
+        .admin-panel-preview .preview-card table th {
+            background: #667eea;
+            color: white;
+            padding: 10px 12px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .admin-panel-preview .preview-card table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e8ecf4;
+            color: #333;
+        }
+
+        .admin-panel-preview .preview-card table tr:nth-child(even) {
+            background: #f8f9fc;
+        }
+
+        .admin-panel-preview .preview-card .preview-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e8ecf4;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== نمونه‌ها ===== */
+        .demo-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .demo-section .desc {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            background: white;
+            border: 2.5px solid #667eea;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+            border-color: transparent;
+        }
+
+        .demo-btn .badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== خدمات ===== */
+        .services-section {
+            margin: 40px 0 30px;
+        }
+
+        .services-section h2 {
+            color: #764ba2;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #f0f2f8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .service-item .icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-item h3 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            margin: 50px 0;
+            background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .features-section h2 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-item .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            color: #2d3748;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            color: #777;
+            font-size: 0.95em;
+            font-weight: 300;
+        }
+
+        /* ===== باکس تماس ===== */
+        .contact-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+        }
+
+        .contact-box h3 {
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .contact-box .phone {
+            font-size: 2.2em;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-box .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-box .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== سفارش ===== */
+        .order-section {
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 2px solid #e8ecf4;
+        }
+
+        .order-section h2 {
+            color: #764ba2;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .order-section p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .order-section .order-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 16px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .order-section .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 2px solid #e8ecf4;
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        footer strong {
+            color: #667eea;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 992px) {
+            .container { padding: 30px; }
+            .header h1 { font-size: 2.6em; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding: 30px; }
+            .hero-content .hero-buttons { justify-content: center; }
+            .hero-image .floating-badge { display: none; }
+            .management-banner { flex-direction: column; text-align: center; }
+            .management-banner .info { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; border-radius: 20px; }
+            .header h1 { font-size: 2em; }
+            .header .subtitle { font-size: 1em; }
+            .hero-content h2 { font-size: 1.8em; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .industry-grid { grid-template-columns: 1fr 1fr; }
+            .contact-box .phone { font-size: 1.8em; }
+            .demo-buttons { gap: 10px; }
+            .demo-btn { padding: 10px 20px; font-size: 0.95em; }
+            .management-banner .badge-group .badge { font-size: 0.8em; padding: 5px 12px; }
+            .admin-panel-preview .preview-card table { font-size: 0.75em; min-width: 500px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.5em; }
+            .intro-section { padding: 25px 20px; }
+            .intro-section h2 { font-size: 1.5em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr 1fr; }
+            .order-section { padding: 25px 20px; }
+            .order-section h2 { font-size: 1.5em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; border-radius: 16px; }
+            .header h1 { font-size: 1.6em; }
+            .header .main-icon { font-size: 3.5em; }
+            .hero-content h2 { font-size: 1.4em; }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-secondary {
+                padding: 10px 25px;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+            }
+            .hero-content .hero-buttons { flex-direction: column; align-items: stretch; }
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: 1fr; }
+            .demo-buttons { flex-direction: column; align-items: stretch; }
+            .demo-btn { text-align: center; width: 100%; }
+            .contact-box .phone { font-size: 1.4em; }
+            .contact-box h3 { font-size: 1.4em; }
+            .section-title { font-size: 1.6em; }
+            .product-card { padding: 20px; }
+            .product-card .icon { font-size: 3em; }
+            .management-banner .info .icon { font-size: 2em; }
+            .admin-panel-preview .preview-card table { font-size: 0.65em; min-width: 400px; }
+            .admin-panel-preview .preview-card table th,
+            .admin-panel-preview .preview-card table td { padding: 5px 6px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.2em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr; }
+            .intro-section h2 { font-size: 1.3em; }
+            .intro-section .intro-desc { font-size: 0.95em; }
+            .hero-image .mockup { max-width: 280px; }
+            .order-section { padding: 20px 15px; }
+            .order-section h2 { font-size: 1.3em; }
+            .order-section .order-btn { padding: 12px 30px; font-size: 1em; }
+            .industry-card .icon { font-size: 2.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== هدر ===== -->
+        <div class="header">
+            <span class="main-icon">📢</span>
+            <h1>هوش مصنوعی در بازاریابی دیجیتال سوفیا</h1>
+            <p class="subtitle">✨ بازاریابی هوشمند برای جذب و وفاداری مشتریان</p>
+            <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
+        </div>
+
+        <!-- ===== هیرو با تصویر ===== -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">🔥 بازاریابی هوشمند در خدمت کسب‌وکار شما</span>
+                <h2>با بازاریابی مبتنی بر هوش مصنوعی، <span>مشتریان را هدفمند</span> جذب و حفظ کنید</h2>
+                <p>سیستم‌های بازاریابی دیجیتال سوفیا با استفاده از الگوریتم‌های پیشرفته یادگیری ماشین و تحلیل داده، کمپین‌های بازاریابی شما را هوشمندانه‌تر، هدفمندتر و مؤثرتر می‌کنند. از شخصی‌سازی محتوا تا پیش‌بینی رفتار مشتریان.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">🚀 مشاهده محصولات</a>
+                    <a href="#contact" class="btn-secondary">📞 مشاوره رایگان</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="title">داشبورد بازاریابی سوفیا</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="marketing-item">
+                            <span class="item-icon">🎯</span>
+                            <div class="item-info">
+                                <div class="item-title">نرخ تبدیل کمپین</div>
+                                <div class="item-desc">کمپین دیجیتال مارکتینگ</div>
+                            </div>
+                            <span class="item-value green">+۳۴%</span>
+                        </div>
+                        <div class="marketing-item">
+                            <span class="item-icon">👥</span>
+                            <div class="item-info">
+                                <div class="item-title">افزایش تعامل کاربران</div>
+                                <div class="item-desc">شبکه‌های اجتماعی</div>
+                            </div>
+                            <span class="item-value green">+۵۶%</span>
+                        </div>
+                        <div class="marketing-item">
+                            <span class="item-icon">💬</span>
+                            <div class="item-info">
+                                <div class="item-title">نرخ کلیک ایمیل</div>
+                                <div class="item-desc">کمپین ایمیل مارکتینگ</div>
+                            </div>
+                            <span class="item-value green">+۲۸%</span>
+                        </div>
+                        <div class="marketing-item">
+                            <span class="item-icon">📊</span>
+                            <div class="item-info">
+                                <div class="item-title">بازگشت سرمایه (ROI)</div>
+                                <div class="item-desc">کل کمپین‌ها</div>
+                            </div>
+                            <span class="item-value green">۴.۲x</span>
+                        </div>
+                        <div class="marketing-result">
+                            📈 رشد ۴۲٪ در فروش · کاهش ۳۰٪ هزینه‌های تبلیغات
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">
+                    📈 رشد ۴۲٪
+                </div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">
+                    🎯 هدف‌گیری دقیق
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== متن معرفی جذاب ===== -->
+        <div class="intro-section">
+            <span class="intro-icon">📢</span>
+            <h2>بازاریابی هوشمند سوفیا؛ مشتریان خود را بهتر بشناسید</h2>
+            <p class="intro-desc">
+                سیستم‌های بازاریابی دیجیتال سوفیا با استفاده از هوش مصنوعی و تحلیل داده‌های رفتاری، به شما کمک می‌کنند تا مشتریان خود را بهتر بشناسید، کمپین‌های هدفمندتری طراحی کنید و نرخ تبدیل را به حداکثر برسانید. از شخصی‌سازی محتوا تا پیش‌بینی رفتار مشتریان و بهینه‌سازی کمپین‌ها.
+                <strong>با بازاریابی هوشمند سوفیا، هر مشتری را با پیام مناسب هدف بگیرید.</strong>
+            </p>
+
+            <div class="highlight-box">
+                <div class="highlight-item">
+                    <span class="icon">🎯</span>
+                    <h4>هدف‌گیری دقیق</h4>
+                    <p>رسیدن به مخاطبان مناسب با پیام مناسب</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📈</span>
+                    <h4>افزایش نرخ تبدیل</h4>
+                    <p>بهبود عملکرد کمپین‌های بازاریابی</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">👤</span>
+                    <h4>شخصی‌سازی محتوا</h4>
+                    <p>تجربه منحصربه‌فرد برای هر مشتری</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">📊</span>
+                    <h4>تحلیل داده‌های مشتری</h4>
+                    <p>درک عمیق از رفتار و نیازهای مشتریان</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهینه‌سازی مستمر</h4>
+                    <p>بهبود مداوم کمپین‌ها با داده‌های جدید</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="icon">💰</span>
+                    <h4>بازگشت سرمایه</h4>
+                    <p>کاهش هزینه‌ها و افزایش سودآوری</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== صنایع ===== -->
+        <h2 class="section-title">🏭 <span>صنایع و کاربردهای بازاریابی هوشمند</span></h2>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <span class="icon">🛒</span>
+                <h3>تجارت الکترونیک</h3>
+                <p>شخصی‌سازی پیشنهادات و افزایش فروش</p>
+                <ul class="use-cases">
+                    <li>پیشنهاد محصولات شخصی‌سازی‌شده</li>
+                    <li>بهبود نرخ تبدیل فروشگاه</li>
+                    <li>کاهش نرخ رهاسازی سبد خرید</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">📱</span>
+                <h3>اپلیکیشن‌های موبایل</h3>
+                <p>افزایش تعامل و وفاداری کاربران</p>
+                <ul class="use-cases">
+                    <li>ارسال نوتیفیکیشن‌های شخصی‌سازی‌شده</li>
+                    <li>تحلیل رفتار کاربران در اپلیکیشن</li>
+                    <li>افزایش نرخ بازگشت کاربران</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏢</span>
+                <h3>سازمان‌های B2B</h3>
+                <p>شناسایی سرنخ‌های فروش و شخصی‌سازی ارتباطات</p>
+                <ul class="use-cases">
+                    <li>شناسایی سرنخ‌های فروش</li>
+                    <li>شخصی‌سازی ایمیل‌های فروش</li>
+                    <li>بهبود نرخ تبدیل سرنخ‌ها</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🏦</span>
+                <h3>بانکداری و مالی</h3>
+                <p>ارائه پیشنهادات مالی شخصی‌سازی‌شده</p>
+                <ul class="use-cases">
+                    <li>پیشنهاد محصولات مالی</li>
+                    <li>تحلیل رفتار مالی مشتریان</li>
+                    <li>افزایش وفاداری مشتریان</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">🎬</span>
+                <h3>رسانه و سرگرمی</h3>
+                <p>شخصی‌سازی محتوا و افزایش تعامل</p>
+                <ul class="use-cases">
+                    <li>پیشنهاد محتوای شخصی‌سازی‌شده</li>
+                    <li>تحلیل سلیقه مخاطبان</li>
+                    <li>افزایش زمان حضور کاربران</li>
+                </ul>
+            </div>
+            <div class="industry-card">
+                <span class="icon">✈️</span>
+                <h3>گردشگری و هتلداری</h3>
+                <p>پیشنهاد سفر و بسته‌های شخصی‌سازی‌شده</p>
+                <ul class="use-cases">
+                    <li>پیشنهاد مقاصد سفر</li>
+                    <li>شخصی‌سازی بسته‌های مسافرتی</li>
+                    <li>افزایش نرخ رزرو</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== محصولات ===== -->
+        <h2 class="section-title" id="products">🚀 <span>محصولات بازاریابی هوشمند سوفیا</span></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <span class="icon">🎯</span>
+                <h3>شخصی‌سازی محتوا</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تولید محتوای شخصی‌سازی‌شده برای هر مشتری</p>
+                <ul class="features-list">
+                    <li>شخصی‌سازی پیام‌های بازاریابی</li>
+                    <li>تولید محتوای پویا</li>
+                    <li>افزایش نرخ تعامل</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📊</span>
+                <h3>تحلیل کمپین‌های تبلیغاتی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تحلیل و بهینه‌سازی کمپین‌های تبلیغاتی</p>
+                <ul class="features-list">
+                    <li>تحلیل عملکرد کمپین‌ها</li>
+                    <li>بهینه‌سازی بودجه تبلیغاتی</li>
+                    <li>شناسایی کانال‌های مؤثر</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">👥</span>
+                <h3>تحلیل رفتار مشتریان</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تحلیل عمیق رفتار و نیازهای مشتریان</p>
+                <ul class="features-list">
+                    <li>بخش‌بندی هوشمند مشتریان</li>
+                    <li>تحلیل سفر مشتری</li>
+                    <li>پیش‌بینی رفتار مشتری</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📧</span>
+                <h3>ایمیل مارکتینگ هوشمند</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>ارسال ایمیل‌های شخصی‌سازی‌شده و هدفمند</p>
+                <ul class="features-list">
+                    <li>شخصی‌سازی محتوای ایمیل</li>
+                    <li>زمان‌بندی هوشمند ارسال</li>
+                    <li>افزایش نرخ کلیک و تبدیل</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">📱</span>
+                <h3>بازاریابی در شبکه‌های اجتماعی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>بهینه‌سازی حضور در شبکه‌های اجتماعی</p>
+                <ul class="features-list">
+                    <li>تحلیل محتوای شبکه‌های اجتماعی</li>
+                    <li>شناسایی بهترین زمان انتشار</li>
+                    <li>افزایش تعامل با مخاطبان</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+            <div class="product-card">
+                <span class="icon">🔮</span>
+                <h3>پیش‌بینی بازاریابی</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>پیش‌بینی روندها و رفتار مشتریان</p>
+                <ul class="features-list">
+                    <li>پیش‌بینی نرخ تبدیل</li>
+                    <li>پیش‌بینی فروش آینده</li>
+                    <li>شناسایی فرصت‌های بازاریابی</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="#" class="order-btn">درخواست مشاوره</a>
+            </div>
+
+        </div>
+
+        <!-- ===== بنر مدیریتی ===== -->
+        <div class="management-banner">
+            <div class="info">
+                <span class="icon">📊</span>
+                <div class="text">
+                    <h3>🎯 پنل مدیریت بازاریابی اختصاصی</h3>
+                    <p>با تهیه سیستم بازاریابی هوشمند، به یک پنل مدیریت کامل دسترسی دارید که تمام کمپین‌ها و تحلیل‌ها را به صورت لحظه‌ای نمایش می‌دهد.</p>
+                </div>
+            </div>
+            <div class="badge-group">
+                <span class="badge">📋 ذخیره کمپین‌ها</span>
+                <span class="badge">📊 گزارش‌های تحلیلی</span>
+                <span class="badge">🎯 بهینه‌سازی لحظه‌ای</span>
+            </div>
+        </div>
+
+        <!-- ===== نمونه پنل مدیریت ===== -->
+        <div class="admin-panel-preview">
+            <div class="preview-title">
+                <h2>📊 نمونه پنل مدیریت بازاریابی</h2>
+                <p>همه کمپین‌ها و تحلیل‌های بازاریابی در این پنل قابل مشاهده است</p>
+            </div>
+            <div class="preview-card">
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number">۴.۲x</div>
+                        <div class="label">بازگشت سرمایه (ROI)</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <div class="number">۳۴٪</div>
+                        <div class="label">نرخ تبدیل</div>
+                    </div>
+                    <div class="stat-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <div class="number">۵۶٪</div>
+                        <div class="label">افزایش تعامل</div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کمپین</th>
+                            <th>کانال</th>
+                            <th>نرخ تبدیل</th>
+                            <th>بازگشت سرمایه</th>
+                            <th>تاریخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>۱</td>
+                            <td><strong>تخفیف تابستانه</strong></td>
+                            <td><span style="display:inline-block;background:#667eea;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">ایمیل</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">۴۲٪</span></td>
+                            <td><span style="font-weight:700;">۵.۱x</span></td>
+                            <td>۱۴۰۵-۰۴-۰۷</td>
+                        </tr>
+                        <tr>
+                            <td>۲</td>
+                            <td><strong>معرفی محصول جدید</strong></td>
+                            <td><span style="display:inline-block;background:#f093fb;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">اینستاگرام</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">۳۶٪</span></td>
+                            <td><span style="font-weight:700;">۴.۳x</span></td>
+                            <td>۱۴۰۵-۰۴-۰۶</td>
+                        </tr>
+                        <tr>
+                            <td>۳</td>
+                            <td><strong>برنامه وفاداری</strong></td>
+                            <td><span style="display:inline-block;background:#4facfe;color:white;padding:2px 12px;border-radius:12px;font-size:0.8em;">پیامک</span></td>
+                            <td><span style="color:#28c840;font-weight:700;">۲۸٪</span></td>
+                            <td><span style="font-weight:700;">۳.۸x</span></td>
+                            <td>۱۴۰۵-۰۴-۰۵</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="preview-footer">
+                    🔒 دسترسی به پنل مدیریت با نام کاربری و رمز عبور محافظت می‌شود
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== نمونه‌ها ===== -->
+        <div class="demo-section">
+            <h2>🎯 نمونه‌های بازاریابی هوشمند</h2>
+            <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">🎯 شخصی‌سازی محتوا <span class="badge">جدید</span></a>
+                <a href="#" class="demo-btn">📊 تحلیل کمپین</a>
+                <a href="#" class="demo-btn">👥 تحلیل مشتریان</a>
+                <a href="#" class="demo-btn">📧 ایمیل مارکتینگ</a>
+            </div>
+        </div>
+
+        <!-- ===== خدمات ===== -->
+        <div class="services-section">
+            <h2>✨ خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="icon">🎯</span>
+                    <h3>طراحی اختصاصی</h3>
+                    <p>سیستم بازاریابی متناسب با نیاز شما</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🔧</span>
+                    <h3>پیاده‌سازی و نصب</h3>
+                    <p>نصب و راه‌اندازی روی سرور یا ابر</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">📚</span>
+                    <h3>آموزش</h3>
+                    <p>آموزش تیم شما برای استفاده حداکثری</p>
+                </div>
+                <div class="service-item">
+                    <span class="icon">🛠️</span>
+                    <h3>پشتیبانی ۲۴/۷</h3>
+                    <p>پشتیبانی کامل و بروزرسانی مداوم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ویژگی‌ها ===== -->
+        <div class="features-section">
+            <h2>⭐ چرا بازاریابی هوشمند سوفیا؟</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🎯</span>
+                    <h4>هدف‌گیری دقیق</h4>
+                    <p>رسیدن به مخاطبان مناسب</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h4>پردازش لحظه‌ای</h4>
+                    <p>تحلیل کمپین‌ها در کسری از ثانیه</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📊</span>
+                    <h4>تحلیل عمیق</h4>
+                    <p>درک رفتار و نیاز مشتریان</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت داده</h4>
+                    <p>محافظت کامل از اطلاعات</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h4>بهبود مستمر</h4>
+                    <p>یادگیری از داده‌های جدید</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">💰</span>
+                    <h4>بازگشت سرمایه</h4>
+                    <p>کاهش هزینه‌ها و افزایش فروش</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== سفارش ===== -->
+        <div class="order-section" id="order">
+            <h2>📝 ثبت سفارش سیستم بازاریابی هوشمند</h2>
+            <p>
+                برای سفارش سیستم بازاریابی هوشمند اختصاصی، فرم زیر را تکمیل کنید.<br>
+                تیم ما در اسرع وقت با شما تماس می‌گیرد.
+            </p>
+            <a href="order.html" class="order-btn">🚀 ثبت سفارش</a>
+        </div>
+
+        <!-- ===== باکس تماس ===== -->
+        <div class="contact-box" id="contact">
+            <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
+            <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
+            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
+        </div>
+
+        <!-- ===== فوتر ===== -->
+        <footer>
+            <p>© ۱۴۰۶ - تمامی حقوق برای <strong>هوش مصنوعی در بازاریابی دیجیتال سوفیا</strong> محفوظ است</p>
+            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
+        </footer>
+
+    </div>
+</body>
+</html>
