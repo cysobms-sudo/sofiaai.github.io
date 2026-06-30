@@ -2,129 +2,649 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>فرم ثبت درخواست | Sofia AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:Tahoma;background:linear-gradient(135deg,#667eea,#764ba2);direction:rtl;padding:20px;}
-        .container{max-width:700px;margin:0 auto;background:white;border-radius:25px;padding:40px;}
-        h1{color:#667eea;text-align:center;margin-bottom:10px;}
-        .subtitle{text-align:center;color:#666;margin-bottom:30px;font-size:0.9em;}
-        .form-group{margin-bottom:20px;}
-        label{display:block;margin-bottom:8px;font-weight:bold;color:#333;}
-        label .required{color:red;}
-        input,select,textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:1em;font-family:Tahoma;}
-        input:focus,select:focus,textarea:focus{border-color:#667eea;outline:none;}
-        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:15px;border:none;border-radius:50px;font-size:1.2em;font-weight:bold;cursor:pointer;width:100%;}
-        .btn:hover{opacity:0.9;}
-        .back-link{display:block;text-align:center;margin-top:20px;color:#667eea;text-decoration:none;}
-        .cooperation-link{display:block;text-align:center;margin-top:15px;color:#764ba2;text-decoration:none;font-weight:bold;}
-        footer{text-align:center;margin-top:30px;color:#999;font-size:0.8em;}
-        hr{margin:20px 0;border:1px solid #eee;}
-        .service-option{padding-right:5px;}
-        .price-info{
-            background:linear-gradient(135deg,#667eea20,#764ba220);
-            padding:15px;
-            border-radius:15px;
-            margin:20px 0;
-            text-align:center;
-            border:1px solid #667eea30;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .price-info p{
-            color:#555;
-            font-size:0.9em;
+
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 30px 20px;
+            line-height: 1.8;
         }
-        .price-info strong{
-            color:#764ba2;
-            font-size:1.1em;
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 45px 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .icon {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 5px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.4em;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .header .subtitle strong {
+            color: #764ba2;
+            font-weight: 700;
+        }
+
+        /* ===== Form ===== */
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 0.95em;
+        }
+
+        label .required {
+            color: #f5576c;
+            margin-right: 3px;
+        }
+
+        label .optional {
+            color: #999;
+            font-weight: 300;
+            font-size: 0.85em;
+            margin-right: 5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .input-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1em;
+            color: #999;
+            pointer-events: none;
+        }
+
+        .input-wrapper .input-icon.textarea-icon {
+            top: 18px;
+            transform: none;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 45px 12px 14px;
+            border: 2px solid #e8ecf4;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            transition: all 0.3s ease;
+            background: #f8f9fe;
+            color: #2d3748;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #667eea;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 14px center;
+            padding-left: 35px;
+            cursor: pointer;
+        }
+
+        select optgroup {
+            font-weight: 700;
+            color: #667eea;
+            background: #f8f9fe;
+        }
+
+        select option {
+            padding: 6px 8px;
+            font-weight: 400;
+            color: #2d3748;
+        }
+
+        select option.service-option {
+            padding-right: 20px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            padding: 12px 45px 12px 14px;
+        }
+
+        .input-wrapper .input-icon.textarea-icon {
+            top: 14px;
+        }
+
+        /* ===== Price Info ===== */
+        .price-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin: 22px 0;
+            border: 1.5px dashed rgba(102, 126, 234, 0.25);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-info p {
+            color: #555;
+            font-size: 0.95em;
+            margin: 3px 0;
+        }
+
+        .price-info .highlight {
+            color: #764ba2;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .price-info .free-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #28c840, #00b894);
+            color: white;
+            padding: 4px 18px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        /* ===== Button ===== */
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15em;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.45);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* ===== Trust Badges ===== */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 0.85em;
+            font-weight: 400;
+        }
+
+        .trust-badge .icon {
+            font-size: 1.2em;
+        }
+
+        /* ===== Divider ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .divider .line {
+            flex: 1;
+            height: 1px;
+            background: #e8ecf4;
+        }
+
+        .divider .text {
+            color: #999;
+            font-size: 0.85em;
+            font-weight: 300;
+            white-space: nowrap;
+        }
+
+        /* ===== Links ===== */
+        .links {
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 5px 10px;
+            font-size: 0.95em;
+        }
+
+        .links a:hover {
+            color: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .links .cooperation-link {
+            color: #f5576c;
+            font-weight: 700;
+            background: rgba(245, 87, 108, 0.08);
+            padding: 6px 20px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(245, 87, 108, 0.2);
+        }
+
+        .links .cooperation-link:hover {
+            background: rgba(245, 87, 108, 0.15);
+            border-color: #f5576c;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #999;
+            font-size: 0.85em;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid #e8ecf4;
+            padding-top: 20px;
+        }
+
+        footer .footer-icon {
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 22px;
+                border-radius: 22px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header .icon {
+                font-size: 3.2em;
+            }
+
+            input, select, textarea {
+                padding: 10px 40px 10px 12px;
+                font-size: 0.95em;
+            }
+
+            .btn-submit {
+                font-size: 1em;
+                padding: 14px 30px;
+            }
+
+            .trust-badges {
+                gap: 12px;
+            }
+
+            .trust-badge {
+                font-size: 0.75em;
+            }
+
+            .price-info {
+                padding: 14px 16px;
+            }
+
+            .price-info p {
+                font-size: 0.85em;
+            }
+
+            .links a {
+                font-size: 0.85em;
+                margin: 3px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .container {
+                padding: 22px 16px;
+                border-radius: 18px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .header .subtitle {
+                font-size: 0.9em;
+            }
+
+            input, select, textarea {
+                padding: 8px 35px 8px 10px;
+                font-size: 0.9em;
+                border-radius: 10px;
+            }
+
+            label {
+                font-size: 0.85em;
+            }
+
+            .btn-submit {
+                font-size: 0.95em;
+                padding: 12px 25px;
+            }
+
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .price-info .highlight {
+                font-size: 0.95em;
+            }
+
+            .links a {
+                font-size: 0.8em;
+                display: block;
+                margin: 4px 0;
+            }
+
+            footer {
+                font-size: 0.75em;
+            }
+
+            .divider .text {
+                font-size: 0.75em;
+            }
+        }
+
+        /* Scrollbar styling for dropdown */
+        select option:checked {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Custom scrollbar for select */
+        select::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        select::-webkit-scrollbar-track {
+            background: #f0f2f8;
+            border-radius: 8px;
+        }
+
+        select::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📋 فرم ثبت درخواست</h1>
-    <div class="subtitle">لطفاً اطلاعات خود را وارد کنید</div>
-    
+
+    <!-- ===== Header ===== -->
+    <div class="header">
+        <span class="icon">📋</span>
+        <h1>ثبت درخواست</h1>
+        <p class="subtitle">لطفاً اطلاعات خود را وارد کنید تا <strong>کارشناسان ما</strong> با شما تماس بگیرند</p>
+    </div>
+
+    <!-- ===== Form ===== -->
     <form action="https://formspree.io/f/xpqeqkgk" method="POST">
         <input type="hidden" name="_subject" value="سفارش جدید از سایت Sofia AI">
-        
-        <!-- منوی کرکره‌ای انتخاب خدمات - 10 سرویس کامل -->
+
+        <!-- ===== Service Selection ===== -->
         <div class="form-group">
             <label>نوع درخواست <span class="required">*</span></label>
-            <select name="request_type" required style="padding:12px;">
-                <option value="" disabled selected>── لطفاً خدمت مورد نظر را انتخاب کنید ──</option>
-                <option value="rag" class="service-option">🧠 سیستم RAG (پرسش و پاسخ هوشمند از اسناد)</option>
-                <option value="vision" class="service-option">👁️ بینایی ماشین (تشخیص اشیا، چهره و آنالیز تصاویر)</option>
-                <option value="automation" class="service-option">⚙️ اتوماسیون هوشمند (طراحی workflow با n8n)</option>
-                <option value="llm" class="service-option">🎓 مشاوره و آموزش LLM (مهندسی پرامپت، Fine-tuning)</option>
-                <option value="lmstudio" class="service-option">🚀 نصب و راه‌اندازی ایجنت هوش مصنوعی</option>
-                <option value="data" class="service-option">📊 تحلیل داده و سیستم پیشنهاددهنده</option>
-                <option value="nlp" class="service-option">💬 پردازش زبان طبیعی (تحلیل متن، احساسات، چت‌بات)</option>
-                <option value="voice" class="service-option">🎤 تشخیص و سنتز صدا (تبدیل گفتار به متن و برعکس)</option>
-                <option value="predictive" class="service-option">📈 سیستم‌های پیش‌بینی (پیش‌بینی فروش، قیمت و تقاضا)</option>
-                <option value="recommend" class="service-option">🎯 سیستم پیشنهاددهنده (توصیه محصول و محتوای شخصی‌سازی شده)</option>
-                <option value="other" class="service-option">🔧 سایر خدمات (لطفاً در توضیحات بنویسید)</option>
-            </select>
+            <div class="input-wrapper">
+                <span class="input-icon">🛠</span>
+                <select name="request_type" required>
+                    <option value="" disabled selected>── لطفاً خدمت مورد نظر را انتخاب کنید ──</option>
+                    <optgroup label="🔷 خدمات اصلی">
+                        <option value="rag">🧠 سیستم RAG (پرسش و پاسخ از اسناد)</option>
+                        <option value="vision">👁️ بینایی ماشین (تشخیص اشیا، چهره)</option>
+                        <option value="automation">⚙️ اتوماسیون هوشمند (طراحی workflow)</option>
+                        <option value="lmstudio">🚀 نصب و راه‌اندازی ایجنت AI</option>
+                        <option value="chatbot">🤖 طراحی و راه‌اندازی چت‌بات</option>
+                        <option value="data">📊 تحلیل داده و پیش‌بینی</option>
+                        <option value="nlp">💬 پردازش زبان طبیعی</option>
+                        <option value="voice">🎤 تشخیص و سنتز صدا</option>
+                        <option value="predictive">📈 سیستم‌های پیش‌بینی</option>
+                        <option value="recommend">🎯 سیستم پیشنهاددهنده</option>
+                    </optgroup>
+                    <optgroup label="🟣 خدمات جدید">
+                        <option value="fraud">🛡️ تشخیص کلاهبرداری و امنیت سایبری</option>
+                        <option value="marketing">📢 هوش مصنوعی در بازاریابی دیجیتال</option>
+                        <option value="knowledge">🧠 مدیریت دانش و هوش کسب‌وکار</option>
+                        <option value="health">🏥 هوش مصنوعی در سلامت و پزشکی</option>
+                        <option value="content">✍️ تولید خودکار محتوا</option>
+                        <option value="beauty">💄 هوش مصنوعی در صنعت زیبایی</option>
+                        <option value="interior">🏠 هوش مصنوعی در دکوراسیون داخلی</option>
+                        <option value="site">🌐 طراحی سایت با هوش مصنوعی</option>
+                    </optgroup>
+                    <option value="other">🔧 سایر خدمات (لطفاً در توضیحات بنویسید)</option>
+                </select>
+            </div>
         </div>
-        
+
+        <!-- ===== Name ===== -->
         <div class="form-group">
             <label>نام و نام خانوادگی <span class="required">*</span></label>
-            <input type="text" name="name" required>
+            <div class="input-wrapper">
+                <span class="input-icon">👤</span>
+                <input type="text" name="name" required placeholder="مثال: علی محمدی">
+            </div>
         </div>
-        
+
+        <!-- ===== Phone ===== -->
         <div class="form-group">
             <label>شماره تماس <span class="required">*</span></label>
-            <input type="tel" name="phone" required>
+            <div class="input-wrapper">
+                <span class="input-icon">📞</span>
+                <input type="tel" name="phone" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+            </div>
         </div>
-        
+
+        <!-- ===== Email ===== -->
         <div class="form-group">
-            <label>ایمیل</label>
-            <input type="email" name="email" placeholder="example@gmail.com">
+            <label>ایمیل <span class="optional">(اختیاری)</span></label>
+            <div class="input-wrapper">
+                <span class="input-icon">✉️</span>
+                <input type="email" name="email" placeholder="example@gmail.com">
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label>سیستم عامل <span class="required">*</span></label>
-            <select name="os" required>
-                <option value="" disabled selected>── انتخاب کنید ──</option>
-                <option value="windows">ویندوز 10/11</option>
-                <option value="mac">مک (MacOS)</option>
-                <option value="linux">لینوکس</option>
-            </select>
+
+        <!-- ===== Two columns for OS and RAM ===== -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; position:relative; z-index:1;">
+            <div class="form-group">
+                <label>سیستم عامل <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">💻</span>
+                    <select name="os" required>
+                        <option value="" disabled selected>── انتخاب ──</option>
+                        <option value="windows">ویندوز 10/11</option>
+                        <option value="mac">مک (MacOS)</option>
+                        <option value="linux">لینوکس</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>میزان رم (RAM) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🧠</span>
+                    <select name="ram" required>
+                        <option value="" disabled selected>── انتخاب ──</option>
+                        <option value="4">۴ گیگابایت</option>
+                        <option value="8">۸ گیگابایت</option>
+                        <option value="16">۱۶ گیگابایت</option>
+                        <option value="32">۳۲ گیگابایت</option>
+                        <option value="64">۶۴ گیگابایت یا بیشتر</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label>میزان رم (RAM) <span class="required">*</span></label>
-            <select name="ram" required>
-                <option value="" disabled selected>── انتخاب کنید ──</option>
-                <option value="4">4 گیگابایت</option>
-                <option value="8">8 گیگابایت</option>
-                <option value="16">16 گیگابایت</option>
-                <option value="32">32 گیگابایت</option>
-                <option value="64">64 گیگابایت یا بیشتر</option>
-            </select>
-        </div>
-        
-        <!-- بخش اطلاع‌رسانی هزینه -->
+
+        <!-- ===== Price Info ===== -->
         <div class="price-info">
-            <p>💰 <strong>هزینه خدمات</strong> بر اساس نوع پروژه محاسبه می‌شود</p>
+            <p>💰 <span class="highlight">هزینه خدمات</span> بر اساس نوع پروژه محاسبه می‌شود</p>
             <p>پس از ثبت درخواست، کارشناسان ما با شما تماس می‌گیرند و با توجه به نیاز شما، قیمت دقیق را اعلام می‌کنند.</p>
-            <p style="margin-top:8px;">🟢 <strong>مشاوره اولیه رایگان</strong> 🟢</p>
+            <span class="free-badge">🟢 مشاوره اولیه رایگان</span>
         </div>
-        
+
+        <!-- ===== Notes ===== -->
         <div class="form-group">
-            <label>توضیحات اضافه</label>
-            <textarea name="notes" rows="4" placeholder="اگر نکته خاصی هست یا درخواست شما غیر از گزینه‌های بالا است، اینجا بنویسید..."></textarea>
+            <label>توضیحات اضافه <span class="optional">(اختیاری)</span></label>
+            <div class="input-wrapper">
+                <span class="input-icon textarea-icon">📝</span>
+                <textarea name="notes" rows="4" placeholder="اگر نکته خاصی هست یا درخواست شما غیر از گزینه‌های بالا است، اینجا بنویسید..."></textarea>
+            </div>
         </div>
-        
-        <button type="submit" class="btn">📝 ثبت درخواست</button>
+
+        <!-- ===== Submit Button ===== -->
+        <button type="submit" class="btn-submit">
+            <span>📝 ثبت درخواست</span>
+            <span style="font-size:0.8em; opacity:0.7;">(رایگان)</span>
+        </button>
+
+        <!-- ===== Trust Badges ===== -->
+        <div class="trust-badges">
+            <span class="trust-badge"><span class="icon">🔒</span> اطلاعات شما محفوظ است</span>
+            <span class="trust-badge"><span class="icon">⏱️</span> پاسخگویی در ۲۴ ساعت</span>
+            <span class="trust-badge"><span class="icon">💳</span> پرداخت امن و مطمئن</span>
+        </div>
     </form>
-    
-    <hr>
-    
-    <a href="cooperation.html" class="cooperation-link">🤝 می‌خواهید با ما همکاری کنید؟ کلیک کنید</a>
-    <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
-    
-    <footer>پس از ثبت، حداکثر 24 ساعت با شما تماس می‌گیریم</footer>
+
+    <!-- ===== Divider ===== -->
+    <div class="divider">
+        <span class="line"></span>
+        <span class="text">✨</span>
+        <span class="line"></span>
+    </div>
+
+    <!-- ===== Links ===== -->
+    <div class="links">
+        <a href="cooperation.html" class="cooperation-link">🤝 می‌خواهید با ما همکاری کنید؟ کلیک کنید</a>
+        <br>
+        <a href="index.html">← بازگشت به صفحه اصلی</a>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <span class="footer-icon">⏳</span> پس از ثبت، حداکثر ۲۴ ساعت با شما تماس می‌گیریم
+    </footer>
+
 </div>
 </body>
 </html>
