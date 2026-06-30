@@ -6,7 +6,6 @@
     <title>Sofia AI | هوش مصنوعی سوفیا</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== فونت‌ها ===== */
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
 
         * {
@@ -16,7 +15,7 @@
         }
 
         body {
-            font-family: 'Vazirmatn', 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
@@ -29,9 +28,6 @@
             margin: 0 auto;
         }
 
-        /* ============================================
-                   نوار ناوبری
-                   ============================================ */
         .navbar {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(14px);
@@ -49,9 +45,6 @@
             z-index: 100;
         }
 
-        /* ============================================
-                   لوگوی ساده با حرف S و Zoom In/Out
-                   ============================================ */
         .logo-wrapper {
             display: flex;
             align-items: center;
@@ -120,15 +113,8 @@
         }
 
         @keyframes zoomLetter {
-            0%, 100% { 
-                transform: scale(1); 
-                opacity: 0.9;
-            }
-            50% { 
-                transform: scale(1.25); 
-                opacity: 1;
-                text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
-            }
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.25); opacity: 1; text-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
         }
 
         .logo-dot {
@@ -151,25 +137,11 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        .logo-wrapper:hover .logo-letter {
-            animation-duration: 2s;
-        }
-
-        .logo-wrapper:hover .logo-ring-outer {
-            animation-duration: 8s;
-        }
-
-        .logo-wrapper:hover .logo-ring-outer::before {
-            animation-duration: 3s;
-        }
-
-        .logo-wrapper:hover .logo-ring-inner {
-            animation-duration: 10s;
-        }
-
-        .logo-wrapper:hover .logo-letter {
-            text-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-        }
+        .logo-wrapper:hover .logo-letter { animation-duration: 2s; }
+        .logo-wrapper:hover .logo-ring-outer { animation-duration: 8s; }
+        .logo-wrapper:hover .logo-ring-outer::before { animation-duration: 3s; }
+        .logo-wrapper:hover .logo-ring-inner { animation-duration: 10s; }
+        .logo-wrapper:hover .logo-letter { text-shadow: 0 0 60px rgba(255, 215, 0, 0.6); }
 
         .logo-text {
             display: flex;
@@ -198,9 +170,6 @@
             letter-spacing: 3px;
         }
 
-        /* ============================================
-                   منوی اصلی
-                   ============================================ */
         .nav-menu {
             display: flex;
             gap: 4px;
@@ -223,7 +192,6 @@
             color: #fff;
         }
 
-        /* ===== منوی کشویی ===== */
         .dropdown {
             position: relative;
             z-index: 999;
@@ -294,7 +262,6 @@
             display: block;
         }
 
-        /* ===== دکمه‌ها ===== */
         .btn-request {
             background: linear-gradient(145deg, #FFD700, #FF8C00);
             color: #fff !important;
@@ -317,9 +284,6 @@
             background: rgba(255, 255, 255, 0.15) !important;
         }
 
-        /* ============================================
-                   بخش قهرمان
-                   ============================================ */
         .hero {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
             border-radius: 28px;
@@ -387,7 +351,6 @@
             font-weight: 700;
         }
 
-        /* ===== آمار ===== */
         .stats {
             display: flex;
             justify-content: center;
@@ -415,9 +378,6 @@
             font-size: 0.8em;
         }
 
-        /* ============================================
-                   عنوان بخش
-                   ============================================ */
         .section-title {
             text-align: center;
             color: #fff;
@@ -437,9 +397,6 @@
             border-radius: 10px;
         }
 
-        /* ============================================
-                   شبکه خدمات
-                   ============================================ */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -496,9 +453,6 @@
             margin-top: 4px;
         }
 
-        /* ============================================
-                   درباره ما
-                   ============================================ */
         .about-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
@@ -525,9 +479,6 @@
             margin: 0 auto;
         }
 
-        /* ============================================
-                   تماس
-                   ============================================ */
         .contact-row {
             display: flex;
             justify-content: center;
@@ -552,9 +503,6 @@
             transform: translateY(-2px);
         }
 
-        /* ============================================
-                   باکس درخواست
-                   ============================================ */
         .request-box {
             background: rgba(0, 0, 0, 0.18);
             backdrop-filter: blur(8px);
@@ -596,9 +544,6 @@
             box-shadow: 0 8px 28px rgba(255, 215, 0, 0.35);
         }
 
-        /* ============================================
-                   فوتر
-                   ============================================ */
         footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.4);
@@ -621,9 +566,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* ============================================
-                   واکنش‌گرایی
-                   ============================================ */
         @media (max-width: 992px) {
             .hero h1 { font-size: 2.4em; }
             .hero { padding: 35px 25px; min-height: 230px; }
