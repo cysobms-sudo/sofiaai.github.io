@@ -21,6 +21,7 @@
             direction: rtl;
             padding: 20px;
             line-height: 1.8;
+            font-size: 18px;
         }
 
         .container {
@@ -29,17 +30,17 @@
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(14px);
-            padding: 10px 25px;
+            padding: 12px 28px;
             border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             position: relative;
             z-index: 100;
@@ -48,21 +49,21 @@
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             text-decoration: none;
         }
 
         .logo-container {
             position: relative;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             flex-shrink: 0;
         }
 
         .logo-ring-outer {
             position: absolute;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: 2.5px solid rgba(255, 215, 0, 0.12);
             animation: ringSpin 15s linear infinite;
@@ -73,8 +74,8 @@
             position: absolute;
             top: -2.5px;
             left: -2.5px;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: 2.5px solid transparent;
             border-top-color: #FFD700;
@@ -89,12 +90,12 @@
 
         .logo-ring-inner {
             position: absolute;
-            top: 7px;
-            left: 7px;
-            width: 42px;
-            height: 42px;
+            top: 8px;
+            left: 8px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.06);
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(4px);
             display: flex;
@@ -104,7 +105,7 @@
         }
 
         .logo-letter {
-            font-size: 1.6em;
+            font-size: 1.8em;
             font-weight: 900;
             color: #FFD700;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
@@ -114,23 +115,23 @@
 
         @keyframes zoomLetter {
             0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.25); opacity: 1; text-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
+            50% { transform: scale(1.2); opacity: 1; text-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
         }
 
         .logo-dot {
             position: absolute;
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             background: #FFD700;
             border-radius: 50%;
             box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
             animation: dotFlash 3s ease-in-out infinite;
         }
 
-        .logo-dot:nth-child(4) { top: -2px; right: 10px; animation-delay: 0s; }
-        .logo-dot:nth-child(5) { top: -2px; left: 10px; animation-delay: 0.7s; }
-        .logo-dot:nth-child(6) { bottom: -2px; right: 10px; animation-delay: 1.4s; }
-        .logo-dot:nth-child(7) { bottom: -2px; left: 10px; animation-delay: 2.1s; }
+        .logo-dot:nth-child(4) { top: -2px; right: 11px; animation-delay: 0s; }
+        .logo-dot:nth-child(5) { top: -2px; left: 11px; animation-delay: 0.7s; }
+        .logo-dot:nth-child(6) { bottom: -2px; right: 11px; animation-delay: 1.4s; }
+        .logo-dot:nth-child(7) { bottom: -2px; left: 11px; animation-delay: 2.1s; }
 
         @keyframes dotFlash {
             0%, 100% { opacity: 0.2; transform: scale(0.5); }
@@ -150,7 +151,7 @@
         }
 
         .logo-text .main {
-            font-size: 1.6em;
+            font-size: 1.8em;
             font-weight: 900;
             color: #fff;
             letter-spacing: 0.5px;
@@ -164,27 +165,27 @@
         }
 
         .logo-text .sub {
-            font-size: 0.45em;
+            font-size: 0.5em;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.4);
             letter-spacing: 3px;
         }
 
         .nav-menu {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
             align-items: center;
         }
 
         .nav-menu > a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            padding: 6px 14px;
+            padding: 7px 16px;
             border-radius: 25px;
             transition: all 0.3s;
             font-weight: 500;
-            font-size: 0.85em;
+            font-size: 0.95em;
         }
 
         .nav-menu > a:hover {
@@ -198,13 +199,13 @@
         }
 
         .dropdown-btn {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.12);
             color: #FFD700;
-            padding: 6px 14px;
+            padding: 7px 16px;
             border-radius: 25px;
             cursor: pointer;
             border: 1px solid rgba(255, 215, 0, 0.1);
-            font-size: 0.85em;
+            font-size: 0.95em;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             font-weight: 600;
             transition: all 0.3s;
@@ -218,11 +219,11 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 44px;
+            top: 46px;
             right: 0;
             background: rgba(15, 15, 40, 0.96);
             backdrop-filter: blur(20px);
-            min-width: 280px;
+            min-width: 300px;
             border-radius: 14px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             z-index: 99999;
@@ -235,10 +236,10 @@
 
         .dropdown-content a {
             color: #f0f2f8 !important;
-            padding: 11px 18px !important;
+            padding: 12px 20px !important;
             display: block !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-            font-size: 0.88em !important;
+            font-size: 0.95em !important;
             text-decoration: none !important;
             font-weight: 400 !important;
             background: transparent !important;
@@ -248,7 +249,7 @@
         .dropdown-content a:hover {
             background: rgba(255, 215, 0, 0.08) !important;
             color: #FFD700 !important;
-            padding-right: 24px !important;
+            padding-right: 26px !important;
         }
 
         .dropdown-content .menu-divider {
@@ -320,9 +321,9 @@
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: #fff;
-            padding: 5px 22px;
+            padding: 6px 24px;
             border-radius: 50px;
-            font-size: 0.75em;
+            font-size: 0.85em;
             font-weight: 700;
             margin-bottom: 14px;
             box-shadow: 0 3px 12px rgba(102, 126, 234, 0.2);
@@ -331,7 +332,7 @@
         .hero h1 {
             font-size: 2.8em;
             font-weight: 900;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -340,7 +341,7 @@
 
         .hero p {
             color: #555;
-            font-size: 1.05em;
+            font-size: 1.15em;
             line-height: 2;
             max-width: 600px;
             margin: 0 auto;
@@ -354,15 +355,15 @@
         .stats {
             display: flex;
             justify-content: center;
-            gap: 35px;
+            gap: 40px;
             flex-wrap: wrap;
-            margin-top: 25px;
-            padding-top: 22px;
+            margin-top: 28px;
+            padding-top: 24px;
             border-top: 2px solid rgba(0, 0, 0, 0.05);
         }
 
         .stat-number {
-            font-size: 1.8em;
+            font-size: 2em;
             font-weight: 900;
             color: #764ba2;
             display: block;
@@ -375,15 +376,15 @@
 
         .stat-label {
             color: #777;
-            font-size: 0.8em;
+            font-size: 0.9em;
         }
 
         .section-title {
             text-align: center;
             color: #fff;
-            font-size: 1.7em;
+            font-size: 1.9em;
             font-weight: 900;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -399,8 +400,8 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
             margin-bottom: 35px;
         }
 
@@ -408,7 +409,7 @@
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(8px);
             border-radius: 20px;
-            padding: 22px 18px;
+            padding: 24px 20px;
             text-align: center;
             text-decoration: none;
             color: #fff;
@@ -424,31 +425,31 @@
         }
 
         .service-icon {
-            font-size: 2.5em;
-            margin-bottom: 8px;
+            font-size: 2.8em;
+            margin-bottom: 10px;
             display: block;
         }
 
         .service-card h4 {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .service-card p {
-            font-size: 0.8em;
-            opacity: 0.8;
+            font-size: 0.9em;
+            opacity: 0.85;
             font-weight: 300;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .service-card .card-badge {
             display: inline-block;
             background: rgba(255, 215, 0, 0.15);
             color: #FFD700;
-            padding: 2px 10px;
+            padding: 2px 12px;
             border-radius: 50px;
-            font-size: 0.55em;
+            font-size: 0.65em;
             font-weight: 700;
             margin-top: 4px;
         }
@@ -456,7 +457,7 @@
         .about-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
-            padding: 35px 40px;
+            padding: 40px 45px;
             text-align: center;
             margin-top: 35px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
@@ -466,15 +467,15 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            font-size: 1.5em;
+            margin-bottom: 18px;
+            font-size: 1.7em;
             font-weight: 900;
         }
 
         .about-box p {
             color: #555;
-            line-height: 2;
-            font-size: 0.9em;
+            line-height: 2.2;
+            font-size: 1.05em;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -482,20 +483,20 @@
         .contact-row {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-top: 18px;
+            margin-top: 20px;
         }
 
         .contact-row a {
             color: #764ba2;
             text-decoration: none;
             font-weight: 500;
-            padding: 5px 16px;
+            padding: 6px 18px;
             border-radius: 50px;
             background: rgba(118, 75, 162, 0.05);
             transition: all 0.3s;
-            font-size: 0.85em;
+            font-size: 0.95em;
         }
 
         .contact-row a:hover {
@@ -507,34 +508,34 @@
             background: rgba(0, 0, 0, 0.18);
             backdrop-filter: blur(8px);
             border-radius: 24px;
-            padding: 35px 30px;
+            padding: 40px 35px;
             text-align: center;
-            margin-top: 30px;
+            margin-top: 32px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .request-box h3 {
             color: #fff;
-            margin-bottom: 8px;
-            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-size: 1.6em;
             font-weight: 900;
         }
 
         .request-box p {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9em;
+            font-size: 1.05em;
         }
 
         .btn-large {
             background: linear-gradient(145deg, #FFD700, #FF8C00);
             color: #fff;
-            padding: 12px 45px;
+            padding: 14px 50px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.95em;
+            font-size: 1.05em;
             display: inline-block;
-            margin-top: 16px;
+            margin-top: 18px;
             transition: all 0.3s;
             box-shadow: 0 5px 18px rgba(255, 215, 0, 0.2);
         }
@@ -547,17 +548,17 @@
         footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.4);
-            padding: 20px 0 10px;
+            padding: 25px 0 12px;
             margin-top: 28px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         footer p {
-            font-size: 0.85em;
+            font-size: 0.95em;
         }
 
         footer .sub {
-            font-size: 0.7em;
+            font-size: 0.75em;
             margin-top: 4px;
             opacity: 0.6;
         }
@@ -567,76 +568,82 @@
         }
 
         @media (max-width: 992px) {
+            body { font-size: 16px; }
             .hero h1 { font-size: 2.4em; }
             .hero { padding: 35px 25px; min-height: 230px; }
             .hero::before { background-size: 60%; opacity: 0.12; }
-            .logo-text .main { font-size: 1.4em; }
-            .logo-container { width: 48px; height: 48px; }
-            .logo-ring-outer { width: 48px; height: 48px; }
-            .logo-ring-outer::before { width: 48px; height: 48px; }
-            .logo-ring-inner { width: 36px; height: 36px; top: 6px; left: 6px; }
-            .logo-letter { font-size: 1.3em; }
+            .logo-text .main { font-size: 1.6em; }
+            .logo-container { width: 52px; height: 52px; }
+            .logo-ring-outer { width: 52px; height: 52px; }
+            .logo-ring-outer::before { width: 52px; height: 52px; }
+            .logo-ring-inner { width: 38px; height: 38px; top: 7px; left: 7px; }
+            .logo-letter { font-size: 1.5em; }
             .logo-dot { display: none; }
         }
 
         @media (max-width: 768px) {
-            .navbar { flex-direction: column; border-radius: 20px; padding: 12px 16px; }
+            body { font-size: 15px; }
+            .navbar { flex-direction: column; border-radius: 20px; padding: 14px 18px; }
             .logo-wrapper { width: 100%; justify-content: center; }
             .hero h1 { font-size: 2em; }
             .hero { padding: 25px 18px; min-height: 190px; }
             .hero::before { background-size: 75%; opacity: 0.1; }
-            .section-title { font-size: 1.4em; }
+            .section-title { font-size: 1.6em; }
             .dropdown-content { min-width: 210px; right: 0; max-height: 320px; }
-            .stats { gap: 20px; }
-            .stat-number { font-size: 1.6em; }
-            .about-box { padding: 25px 18px; }
-            .services-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .service-card { padding: 16px 12px; }
-            .service-icon { font-size: 2.2em; }
+            .stats { gap: 25px; }
+            .stat-number { font-size: 1.7em; }
+            .about-box { padding: 28px 22px; }
+            .services-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .service-card { padding: 18px 14px; }
+            .service-icon { font-size: 2.4em; }
             .nav-menu { justify-content: center; width: 100%; }
-            .nav-menu > a { padding: 4px 10px; font-size: 0.75em; }
-            .dropdown-btn { padding: 4px 10px; font-size: 0.75em; }
-            .logo-container { width: 40px; height: 40px; }
-            .logo-ring-outer { width: 40px; height: 40px; }
-            .logo-ring-outer::before { width: 40px; height: 40px; }
-            .logo-ring-inner { width: 30px; height: 30px; top: 5px; left: 5px; }
-            .logo-letter { font-size: 1.1em; }
-            .logo-text .main { font-size: 1.2em; }
-            .logo-text .sub { font-size: 0.4em; }
+            .nav-menu > a { padding: 5px 12px; font-size: 0.85em; }
+            .dropdown-btn { padding: 5px 12px; font-size: 0.85em; }
+            .logo-container { width: 44px; height: 44px; }
+            .logo-ring-outer { width: 44px; height: 44px; }
+            .logo-ring-outer::before { width: 44px; height: 44px; }
+            .logo-ring-inner { width: 32px; height: 32px; top: 6px; left: 6px; }
+            .logo-letter { font-size: 1.2em; }
+            .logo-text .main { font-size: 1.4em; }
+            .logo-text .sub { font-size: 0.45em; }
         }
 
         @media (max-width: 480px) {
-            body { padding: 10px; }
+            body { 
+                padding: 10px; 
+                font-size: 14px; 
+            }
             .hero h1 { font-size: 1.6em; }
-            .hero p { font-size: 0.85em; }
+            .hero p { font-size: 0.95em; }
             .hero { min-height: 160px; padding: 18px 12px; }
             .hero::before { opacity: 0.08; background-size: 90%; }
             .services-grid { grid-template-columns: 1fr; }
-            .stats { gap: 12px; }
-            .stat-number { font-size: 1.3em; }
-            .stat-label { font-size: 0.7em; }
-            .contact-row { gap: 6px; }
-            .contact-row a { padding: 3px 10px; font-size: 0.7em; }
-            .btn-large { padding: 10px 28px; font-size: 0.85em; }
-            .about-box h3 { font-size: 1.3em; }
-            .about-box p { font-size: 0.8em; }
-            .section-title { font-size: 1.2em; }
-            .dropdown-content { min-width: 180px; right: -5px; max-height: 260px; }
-            .dropdown-content a { font-size: 0.78em !important; padding: 8px 14px !important; }
-            .service-card h4 { font-size: 0.9em; }
-            .service-card p { font-size: 0.75em; }
-            .request-box h3 { font-size: 1.2em; }
-            .logo-text .main { font-size: 1em; }
-            .logo-text .sub { font-size: 0.35em; letter-spacing: 2px; }
-            .logo-container { width: 34px; height: 34px; }
-            .logo-ring-outer { width: 34px; height: 34px; border-width: 2px; }
-            .logo-ring-outer::before { width: 34px; height: 34px; border-width: 2px; top: -2px; left: -2px; }
-            .logo-ring-inner { width: 24px; height: 24px; top: 5px; left: 5px; border-width: 1.5px; }
-            .logo-letter { font-size: 0.9em; }
-            .hero-badge { font-size: 0.55em; padding: 3px 12px; }
-            .navbar { padding: 8px 10px; }
-            .dropdown-btn { font-size: 0.7em; padding: 3px 8px; }
-            .nav-menu > a { font-size: 0.7em; padding: 3px 8px; }
+            .stats { gap: 15px; }
+            .stat-number { font-size: 1.4em; }
+            .stat-label { font-size: 0.8em; }
+            .contact-row { gap: 8px; }
+            .contact-row a { padding: 4px 12px; font-size: 0.85em; }
+            .btn-large { padding: 12px 30px; font-size: 0.95em; }
+            .about-box h3 { font-size: 1.4em; }
+            .about-box p { font-size: 0.95em; }
+            .section-title { font-size: 1.3em; }
+            .dropdown-content { min-width: 190px; right: -5px; max-height: 260px; }
+            .dropdown-content a { font-size: 0.85em !important; padding: 8px 14px !important; }
+            .service-card h4 { font-size: 1em; }
+            .service-card p { font-size: 0.85em; }
+            .request-box h3 { font-size: 1.3em; }
+            .logo-text .main { font-size: 1.2em; }
+            .logo-text .sub { font-size: 0.4em; letter-spacing: 2px; }
+            .logo-container { width: 38px; height: 38px; }
+            .logo-ring-outer { width: 38px; height: 38px; border-width: 2px; }
+            .logo-ring-outer::before { width: 38px; height: 38px; border-width: 2px; top: -2px; left: -2px; }
+            .logo-ring-inner { width: 26px; height: 26px; top: 6px; left: 6px; border-width: 1.5px; }
+            .logo-letter { font-size: 1em; }
+            .hero-badge { font-size: 0.7em; padding: 3px 14px; }
+            .navbar { padding: 10px 12px; }
+            .dropdown-btn { font-size: 0.8em; padding: 4px 10px; }
+            .nav-menu > a { font-size: 0.8em; padding: 4px 10px; }
+            .service-card .card-badge { font-size: 0.55em; }
         }
 
         .dropdown-content::-webkit-scrollbar { width: 4px; }
