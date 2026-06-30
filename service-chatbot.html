@@ -580,6 +580,38 @@
             margin-bottom: 10px;
         }
 
+        /* کارت چت بات بورس با تم سبز */
+        .product-card.stock-card {
+            border-color: #2ecc71;
+        }
+
+        .product-card.stock-card::before {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .product-card.stock-card .order-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .product-card.stock-card .order-btn:hover {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+        }
+
+        .product-card.stock-card .admin-tag {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .product-card.stock-card .price-tag {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .product-card.stock-card .features-list li::before {
+            content: "📊";
+            color: #2ecc71;
+        }
+
         /* ===== بنر مدیریتی ===== */
         .management-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -813,6 +845,22 @@
             font-size: 0.7em;
             margin-right: 8px;
             font-weight: 700;
+        }
+
+        /* دکمه بورس با تم سبز */
+        .demo-btn.stock-btn {
+            border-color: #2ecc71;
+            color: #27ae60;
+        }
+
+        .demo-btn.stock-btn:hover {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-color: transparent;
+        }
+
+        .demo-btn.stock-btn .badge {
+            background: #2ecc71;
         }
 
         /* ===== خدمات ===== */
@@ -1338,6 +1386,24 @@
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
             </div>
 
+            <!-- ===== کارت جدید چت‌بات بورس تهران ===== -->
+            <div class="product-card stock-card">
+                <span class="icon">📊</span>
+                <h3>چت‌بات بورس تهران</h3>
+                <span class="admin-tag">📊 دارای پنل مدیریت</span>
+                <p>تحلیل بنیادی و تکنیکال سهام بورس تهران با تمرکز بر نسبت‌های مالی و مدیریت ریسک</p>
+                <ul class="features-list">
+                    <li>تحلیل نسبت‌های مالی (P/E, P/B, DPS, EPS, ROE)</li>
+                    <li>تحلیل تکنیکال (RSI, MACD, میانگین متحرک)</li>
+                    <li>مدیریت ریسک و تنوع‌بخشی</li>
+                    <li>سهام پیشنهادی ارزنده و رشدی</li>
+                    <li>تحلیل صنایع (خودرو، پتروشیمی، بانکی، فولاد)</li>
+                    <li>تعیین سبک سرمایه‌گذاری</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="https://cysobms-chatbot-bors-tehran.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
+            </div>
+
             <div class="product-card">
                 <span class="icon">✈️</span>
                 <h3>چت‌بات مسافرتی</h3>
@@ -1487,6 +1553,10 @@
             <div class="demo-buttons">
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
                     ⚖️ حقوقی <span class="badge">جدید</span>
+                </a>
+                <!-- ===== دکمه جدید بورس تهران ===== -->
+                <a href="https://cysobms-chatbot-bors-tehran.hf.space/" target="_blank" class="demo-btn stock-btn">
+                    📊 بورس تهران <span class="badge">جدید</span>
                 </a>
                 <a href="#" class="demo-btn">✈️ مسافرتی</a>
                 <a href="#" class="demo-btn">🏨 هتلداری</a>
