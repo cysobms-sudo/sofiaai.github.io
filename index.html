@@ -2,8 +2,9 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia AI |  هوش مصنوعی سوفیا</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sofia AI | هوش مصنوعی سوفیا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         /* ===== فونت‌های مشابه چت‌بات ===== */
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
@@ -109,6 +110,8 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             z-index: 100;
             overflow: hidden;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         .dropdown-content a {
@@ -402,6 +405,7 @@
             .dropdown-content {
                 min-width: 220px;
                 right: -50px;
+                max-height: 350px;
             }
             .stats {
                 gap: 30px;
@@ -471,6 +475,11 @@
             .logo {
                 font-size: 1.3em;
             }
+            .dropdown-content {
+                min-width: 200px;
+                right: -20px;
+                max-height: 300px;
+            }
         }
     </style>
 </head>
@@ -490,13 +499,21 @@
                     <a href="service-vision.html">👁️ بینایی ماشین</a>
                     <a href="service-automation.html">⚙️ اتوماسیون هوشمند</a>
                     <a href="service-llm.html">🎓 مشاوره LLM</a>
-                    <a href="service-lmstudio.html">🚀 نصب و راه اندازی ایجنت هوش مصنوعی</a>
-                    <a href="service-chatbot.html">🚀 طراحی و راه اندازی چت بات</a>
+                    <a href="service-lmstudio.html">🚀 نصب و راه‌اندازی ایجنت AI</a>
+                    <a href="service-chatbot.html">🚀 طراحی و راه‌اندازی چت‌بات</a>
                     <a href="service-data.html">📊 تحلیل داده</a>
                     <a href="service-nlp.html">💬 پردازش زبان طبیعی</a>
                     <a href="service-voice.html">🎤 تشخیص و سنتز صدا</a>
                     <a href="service-predictive.html">📈 سیستم‌های پیش‌بینی</a>
                     <a href="service-recommend.html">🎯 سیستم پیشنهاددهنده</a>
+                    <hr style="border: 1px solid #eee; margin: 4px 0;">
+                    <a href="fraud.html">🛡️ تشخیص کلاهبرداری و امنیت سایبری</a>
+                    <a href="marketing.html">📢 هوش مصنوعی در بازاریابی دیجیتال</a>
+                    <a href="knowledge.html">🧠 مدیریت دانش و هوش کسب‌وکار</a>
+                    <a href="health.html">🏥 هوش مصنوعی در سلامت و پزشکی</a>
+                    <a href="content.html">✍️ تولید خودکار محتوا</a>
+                    <a href="beauty.html">💄 هوش مصنوعی در صنعت زیبایی</a>
+                    <a href="interior.html">🏠 هوش مصنوعی در دکوراسیون داخلی</a>
                 </div>
             </div>
             <a href="#about">📖 درباره ما</a>
@@ -582,6 +599,41 @@
             <span class="service-icon">🎯</span>
             <h4>سیستم پیشنهاددهنده</h4>
             <p>توصیه محصول و محتوای شخصی‌سازی شده</p>
+        </a>
+        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.4);">
+            <span class="service-icon">🛡️</span>
+            <h4>تشخیص کلاهبرداری و امنیت سایبری</h4>
+            <p>تشخیص تراکنش‌های مشکوک و حملات سایبری</p>
+        </a>
+        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.4);">
+            <span class="service-icon">📢</span>
+            <h4>هوش مصنوعی در بازاریابی دیجیتال</h4>
+            <p>شخصی‌سازی کمپین‌ها و تحلیل رفتار مشتری</p>
+        </a>
+        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.4);">
+            <span class="service-icon">🧠</span>
+            <h4>مدیریت دانش و هوش کسب‌وکار</h4>
+            <p>استخراج دانش و داشبوردهای هوشمند</p>
+        </a>
+        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.4);">
+            <span class="service-icon">🏥</span>
+            <h4>هوش مصنوعی در سلامت و پزشکی</h4>
+            <p>تشخیص بیماری، تحلیل تصاویر پزشکی</p>
+        </a>
+        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.4);">
+            <span class="service-icon">✍️</span>
+            <h4>تولید خودکار محتوا</h4>
+            <p>تولید مقاله، ایمیل، کپشن و گزارش</p>
+        </a>
+        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.4);">
+            <span class="service-icon">💄</span>
+            <h4>هوش مصنوعی در صنعت زیبایی</h4>
+            <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
+        </a>
+        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.4);">
+            <span class="service-icon">🏠</span>
+            <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
+            <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
         </a>
     </div>
 
