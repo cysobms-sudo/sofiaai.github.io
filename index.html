@@ -1,287 +1,1227 @@
-/* ============================================
-   لوگوی جدید فوق‌العاده شیک - نسخه پریمیوم
-   ============================================ */
-.logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    flex-shrink: 0;
-    position: relative;
-}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sofia AI | هوش مصنوعی سوفیا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== فونت‌ها ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
 
-/* لوگوی سه‌بعدی با افکت‌های حرفه‌ای */
-.logo-premium {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    background: linear-gradient(145deg, #FFD700, #FF8C00, #FF6B00);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
-    box-shadow: 
-        0 4px 20px rgba(255, 215, 0, 0.3),
-        inset 0 2px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: hidden;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* افکت شیشه‌ای روی لوگو */
-.logo-premium::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
-    border-radius: 16px 16px 0 0;
-    pointer-events: none;
-}
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+            line-height: 1.8;
+        }
 
-/* افکت درخشش هنگام هاور */
-.logo-premium::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.logo-wrapper:hover .logo-premium {
-    transform: scale(1.1) rotate(-8deg);
-    box-shadow: 
-        0 8px 40px rgba(255, 215, 0, 0.5),
-        inset 0 2px 0 rgba(255, 255, 255, 0.4),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
-}
+        /* ============================================
+                   نوار ناوبری
+                   ============================================ */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            padding: 12px 32px;
+            border-radius: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
 
-.logo-wrapper:hover .logo-premium::after {
-    opacity: 1;
-}
+        /* ============================================
+                   لوگوی جدید فوق‌العاده شیک - نسخه پریمیوم
+                   ============================================ */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            flex-shrink: 0;
+            position: relative;
+        }
 
-/* آیکون اصلی لوگو - حرف S */
-.logo-premium .logo-icon {
-    font-size: 1.6em;
-    font-weight: 900;
-    color: white;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 2;
-    position: relative;
-    font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-    letter-spacing: 1px;
-}
+        /* لوگوی سه‌بعدی با افکت‌های حرفه‌ای */
+        .logo-premium {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #FFD700, #FF8C00, #FF6B00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 
+                0 4px 20px rgba(255, 215, 0, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
 
-/* خطوط تزئینی روی لوگو */
-.logo-premium .logo-line {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    z-index: 1;
-}
+        /* افکت شیشه‌ای روی لوگو */
+        .logo-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 16px 16px 0 0;
+            pointer-events: none;
+        }
 
-.logo-premium .logo-line:nth-child(3) {
-    width: 20px;
-    height: 2px;
-    bottom: 12px;
-    right: 12px;
-}
+        /* افکت درخشش هنگام هاور */
+        .logo-premium::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
 
-.logo-premium .logo-line:nth-child(4) {
-    width: 12px;
-    height: 2px;
-    bottom: 18px;
-    right: 12px;
-}
+        .logo-wrapper:hover .logo-premium {
+            transform: scale(1.1) rotate(-8deg);
+            box-shadow: 
+                0 8px 40px rgba(255, 215, 0, 0.5),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+        }
 
-/* حلقه چرخان دور لوگو */
-.logo-ring-premium {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 215, 0, 0.15);
-    pointer-events: none;
-    transition: all 0.5s ease;
-}
+        .logo-wrapper:hover .logo-premium::after {
+            opacity: 1;
+        }
 
-.logo-ring-premium:nth-child(5) {
-    width: 70px;
-    height: 70px;
-    top: -7px;
-    right: -7px;
-    animation: ringSpin 4s linear infinite;
-    border-color: rgba(255, 215, 0, 0.12);
-}
+        /* آیکون اصلی لوگو - حرف S */
+        .logo-premium .logo-icon {
+            font-size: 1.6em;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            position: relative;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            letter-spacing: 1px;
+        }
 
-.logo-ring-premium:nth-child(6) {
-    width: 84px;
-    height: 84px;
-    top: -14px;
-    right: -14px;
-    animation: ringSpin 6s linear infinite reverse;
-    border-color: rgba(255, 215, 0, 0.08);
-    border-style: dashed;
-}
+        /* خطوط تزئینی روی لوگو */
+        .logo-premium .logo-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            z-index: 1;
+        }
 
-@keyframes ringSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        .logo-premium .logo-line:nth-child(3) {
+            width: 20px;
+            height: 2px;
+            bottom: 12px;
+            right: 12px;
+        }
 
-/* نقطه‌های نورانی */
-.logo-sparkle-premium {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, #FFD700, #FF4500);
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-    z-index: 3;
-    animation: sparkleFloat 2.5s ease-in-out infinite;
-}
+        .logo-premium .logo-line:nth-child(4) {
+            width: 12px;
+            height: 2px;
+            bottom: 18px;
+            right: 12px;
+        }
 
-.logo-sparkle-premium:nth-child(7) { top: -3px; right: 6px; animation-delay: 0s; }
-.logo-sparkle-premium:nth-child(8) { top: -3px; left: 6px; animation-delay: 0.6s; }
-.logo-sparkle-premium:nth-child(9) { bottom: -3px; right: 6px; animation-delay: 1.2s; }
-.logo-sparkle-premium:nth-child(10) { bottom: -3px; left: 6px; animation-delay: 1.8s; }
+        /* حلقه چرخان دور لوگو */
+        .logo-ring-premium {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 215, 0, 0.15);
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
 
-@keyframes sparkleFloat {
-    0%, 100% { 
-        transform: scale(0.5) translateY(0); 
-        opacity: 0.3;
-    }
-    50% { 
-        transform: scale(1.2) translateY(-4px); 
-        opacity: 1;
-    }
-}
+        .logo-ring-premium:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            top: -7px;
+            right: -7px;
+            animation: ringSpin 4s linear infinite;
+            border-color: rgba(255, 215, 0, 0.12);
+        }
 
-/* متن لوگو */
-.logo-text-premium {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-}
+        .logo-ring-premium:nth-child(6) {
+            width: 84px;
+            height: 84px;
+            top: -14px;
+            right: -14px;
+            animation: ringSpin 6s linear infinite reverse;
+            border-color: rgba(255, 215, 0, 0.08);
+            border-style: dashed;
+        }
 
-.logo-text-premium .main {
-    font-size: 2em;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-    position: relative;
-}
+        @keyframes ringSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-.logo-text-premium .main .highlight {
-    background: linear-gradient(135deg, #FFD700, #FF8C00, #FF6B00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-}
+        /* نقطه‌های نورانی */
+        .logo-sparkle-premium {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #FFD700, #FF4500);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            z-index: 3;
+            animation: sparkleFloat 2.5s ease-in-out infinite;
+        }
 
-/* خط زیر متحرک */
-.logo-text-premium .main .highlight::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(135deg, #FFD700, #FF4500);
-    border-radius: 10px;
-    transform: scaleX(0);
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: right;
-}
+        .logo-sparkle-premium:nth-child(7) { top: -3px; right: 6px; animation-delay: 0s; }
+        .logo-sparkle-premium:nth-child(8) { top: -3px; left: 6px; animation-delay: 0.6s; }
+        .logo-sparkle-premium:nth-child(9) { bottom: -3px; right: 6px; animation-delay: 1.2s; }
+        .logo-sparkle-premium:nth-child(10) { bottom: -3px; left: 6px; animation-delay: 1.8s; }
 
-.logo-wrapper:hover .logo-text-premium .main .highlight::after {
-    transform: scaleX(1);
-}
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                transform: scale(0.5) translateY(0); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: scale(1.2) translateY(-4px); 
+                opacity: 1;
+            }
+        }
 
-.logo-text-premium .sub {
-    font-size: 0.5em;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 4px;
-    margin-top: 2px;
-    position: relative;
-}
+        /* متن لوگو */
+        .logo-text-premium {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
 
-.logo-text-premium .sub .divider {
-    color: #FFD700;
-    margin: 0 4px;
-    opacity: 0.5;
-}
+        .logo-text-premium .main {
+            font-size: 2em;
+            font-weight: 900;
+            color: white;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
 
-/* ============================================
-   واکنش‌گرایی لوگو
-   ============================================ */
-@media (max-width: 992px) {
-    .logo-premium {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-    }
-    .logo-premium .logo-icon {
-        font-size: 1.3em;
-    }
-    .logo-text-premium .main {
-        font-size: 1.6em;
-    }
-    .logo-ring-premium {
-        display: none;
-    }
-    .logo-sparkle-premium {
-        display: none;
-    }
-}
+        .logo-text-premium .main .highlight {
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF6B00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
 
-@media (max-width: 768px) {
-    .logo-premium {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-    }
-    .logo-premium .logo-icon {
-        font-size: 1.1em;
-    }
-    .logo-text-premium .main {
-        font-size: 1.3em;
-    }
-    .logo-text-premium .sub {
-        font-size: 0.4em;
-        letter-spacing: 3px;
-    }
-    .logo-premium .logo-line {
-        display: none;
-    }
-}
+        /* خط زیر متحرک */
+        .logo-text-premium .main .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #FFD700, #FF4500);
+            border-radius: 10px;
+            transform: scaleX(0);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: right;
+        }
 
-@media (max-width: 480px) {
-    .logo-premium {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-    }
-    .logo-premium .logo-icon {
-        font-size: 0.95em;
-    }
-    .logo-text-premium .main {
-        font-size: 1.1em;
-    }
-    .logo-text-premium .sub {
-        font-size: 0.35em;
-        letter-spacing: 2px;
-    }
-    .logo-premium::before {
-        border-radius: 10px 10px 0 0;
-    }
-}
+        .logo-wrapper:hover .logo-text-premium .main .highlight::after {
+            transform: scaleX(1);
+        }
+
+        .logo-text-premium .sub {
+            font-size: 0.5em;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            margin-top: 2px;
+            position: relative;
+        }
+
+        .logo-text-premium .sub .divider {
+            color: #FFD700;
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        /* ===== منوی اصلی ===== */
+        .nav-menu {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-menu > a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .nav-menu > a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== منوی کشویی ===== */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 0, 0.2));
+            color: #FFD700;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1.5px solid rgba(255, 215, 0, 0.25);
+            font-size: 0.9em;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.35), rgba(255, 107, 0, 0.35));
+            color: #FFE44D;
+            border-color: rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 48px;
+            right: 0;
+            background: #ffffff;
+            min-width: 310px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            overflow: hidden;
+            max-height: 480px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .dropdown-content a {
+            color: #2d3748 !important;
+            padding: 12px 20px !important;
+            display: block !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+            font-size: 0.9em !important;
+            text-decoration: none !important;
+            font-weight: 400 !important;
+            transition: all 0.25s ease !important;
+            background: transparent !important;
+        }
+
+        .dropdown-content a:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08)) !important;
+            color: #667eea !important;
+            padding-right: 28px !important;
+        }
+
+        .dropdown-content .menu-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+            margin: 4px 12px;
+        }
+
+        @media (min-width: 769px) {
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        /* ===== دکمه‌های ویژه ===== */
+        .btn-request {
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF4500);
+            color: #fff !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-request:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.5) !important;
+            color: #fff !important;
+        }
+
+        .cooperation-btn {
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .cooperation-btn:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* ============================================
+                   بخش قهرمان با تصویر پس‌زمینه
+                   ============================================ */
+        .hero {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.92));
+            border-radius: 32px;
+            padding: 60px 50px;
+            text-align: center;
+            margin-bottom: 45px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        /* تصویر 2.png در پس‌زمینه با شفافیت مناسب */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('2.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* المان‌های تزئینی پس‌زمینه */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero .hero-bg-decoration {
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.05), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 28px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #555;
+            font-size: 1.15em;
+            line-height: 2;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero .highlight-text {
+            color: #764ba2;
+            font-weight: 700;
+        }
+
+        /* ===== آمار ===== */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+            padding-top: 28px;
+            border-top: 2px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #764ba2;
+            display: block;
+        }
+
+        .stat-number .plus {
+            font-size: 0.6em;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #777;
+            font-size: 0.9em;
+            font-weight: 400;
+        }
+
+        /* ============================================
+                   عنوان بخش
+                   ============================================ */
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #FFD700, #FF4500);
+            margin: 10px auto 0;
+            border-radius: 10px;
+        }
+
+        /* ============================================
+                   شبکه خدمات
+                   ============================================ */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+            margin-bottom: 45px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.35s ease;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .service-card h4 {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .service-card p {
+            font-size: 0.88em;
+            opacity: 0.85;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .service-card .card-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            padding: 2px 14px;
+            border-radius: 50px;
+            font-size: 0.65em;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        /* ============================================
+                   درباره ما
+                   ============================================ */
+        .about-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 28px;
+            padding: 45px 50px;
+            text-align: center;
+            margin-top: 45px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .about-box h3 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-size: 1.7em;
+            font-weight: 900;
+        }
+
+        .about-box p {
+            color: #555;
+            line-height: 2.2;
+            font-size: 1em;
+            font-weight: 400;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+                   تماس
+                   ============================================ */
+        .contact-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .contact-row a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 22px;
+            border-radius: 50px;
+            background: rgba(118, 75, 162, 0.06);
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .contact-row a:hover {
+            background: rgba(118, 75, 162, 0.12);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+                   باکس درخواست
+                   ============================================ */
+        .request-box {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 45px 40px;
+            text-align: center;
+            margin-top: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .request-box h3 {
+            color: white;
+            margin-bottom: 12px;
+            font-size: 1.6em;
+            font-weight: 900;
+        }
+
+        .request-box p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1em;
+            font-weight: 400;
+        }
+
+        .btn-large {
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF4500);
+            color: #fff;
+            padding: 16px 55px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: inline-block;
+            margin-top: 22px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
+        }
+
+        .btn-large:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.45);
+        }
+
+        /* ============================================
+                   فوتر
+                   ============================================ */
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 30px 0 15px;
+            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        footer p {
+            font-size: 0.95em;
+        }
+
+        footer .sub {
+            font-size: 0.8em;
+            margin-top: 6px;
+            opacity: 0.6;
+        }
+
+        footer strong {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ============================================
+                   واکنش‌گرایی لوگو
+                   ============================================ */
+        @media (max-width: 992px) {
+            .logo-premium {
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
+            }
+            .logo-premium .logo-icon {
+                font-size: 1.3em;
+            }
+            .logo-text-premium .main {
+                font-size: 1.6em;
+            }
+            .logo-ring-premium {
+                display: none;
+            }
+            .logo-sparkle-premium {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.4em;
+            }
+            .hero {
+                padding: 40px 30px;
+                min-height: 280px;
+            }
+            .hero::before {
+                opacity: 0.1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                border-radius: 24px;
+                padding: 15px 20px;
+            }
+            .logo-wrapper {
+                width: 100%;
+                justify-content: center;
+            }
+            .logo-premium {
+                width: 42px;
+                height: 42px;
+                border-radius: 12px;
+            }
+            .logo-premium .logo-icon {
+                font-size: 1.1em;
+            }
+            .logo-text-premium .main {
+                font-size: 1.3em;
+            }
+            .logo-text-premium .sub {
+                font-size: 0.4em;
+                letter-spacing: 3px;
+            }
+            .logo-premium .logo-line {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero {
+                padding: 30px 20px;
+                border-radius: 20px;
+                min-height: 220px;
+            }
+            .hero::before {
+                opacity: 0.08;
+            }
+            .section-title {
+                font-size: 1.5em;
+            }
+            .dropdown-content {
+                min-width: 220px;
+                right: -50px;
+                max-height: 350px;
+            }
+            .stats {
+                gap: 25px;
+            }
+            .stat-number {
+                font-size: 1.6em;
+            }
+            .about-box {
+                padding: 30px 20px;
+            }
+            .request-box {
+                padding: 30px 20px;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .service-card {
+                padding: 20px 15px;
+            }
+            .service-icon {
+                font-size: 2.4em;
+            }
+            .nav-menu {
+                justify-content: center;
+                width: 100%;
+            }
+            .nav-menu > a {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+            .dropdown-btn {
+                padding: 6px 14px;
+                font-size: 0.8em;
+            }
+            .hero-bg-decoration {
+                display: none;
+            }
+            .hero::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .logo-premium {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+            }
+            .logo-premium .logo-icon {
+                font-size: 0.95em;
+            }
+            .logo-text-premium .main {
+                font-size: 1.1em;
+            }
+            .logo-text-premium .sub {
+                font-size: 0.35em;
+                letter-spacing: 2px;
+            }
+            .logo-premium::before {
+                border-radius: 10px 10px 0 0;
+            }
+            .hero h1 {
+                font-size: 1.6em;
+            }
+            .hero p {
+                font-size: 0.95em;
+            }
+            .hero {
+                min-height: 180px;
+                padding: 25px 15px;
+            }
+            .hero::before {
+                opacity: 0.06;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats {
+                gap: 15px;
+            }
+            .stat-number {
+                font-size: 1.3em;
+            }
+            .contact-row {
+                gap: 10px;
+            }
+            .contact-row a {
+                padding: 5px 12px;
+                font-size: 0.75em;
+            }
+            .btn-large {
+                padding: 12px 30px;
+                font-size: 0.9em;
+            }
+            .about-box h3 {
+                font-size: 1.3em;
+            }
+            .section-title {
+                font-size: 1.2em;
+            }
+            .dropdown-content {
+                min-width: 190px;
+                right: -20px;
+                max-height: 280px;
+            }
+            .dropdown-content a {
+                font-size: 0.8em !important;
+                padding: 10px 14px !important;
+            }
+            .service-card h4 {
+                font-size: 1em;
+            }
+            .service-card p {
+                font-size: 0.8em;
+            }
+            .request-box h3 {
+                font-size: 1.2em;
+            }
+            .hero-badge {
+                font-size: 0.6em;
+                padding: 4px 14px;
+            }
+            .navbar {
+                padding: 12px 14px;
+            }
+            .dropdown-btn {
+                font-size: 0.75em;
+                padding: 5px 12px;
+            }
+        }
+
+        .dropdown-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-track {
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== نوار ناوبری ===== -->
+    <div class="navbar">
+        <a href="index.html" class="logo-wrapper">
+            <div class="logo-premium">
+                <span class="logo-icon">S</span>
+                <div class="logo-line"></div>
+                <div class="logo-line"></div>
+                <div class="logo-ring-premium"></div>
+                <div class="logo-ring-premium"></div>
+                <div class="logo-sparkle-premium"></div>
+                <div class="logo-sparkle-premium"></div>
+                <div class="logo-sparkle-premium"></div>
+                <div class="logo-sparkle-premium"></div>
+            </div>
+            <div class="logo-text-premium">
+                <span class="main">Sofia<span class="highlight">AI</span></span>
+                <span class="sub"><span class="divider">✦</span> هوش مصنوعی سوفیا <span class="divider">✦</span></span>
+            </div>
+        </a>
+        <div class="nav-menu">
+            <a href="index.html">🏠 خانه</a>
+            <div class="dropdown" id="servicesDropdown">
+                <button class="dropdown-btn" id="servicesBtn">🛠 خدمات ▼</button>
+                <div class="dropdown-content">
+                    <a href="service-rag.html">🧠 سیستم RAG</a>
+                    <a href="service-vision.html">👁️ بینایی ماشین</a>
+                    <a href="service-automation.html">⚙️ اتوماسیون هوشمند</a>
+                    <a href="service-lmstudio.html">🚀 نصب و راه‌اندازی ایجنت AI</a>
+                    <a href="service-chatbot.html">🤖 طراحی و راه‌اندازی چت‌بات</a>
+                    <a href="service-data.html">📊 تحلیل داده</a>
+                    <a href="service-nlp.html">💬 پردازش زبان طبیعی</a>
+                    <a href="service-voice.html">🎤 تشخیص و سنتز صدا</a>
+                    <a href="service-predictive.html">📈 سیستم‌های پیش‌بینی</a>
+                    <a href="service-recommend.html">🎯 سیستم پیشنهاددهنده</a>
+                    <hr class="menu-divider">
+                    <a href="fraud.html">🛡️ تشخیص کلاهبرداری و امنیت سایبری</a>
+                    <a href="marketing.html">📢 هوش مصنوعی در بازاریابی دیجیتال</a>
+                    <a href="knowledge.html">🧠 مدیریت دانش و هوش کسب‌وکار</a>
+                    <a href="health.html">🏥 هوش مصنوعی در سلامت و پزشکی</a>
+                    <a href="content.html">✍️ تولید خودکار محتوا</a>
+                    <a href="beauty.html">💄 هوش مصنوعی در صنعت زیبایی</a>
+                    <a href="interior.html">🏠 هوش مصنوعی در دکوراسیون داخلی</a>
+                    <a href="site.html">🌐 طراحی سایت با هوش مصنوعی</a>
+                </div>
+            </div>
+            <a href="#about">📖 درباره ما</a>
+            <a href="cooperation.html" class="cooperation-btn">🤝 همکاری با ما</a>
+            <a href="order.html" class="btn-request">📝 ثبت درخواست</a>
+        </div>
+    </div>
+
+    <!-- ===== بخش قهرمان ===== -->
+    <div class="hero">
+        <div class="hero-bg-decoration"></div>
+        <div class="hero-content">
+            <div class="hero-badge">✨ هوش مصنوعی پیشرفته برای کسب‌وکار شما</div>
+            <h1>✨ هوش مصنوعی سوفیا ✨</h1>
+            <p>
+                ارائه‌دهنده خدمات تخصصی هوش مصنوعی متناسب با <span class="highlight-text">کسب‌وکار شما</span><br>
+                از طراحی مدل تا نصب، راه‌اندازی و پشتیبانی حرفه‌ای
+            </p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">۸۰<span class="plus">+</span></span>
+                    <span class="stat-label">مدل هوش مصنوعی</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۱۰۰<span class="plus">%</span></span>
+                    <span class="stat-label">حریم خصوصی و آفلاین</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۲۴/۷</span>
+                    <span class="stat-label">پشتیبانی تخصصی</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== خدمات ===== -->
+    <h2 class="section-title">⚡ خدمات تخصصی هوش مصنوعی سوفیا</h2>
+    <div class="services-grid">
+        <a href="service-rag.html" class="service-card">
+            <span class="service-icon">🧠</span>
+            <h4>سیستم RAG</h4>
+            <p>پرسش و پاسخ هوشمند از اسناد سازمانی</p>
+        </a>
+        <a href="service-vision.html" class="service-card">
+            <span class="service-icon">👁️</span>
+            <h4>بینایی ماشین</h4>
+            <p>تشخیص اشیا، چهره و آنالیز تصاویر</p>
+        </a>
+        <a href="service-automation.html" class="service-card">
+            <span class="service-icon">⚙️</span>
+            <h4>اتوماسیون هوشمند</h4>
+            <p>طراحی workflow خودکار با n8n</p>
+        </a>
+        <a href="service-lmstudio.html" class="service-card">
+            <span class="service-icon">🚀</span>
+            <h4>نصب و راه‌اندازی ایجنت AI</h4>
+            <p>هوش مصنوعی روی سیستم شما</p>
+            <span class="card-badge">🔥 محبوب</span>
+        </a>
+        <a href="service-chatbot.html" class="service-card">
+            <span class="service-icon">🤖</span>
+            <h4>طراحی و راه‌اندازی چت‌بات</h4>
+            <p>متناسب با نیاز کسب و کار شما</p>
+            <span class="card-badge">⭐ پرطرفدار</span>
+        </a>
+        <a href="service-data.html" class="service-card">
+            <span class="service-icon">📊</span>
+            <h4>تحلیل داده</h4>
+            <p>پیش‌بینی و سیستم پیشنهاددهنده</p>
+        </a>
+        <a href="service-nlp.html" class="service-card">
+            <span class="service-icon">💬</span>
+            <h4>پردازش زبان طبیعی</h4>
+            <p>تحلیل متن، احساسات و چت‌بات</p>
+        </a>
+        <a href="service-voice.html" class="service-card">
+            <span class="service-icon">🎤</span>
+            <h4>تشخیص و سنتز صدا</h4>
+            <p>تبدیل گفتار به متن و برعکس</p>
+        </a>
+        <a href="service-predictive.html" class="service-card">
+            <span class="service-icon">📈</span>
+            <h4>سیستم‌های پیش‌بینی</h4>
+            <p>پیش‌بینی فروش، قیمت و تقاضا</p>
+        </a>
+        <a href="service-recommend.html" class="service-card">
+            <span class="service-icon">🎯</span>
+            <h4>سیستم پیشنهاددهنده</h4>
+            <p>توصیه محصول و محتوای شخصی‌سازی شده</p>
+        </a>
+        <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.2);">
+            <span class="service-icon">🛡️</span>
+            <h4>تشخیص کلاهبرداری و امنیت سایبری</h4>
+            <p>تشخیص تراکنش‌های مشکوک و حملات سایبری</p>
+        </a>
+        <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.2);">
+            <span class="service-icon">📢</span>
+            <h4>هوش مصنوعی در بازاریابی دیجیتال</h4>
+            <p>شخصی‌سازی کمپین‌ها و تحلیل رفتار مشتری</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.2);">
+            <span class="service-icon">🧠</span>
+            <h4>مدیریت دانش و هوش کسب‌وکار</h4>
+            <p>استخراج دانش و داشبوردهای هوشمند</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.2);">
+            <span class="service-icon">🏥</span>
+            <h4>هوش مصنوعی در سلامت و پزشکی</h4>
+            <p>تشخیص بیماری، تحلیل تصاویر پزشکی</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.2);">
+            <span class="service-icon">✍️</span>
+            <h4>تولید خودکار محتوا</h4>
+            <p>تولید مقاله، ایمیل، کپشن و گزارش</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.2);">
+            <span class="service-icon">💄</span>
+            <h4>هوش مصنوعی در صنعت زیبایی</h4>
+            <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="interior.html" class="service-card" style="border-color: rgba(200,150,100,0.2);">
+            <span class="service-icon">🏠</span>
+            <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
+            <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+        <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.2);">
+            <span class="service-icon">🌐</span>
+            <h4>طراحی سایت با هوش مصنوعی</h4>
+            <p>طراحی قالب، فروشگاه، اپلیکیشن وب و بهینه‌سازی سئو</p>
+            <span class="card-badge">💎 جدید</span>
+        </a>
+    </div>
+
+    <!-- ===== درباره ما ===== -->
+    <div class="about-box" id="about">
+        <h3>📖 هوش مصنوعی سوفیا</h3>
+        <p>
+            هوش مصنوعی سوفیا متشکل از متخصصین باتجربه در حوزه هوش مصنوعی، یادگیری ماشین و پردازش زبان طبیعی است.<br>
+            ما با بهره‌گیری از جدیدترین فناوری‌های روز دنیا، راهکارهای هوشمند و مقرون‌به‌صرفه را برای کسب‌وکارها ارائه می‌دهیم.<br>
+            تخصص ما در معماری RAG، بینایی ماشین، اتوماسیون هوشمند و پیاده‌سازی مدل‌های زبانی بزرگ و ساخت چت‌بات‌ها است.<br>
+            <strong style="color:#667eea;">هدف ما کمک به سازمان‌ها برای بهره‌گیری از قدرت هوش مصنوعی به صورت خصوصی، آفلاین و اقتصادی می‌باشد.</strong>
+        </p>
+        <div class="contact-row">
+            <a href="mailto:Cysobms@gmail.com">📧 Cysobms@gmail.com</a>
+            <a href="tel:09130771128">📱 ۰۹۱۳۰۷۷۱۱۲۸</a>
+            <a href="#">💬 واتس‌اپ</a>
+            <a href="#">📱 تلگرام</a>
+        </div>
+    </div>
+
+    <!-- ===== فرصت همکاری ===== -->
+    <div class="request-box">
+        <h3>🤝 فرصت همکاری</h3>
+        <p>اگر تخصصی در حوزه هوش مصنوعی دارید و می‌خواهید با ما همکاری کنید...</p>
+        <a href="cooperation.html" class="btn-large">❓ میخواهید با ما همکاری داشته باشید؟</a>
+    </div>
+
+    <!-- ===== فوتر ===== -->
+    <footer>
+        <p>© ۲۰۲۶ هوش مصنوعی سوفیا - <strong>Sofia AI</strong></p>
+        <p class="sub">ارائه‌دهنده خدمات تخصصی هوش مصنوعی</p>
+    </footer>
+
+</div>
+
+<!-- ===== جاوااسکریپت ===== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.getElementById('servicesDropdown');
+        const btn = document.getElementById('servicesBtn');
+
+        if (dropdown && btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            dropdown.querySelectorAll('.dropdown-content a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    dropdown.classList.remove('active');
+                });
+            });
+
+            dropdown.addEventListener('mouseenter', function() {
+                if (window.innerWidth > 768) {
+                    dropdown.classList.add('active');
+                }
+            });
+
+            dropdown.addEventListener('mouseleave', function() {
+                if (window.innerWidth > 768) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
