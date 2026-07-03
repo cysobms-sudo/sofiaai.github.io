@@ -580,6 +580,125 @@
             margin-bottom: 10px;
         }
 
+        /* ===== کارت جدید چت‌بات رستوران ناژخوان ===== */
+        .product-card.restaurant-card {
+            border-color: #D4AF37;
+            background: linear-gradient(145deg, #ffffff, #fef9f0);
+            position: relative;
+        }
+
+        .product-card.restaurant-card::before {
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
+        }
+
+        .product-card.restaurant-card .restaurant-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: #F4D03F;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.7em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            border: 1px solid #D4AF37;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card.restaurant-card .restaurant-badge .star {
+            color: #F4D03F;
+            margin-left: 4px;
+        }
+
+        .product-card.restaurant-card .icon {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 15px;
+            animation: pulse-restaurant 2s infinite;
+        }
+
+        @keyframes pulse-restaurant {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-card.restaurant-card h3 {
+            color: #8B0000;
+            font-size: 1.6em;
+        }
+
+        .product-card.restaurant-card h3 span {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-card.restaurant-card .sub-title {
+            color: #7f6b5c;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .product-card.restaurant-card .features-list li::before {
+            content: "🍽️";
+            color: #D4AF37;
+        }
+
+        .product-card.restaurant-card .price-tag {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        .product-card.restaurant-card .order-btn {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            color: #3A0000;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-card.restaurant-card .order-btn:hover {
+            background: linear-gradient(135deg, #F4D03F, #D4AF37);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .product-card.restaurant-card .quick-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin: 10px 0 15px;
+        }
+
+        .product-card.restaurant-card .quick-tags .tag {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #8B0000;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 700;
+        }
+
+        .product-card.restaurant-card .feature-highlight {
+            background: linear-gradient(135deg, #fef9f0, #fdf0e0);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .product-card.restaurant-card .feature-highlight p {
+            color: #5C0000;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .product-card.restaurant-card .feature-highlight .highlight-icon {
+            font-size: 1.2em;
+            margin-left: 6px;
+        }
+
         /* کارت چت بات بورس با تم سبز */
         .product-card.stock-card {
             border-color: #2ecc71;
@@ -847,7 +966,7 @@
             font-weight: 700;
         }
 
-        /* دکمه بورس با تم سبز */
+        /* ===== دکمه بورس با تم سبز ===== */
         .demo-btn.stock-btn {
             border-color: #2ecc71;
             color: #27ae60;
@@ -861,6 +980,24 @@
 
         .demo-btn.stock-btn .badge {
             background: #2ecc71;
+        }
+
+        /* ===== دکمه رستوران با تم طلایی ===== */
+        .demo-btn.restaurant-btn {
+            border-color: #D4AF37;
+            color: #8B0000;
+            background: linear-gradient(145deg, #ffffff, #fef9f0);
+        }
+
+        .demo-btn.restaurant-btn:hover {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: #F4D03F;
+            border-color: transparent;
+        }
+
+        .demo-btn.restaurant-btn .badge {
+            background: #D4AF37;
+            color: #3A0000;
         }
 
         /* ===== خدمات ===== */
@@ -1371,6 +1508,49 @@
         <h2 class="section-title" id="products">🚀 <span>چت‌بات‌های اختصاصی</span></h2>
         <div class="products-grid">
 
+            <!-- ============================================ -->
+            <!-- کارت جدید: چت‌بات رستوران ناژخوان              -->
+            <!-- ============================================ -->
+            <div class="product-card restaurant-card">
+                <span class="restaurant-badge"><span class="star">⭐</span> پیشنهاد ویژه</span>
+                <span class="icon">🍽️</span>
+                <h3>رستوران <span>ناژخوان</span></h3>
+                <p class="sub-title">✨ چت‌بات هوشمند سفارش غذا</p>
+                <p>سیستم سفارش‌دهی هوشمند و حرفه‌ای برای رستوران‌ها و کافه‌ها</p>
+                
+                <div class="quick-tags">
+                    <span class="tag">🍕 منوی کامل</span>
+                    <span class="tag">💳 پرداخت آنلاین</span>
+                    <span class="tag">⏰ ۲۴ ساعته</span>
+                    <span class="tag">📱 موبایل‌پسند</span>
+                </div>
+
+                <div class="feature-highlight">
+                    <p>
+                        <span class="highlight-icon">🔥</span>
+                        <strong>تجربه سفارش غذا بدون تماس تلفنی</strong>
+                        <br>
+                        <span style="font-size:0.85em;color:#7f6b5c;">
+                            با چند کلیک ساده، غذای مورد علاقه‌تان را سفارش دهید
+                        </span>
+                    </p>
+                </div>
+
+                <ul class="features-list">
+                    <li>نمایش منوی کامل با قیمت‌ها و توضیحات</li>
+                    <li>انتخاب تعداد و مشاهده صورت‌حساب لحظه‌ای</li>
+                    <li>پرداخت امن از طریق درگاه زرین‌پال</li>
+                    <li>پنل مدیریت اختصاصی برای رستوران</li>
+                    <li>ذخیره اطلاعات مشتریان و سفارشات</li>
+                    <li>قابلیت ویرایش منو توسط مدیر</li>
+                </ul>
+                <div class="price-tag">قابل مذاکره</div>
+                <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="order-btn">🍽️ تست و مشاهده نمونه</a>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- کارت حقوقی                                    -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">⚖️</span>
                 <h3>چت‌بات حقوقی</h3>
@@ -1386,7 +1566,9 @@
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
             </div>
 
-            <!-- ===== کارت جدید چت‌بات بورس تهران ===== -->
+            <!-- ============================================ -->
+            <!-- کارت بورس تهران                               -->
+            <!-- ============================================ -->
             <div class="product-card stock-card">
                 <span class="icon">📊</span>
                 <h3>چت‌بات بورس تهران</h3>
@@ -1404,6 +1586,9 @@
                 <a href="https://cysobms-chatbot-bors-tehran.hf.space/" target="_blank" class="order-btn">مشاهده و تست نمونه</a>
             </div>
 
+            <!-- ============================================ -->
+            <!-- کارت مسافرتی                                 -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">✈️</span>
                 <h3>چت‌بات مسافرتی</h3>
@@ -1419,6 +1604,9 @@
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ============================================ -->
+            <!-- کارت هتلداری                                 -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">🏨</span>
                 <h3>چت‌بات هتلداری</h3>
@@ -1434,6 +1622,9 @@
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ============================================ -->
+            <!-- کارت فروشگاهی                                -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">🛒</span>
                 <h3>چت‌بات فروشگاهی</h3>
@@ -1449,6 +1640,9 @@
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ============================================ -->
+            <!-- کارت پزشکی                                   -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">🏥</span>
                 <h3>چت‌بات پزشکی</h3>
@@ -1464,6 +1658,9 @@
                 <a href="#" class="order-btn">درخواست مشاوره</a>
             </div>
 
+            <!-- ============================================ -->
+            <!-- کارت آموزشی                                  -->
+            <!-- ============================================ -->
             <div class="product-card">
                 <span class="icon">📚</span>
                 <h3>چت‌بات آموزشی</h3>
@@ -1551,10 +1748,13 @@
             <h2>🎯 نمونه‌های آماده چت‌بات</h2>
             <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
             <div class="demo-buttons">
+                <!-- ===== دکمه جدید رستوران ناژخوان ===== -->
+                <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="demo-btn restaurant-btn">
+                    🍽️ رستوران ناژخوان <span class="badge">جدید ⭐</span>
+                </a>
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
                     ⚖️ حقوقی <span class="badge">جدید</span>
                 </a>
-                <!-- ===== دکمه جدید بورس تهران ===== -->
                 <a href="https://cysobms-chatbot-bors-tehran.hf.space/" target="_blank" class="demo-btn stock-btn">
                     📊 بورس تهران <span class="badge">جدید</span>
                 </a>
