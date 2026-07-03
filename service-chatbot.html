@@ -456,7 +456,7 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin: 30px 0;
         }
@@ -585,6 +585,7 @@
             border-color: #D4AF37;
             background: linear-gradient(145deg, #ffffff, #fef9f0);
             position: relative;
+            grid-column: span 1;
         }
 
         .product-card.restaurant-card::before {
@@ -699,7 +700,177 @@
             margin-left: 6px;
         }
 
-        /* کارت چت بات بورس با تم سبز */
+        /* ===== استایل نمایش پنل مدیریت ===== */
+        .admin-preview-box {
+            background: #f8f6f3;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin: 14px 0;
+            border: 2px dashed #D4AF37;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .admin-preview-box:hover {
+            border-color: #8B0000;
+            background: #fef9f0;
+            transform: scale(1.01);
+        }
+
+        .admin-preview-box .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .admin-preview-box .preview-header .preview-title {
+            font-size: 0.85em;
+            font-weight: 800;
+            color: #8B0000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-preview-box .preview-header .preview-badge {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: #F4D03F;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.65em;
+            font-weight: 700;
+        }
+
+        .admin-preview-box .preview-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .admin-preview-box .preview-content .stat-item {
+            background: white;
+            border-radius: 10px;
+            padding: 10px 8px;
+            text-align: center;
+            border: 1px solid #e8ddd0;
+        }
+
+        .admin-preview-box .preview-content .stat-item .num {
+            font-size: 1.4em;
+            font-weight: 900;
+            color: #8B0000;
+        }
+
+        .admin-preview-box .preview-content .stat-item .label {
+            font-size: 0.6em;
+            color: #7f6b5c;
+            font-weight: 500;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .admin-preview-box .preview-content .stat-item .icon-small {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .admin-preview-box .preview-table {
+            margin-top: 10px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            border: 1px solid #e8ddd0;
+        }
+
+        .admin-preview-box .preview-table .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.7em;
+            border-bottom: 1px solid #f0ece8;
+            color: #5C0000;
+        }
+
+        .admin-preview-box .preview-table .row:last-child {
+            border-bottom: none;
+        }
+
+        .admin-preview-box .preview-table .row .label {
+            color: #7f6b5c;
+            font-weight: 400;
+        }
+
+        .admin-preview-box .preview-table .row .value {
+            font-weight: 700;
+        }
+
+        .admin-preview-box .preview-table .row .value .tag {
+            background: rgba(212, 175, 55, 0.15);
+            padding: 0 8px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #8B0000;
+        }
+
+        .admin-preview-box .preview-footer-text {
+            text-align: center;
+            font-size: 0.65em;
+            color: #7f6b5c;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .admin-preview-box .preview-footer-text .lock {
+            font-size: 0.9em;
+        }
+
+        /* ===== دکمه‌های کارت رستوران ===== */
+        .product-card.restaurant-card .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        .product-card.restaurant-card .btn-group .btn-chat {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .product-card.restaurant-card .btn-group .btn-admin {
+            flex: 0.8;
+            min-width: 100px;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
+            font-size: 0.85em;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .product-card.restaurant-card .btn-group .btn-admin:hover {
+            background: linear-gradient(135deg, #A52A2A, #5C0000);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
+        }
+
+        /* ===== کارت بورس ===== */
         .product-card.stock-card {
             border-color: #2ecc71;
         }
@@ -966,7 +1137,6 @@
             font-weight: 700;
         }
 
-        /* ===== دکمه بورس با تم سبز ===== */
         .demo-btn.stock-btn {
             border-color: #2ecc71;
             color: #27ae60;
@@ -982,7 +1152,6 @@
             background: #2ecc71;
         }
 
-        /* ===== دکمه رستوران با تم طلایی ===== */
         .demo-btn.restaurant-btn {
             border-color: #D4AF37;
             color: #8B0000;
@@ -1242,6 +1411,12 @@
                 flex-direction: column;
                 text-align: center;
             }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .admin-preview-box .preview-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1262,7 +1437,7 @@
                 grid-template-columns: 1fr 1fr;
             }
             .products-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
             .features-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1302,6 +1477,12 @@
             }
             .order-section h2 {
                 font-size: 1.5em;
+            }
+            .product-card.restaurant-card {
+                grid-column: span 1;
+            }
+            .admin-preview-box .preview-content {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1397,6 +1578,17 @@
             .order-section .order-btn {
                 padding: 12px 30px;
                 font-size: 1em;
+            }
+            .product-card.restaurant-card .btn-group {
+                flex-direction: column;
+            }
+            .product-card.restaurant-card .btn-group .btn-chat,
+            .product-card.restaurant-card .btn-group .btn-admin {
+                flex: 1;
+                width: 100%;
+            }
+            .admin-preview-box .preview-content {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -1536,6 +1728,55 @@
                     </p>
                 </div>
 
+                <!-- ===== باکس نمایش پنل مدیریت ===== -->
+                <div class="admin-preview-box">
+                    <div class="preview-header">
+                        <span class="preview-title">📊 نمونه پنل مدیریت رستوران</span>
+                        <span class="preview-badge">🔒 اختصاصی</span>
+                    </div>
+                    <div class="preview-content">
+                        <div class="stat-item">
+                            <span class="icon-small">📋</span>
+                            <div class="num">۱۲</div>
+                            <span class="label">سفارش امروز</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="icon-small">💰</span>
+                            <div class="num">۲.۴M</div>
+                            <span class="label">فروش امروز</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="icon-small">👤</span>
+                            <div class="num">۸</div>
+                            <span class="label">مشتری جدید</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="icon-small">⭐</span>
+                            <div class="num">۴.۸</div>
+                            <span class="label">میانگین امتیاز</span>
+                        </div>
+                    </div>
+                    <div class="preview-table">
+                        <div class="row">
+                            <span class="label">🕒 آخرین سفارش</span>
+                            <span class="value">علیرضا - میز ۵ <span class="tag">در حال آماده‌سازی</span></span>
+                        </div>
+                        <div class="row">
+                            <span class="label">📊 پرفروش‌ترین</span>
+                            <span class="value">جوجه کباب <span class="tag">۱۲ سفارش</span></span>
+                        </div>
+                        <div class="row">
+                            <span class="label">💰 درآمد امروز</span>
+                            <span class="value">۲,۴۰۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                    <div class="preview-footer-text">
+                        <span class="lock">🔒</span>
+                        دسترسی اختصاصی برای مدیر رستوران
+                        <span style="color:#D4AF37;">⚡</span>
+                    </div>
+                </div>
+
                 <ul class="features-list">
                     <li>نمایش منوی کامل با قیمت‌ها و توضیحات</li>
                     <li>انتخاب تعداد و مشاهده صورت‌حساب لحظه‌ای</li>
@@ -1544,8 +1785,17 @@
                     <li>ذخیره اطلاعات مشتریان و سفارشات</li>
                     <li>قابلیت ویرایش منو توسط مدیر</li>
                 </ul>
+                
                 <div class="price-tag">قابل مذاکره</div>
-                <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="order-btn">🍽️ تست و مشاهده نمونه</a>
+                
+                <div class="btn-group">
+                    <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="order-btn btn-chat">
+                        🍽️ تست چت‌بات
+                    </a>
+                    <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/admin" target="_blank" class="btn-admin">
+                        ⚙️ پنل مدیریت
+                    </a>
+                </div>
             </div>
 
             <!-- ============================================ -->
