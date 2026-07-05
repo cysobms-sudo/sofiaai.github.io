@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title>همکاری با ما | Sofia AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -17,21 +17,44 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
-            padding: 30px 20px;
+            padding: 16px;
             line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* ===== انیمیشن‌ها ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.25); }
         }
 
         .container {
-            max-width: 780px;
+            max-width: 720px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 45px 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 40px 38px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.7s ease;
         }
 
         .container::before {
@@ -39,9 +62,9 @@
             position: absolute;
             top: -30%;
             right: -20%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
             border-radius: 50%;
         }
 
@@ -50,16 +73,16 @@
             position: absolute;
             bottom: -30%;
             left: -20%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(118, 75, 162, 0.08) 0%, transparent 70%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.06) 0%, transparent 70%);
             border-radius: 50%;
         }
 
-        /* ===== Header ===== */
+        /* ===== هدر ===== */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
             position: relative;
             z-index: 1;
         }
@@ -67,13 +90,8 @@
         .header .icon {
             font-size: 4.5em;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .header h1 {
@@ -81,71 +99,121 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 2.4em;
+            font-size: 2.6em;
             font-weight: 900;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
         }
 
         .header .subtitle {
             color: #666;
-            font-size: 1em;
+            font-size: 1.05em;
             font-weight: 300;
         }
 
         .header .subtitle strong {
-            color: #764ba2;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
         }
 
-        /* ===== Info Box ===== */
-        .info-box {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+        /* ===== بنر ویژه ===== */
+        .special-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 16px;
-            padding: 18px 22px;
+            padding: 14px 20px;
+            text-align: center;
             margin-bottom: 25px;
-            border: 1.5px solid rgba(102, 126, 234, 0.2);
             position: relative;
             z-index: 1;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.25);
         }
 
-        .info-box p {
-            color: #555;
-            font-size: 0.95em;
-            margin: 3px 0;
-        }
-
-        .info-box .highlight {
-            color: #764ba2;
-            font-weight: 700;
-        }
-
-        .info-box .badge-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-            justify-content: center;
-        }
-
-        .info-box .badge-list .badge {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .special-banner p {
             color: white;
-            padding: 4px 16px;
+            font-size: 0.95em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .special-banner .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 16px;
             border-radius: 50px;
             font-size: 0.8em;
             font-weight: 700;
         }
 
-        /* ===== Form ===== */
+        /* ===== باکس تخصص‌ها ===== */
+        .expertise-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.06), rgba(118, 75, 162, 0.06));
+            border-radius: 18px;
+            padding: 20px 24px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(102, 126, 234, 0.12);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .expertise-box:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.05);
+        }
+
+        .expertise-box .expertise-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .expertise-box .expertise-title .icon {
+            font-size: 1.3em;
+        }
+
+        .badge-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .badge-grid .badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.78em;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .badge-grid .badge:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
+        }
+
+        /* ===== فرم ===== */
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
         label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 700;
             color: #2d3748;
             font-size: 0.95em;
@@ -172,21 +240,22 @@
             right: 14px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.1em;
+            font-size: 1.15em;
             color: #999;
             pointer-events: none;
+            transition: color 0.3s ease;
         }
 
         .input-wrapper .input-icon.textarea-icon {
-            top: 14px;
+            top: 16px;
             transform: none;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 12px 45px 12px 14px;
+            padding: 12px 46px 12px 16px;
             border: 2px solid #e8ecf4;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1em;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             transition: all 0.3s ease;
@@ -201,12 +270,18 @@
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
         }
 
+        input:focus ~ .input-icon,
+        select:focus ~ .input-icon,
+        textarea:focus ~ .input-icon {
+            color: #667eea;
+        }
+
         select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M1 2l6 6 6-6' stroke='%23999' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: left 14px center;
-            padding-left: 35px;
+            padding-left: 40px;
             cursor: pointer;
         }
 
@@ -217,11 +292,7 @@
         textarea {
             resize: vertical;
             min-height: 80px;
-            padding: 12px 45px 12px 14px;
-        }
-
-        .input-wrapper .input-icon.textarea-icon {
-            top: 14px;
+            padding: 12px 46px 12px 16px;
         }
 
         .helper-text {
@@ -232,53 +303,67 @@
             font-weight: 300;
         }
 
-        /* ===== Two Columns ===== */
+        /* ===== دو ستونی ===== */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 16px;
             position: relative;
             z-index: 1;
         }
 
-        /* ===== Button ===== */
+        /* ===== دکمه ارسال ===== */
         .btn-submit {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 16px 40px;
+            padding: 18px 40px;
             border: none;
-            border-radius: 50px;
+            border-radius: 60px;
             font-size: 1.15em;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
             position: relative;
             z-index: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
+            letter-spacing: 0.5px;
         }
 
         .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.45);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 14px 45px rgba(102, 126, 234, 0.4);
         }
 
         .btn-submit:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
-        /* ===== Trust Badges ===== */
+        .btn-submit .btn-icon {
+            font-size: 1.3em;
+        }
+
+        .btn-submit .btn-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 14px;
+            border-radius: 50px;
+            font-size: 0.6em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== نشان‌های اعتماد ===== */
         .trust-badges {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 24px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 18px;
             position: relative;
             z-index: 1;
         }
@@ -289,27 +374,31 @@
             gap: 6px;
             color: #666;
             font-size: 0.85em;
-            font-weight: 400;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #e8ecf4;
         }
 
         .trust-badge .icon {
-            font-size: 1.2em;
+            font-size: 1.15em;
         }
 
-        /* ===== Divider ===== */
+        /* ===== جداکننده ===== */
         .divider {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin: 20px 0 15px;
+            gap: 16px;
+            margin: 18px 0 12px;
             position: relative;
             z-index: 1;
         }
 
         .divider .line {
             flex: 1;
-            height: 1px;
-            background: #e8ecf4;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, #e8ecf4, transparent);
         }
 
         .divider .text {
@@ -319,10 +408,10 @@
             white-space: nowrap;
         }
 
-        /* ===== Links ===== */
+        /* ===== لینک‌ها ===== */
         .links {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 12px;
             position: relative;
             z-index: 1;
         }
@@ -333,7 +422,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             display: inline-block;
-            margin: 5px 10px;
+            margin: 4px 8px;
             font-size: 0.95em;
         }
 
@@ -346,26 +435,36 @@
             color: #f5576c;
             font-weight: 700;
             background: rgba(245, 87, 108, 0.08);
-            padding: 6px 20px;
+            padding: 6px 22px;
             border-radius: 50px;
-            border: 1.5px solid rgba(245, 87, 108, 0.2);
+            border: 1.5px solid rgba(245, 87, 108, 0.15);
         }
 
         .links .order-link:hover {
             background: rgba(245, 87, 108, 0.15);
             border-color: #f5576c;
+            color: #f5576c;
         }
 
-        /* ===== Footer ===== */
+        .links .back-link {
+            color: #999;
+            font-weight: 400;
+        }
+
+        .links .back-link:hover {
+            color: #667eea;
+        }
+
+        /* ===== فوتر ===== */
         footer {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 22px;
             color: #999;
             font-size: 0.85em;
             position: relative;
             z-index: 1;
             border-top: 1px solid #e8ecf4;
-            padding-top: 20px;
+            padding-top: 18px;
         }
 
         footer .footer-icon {
@@ -373,151 +472,86 @@
             margin-left: 5px;
         }
 
-        /* ===== Responsive ===== */
+        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
-            .container {
-                padding: 30px 22px;
-                border-radius: 22px;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .header .icon {
-                font-size: 3.5em;
-            }
-
-            .two-col {
-                grid-template-columns: 1fr;
-            }
-
-            input, select, textarea {
-                padding: 10px 40px 10px 12px;
-                font-size: 0.95em;
-            }
-
-            .btn-submit {
-                font-size: 1em;
-                padding: 14px 30px;
-            }
-
-            .trust-badges {
-                gap: 12px;
-            }
-
-            .trust-badge {
-                font-size: 0.75em;
-            }
-
-            .info-box {
-                padding: 14px 16px;
-            }
-
-            .info-box p {
-                font-size: 0.85em;
-            }
-
-            .links a {
-                font-size: 0.85em;
-                margin: 3px 8px;
-            }
+            body { padding: 12px; font-size: 15px; }
+            .container { padding: 28px 22px; border-radius: 20px; }
+            .header h1 { font-size: 2.2em; }
+            .header .icon { font-size: 3.8em; }
+            .header .subtitle { font-size: 0.95em; }
+            .two-col { grid-template-columns: 1fr; gap: 0; }
+            input, select, textarea { padding: 10px 40px 10px 14px; font-size: 0.95em; }
+            .btn-submit { font-size: 1.05em; padding: 14px 28px; }
+            .trust-badges { gap: 12px; }
+            .trust-badge { font-size: 0.75em; padding: 3px 10px; }
+            .expertise-box { padding: 16px 18px; }
+            .badge-grid .badge { font-size: 0.7em; padding: 3px 12px; }
+            .special-banner p { font-size: 0.85em; }
+            .links a { font-size: 0.85em; margin: 3px 6px; }
+            footer { font-size: 0.8em; }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 15px 10px;
-            }
-
-            .container {
-                padding: 22px 16px;
-                border-radius: 18px;
-            }
-
-            .header h1 {
-                font-size: 1.6em;
-            }
-
-            .header .subtitle {
-                font-size: 0.9em;
-            }
-
-            input, select, textarea {
-                padding: 8px 35px 8px 10px;
-                font-size: 0.9em;
-                border-radius: 10px;
-            }
-
-            label {
-                font-size: 0.85em;
-            }
-
-            .btn-submit {
-                font-size: 0.95em;
-                padding: 12px 25px;
-            }
-
-            .trust-badges {
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-            }
-
-            .info-box .badge-list .badge {
-                font-size: 0.7em;
-                padding: 3px 12px;
-            }
-
-            .links a {
-                font-size: 0.8em;
-                display: block;
-                margin: 4px 0;
-            }
-
-            footer {
-                font-size: 0.75em;
-            }
-
-            .divider .text {
-                font-size: 0.75em;
-            }
+            body { padding: 8px; font-size: 14px; }
+            .container { padding: 20px 14px; border-radius: 16px; }
+            .header h1 { font-size: 1.7em; }
+            .header .icon { font-size: 3em; }
+            .header .subtitle { font-size: 0.85em; }
+            input, select, textarea { padding: 8px 35px 8px 12px; font-size: 0.9em; border-radius: 10px; }
+            label { font-size: 0.85em; }
+            .btn-submit { font-size: 0.95em; padding: 12px 20px; border-radius: 50px; }
+            .btn-submit .btn-badge { display: none; }
+            .trust-badges { flex-direction: column; align-items: center; gap: 6px; }
+            .trust-badge { font-size: 0.7em; padding: 2px 10px; width: 100%; justify-content: center; }
+            .expertise-box { padding: 14px 14px; border-radius: 14px; }
+            .expertise-box .expertise-title { font-size: 0.9em; }
+            .badge-grid { gap: 5px; }
+            .badge-grid .badge { font-size: 0.6em; padding: 2px 10px; }
+            .special-banner { padding: 10px 14px; border-radius: 12px; }
+            .special-banner p { font-size: 0.75em; }
+            .special-banner .badge { font-size: 0.65em; padding: 1px 12px; }
+            .links a { font-size: 0.8em; display: block; margin: 3px 0; }
+            .links .order-link { display: inline-block; padding: 4px 16px; }
+            footer { font-size: 0.7em; padding-top: 14px; margin-top: 16px; }
+            .divider .text { font-size: 0.7em; }
+            .helper-text { font-size: 0.7em; }
         }
 
-        /* Scrollbar styling for select */
-        select option:checked {
-            background: #667eea;
-            color: white;
-        }
+        /* ===== اسکرول ===== */
+        select::-webkit-scrollbar { width: 5px; }
+        select::-webkit-scrollbar-track { background: #f0f2f8; border-radius: 8px; }
+        select::-webkit-scrollbar-thumb { background: #667eea; border-radius: 8px; }
 
-        select::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        select::-webkit-scrollbar-track {
-            background: #f0f2f8;
-            border-radius: 8px;
-        }
-
-        select::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 8px;
-        }
+        select option:checked { background: #667eea; color: white; }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- ===== Header ===== -->
+    <!-- ===== هدر ===== -->
     <div class="header">
         <span class="icon">🤝</span>
         <h1>همکاری با ما</h1>
         <p class="subtitle">اگر تخصصی در حوزه هوش مصنوعی دارید، به <strong>تیم سوفیا</strong> بپیوندید</p>
     </div>
 
-    <!-- ===== Info Box ===== -->
-    <div class="info-box">
-        <p>📌 ما به دنبال همکاران متخصص در زمینه‌های زیر هستیم:</p>
-        <div class="badge-list">
+    <!-- ===== بنر ویژه ===== -->
+    <div class="special-banner">
+        <p>
+            <span>✨</span>
+            به خانواده بزرگ سوفیا بپیوندید
+            <span class="badge">🔥 فرصت‌های عالی</span>
+            <span>✨</span>
+        </p>
+    </div>
+
+    <!-- ===== باکس تخصص‌ها ===== -->
+    <div class="expertise-box">
+        <div class="expertise-title">
+            <span class="icon">📌</span>
+            <span>ما به دنبال همکاران متخصص در زمینه‌های زیر هستیم:</span>
+        </div>
+        <div class="badge-grid">
             <span class="badge">🐍 برنامه‌نویسی پایتون</span>
             <span class="badge">🤖 یادگیری ماشین</span>
             <span class="badge">🧠 یادگیری عمیق</span>
@@ -529,11 +563,11 @@
         </div>
     </div>
 
-    <!-- ===== Form ===== -->
+    <!-- ===== فرم ===== -->
     <form action="https://formspree.io/f/xpqeqkgk" method="POST">
         <input type="hidden" name="_subject" value="درخواست همکاری جدید - Sofia AI">
 
-        <!-- ===== Cooperation Type ===== -->
+        <!-- ===== نوع همکاری ===== -->
         <div class="form-group">
             <label>نوع همکاری <span class="required">*</span></label>
             <div class="input-wrapper">
@@ -548,7 +582,7 @@
             </div>
         </div>
 
-        <!-- ===== Name ===== -->
+        <!-- ===== نام ===== -->
         <div class="form-group">
             <label>نام و نام خانوادگی <span class="required">*</span></label>
             <div class="input-wrapper">
@@ -557,7 +591,7 @@
             </div>
         </div>
 
-        <!-- ===== Phone ===== -->
+        <!-- ===== تلفن ===== -->
         <div class="form-group">
             <label>شماره تماس <span class="required">*</span></label>
             <div class="input-wrapper">
@@ -566,7 +600,7 @@
             </div>
         </div>
 
-        <!-- ===== Email ===== -->
+        <!-- ===== ایمیل ===== -->
         <div class="form-group">
             <label>ایمیل <span class="required">*</span></label>
             <div class="input-wrapper">
@@ -575,7 +609,7 @@
             </div>
         </div>
 
-        <!-- ===== Two columns: Education & Field ===== -->
+        <!-- ===== دو ستونی: مدرک و رشته ===== -->
         <div class="two-col">
             <div class="form-group">
                 <label>مدرک تحصیلی <span class="required">*</span></label>
@@ -601,7 +635,7 @@
             </div>
         </div>
 
-        <!-- ===== Two columns: Expertise & Experience ===== -->
+        <!-- ===== دو ستونی: تخصص و سابقه ===== -->
         <div class="two-col">
             <div class="form-group">
                 <label>زمینه تخصصی <span class="required">*</span></label>
@@ -640,7 +674,7 @@
             </div>
         </div>
 
-        <!-- ===== Resume Link ===== -->
+        <!-- ===== لینک رزومه ===== -->
         <div class="form-group">
             <label>لینک رزومه یا نمونه کارها <span class="required">*</span></label>
             <div class="input-wrapper">
@@ -650,7 +684,7 @@
             <span class="helper-text">📌 لطفاً لینک رزومه یا نمونه کارهای خود را وارد کنید (Google Drive, Dropbox, LinkedIn, GitHub)</span>
         </div>
 
-        <!-- ===== Projects ===== -->
+        <!-- ===== پروژه‌ها ===== -->
         <div class="form-group">
             <label>نمونه پروژه‌های انجام شده <span class="optional">(اختیاری)</span></label>
             <div class="input-wrapper">
@@ -659,7 +693,7 @@
             </div>
         </div>
 
-        <!-- ===== Additional Notes ===== -->
+        <!-- ===== توضیحات ===== -->
         <div class="form-group">
             <label>توضیحات اضافه <span class="optional">(اختیاری)</span></label>
             <div class="input-wrapper">
@@ -668,12 +702,14 @@
             </div>
         </div>
 
-        <!-- ===== Submit Button ===== -->
+        <!-- ===== دکمه ارسال ===== -->
         <button type="submit" class="btn-submit">
-            <span>📤 ارسال درخواست همکاری</span>
+            <span class="btn-icon">📤</span>
+            ارسال درخواست همکاری
+            <span class="btn-badge">رایگان</span>
         </button>
 
-        <!-- ===== Trust Badges ===== -->
+        <!-- ===== نشان‌های اعتماد ===== -->
         <div class="trust-badges">
             <span class="trust-badge"><span class="icon">🔒</span> اطلاعات شما محفوظ است</span>
             <span class="trust-badge"><span class="icon">⏱️</span> پاسخگویی در ۴۸ ساعت</span>
@@ -681,21 +717,21 @@
         </div>
     </form>
 
-    <!-- ===== Divider ===== -->
+    <!-- ===== جداکننده ===== -->
     <div class="divider">
         <span class="line"></span>
         <span class="text">✨</span>
         <span class="line"></span>
     </div>
 
-    <!-- ===== Links ===== -->
+    <!-- ===== لینک‌ها ===== -->
     <div class="links">
         <a href="order.html" class="order-link">📋 ثبت درخواست خدمات</a>
         <br>
-        <a href="index.html">← بازگشت به صفحه اصلی</a>
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
     </div>
 
-    <!-- ===== Footer ===== -->
+    <!-- ===== فوتر ===== -->
     <footer>
         <span class="footer-icon">⏳</span> پس از ثبت، حداکثر ۴۸ ساعت با شما تماس می‌گیریم
     </footer>
