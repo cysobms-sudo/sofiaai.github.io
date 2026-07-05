@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title>چت‌بات‌های هوشمند سوفیا | Sofia AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -18,8 +18,9 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
-            padding: 20px;
+            padding: 12px;
             line-height: 1.8;
+            font-size: 16px;
         }
 
         .container {
@@ -27,35 +28,42 @@
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 50px;
+            border-radius: 24px;
+            padding: 30px 25px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== انیمیشن‌ها ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+            50% { transform: scale(1.02); box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== هدر ===== */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
             border-bottom: 3px solid rgba(102, 126, 234, 0.3);
+            animation: fadeInUp 0.6s ease;
         }
 
         .header .main-icon {
-            font-size: 5em;
-            margin-bottom: 10px;
+            font-size: 4em;
+            margin-bottom: 8px;
             display: block;
             animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-12px);
-            }
         }
 
         .header h1 {
@@ -63,26 +71,26 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 3.2em;
+            font-size: 2.6em;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             letter-spacing: 1px;
         }
 
         .header .subtitle {
             color: #555;
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: 300;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .header .phone-badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 10px 30px;
+            padding: 8px 24px;
             border-radius: 50px;
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: 700;
             direction: ltr;
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
@@ -94,19 +102,20 @@
             transform: scale(1.05);
         }
 
-        /* ===== هیرو با تصویر ===== */
+        /* ===== هیرو ===== */
         .hero-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 30px;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
-            border-radius: 28px;
-            padding: 40px;
+            border-radius: 22px;
+            padding: 30px;
             border: 2px solid #e8ecf4;
             overflow: hidden;
             position: relative;
+            animation: fadeInUp 0.8s ease;
         }
 
         .hero-section::before {
@@ -133,14 +142,14 @@
             border-radius: 50px;
             font-size: 0.8em;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hero-content h2 {
-            font-size: 2.4em;
+            font-size: 2em;
             font-weight: 900;
             color: #1a1a2e;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.4;
         }
 
@@ -153,14 +162,14 @@
 
         .hero-content p {
             color: #555;
-            font-size: 1.05em;
+            font-size: 1em;
             line-height: 2;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .hero-content .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
@@ -168,10 +177,11 @@
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 14px 35px;
+            padding: 12px 28px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
+            font-size: 0.95em;
             transition: all 0.3s ease;
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
@@ -185,10 +195,11 @@
             display: inline-block;
             background: white;
             color: #667eea;
-            padding: 14px 35px;
+            padding: 12px 28px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
+            font-size: 0.95em;
             border: 2px solid #667eea;
             transition: all 0.3s ease;
         }
@@ -208,12 +219,12 @@
 
         .hero-image .mockup {
             width: 100%;
-            max-width: 400px;
-            border-radius: 24px;
+            max-width: 380px;
+            border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
             transition: transform 0.5s ease;
             background: white;
-            padding: 15px;
+            padding: 12px;
             border: 1px solid #e8ecf4;
         }
 
@@ -225,52 +236,45 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: #f8f9fc;
-            border-radius: 12px 12px 0 0;
+            border-radius: 10px 10px 0 0;
             border-bottom: 1px solid #e8ecf4;
         }
 
         .hero-image .mockup .mockup-header .dots {
             display: flex;
-            gap: 6px;
+            gap: 5px;
         }
 
         .hero-image .mockup .mockup-header .dots span {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: block;
         }
 
-        .hero-image .mockup .mockup-header .dots span:nth-child(1) {
-            background: #ff5f57;
-        }
-        .hero-image .mockup .mockup-header .dots span:nth-child(2) {
-            background: #ffbd2e;
-        }
-        .hero-image .mockup .mockup-header .dots span:nth-child(3) {
-            background: #28c840;
-        }
+        .hero-image .mockup .mockup-header .dots span:nth-child(1) { background: #ff5f57; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(2) { background: #ffbd2e; }
+        .hero-image .mockup .mockup-header .dots span:nth-child(3) { background: #28c840; }
 
         .hero-image .mockup .mockup-header .title {
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #666;
             font-weight: 500;
-            margin-right: 10px;
+            margin-right: 8px;
         }
 
         .hero-image .mockup .mockup-body {
-            padding: 15px;
+            padding: 12px;
         }
 
         .hero-image .mockup .mockup-body .chat-bubble {
-            background: #f0f2f8;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.8em;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.75em;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             max-width: 80%;
         }
 
@@ -290,27 +294,27 @@
 
         .hero-image .mockup .mockup-body .chat-input {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .hero-image .mockup .mockup-body .chat-input input {
             flex: 1;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border: 2px solid #dce0ea;
-            border-radius: 10px;
-            font-size: 0.8em;
+            border-radius: 8px;
+            font-size: 0.75em;
             outline: none;
             font-family: 'Vazirmatn', sans-serif;
         }
 
         .hero-image .mockup .mockup-body .chat-input button {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 0.8em;
+            border-radius: 8px;
+            font-size: 0.75em;
             font-weight: 700;
             cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
@@ -319,49 +323,36 @@
         .hero-image .floating-badge {
             position: absolute;
             background: white;
-            padding: 10px 16px;
-            border-radius: 16px;
+            padding: 8px 14px;
+            border-radius: 14px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
             color: #2d3748;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             animation: float-badge 4s ease-in-out infinite;
         }
 
-        .hero-image .floating-badge:nth-child(2) {
-            top: 5%;
-            left: -10%;
-            animation-delay: 1s;
-        }
-
-        .hero-image .floating-badge:nth-child(3) {
-            bottom: 10%;
-            right: -10%;
-            animation-delay: 2s;
-        }
+        .hero-image .floating-badge:nth-child(2) { top: 5%; left: -10%; animation-delay: 1s; }
+        .hero-image .floating-badge:nth-child(3) { bottom: 10%; right: -10%; animation-delay: 2s; }
 
         @keyframes float-badge {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* ===== متن معرفی جذاب ===== */
+        /* ===== متن معرفی ===== */
         .intro-section {
             background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
-            border-radius: 24px;
-            padding: 45px 40px;
-            margin-bottom: 50px;
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 40px;
             border: 2px solid #e8ecf4;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.8s ease;
         }
 
         .intro-section::before {
@@ -369,42 +360,42 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 6px;
+            width: 5px;
             height: 100%;
             background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .intro-section .intro-icon {
-            font-size: 3em;
+            font-size: 2.5em;
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .intro-section h2 {
             color: #764ba2;
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .intro-section .intro-desc {
             color: #555;
-            font-size: 1.05em;
+            font-size: 1em;
             line-height: 2;
             font-weight: 400;
         }
 
         .intro-section .highlight-box {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
 
         .intro-section .highlight-item {
             background: white;
-            padding: 22px 18px;
-            border-radius: 16px;
+            padding: 18px 14px;
+            border-radius: 14px;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             transition: all 0.3s ease;
@@ -418,21 +409,21 @@
         }
 
         .intro-section .highlight-item .icon {
-            font-size: 2.5em;
+            font-size: 2em;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .intro-section .highlight-item h4 {
             color: #2d3748;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .intro-section .highlight-item p {
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 300;
             line-height: 1.6;
         }
@@ -440,10 +431,11 @@
         /* ===== محصولات ===== */
         .section-title {
             color: #764ba2;
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 900;
             text-align: center;
-            margin: 50px 0 30px;
+            margin: 35px 0 25px;
+            animation: fadeInUp 0.6s ease;
         }
 
         .section-title span {
@@ -456,22 +448,28 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 25px 0;
         }
 
         .product-card {
             background: #ffffff;
-            border-radius: 24px;
-            padding: 30px 25px;
+            border-radius: 20px;
+            padding: 24px 20px;
             text-align: center;
             transition: all 0.4s ease;
             border: 2px solid #f0f2f8;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.6s ease;
         }
+
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.10s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.20s; }
 
         .product-card::before {
             content: '';
@@ -485,34 +483,31 @@
             transition: opacity 0.4s ease;
         }
 
-        .product-card:hover::before {
-            opacity: 1;
-        }
-
+        .product-card:hover::before { opacity: 1; }
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
             border-color: #667eea;
         }
 
         .product-card .icon {
-            font-size: 4em;
-            margin-bottom: 15px;
+            font-size: 3.2em;
+            margin-bottom: 10px;
             display: block;
         }
 
         .product-card h3 {
             color: #2d3748;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .product-card p {
             color: #666;
-            font-size: 0.95em;
-            line-height: 1.9;
-            margin-bottom: 15px;
+            font-size: 0.9em;
+            line-height: 1.8;
+            margin-bottom: 12px;
             font-weight: 300;
         }
 
@@ -520,16 +515,16 @@
             text-align: right;
             list-style: none;
             padding: 0;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .product-card .features-list li {
-            padding: 5px 0;
+            padding: 4px 0;
             color: #555;
-            font-size: 0.9em;
+            font-size: 0.85em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .product-card .features-list li::before {
@@ -541,11 +536,11 @@
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1em;
-            margin-bottom: 18px;
+            font-size: 1em;
+            margin-bottom: 14px;
             letter-spacing: 0.5px;
         }
 
@@ -553,11 +548,11 @@
             display: inline-block;
             background: #667eea;
             color: white;
-            padding: 12px 35px;
+            padding: 10px 28px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1em;
+            font-size: 0.95em;
             transition: all 0.3s ease;
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
@@ -573,26 +568,28 @@
             display: inline-block;
             background: #f093fb;
             color: white;
-            padding: 3px 14px;
+            padding: 2px 12px;
             border-radius: 50px;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        /* ===== کارت جدید چت‌بات رستوران ناژخوان ===== */
-        .product-card.restaurant-card {
+        /* ===== کارت رستوران شهرزاد (جدید و ویژه) ===== */
+        .product-card.shahrzad-card {
             border-color: #D4AF37;
             background: linear-gradient(145deg, #ffffff, #fef9f0);
             position: relative;
             grid-column: span 1;
+            border-width: 2.5px;
+            animation: pulse-gold 3s ease-in-out infinite;
         }
 
-        .product-card.restaurant-card::before {
+        .product-card.shahrzad-card::before {
             background: linear-gradient(135deg, #8B0000, #D4AF37);
         }
 
-        .product-card.restaurant-card .restaurant-badge {
+        .product-card.shahrzad-card .restaurant-badge {
             display: inline-block;
             background: linear-gradient(135deg, #8B0000, #A52A2A);
             color: #F4D03F;
@@ -600,112 +597,145 @@
             border-radius: 50px;
             font-size: 0.7em;
             font-weight: 800;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border: 1px solid #D4AF37;
             letter-spacing: 0.5px;
         }
 
-        .product-card.restaurant-card .restaurant-badge .star {
+        .product-card.shahrzad-card .restaurant-badge .star {
             color: #F4D03F;
             margin-left: 4px;
         }
 
-        .product-card.restaurant-card .icon {
-            font-size: 4em;
+        .product-card.shahrzad-card .icon {
+            font-size: 3.5em;
             display: block;
-            margin-bottom: 15px;
-            animation: pulse-restaurant 2s infinite;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes pulse-restaurant {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .product-card.restaurant-card h3 {
+        .product-card.shahrzad-card h3 {
             color: #8B0000;
-            font-size: 1.6em;
+            font-size: 1.5em;
         }
 
-        .product-card.restaurant-card h3 span {
+        .product-card.shahrzad-card h3 span {
             background: linear-gradient(135deg, #D4AF37, #F4D03F);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .product-card.restaurant-card .sub-title {
+        .product-card.shahrzad-card .sub-title {
             color: #7f6b5c;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 500;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        .product-card.restaurant-card .features-list li::before {
+        .product-card.shahrzad-card .features-list li::before {
             content: "🍽️";
             color: #D4AF37;
         }
 
-        .product-card.restaurant-card .price-tag {
+        .product-card.shahrzad-card .price-tag {
             background: linear-gradient(135deg, #8B0000, #A52A2A);
             box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
         }
 
-        .product-card.restaurant-card .order-btn {
+        .product-card.shahrzad-card .order-btn {
             background: linear-gradient(135deg, #D4AF37, #F4D03F);
             color: #3A0000;
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
         }
 
-        .product-card.restaurant-card .order-btn:hover {
+        .product-card.shahrzad-card .order-btn:hover {
             background: linear-gradient(135deg, #F4D03F, #D4AF37);
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
         }
 
-        .product-card.restaurant-card .quick-tags {
+        .product-card.shahrzad-card .quick-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 5px;
             justify-content: center;
-            margin: 10px 0 15px;
+            margin: 8px 0 12px;
         }
 
-        .product-card.restaurant-card .quick-tags .tag {
+        .product-card.shahrzad-card .quick-tags .tag {
             background: rgba(212, 175, 55, 0.12);
             border: 1px solid rgba(212, 175, 55, 0.2);
             color: #8B0000;
-            padding: 2px 14px;
+            padding: 2px 12px;
             border-radius: 20px;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 700;
         }
 
-        .product-card.restaurant-card .feature-highlight {
+        .product-card.shahrzad-card .feature-highlight {
             background: linear-gradient(135deg, #fef9f0, #fdf0e0);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin: 12px 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin: 10px 0;
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .product-card.restaurant-card .feature-highlight p {
+        .product-card.shahrzad-card .feature-highlight p {
             color: #5C0000;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 500;
             margin-bottom: 0;
         }
 
-        .product-card.restaurant-card .feature-highlight .highlight-icon {
-            font-size: 1.2em;
-            margin-left: 6px;
+        .product-card.shahrzad-card .feature-highlight .highlight-icon {
+            font-size: 1.1em;
+            margin-left: 5px;
         }
 
-        /* ===== استایل نمایش پنل مدیریت ===== */
+        .product-card.shahrzad-card .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .product-card.shahrzad-card .btn-group .btn-chat {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .product-card.shahrzad-card .btn-group .btn-admin {
+            flex: 0.8;
+            min-width: 80px;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
+            font-size: 0.8em;
+            padding: 10px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .product-card.shahrzad-card .btn-group .btn-admin:hover {
+            background: linear-gradient(135deg, #A52A2A, #5C0000);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
+        }
+
+        /* ===== باکس نمایش پنل مدیریت ===== */
         .admin-preview-box {
             background: #f8f6f3;
-            border-radius: 16px;
-            padding: 16px 18px;
-            margin: 14px 0;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin: 12px 0;
             border: 2px dashed #D4AF37;
             position: relative;
             overflow: hidden;
@@ -723,49 +753,49 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .admin-preview-box .preview-header .preview-title {
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 800;
             color: #8B0000;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .admin-preview-box .preview-header .preview-badge {
             background: linear-gradient(135deg, #8B0000, #A52A2A);
             color: #F4D03F;
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 12px;
-            font-size: 0.65em;
+            font-size: 0.6em;
             font-weight: 700;
         }
 
         .admin-preview-box .preview-content {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .admin-preview-box .preview-content .stat-item {
             background: white;
-            border-radius: 10px;
-            padding: 10px 8px;
+            border-radius: 8px;
+            padding: 8px 6px;
             text-align: center;
             border: 1px solid #e8ddd0;
         }
 
         .admin-preview-box .preview-content .stat-item .num {
-            font-size: 1.4em;
+            font-size: 1.2em;
             font-weight: 900;
             color: #8B0000;
         }
 
         .admin-preview-box .preview-content .stat-item .label {
-            font-size: 0.6em;
+            font-size: 0.55em;
             color: #7f6b5c;
             font-weight: 500;
             display: block;
@@ -773,40 +803,31 @@
         }
 
         .admin-preview-box .preview-content .stat-item .icon-small {
-            font-size: 1.2em;
+            font-size: 1em;
             display: block;
             margin-bottom: 2px;
         }
 
         .admin-preview-box .preview-table {
-            margin-top: 10px;
+            margin-top: 8px;
             background: white;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
             border: 1px solid #e8ddd0;
         }
 
         .admin-preview-box .preview-table .row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
-            font-size: 0.7em;
+            padding: 3px 0;
+            font-size: 0.65em;
             border-bottom: 1px solid #f0ece8;
             color: #5C0000;
         }
 
-        .admin-preview-box .preview-table .row:last-child {
-            border-bottom: none;
-        }
-
-        .admin-preview-box .preview-table .row .label {
-            color: #7f6b5c;
-            font-weight: 400;
-        }
-
-        .admin-preview-box .preview-table .row .value {
-            font-weight: 700;
-        }
+        .admin-preview-box .preview-table .row:last-child { border-bottom: none; }
+        .admin-preview-box .preview-table .row .label { color: #7f6b5c; font-weight: 400; }
+        .admin-preview-box .preview-table .row .value { font-weight: 700; }
 
         .admin-preview-box .preview-table .row .value .tag {
             background: rgba(212, 175, 55, 0.15);
@@ -818,57 +839,16 @@
 
         .admin-preview-box .preview-footer-text {
             text-align: center;
-            font-size: 0.65em;
+            font-size: 0.6em;
             color: #7f6b5c;
-            margin-top: 8px;
+            margin-top: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        .admin-preview-box .preview-footer-text .lock {
-            font-size: 0.9em;
-        }
-
-        /* ===== دکمه‌های کارت رستوران ===== */
-        .product-card.restaurant-card .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 5px;
-        }
-
-        .product-card.restaurant-card .btn-group .btn-chat {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .product-card.restaurant-card .btn-group .btn-admin {
-            flex: 0.8;
-            min-width: 100px;
-            background: linear-gradient(135deg, #8B0000, #A52A2A);
-            color: white;
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
-            font-size: 0.85em;
-            padding: 12px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            font-family: 'Vazirmatn', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .product-card.restaurant-card .btn-group .btn-admin:hover {
-            background: linear-gradient(135deg, #A52A2A, #5C0000);
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
-        }
+        .admin-preview-box .preview-footer-text .lock { font-size: 0.85em; }
 
         /* ===== کارت بورس ===== */
         .product-card.stock-card {
@@ -906,88 +886,87 @@
         .management-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 20px 30px;
-            border-radius: 16px;
-            margin-bottom: 40px;
+            padding: 16px 24px;
+            border-radius: 14px;
+            margin-bottom: 30px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
             box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+            animation: fadeInUp 0.6s ease;
         }
 
         .management-banner .info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex: 1;
         }
 
-        .management-banner .info .icon {
-            font-size: 2.5em;
-        }
-
+        .management-banner .info .icon { font-size: 2em; }
         .management-banner .info .text h3 {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 900;
             margin-bottom: 2px;
         }
 
         .management-banner .info .text p {
-            font-size: 0.95em;
+            font-size: 0.9em;
             opacity: 0.9;
             line-height: 1.6;
         }
 
         .management-banner .badge-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .management-banner .badge-group .badge {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 50px;
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
-        /* ===== نمونه پنل مدیریت ===== */
+        /* ===== نمونه پنل ===== */
         .admin-panel-preview {
             background: #f8f9fe;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 40px 0;
+            border-radius: 18px;
+            padding: 24px;
+            margin: 30px 0;
             border: 2px solid #e8ecf4;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.8s ease;
         }
 
         .admin-panel-preview .preview-title {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .admin-panel-preview .preview-title h2 {
             color: #764ba2;
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: 900;
         }
 
         .admin-panel-preview .preview-title p {
             color: #666;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
 
         .admin-panel-preview .preview-card {
             background: white;
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 14px;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border: 1px solid #e8ecf4;
             overflow-x: auto;
@@ -995,46 +974,48 @@
 
         .admin-panel-preview .preview-card .stats {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
 
         .admin-panel-preview .preview-card .stats .stat-box {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
+            padding: 12px 20px;
+            border-radius: 10px;
             flex: 1;
             text-align: center;
+            min-width: 100px;
         }
 
         .admin-panel-preview .preview-card .stats .stat-box .number {
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 900;
         }
 
         .admin-panel-preview .preview-card .stats .stat-box .label {
-            font-size: 0.85em;
+            font-size: 0.8em;
             opacity: 0.9;
         }
 
         .admin-panel-preview .preview-card table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9em;
-            min-width: 600px;
+            font-size: 0.85em;
+            min-width: 500px;
         }
 
         .admin-panel-preview .preview-card table th {
             background: #667eea;
             color: white;
-            padding: 10px 12px;
+            padding: 8px 10px;
             text-align: right;
             font-weight: 700;
         }
 
         .admin-panel-preview .preview-card table td {
-            padding: 10px 12px;
+            padding: 8px 10px;
             border-bottom: 1px solid #e8ecf4;
             color: #333;
         }
@@ -1047,9 +1028,9 @@
             display: inline-block;
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 12px;
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
         }
 
@@ -1057,9 +1038,9 @@
             display: inline-block;
             background: #e8ecf4;
             color: #667eea;
-            padding: 2px 10px;
+            padding: 2px 8px;
             border-radius: 12px;
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
         }
 
@@ -1071,37 +1052,38 @@
 
         .admin-panel-preview .preview-card .preview-footer {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 16px;
+            padding-top: 16px;
             border-top: 1px solid #e8ecf4;
             color: #999;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         /* ===== نمونه‌ها ===== */
         .demo-section {
-            margin: 50px 0;
+            margin: 35px 0;
             text-align: center;
+            animation: fadeInUp 0.6s ease;
         }
 
         .demo-section h2 {
             color: #764ba2;
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .demo-section .desc {
             color: #666;
-            font-size: 1.1em;
-            margin-bottom: 25px;
+            font-size: 1em;
+            margin-bottom: 20px;
         }
 
         .demo-buttons {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .demo-btn {
@@ -1109,11 +1091,11 @@
             background: white;
             border: 2.5px solid #667eea;
             color: #667eea;
-            padding: 14px 32px;
-            border-radius: 60px;
+            padding: 10px 24px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.1em;
+            font-size: 0.95em;
             transition: all 0.3s ease;
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -1131,9 +1113,9 @@
             background: #ff6b6b;
             color: white;
             border-radius: 50px;
-            padding: 2px 12px;
-            font-size: 0.7em;
-            margin-right: 8px;
+            padding: 2px 10px;
+            font-size: 0.65em;
+            margin-right: 6px;
             font-weight: 700;
         }
 
@@ -1148,9 +1130,7 @@
             border-color: transparent;
         }
 
-        .demo-btn.stock-btn .badge {
-            background: #2ecc71;
-        }
+        .demo-btn.stock-btn .badge { background: #2ecc71; }
 
         .demo-btn.restaurant-btn {
             border-color: #D4AF37;
@@ -1169,29 +1149,49 @@
             color: #3A0000;
         }
 
+        .demo-btn.shahrzad-btn {
+            border-color: #D4AF37;
+            color: #8B0000;
+            background: linear-gradient(145deg, #ffffff, #fef5e8);
+            border-width: 3px;
+            animation: pulse-gold 3s ease-in-out infinite;
+        }
+
+        .demo-btn.shahrzad-btn:hover {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: #F4D03F;
+            border-color: transparent;
+        }
+
+        .demo-btn.shahrzad-btn .badge {
+            background: #D4AF37;
+            color: #3A0000;
+        }
+
         /* ===== خدمات ===== */
         .services-section {
-            margin: 40px 0 30px;
+            margin: 30px 0 25px;
+            animation: fadeInUp 0.6s ease;
         }
 
         .services-section h2 {
             color: #764ba2;
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .service-item {
             background: white;
-            padding: 25px 20px;
-            border-radius: 20px;
+            padding: 20px 16px;
+            border-radius: 16px;
             text-align: center;
             border: 2px solid #f0f2f8;
             transition: all 0.3s ease;
@@ -1199,57 +1199,58 @@
         }
 
         .service-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
             border-color: #667eea;
         }
 
         .service-item .icon {
-            font-size: 2.5em;
+            font-size: 2.2em;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .service-item h3 {
             color: #2d3748;
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .service-item p {
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.85em;
             line-height: 1.7;
         }
 
         /* ===== ویژگی‌ها ===== */
         .features-section {
-            margin: 50px 0;
+            margin: 35px 0;
             background: linear-gradient(135deg, #f8f9fe 0%, #f0f2f8 100%);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 30px;
+            animation: fadeInUp 0.8s ease;
         }
 
         .features-section h2 {
             color: #764ba2;
             text-align: center;
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 900;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 20px;
         }
 
         .feature-item {
             text-align: center;
-            padding: 20px 15px;
+            padding: 16px 12px;
             background: white;
-            border-radius: 16px;
+            border-radius: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
@@ -1260,21 +1261,21 @@
         }
 
         .feature-item .icon {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 2.5em;
+            margin-bottom: 8px;
             display: block;
         }
 
         .feature-item h4 {
             color: #2d3748;
-            font-size: 1.2em;
+            font-size: 1.05em;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .feature-item p {
             color: #777;
-            font-size: 0.95em;
+            font-size: 0.85em;
             font-weight: 300;
         }
 
@@ -1282,28 +1283,29 @@
         .contact-box {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 40px;
-            border-radius: 24px;
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-            margin: 40px 0;
+            margin: 30px 0;
             box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+            animation: fadeInUp 0.6s ease;
         }
 
         .contact-box h3 {
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .contact-box .phone {
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 900;
             direction: ltr;
             display: inline-block;
             background: rgba(255, 255, 255, 0.15);
-            padding: 8px 30px;
+            padding: 6px 24px;
             border-radius: 50px;
-            margin: 12px 0;
+            margin: 10px 0;
             letter-spacing: 1px;
             backdrop-filter: blur(5px);
         }
@@ -1312,12 +1314,12 @@
             display: inline-block;
             background: white;
             color: #667eea;
-            padding: 14px 45px;
+            padding: 12px 35px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.1em;
-            margin-top: 15px;
+            font-size: 1em;
+            margin-top: 12px;
             transition: all 0.3s ease;
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -1331,36 +1333,37 @@
         /* ===== سفارش ===== */
         .order-section {
             background: linear-gradient(135deg, #f8f9fe 0%, #eef1f8 100%);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            margin: 40px 0;
+            margin: 30px 0;
             border: 2px solid #e8ecf4;
+            animation: fadeInUp 0.6s ease;
         }
 
         .order-section h2 {
             color: #764ba2;
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .order-section p {
             color: #555;
-            font-size: 1.05em;
+            font-size: 0.95em;
             line-height: 2;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .order-section .order-btn {
             display: inline-block;
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
-            padding: 16px 50px;
+            padding: 14px 40px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.2em;
+            font-size: 1.05em;
             transition: all 0.3s ease;
             box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
         }
@@ -1373,223 +1376,101 @@
         /* ===== فوتر ===== */
         footer {
             text-align: center;
-            margin-top: 45px;
-            padding-top: 25px;
+            margin-top: 35px;
+            padding-top: 20px;
             border-top: 2px solid #e8ecf4;
             color: #999;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
 
-        footer strong {
-            color: #667eea;
-        }
+        footer strong { color: #667eea; }
 
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
-            .container {
-                padding: 30px;
-            }
-            .header h1 {
-                font-size: 2.6em;
-            }
-            .hero-section {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 30px;
-            }
-            .hero-content .hero-buttons {
-                justify-content: center;
-            }
-            .hero-image .floating-badge {
-                display: none;
-            }
-            .management-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            .management-banner .info {
-                flex-direction: column;
-                text-align: center;
-            }
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .admin-preview-box .preview-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .container { padding: 20px; border-radius: 18px; }
+            .header h1 { font-size: 2.2em; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding: 25px; }
+            .hero-content .hero-buttons { justify-content: center; }
+            .hero-image .floating-badge { display: none; }
+            .management-banner { flex-direction: column; text-align: center; }
+            .management-banner .info { flex-direction: column; text-align: center; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .admin-preview-box .preview-content { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                border-radius: 20px;
-            }
-            .header h1 {
-                font-size: 2em;
-            }
-            .header .subtitle {
-                font-size: 1em;
-            }
-            .hero-content h2 {
-                font-size: 1.8em;
-            }
-            .services-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            .features-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .contact-box .phone {
-                font-size: 1.8em;
-            }
-            .demo-buttons {
-                gap: 10px;
-            }
-            .demo-btn {
-                padding: 10px 20px;
-                font-size: 0.95em;
-            }
-            .management-banner .badge-group .badge {
-                font-size: 0.8em;
-                padding: 5px 12px;
-            }
-            .admin-panel-preview .preview-card table {
-                font-size: 0.75em;
-                min-width: 500px;
-            }
-            .admin-panel-preview .preview-card .stats .stat-box .number {
-                font-size: 1.5em;
-            }
-            .intro-section {
-                padding: 25px 20px;
-            }
-            .intro-section h2 {
-                font-size: 1.5em;
-            }
-            .intro-section .highlight-box {
-                grid-template-columns: 1fr 1fr;
-            }
-            .order-section {
-                padding: 25px 20px;
-            }
-            .order-section h2 {
-                font-size: 1.5em;
-            }
-            .product-card.restaurant-card {
-                grid-column: span 1;
-            }
-            .admin-preview-box .preview-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .container { padding: 16px; border-radius: 16px; }
+            .header h1 { font-size: 1.8em; }
+            .header .subtitle { font-size: 0.95em; }
+            .hero-content h2 { font-size: 1.5em; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .contact-box .phone { font-size: 1.5em; }
+            .demo-buttons { gap: 8px; }
+            .demo-btn { padding: 8px 18px; font-size: 0.85em; }
+            .management-banner .badge-group .badge { font-size: 0.7em; padding: 4px 10px; }
+            .admin-panel-preview .preview-card table { font-size: 0.7em; min-width: 400px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1.3em; }
+            .intro-section { padding: 20px 16px; }
+            .intro-section h2 { font-size: 1.3em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr 1fr; }
+            .product-card.shahrzad-card .btn-group { flex-direction: column; }
+            .product-card.shahrzad-card .btn-group .btn-chat,
+            .product-card.shahrzad-card .btn-group .btn-admin { flex: 1; width: 100%; }
+            .admin-preview-box .preview-content { grid-template-columns: repeat(2, 1fr); }
+            .admin-preview-box .preview-table .row { font-size: 0.6em; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-                border-radius: 16px;
-            }
-            .header h1 {
-                font-size: 1.6em;
-            }
-            .header .main-icon {
-                font-size: 3.5em;
-            }
-            .hero-content h2 {
-                font-size: 1.4em;
-            }
+            .container { padding: 12px; border-radius: 14px; }
+            .header h1 { font-size: 1.4em; }
+            .header .main-icon { font-size: 3em; }
+            .hero-content h2 { font-size: 1.2em; }
             .hero-content .hero-buttons .btn-primary,
             .hero-content .hero-buttons .btn-secondary {
-                padding: 10px 25px;
-                font-size: 0.9em;
+                padding: 8px 20px;
+                font-size: 0.85em;
                 width: 100%;
                 text-align: center;
             }
-            .hero-content .hero-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .demo-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .demo-btn {
-                text-align: center;
-                width: 100%;
-            }
-            .contact-box .phone {
-                font-size: 1.4em;
-            }
-            .contact-box h3 {
-                font-size: 1.4em;
-            }
-            .section-title {
-                font-size: 1.6em;
-            }
-            .product-card {
-                padding: 20px;
-            }
-            .product-card .icon {
-                font-size: 3em;
-            }
-            .management-banner .info .icon {
-                font-size: 2em;
-            }
-            .admin-panel-preview .preview-card table {
-                font-size: 0.65em;
-                min-width: 400px;
-            }
+            .hero-content .hero-buttons { flex-direction: column; align-items: stretch; }
+            .services-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .demo-buttons { flex-direction: column; align-items: stretch; }
+            .demo-btn { text-align: center; width: 100%; font-size: 0.8em; padding: 8px 14px; }
+            .contact-box .phone { font-size: 1.2em; }
+            .contact-box h3 { font-size: 1.2em; }
+            .section-title { font-size: 1.4em; }
+            .product-card { padding: 16px; }
+            .product-card .icon { font-size: 2.5em; }
+            .management-banner .info .icon { font-size: 1.5em; }
+            .admin-panel-preview .preview-card table { font-size: 0.55em; min-width: 320px; }
             .admin-panel-preview .preview-card table th,
-            .admin-panel-preview .preview-card table td {
-                padding: 5px 6px;
-            }
-            .admin-panel-preview .preview-card .stats .stat-box .number {
-                font-size: 1.2em;
-            }
-            .intro-section .highlight-box {
-                grid-template-columns: 1fr;
-            }
-            .intro-section h2 {
-                font-size: 1.3em;
-            }
-            .intro-section .intro-desc {
-                font-size: 0.95em;
-            }
-            .hero-image .mockup {
-                max-width: 280px;
-            }
-            .order-section {
-                padding: 20px 15px;
-            }
-            .order-section h2 {
-                font-size: 1.3em;
-            }
-            .order-section .order-btn {
-                padding: 12px 30px;
-                font-size: 1em;
-            }
-            .product-card.restaurant-card .btn-group {
-                flex-direction: column;
-            }
-            .product-card.restaurant-card .btn-group .btn-chat,
-            .product-card.restaurant-card .btn-group .btn-admin {
-                flex: 1;
-                width: 100%;
-            }
-            .admin-preview-box .preview-content {
-                grid-template-columns: 1fr 1fr;
-            }
+            .admin-panel-preview .preview-card table td { padding: 4px 5px; }
+            .admin-panel-preview .preview-card .stats .stat-box .number { font-size: 1em; }
+            .intro-section .highlight-box { grid-template-columns: 1fr; }
+            .intro-section h2 { font-size: 1.1em; }
+            .intro-section .intro-desc { font-size: 0.9em; }
+            .hero-image .mockup { max-width: 240px; }
+            .order-section { padding: 16px 12px; }
+            .order-section h2 { font-size: 1.2em; }
+            .order-section .order-btn { padding: 10px 24px; font-size: 0.9em; }
+            .admin-preview-box .preview-content { grid-template-columns: 1fr 1fr; }
+            .admin-preview-box .preview-content .stat-item .num { font-size: 1em; }
+            .admin-preview-box .preview-content .stat-item .label { font-size: 0.5em; }
+            .admin-preview-box .preview-header .preview-title { font-size: 0.7em; }
+            .admin-preview-box .preview-header .preview-badge { font-size: 0.5em; }
+            .product-card.shahrzad-card h3 { font-size: 1.2em; }
+            .product-card.shahrzad-card .icon { font-size: 2.8em; }
+            .product-card.shahrzad-card .quick-tags .tag { font-size: 0.6em; padding: 1px 8px; }
+            .demo-btn.shahrzad-btn { font-size: 0.8em; padding: 8px 14px; }
+            .demo-btn.stock-btn { font-size: 0.8em; padding: 8px 14px; }
+            .demo-btn .badge { font-size: 0.55em; padding: 1px 8px; }
+            .features-section { padding: 20px 14px; }
+            .features-section h2 { font-size: 1.4em; }
+            .contact-box { padding: 20px 14px; }
+            .contact-box .btn { padding: 10px 25px; font-size: 0.9em; }
         }
     </style>
 </head>
@@ -1604,7 +1485,7 @@
             <div class="phone-badge">📞 ۰۹۱۳۰۷۷۱۱۲۸</div>
         </div>
 
-        <!-- ===== هیرو با تصویر ===== -->
+        <!-- ===== هیرو ===== -->
         <div class="hero-section">
             <div class="hero-content">
                 <span class="badge">🔥 هوش مصنوعی در خدمت کسب‌وکار شما</span>
@@ -1618,42 +1499,35 @@
             <div class="hero-image">
                 <div class="mockup">
                     <div class="mockup-header">
-                        <div class="dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <span class="title">چت‌بات حقوقی سوفیا</span>
+                        <div class="dots"><span></span><span></span><span></span></div>
+                        <span class="title">چت‌بات رستوران شهرزاد</span>
                     </div>
                     <div class="mockup-body">
                         <div class="chat-bubble bot">
-                            <strong>⚖️ مشاور حقوقی سوفیا</strong><br>
-                            سلام! چطور می‌توانم به شما کمک کنم؟
+                            <strong>🏛️ رستوران شهرزاد</strong><br>
+                            سلام! به رستوران سنتی شهرزاد خوش آمدید. چطور می‌توانم به شما کمک کنم؟
                         </div>
                         <div class="chat-bubble user">
-                            سلام! در مورد مهریه سوال دارم.
+                            سلام! منو غذاها رو ببینم.
                         </div>
                         <div class="chat-bubble bot">
-                            لطفاً سمت خود را مشخص کنید:<br>
-                            <span style="display:inline-block;background:#667eea;color:white;padding:4px 12px;border-radius:8px;margin:4px 0;font-size:0.85em;">خواهان</span>
-                            <span style="display:inline-block;background:#764ba2;color:white;padding:4px 12px;border-radius:8px;margin:4px 0;font-size:0.85em;">خوانده</span>
+                            📋 لطفاً یکی از دسته‌بندی‌های منو را انتخاب کنید:<br>
+                            <span style="display:inline-block;background:#8B0000;color:#F4D03F;padding:3px 10px;border-radius:8px;margin:3px 0;font-size:0.75em;">🥗 پیش‌غذاها</span>
+                            <span style="display:inline-block;background:#D4AF37;color:#3A0000;padding:3px 10px;border-radius:8px;margin:3px 0;font-size:0.75em;">🥩 غذای اصلی</span>
+                            <span style="display:inline-block;background:#8B0000;color:#F4D03F;padding:3px 10px;border-radius:8px;margin:3px 0;font-size:0.75em;">🐟 غذاهای دریایی</span>
                         </div>
                         <div class="chat-input">
-                            <input type="text" placeholder="پیام خود را بنویسید..." value="خواهان هستم">
+                            <input type="text" placeholder="پیام خود را بنویسید..." value="غذای اصلی">
                             <button>ارسال</button>
                         </div>
                     </div>
                 </div>
-                <div class="floating-badge" style="top:5%; left:-10%;">
-                    ⚡ پاسخ‌دهی آنی
-                </div>
-                <div class="floating-badge" style="bottom:10%; right:-10%;">
-                    📊 ذخیره اطلاعات
-                </div>
+                <div class="floating-badge" style="top:5%; left:-10%;">⭐ امتیاز ۴.۸</div>
+                <div class="floating-badge" style="bottom:10%; right:-10%;">🏛️ سنتی و اصیل</div>
             </div>
         </div>
 
-        <!-- ===== متن معرفی جذاب ===== -->
+        <!-- ===== متن معرفی ===== -->
         <div class="intro-section">
             <span class="intro-icon">🤖</span>
             <h2>چت‌بات‌های هوشمند سوفیا؛ مشتری‌هایتان همیشه آنلاین</h2>
@@ -1661,7 +1535,6 @@
                 تصور کنید یک کارشناس فروش یا پشتیبان حرفه‌ای، ۲۴ ساعت شبانه‌روز و ۷ روز هفته، بدون خستگی و با دقت کامل، به تمام سوالات مشتریان شما پاسخ دهد.
                 <strong>چت‌بات‌های هوشمند سوفیا دقیقاً همین کار را می‌کنند.</strong>
             </p>
-
             <div class="highlight-box">
                 <div class="highlight-item">
                     <span class="icon">⏰</span>
@@ -1701,20 +1574,21 @@
         <div class="products-grid">
 
             <!-- ============================================ -->
-            <!-- کارت جدید: چت‌بات رستوران ناژخوان              -->
+            <!-- کارت جدید: چت‌بات رستوران شهرزاد              -->
             <!-- ============================================ -->
-            <div class="product-card restaurant-card">
-                <span class="restaurant-badge"><span class="star">⭐</span> پیشنهاد ویژه</span>
-                <span class="icon">🍽️</span>
-                <h3>رستوران <span>ناژخوان</span></h3>
+            <div class="product-card shahrzad-card">
+                <span class="restaurant-badge"><span class="star">⭐</span> نمونه کار ویژه</span>
+                <span class="icon">🏛️</span>
+                <h3>رستوران <span>شهرزاد</span></h3>
                 <p class="sub-title">✨ چت‌بات هوشمند سفارش غذا</p>
-                <p>سیستم سفارش‌دهی هوشمند و حرفه‌ای برای رستوران‌ها و کافه‌ها</p>
+                <p>سیستم سفارش‌دهی هوشمند و حرفه‌ای برای رستوران‌های سنتی و مدرن</p>
                 
                 <div class="quick-tags">
-                    <span class="tag">🍕 منوی کامل</span>
+                    <span class="tag">🍽️ منوی کامل</span>
                     <span class="tag">💳 پرداخت آنلاین</span>
                     <span class="tag">⏰ ۲۴ ساعته</span>
                     <span class="tag">📱 موبایل‌پسند</span>
+                    <span class="tag">🏛️ سنتی</span>
                 </div>
 
                 <div class="feature-highlight">
@@ -1722,7 +1596,7 @@
                         <span class="highlight-icon">🔥</span>
                         <strong>تجربه سفارش غذا بدون تماس تلفنی</strong>
                         <br>
-                        <span style="font-size:0.85em;color:#7f6b5c;">
+                        <span style="font-size:0.8em;color:#7f6b5c;">
                             با چند کلیک ساده، غذای مورد علاقه‌تان را سفارش دهید
                         </span>
                     </p>
@@ -1789,10 +1663,10 @@
                 <div class="price-tag">قابل مذاکره</div>
                 
                 <div class="btn-group">
-                    <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="order-btn btn-chat">
+                    <a href="https://cysobms-shahrzad-restaurant-isfahan.hf.space/" target="_blank" class="order-btn btn-chat">
                         🍽️ تست چت‌بات
                     </a>
-                    <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/admin" target="_blank" class="btn-admin">
+                    <a href="https://cysobms-shahrzad-restaurant-isfahan.hf.space/admin" target="_blank" class="btn-admin">
                         ⚙️ پنل مدیریت
                     </a>
                 </div>
@@ -1998,9 +1872,9 @@
             <h2>🎯 نمونه‌های آماده چت‌بات</h2>
             <p class="desc">برای مشاهده و تست هر نمونه، روی دکمه مربوطه کلیک کنید</p>
             <div class="demo-buttons">
-                <!-- ===== دکمه جدید رستوران ناژخوان ===== -->
-                <a href="https://cysobms-najkhwan-restaurant-isfahan.hf.space/" target="_blank" class="demo-btn restaurant-btn">
-                    🍽️ رستوران ناژخوان <span class="badge">جدید ⭐</span>
+                <!-- ===== دکمه جدید رستوران شهرزاد ===== -->
+                <a href="https://cysobms-shahrzad-restaurant-isfahan.hf.space/" target="_blank" class="demo-btn shahrzad-btn">
+                    🏛️ رستوران شهرزاد <span class="badge">جدید ⭐</span>
                 </a>
                 <a href="https://cysobms-chatbot-hoghoghi.hf.space/" target="_blank" class="demo-btn">
                     ⚖️ حقوقی <span class="badge">جدید</span>
@@ -2103,14 +1977,14 @@
         <div class="contact-box" id="contact">
             <h3>📞 برای مشاوره و سفارش تماس بگیرید</h3>
             <div class="phone">۰۹۱۳۰۷۷۱۱۲۸</div>
-            <p style="margin:12px 0; opacity:0.9; font-size:1.05em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
+            <p style="margin:10px 0; opacity:0.9; font-size:0.95em;">از طریق واتس‌اپ، تلگرام و ایتا نیز در دسترس هستیم</p>
             <a href="#" class="btn">ثبت درخواست مشاوره رایگان</a>
         </div>
 
         <!-- ===== فوتر ===== -->
         <footer>
             <p>© ۱۴۰۶ - تمامی حقوق برای <strong>چت‌بات‌های هوشمند سوفیا</strong> محفوظ است</p>
-            <p style="margin-top:6px; font-size:0.85em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
+            <p style="margin-top:5px; font-size:0.8em; color:#bbb;">طراحی و توسعه توسط تیم فنی سوفیا</p>
         </footer>
 
     </div>
