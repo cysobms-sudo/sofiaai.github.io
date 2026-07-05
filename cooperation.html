@@ -33,16 +33,6 @@
             50% { transform: translateY(-12px); }
         }
 
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.25); }
-        }
-
         .container {
             max-width: 720px;
             margin: 0 auto;
@@ -312,6 +302,99 @@
             z-index: 1;
         }
 
+        /* ===== آپلود فایل ===== */
+        .file-upload-wrapper {
+            position: relative;
+            width: 100%;
+            border: 2px dashed #e8ecf4;
+            border-radius: 14px;
+            padding: 18px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fe;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.04);
+        }
+
+        .file-upload-wrapper.dragover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.08);
+            transform: scale(1.01);
+        }
+
+        .file-upload-wrapper .upload-icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .file-upload-wrapper .upload-text {
+            color: #666;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .file-upload-wrapper .upload-text strong {
+            color: #667eea;
+        }
+
+        .file-upload-wrapper .upload-hint {
+            color: #999;
+            font-size: 0.8em;
+            font-weight: 300;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-wrapper .file-name {
+            display: none;
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-top: 8px;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.15);
+        }
+
+        .file-upload-wrapper .file-name .remove-file {
+            color: #f5576c;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-wrapper .file-name .remove-file:hover {
+            color: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .file-upload-wrapper.has-file .upload-icon,
+        .file-upload-wrapper.has-file .upload-text,
+        .file-upload-wrapper.has-file .upload-hint {
+            display: none;
+        }
+
+        .file-upload-wrapper.has-file .file-name {
+            display: block;
+        }
+
         /* ===== دکمه ارسال ===== */
         .btn-submit {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -489,6 +572,9 @@
             .special-banner p { font-size: 0.85em; }
             .links a { font-size: 0.85em; margin: 3px 6px; }
             footer { font-size: 0.8em; }
+            .file-upload-wrapper { padding: 14px 16px; }
+            .file-upload-wrapper .upload-icon { font-size: 2em; }
+            .file-upload-wrapper .upload-text { font-size: 0.85em; }
         }
 
         @media (max-width: 480px) {
@@ -515,6 +601,11 @@
             footer { font-size: 0.7em; padding-top: 14px; margin-top: 16px; }
             .divider .text { font-size: 0.7em; }
             .helper-text { font-size: 0.7em; }
+            .file-upload-wrapper { padding: 12px 14px; border-radius: 10px; }
+            .file-upload-wrapper .upload-icon { font-size: 1.8em; }
+            .file-upload-wrapper .upload-text { font-size: 0.8em; }
+            .file-upload-wrapper .upload-hint { font-size: 0.7em; }
+            .file-upload-wrapper .file-name { font-size: 0.8em; padding: 6px 12px; }
         }
 
         /* ===== اسکرول ===== */
@@ -564,7 +655,7 @@
     </div>
 
     <!-- ===== فرم ===== -->
-    <form action="https://formspree.io/f/xpqeqkgk" method="POST">
+    <form action="https://formspree.io/f/xpqeqkgk" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_subject" value="درخواست همکاری جدید - Sofia AI">
 
         <!-- ===== نوع همکاری ===== -->
@@ -674,14 +765,32 @@
             </div>
         </div>
 
-        <!-- ===== لینک رزومه ===== -->
+        <!-- ===== آپلود رزومه ===== -->
         <div class="form-group">
-            <label>لینک رزومه یا نمونه کارها <span class="required">*</span></label>
+            <label>آپلود رزومه <span class="required">*</span></label>
+            <div class="file-upload-wrapper" id="fileUploadWrapper">
+                <span class="upload-icon">📄</span>
+                <span class="upload-text">
+                    برای آپلود رزومه <strong>کلیک کنید</strong> یا فایل را بکشید
+                </span>
+                <span class="upload-hint">فرمت‌های مجاز: PDF, DOC, DOCX (حداکثر ۵ مگابایت)</span>
+                <div class="file-name" id="fileName">
+                    <span id="fileNameText"></span>
+                    <span class="remove-file" onclick="removeFile()">✕</span>
+                </div>
+                <input type="file" name="resume" accept=".pdf,.doc,.docx" required onchange="handleFileSelect(event)">
+            </div>
+            <span class="helper-text">📌 لطفاً فایل رزومه خود را آپلود کنید (فرمت‌های PDF، DOC، DOCX مجاز هستند)</span>
+        </div>
+
+        <!-- ===== لینک رزومه (اختیاری) ===== -->
+        <div class="form-group">
+            <label>لینک رزومه یا نمونه کارها <span class="optional">(اختیاری)</span></label>
             <div class="input-wrapper">
                 <span class="input-icon">🔗</span>
-                <input type="text" name="resume_link" placeholder="لینک Google Drive, Dropbox, LinkedIn یا GitHub" required>
+                <input type="text" name="resume_link" placeholder="لینک Google Drive, Dropbox, LinkedIn یا GitHub">
             </div>
-            <span class="helper-text">📌 لطفاً لینک رزومه یا نمونه کارهای خود را وارد کنید (Google Drive, Dropbox, LinkedIn, GitHub)</span>
+            <span class="helper-text">📌 در صورت تمایل می‌توانید لینک رزومه آنلاین خود را نیز وارد کنید</span>
         </div>
 
         <!-- ===== پروژه‌ها ===== -->
@@ -737,5 +846,70 @@
     </footer>
 
 </div>
+
+<script>
+    // ===== مدیریت آپلود فایل =====
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const wrapper = document.getElementById('fileUploadWrapper');
+            const fileNameText = document.getElementById('fileNameText');
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            // بررسی حجم فایل
+            if (file.size > maxSize) {
+                alert('حجم فایل نباید بیشتر از ۵ مگابایت باشد!');
+                event.target.value = '';
+                wrapper.classList.remove('has-file');
+                return;
+            }
+
+            // بررسی فرمت فایل
+            const validFormats = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!validFormats.includes(file.type)) {
+                alert('فرمت فایل باید PDF، DOC یا DOCX باشد!');
+                event.target.value = '';
+                wrapper.classList.remove('has-file');
+                return;
+            }
+
+            // نمایش نام فایل
+            fileNameText.textContent = '📎 ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+            wrapper.classList.add('has-file');
+        }
+    }
+
+    function removeFile() {
+        const wrapper = document.getElementById('fileUploadWrapper');
+        const input = wrapper.querySelector('input[type="file"]');
+        input.value = '';
+        wrapper.classList.remove('has-file');
+    }
+
+    // ===== درگ و دراپ =====
+    const uploadWrapper = document.getElementById('fileUploadWrapper');
+    const fileInput = uploadWrapper.querySelector('input[type="file"]');
+
+    uploadWrapper.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+
+    uploadWrapper.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+
+    uploadWrapper.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect({ target: fileInput });
+        }
+    });
+</script>
+
 </body>
 </html>
