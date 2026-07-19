@@ -539,80 +539,6 @@
             opacity: 0.8;
         }
 
-        /* ===== بخش ثبت‌نام در صفحه اصلی ===== */
-        .register-section {
-            padding: 50px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .register-form {
-            max-width: 500px;
-            margin: 0 auto;
-            background: var(--bg-light);
-            padding: 32px;
-            border-radius: var(--radius);
-            border: 2px solid var(--border-color);
-        }
-        .register-form label {
-            display: block;
-            margin-top: 16px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-        .register-form input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            font-size: 1rem;
-            margin-top: 6px;
-            font-family: 'Vazirmatn', sans-serif;
-            background: #fff;
-            transition: var(--transition);
-            color: var(--text-dark);
-        }
-        .register-form input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.06);
-        }
-        .register-form .btn-submit {
-            width: 100%;
-            margin-top: 20px;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .register-form .btn-submit:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
-        }
-        .register-message {
-            text-align: center;
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-        }
-        .register-message.success {
-            display: block;
-            background: #d4edda;
-            color: #155724;
-        }
-        .register-message.error {
-            display: block;
-            background: #f8d7da;
-            color: #721c24;
-        }
-
         /* ===== نظرات ===== */
         .comments-section {
             padding: 50px 0;
@@ -845,6 +771,7 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
+                <!-- ===== دکمه ثبت‌نام به صفحه /register لینک شده ===== -->
                 <a href="/register" class="btn-register"><i class="fas fa-user-plus"></i> ثبت‌نام در سایت</a>
                 <a href="/cart" class="cart-link">
                     <i class="fas fa-shopping-cart"></i>
@@ -1075,34 +1002,6 @@
         </div>
     </section>
 
-    <!-- ===== بخش ثبت‌نام در صفحه اصلی (همین جا) ===== -->
-    <section class="register-section fade-up" id="register">
-        <div class="container">
-            <div class="section-header">
-                <h2>📝 ثبت‌نام در سوفیا AI</h2>
-                <span class="sub">همین حالا عضو شوید و از خدمات ویژه بهره‌مند شوید</span>
-            </div>
-            <div class="register-form">
-                <form id="registerForm">
-                    <label>نام و نام خانوادگی</label>
-                    <input type="text" id="regName" placeholder="نام خود را وارد کنید" required />
-                    
-                    <label>آدرس ایمیل</label>
-                    <input type="email" id="regEmail" placeholder="ایمیل خود را وارد کنید" required />
-                    
-                    <label>رمز عبور</label>
-                    <input type="password" id="regPassword" placeholder="رمز عبور خود را وارد کنید" required />
-                    
-                    <label>شماره تماس</label>
-                    <input type="tel" id="regPhone" placeholder="شماره تماس خود را وارد کنید" />
-                    
-                    <button type="submit" class="btn-submit">ثبت‌نام</button>
-                </form>
-                <div id="registerMessage" class="register-message"></div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== نظرات ===== -->
     <section class="comments-section fade-up" id="comments">
         <div class="container">
@@ -1155,7 +1054,8 @@
         <div class="container">
             <h2>آماده‌اید با ایجنت‌ها و دستیارهای هوشمند، کسب‌وکار خود را متحول کنید؟</h2>
             <p>همین حالا ثبت‌نام کنید و از مشاوره‌ی رایگان تیم سوفیا بهره‌مند شوید.</p>
-            <a href="#register" class="btn-primary">ثبت‌نام در سایت</a>
+            <!-- ===== دکمه CTA به صفحه /register لینک شده ===== -->
+            <a href="/register" class="btn-primary">ثبت‌نام در سایت</a>
         </div>
     </section>
 
@@ -1169,7 +1069,8 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <a href="#register" class="btn-register" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
+                <!-- ===== دکمه ثبت‌نام در فوتر به صفحه /register لینک شده ===== -->
+                <a href="/register" class="btn-register" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
             </div>
             <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
@@ -1185,49 +1086,6 @@
                     alert('🔍 جستجو برای: "' + query + '"\n(این یک نمونه نمایشی است)');
                 } else {
                     alert('لطفاً عبارت جستجو را وارد کنید.');
-                }
-            });
-
-            // ---- ثبت‌نام از طریق فرم در صفحه اصلی ----
-            document.getElementById('registerForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('regName').value;
-                const email = document.getElementById('regEmail').value;
-                const password = document.getElementById('regPassword').value;
-                const phone = document.getElementById('regPhone').value;
-                
-                const messageDiv = document.getElementById('registerMessage');
-                
-                messageDiv.className = 'register-message';
-                messageDiv.style.display = 'block';
-                messageDiv.textContent = '⏳ در حال ثبت‌نام...';
-                messageDiv.style.background = '#e7f3ff';
-                messageDiv.style.color = '#004085';
-                
-                try {
-                    const response = await fetch('/api/register', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, email, password, phone })
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (response.ok) {
-                        messageDiv.className = 'register-message success';
-                        messageDiv.textContent = '✅ ثبت‌نام با موفقیت انجام شد! به صفحه اصلی بروید.';
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 2000);
-                    } else {
-                        messageDiv.className = 'register-message error';
-                        messageDiv.textContent = data.error || 'خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.';
-                    }
-                } catch (error) {
-                    console.error('خطا:', error);
-                    messageDiv.className = 'register-message error';
-                    messageDiv.textContent = '❌ خطا در ارتباط با سرور.';
                 }
             });
 
