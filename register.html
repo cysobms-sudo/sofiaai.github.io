@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ثبت‌نام در سوفیا AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #FFB800;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
+        }
+        h1 {
+            text-align: center;
+            color: #1A0F2E;
+            margin-bottom: 24px;
+            font-size: 2rem;
+        }
+        h1 .highlight {
+            background: linear-gradient(145deg, #6C3CE1, #FFB800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        label {
+            display: block;
+            margin-top: 16px;
+            font-weight: 600;
+            color: #1A0F2E;
+        }
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(108, 60, 225, 0.08);
+            font-size: 1rem;
+            margin-top: 6px;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        input:focus {
+            border-color: #6C3CE1;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            margin-top: 24px;
+            background: linear-gradient(145deg, #6C3CE1, #4A1F9E);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 16px;
+            color: #5A4A7A;
+        }
+        .login-link a {
+            color: #6C3CE1;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .message {
+            text-align: center;
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        .message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+        .message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: #6C3CE1;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ثبت‌نام در <span class="highlight">سوفیا AI</span></h1>
+        <form id="registerForm">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" id="name" placeholder="نام خود را وارد کنید" required />
+            
+            <label>آدرس ایمیل</label>
+            <input type="email" id="email" placeholder="ایمیل خود را وارد کنید" required />
+            
+            <label>رمز عبور</label>
+            <input type="password" id="password" placeholder="رمز عبور خود را وارد کنید" required />
+            
+            <label>شماره تماس</label>
+            <input type="tel" id="phone" placeholder="شماره تماس خود را وارد کنید" />
+            
+            <button type="submit">ثبت‌نام</button>
+        </form>
+        <div id="message" class="message"></div>
+        <div class="login-link">
+            قبلاً ثبت‌نام کرده‌اید؟ <a href="login.html">وارد شوید</a>
+        </div>
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+            
+            const messageDiv = document.getElementById('message');
+            
+            messageDiv.className = 'message';
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = '⏳ در حال ثبت‌نام...';
+            messageDiv.style.background = '#e7f3ff';
+            messageDiv.style.color = '#004085';
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, phone })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = '✅ ثبت‌نام با موفقیت انجام شد! به صفحه اصلی بروید.';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.error || 'خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.';
+                }
+            } catch (error) {
+                console.error('خطا:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً مطمئن شوید سرور در حال اجراست.';
+            }
+        });
+    </script>
+</body>
+</html>
