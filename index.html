@@ -2,271 +2,429 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
-    <title>Sofia AI | معمار دستیارهای هوشمند کسب‌وکار</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوفیا AI | توسعه دهنده هوش مصنوعی</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== تمام استایل‌های قبلی (با تغییرات جزئی در رنگ‌بندی و فونت) ===== */
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ===== تنظیمات پایه ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
+            background: #0a0a0f;
+            color: #e8e8f0;
             direction: rtl;
-            padding: 14px;
-            line-height: 2.2;
-            font-size: 17px;
+            line-height: 1.8;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
         }
-        /* ===== انیمیشن‌ها و بقیه استایل‌ها ===== */
-        /* ... (همان استایل‌های قبلی شما با کمی تغییر در رنگ‌های لوگو و هدر) ... */
-        /* برای جلوگیری از طولانی شدن، استایل‌های کامل در ادامه ارائه شده است */
+        /* ===== نوار ناوبری ===== */
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+        .logo-image {
+            height: 50px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            filter: brightness(1.1);
+            transition: 0.3s;
+        }
+        .logo-image:hover {
+            filter: brightness(1.3);
+            transform: scale(1.02);
+        }
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        .nav-menu .btn-cta {
+            background: linear-gradient(145deg, #FFD700, #FF8C00);
+            color: #0a0a0f;
+            font-weight: 800;
+            padding: 8px 24px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.15);
+        }
+        .nav-menu .btn-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.25);
+            background: #fff;
+            color: #0a0a0f;
+        }
+        /* ===== بخش اصلی (Hero) ===== */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(145deg, #fff 30%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin-bottom: 32px;
+            line-height: 2.2;
+        }
+        .hero .highlight {
+            color: #FFD700;
+            font-weight: 700;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(145deg, #FFD700, #FF8C00);
+            color: #0a0a0f;
+            padding: 16px 48px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.2);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.35);
+            background: #fff;
+        }
+        .btn-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        /* ===== آمار ===== */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FFD700;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        /* ===== بخش خدمات ===== */
+        .services {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 40px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .services-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        .services-desc {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: 0.4s;
+            text-decoration: none;
+            color: #e8e8f0;
+        }
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 215, 0, 0.15);
+            transform: translateY(-6px);
+        }
+        .service-icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .service-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .service-card p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+        }
+        /* ===== CTA نهایی ===== */
+        .cta-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 50px 30px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            border-radius: 30px;
+        }
+        .cta-section h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 28px;
+            font-size: 1.05rem;
+        }
+        /* ===== فوتر ===== */
+        footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 24px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+        }
+        footer strong {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+                padding: 16px;
+            }
+            .nav-menu {
+                justify-content: center;
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .stats {
+                gap: 30px;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+            .logo-image {
+                height: 40px;
+                max-width: 150px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .service-card {
+                padding: 18px 12px;
+            }
+            .service-icon {
+                font-size: 2rem;
+            }
+            .service-card h4 {
+                font-size: 0.9rem;
+            }
+            .service-card p {
+                display: none;
+            }
+            .logo-image {
+                height: 35px;
+                max-width: 120px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- ===== دکمه‌های شناور تماس ===== -->
-    <div class="floating-contact">
-        <a href="tel:09130771128" class="floating-btn phone" title="تماس تلفنی">📞</a>
-        <a href="https://wa.me/989130771128" class="floating-btn whatsapp" target="_blank" title="واتساپ">💬</a>
-    </div>
 
-    <div class="container">
-        <!-- ===== نوار ناوبری با لوگوی جدید ===== -->
-        <div class="navbar">
-            <a href="index.html" class="logo-wrapper">
-                <div class="logo-container">
-                    <div class="logo-ring-outer"></div>
-                    <div class="logo-ring-inner">
-                        <!-- لوگوی جدید (حرف S با المان هوش مصنوعی) -->
-                        <span class="logo-letter" style="font-size: 1.8rem; background: linear-gradient(145deg, #FFD700, #FF6B6B); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">S</span>
-                    </div>
-                </div>
-                <div class="logo-text">
-                    <span class="main">Sofia<span class="highlight">AI</span></span>
-                    <span class="sub">✦ معمار دستیارهای هوشمند ✦</span>
-                </div>
-            </a>
-            <div class="nav-menu">
-                <a href="index.html">🏠 خانه</a>
-                <div class="dropdown" id="servicesDropdown">
-                    <button class="dropdown-btn" id="servicesBtn">🛠 خدمات ▼</button>
-                    <div class="dropdown-content">
-                        <a href="service-rag.html">🧠 سیستم RAG</a>
-                        <a href="service-vision.html">👁️ بینایی ماشین</a>
-                        <a href="service-automation.html">⚙️ اتوماسیون هوشمند</a>
-                        <a href="service-lmstudio.html">🚀 نصب و راه‌اندازی ایجنت AI</a>
-                        <a href="service-chatbot.html">🤖 دستیار هوشمند سازمانی</a>
-                        <a href="service-data.html">📊 تحلیل داده</a>
-                        <a href="service-nlp.html">💬 پردازش زبان طبیعی</a>
-                        <a href="service-voice.html">🎤 تشخیص و سنتز صدا</a>
-                        <a href="service-predictive.html">📈 سیستم‌های پیش‌بینی</a>
-                        <a href="service-recommend.html">🎯 سیستم پیشنهاددهنده</a>
-                        <hr class="menu-divider">
-                        <a href="fraud.html">🛡️ تشخیص کلاهبرداری و امنیت سایبری</a>
-                        <a href="marketing.html">📢 هوش مصنوعی در بازاریابی دیجیتال</a>
-                        <a href="knowledge.html">🧠 مدیریت دانش و هوش کسب‌وکار</a>
-                        <a href="health.html">🏥 هوش مصنوعی در سلامت و پزشکی</a>
-                        <a href="content.html">✍️ تولید خودکار محتوا</a>
-                        <a href="beauty.html">💄 هوش مصنوعی در صنعت زیبایی</a>
-                        <a href="/interior.html">🏠 هوش مصنوعی در دکوراسیون داخلی</a>
-                        <a href="site.html">🌐 طراحی سایت با هوش مصنوعی</a>
-                    </div>
-                </div>
-                <a href="#about">📖 درباره ما</a>
-                <a href="cooperation.html" class="cooperation-btn">🤝 همکاری</a>
-                <a href="order.html" class="btn-request">📝 ثبت درخواست</a>
+    <!-- ===== نوار ناوبری با لوگوی جدید ===== -->
+    <nav class="navbar">
+        <a href="#" class="logo-wrapper">
+            <img src="logo5.png" alt="Sofia AI Developer" class="logo-image">
+        </a>
+        <div class="nav-menu">
+            <a href="#">خانه</a>
+            <a href="#services">خدمات</a>
+            <a href="#about">درباره</a>
+            <a href="#" class="btn-cta">📝 ثبت درخواست</a>
+        </div>
+    </nav>
+
+    <!-- ===== بخش اصلی ===== -->
+    <section class="hero">
+        <span class="hero-badge">✨ معماری هوش مصنوعی برای سازمان‌ها</span>
+        <h1>دستیارهای هوشمند<br>که کسب‌وکار شما را متحول می‌کنند</h1>
+        <p>
+            از <span class="highlight">طراحی و پیاده‌سازی</span> تا استقرار و پشتیبانی<br>
+            هوش مصنوعیِ خصوصی، آفلاین و متناسب با نیاز شما
+        </p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">🚀 شروع پروژه</a>
+            <a href="#services" class="btn-secondary">مشاهده خدمات</a>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">۲۰+</span>
+                <span class="stat-label">سال سابقه</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">۸۰+</span>
+                <span class="stat-label">پروژه موفق</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">۱۰۰%</span>
+                <span class="stat-label">حریم خصوصی</span>
             </div>
         </div>
+    </section>
 
-        <!-- ===== بخش قهرمان (تخصصی‌تر) ===== -->
-        <div class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">🚀 معمار دستیارهای هوشمند سازمانی</div>
-                <h1>✨ هوش مصنوعی سوفیا ✨</h1>
-                <p>
-                    طراحی و پیاده‌سازی <span class="highlight-text">دستیارهای هوشمند</span> اختصاصی برای کسب‌وکارها<br>
-                    از ایده تا اجرا، با حفظ حریم خصوصی و امکان اجرای آفلاین
-                </p>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-number">۸۰<span class="plus">+</span></span>
-                        <span class="stat-label">پروژه‌ی هوشمند</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">۱۰۰<span class="plus">%</span></span>
-                        <span class="stat-label">حریم خصوصی و آفلاین</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">۲۴/۷</span>
-                        <span class="stat-label">پشتیبانی تخصصی</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== خدمات (با تغییر عنوان چت‌بات به دستیار هوشمند) ===== -->
-        <h2 class="section-title">⚡ خدمات تخصصی هوش مصنوعی سوفیا</h2>
+    <!-- ===== خدمات کلیدی ===== -->
+    <section class="services" id="services">
+        <h2 class="services-title">⚡ خدمات تخصصی</h2>
+        <p class="services-desc">تمرکز ما بر راه‌حل‌های عملی و تأثیرگذار برای رشد کسب‌وکار شماست</p>
         <div class="services-grid">
-            <a href="service-rag.html" class="service-card">
+            <a href="#" class="service-card">
                 <span class="service-icon">🧠</span>
-                <h4>سیستم RAG</h4>
-                <p>دستیار هوشمند پرسش و پاسخ از اسناد سازمانی</p>
+                <h4>دستیار هوشمند RAG</h4>
+                <p>پرسش و پاسخ از اسناد سازمانی</p>
             </a>
-            <a href="service-vision.html" class="service-card">
-                <span class="service-icon">👁️</span>
-                <h4>بینایی ماشین</h4>
-                <p>تشخیص اشیا، چهره و آنالیز تصاویر</p>
+            <a href="#" class="service-card">
+                <span class="service-icon">🤖</span>
+                <h4>دستیار مکالمه‌ای</h4>
+                <p>چت‌بات هوشمند و شخصی‌سازی‌شده</p>
             </a>
-            <a href="service-automation.html" class="service-card">
+            <a href="#" class="service-card">
                 <span class="service-icon">⚙️</span>
                 <h4>اتوماسیون هوشمند</h4>
-                <p>طراحی workflow خودکار با n8n</p>
+                <p>طراحی workflow خودکار</p>
             </a>
-            <a href="service-lmstudio.html" class="service-card">
-                <span class="service-icon">🚀</span>
-                <h4>نصب و راه‌اندازی ایجنت AI</h4>
-                <p>هوش مصنوعی روی سیستم شما</p>
-                <span class="card-badge">🔥 محبوب</span>
-            </a>
-            <a href="service-chatbot.html" class="service-card">
-                <span class="service-icon">🤖</span>
-                <h4>دستیار هوشمند سازمانی</h4>
-                <p>طراحی و پیاده‌سازی دستیارهای مکالمه‌محور</p>
-                <span class="card-badge">⭐ پرطرفدار</span>
-            </a>
-            <a href="service-data.html" class="service-card">
-                <span class="service-icon">📊</span>
-                <h4>تحلیل داده</h4>
-                <p>پیش‌بینی و سیستم پیشنهاددهنده</p>
-            </a>
-            <!-- ===== بقیه سرویس‌ها ===== -->
-            <a href="service-nlp.html" class="service-card">
-                <span class="service-icon">💬</span>
-                <h4>پردازش زبان طبیعی</h4>
-                <p>تحلیل متن، احساسات و چت‌بات</p>
-            </a>
-            <a href="service-voice.html" class="service-card">
-                <span class="service-icon">🎤</span>
-                <h4>تشخیص و سنتز صدا</h4>
-                <p>تبدیل گفتار به متن و برعکس</p>
-            </a>
-            <a href="service-predictive.html" class="service-card">
-                <span class="service-icon">📈</span>
-                <h4>سیستم‌های پیش‌بینی</h4>
-                <p>پیش‌بینی فروش، قیمت و تقاضا</p>
-            </a>
-            <a href="service-recommend.html" class="service-card">
-                <span class="service-icon">🎯</span>
-                <h4>سیستم پیشنهاددهنده</h4>
-                <p>توصیه محصول و محتوای شخصی‌سازی شده</p>
-            </a>
-            <!-- ===== سرویس‌های جدید ===== -->
-            <a href="fraud.html" class="service-card" style="border-color: rgba(255,107,107,0.1);">
-                <span class="service-icon">🛡️</span>
-                <h4>تشخیص کلاهبرداری و امنیت سایبری</h4>
-                <p>تشخیص تراکنش‌های مشکوک و حملات سایبری</p>
-            </a>
-            <a href="marketing.html" class="service-card" style="border-color: rgba(255,215,0,0.1);">
-                <span class="service-icon">📢</span>
-                <h4>هوش مصنوعی در بازاریابی دیجیتال</h4>
-                <p>شخصی‌سازی کمپین‌ها و تحلیل رفتار مشتری</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="knowledge.html" class="service-card" style="border-color: rgba(100,200,255,0.1);">
-                <span class="service-icon">🧠</span>
-                <h4>مدیریت دانش و هوش کسب‌وکار</h4>
-                <p>استخراج دانش و داشبوردهای هوشمند</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="health.html" class="service-card" style="border-color: rgba(0,200,150,0.1);">
-                <span class="service-icon">🏥</span>
-                <h4>هوش مصنوعی در سلامت و پزشکی</h4>
-                <p>تشخیص بیماری، تحلیل تصاویر پزشکی</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="content.html" class="service-card" style="border-color: rgba(255,150,50,0.1);">
-                <span class="service-icon">✍️</span>
-                <h4>تولید خودکار محتوا</h4>
-                <p>تولید مقاله، ایمیل، کپشن و گزارش</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="beauty.html" class="service-card" style="border-color: rgba(255,100,150,0.1);">
-                <span class="service-icon">💄</span>
-                <h4>هوش مصنوعی در صنعت زیبایی</h4>
-                <p>تحلیل پوست، شبیه‌سازی جراحی و طراحی تزریق</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="/interior.html" class="service-card" style="border-color: rgba(200,150,100,0.1);">
-                <span class="service-icon">🏠</span>
-                <h4>هوش مصنوعی در دکوراسیون داخلی</h4>
-                <p>طراحی فضا، انتخاب رنگ و شبیه‌سازی سه‌بعدی</p>
-                <span class="card-badge">💎 جدید</span>
-            </a>
-            <a href="site.html" class="service-card" style="border-color: rgba(100,200,200,0.1);">
-                <span class="service-icon">🌐</span>
-                <h4>طراحی سایت با هوش مصنوعی</h4>
-                <p>طراحی قالب، فروشگاه، اپلیکیشن وب و بهینه‌سازی سئو</p>
-                <span class="card-badge">💎 جدید</span>
+            <a href="#" class="service-card">
+                <span class="service-icon">👁️</span>
+                <h4>بینایی ماشین</h4>
+                <p>تشخیص و آنالیز تصاویر</p>
             </a>
         </div>
+    </section>
 
-        <!-- ===== درباره ما (تخصصی‌تر) ===== -->
-        <div class="about-box" id="about">
-            <h3>📖 معمار دستیارهای هوشمند سوفیا</h3>
-            <p>
-                تیم سوفیا با بیش از <strong>۲۰ سال سابقه‌ی مهندسی کامپیوتر</strong> و تخصص در هوش مصنوعی، به کسب‌وکارها کمک می‌کند تا از قدرت <span class="highlight-text">دستیارهای هوشمند</span> برای رشد و بهره‌وری استفاده کنند.<br>
-                ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.<br>
-                <strong style="color:#FFD700;">هدف ما: هوش مصنوعیِ عملی، خصوصی و مقرون‌به‌صرفه برای هر سازمان</strong>
-            </p>
-            <div class="contact-row">
-                <a href="mailto:Cysobms@gmail.com">📧 ایمیل</a>
-                <a href="tel:09130771128">📱 تلفن</a>
-                <a href="https://wa.me/989130771128" target="_blank">💬 واتس‌اپ</a>
-                <a href="#">📱 تلگرام</a>
-                <a href="#">🟣 بله</a>
-            </div>
-        </div>
+    <!-- ===== CTA نهایی ===== -->
+    <section class="cta-section" id="about">
+        <h2>آماده‌اید کسب‌وکار خود را متحول کنید؟</h2>
+        <p>
+            با تیم سوفیا همراه شوید و از قدرت دستیارهای هوشمند برای رشد و بهره‌وری استفاده کنید.
+        </p>
+        <a href="#" class="btn-primary">📋 درخواست مشاوره رایگان</a>
+    </section>
 
-        <!-- ===== فرصت همکاری ===== -->
-        <div class="request-box">
-            <h3>🤝 به تیم سوفیا بپیوندید</h3>
-            <p>اگر در حوزه‌ی هوش مصنوعی تخصص دارید و می‌خواهید در پروژه‌های بزرگ و تأثیرگذار مشارکت کنید...</p>
-            <a href="cooperation.html" class="btn-large">🚀 همکاری با ما</a>
-        </div>
+    <!-- ===== فوتر ===== -->
+    <footer>
+        <p>© ۲۰۲۶ <strong>Sofia AI</strong> — توسعه دهنده هوش مصنوعی سوفیا</p>
+    </footer>
 
-        <!-- ===== فوتر ===== -->
-        <footer>
-            <p>© ۲۰۲۶ تیم توسعه دهنده هوش مصنوعی سوفیا - <strong>Sofia AI</strong></p>
-            <p class="sub">✦ معمار دستیارهای هوشمند کسب‌وکار ✦</p>
-        </footer>
-    </div>
-
-    <script>
-        // ===== اسکریپت منوی کشویی =====
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdown = document.getElementById('servicesDropdown');
-            const btn = document.getElementById('servicesBtn');
-
-            if (dropdown && btn) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropdown.classList.toggle('active');
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (!dropdown.contains(e.target)) {
-                        dropdown.classList.remove('active');
-                    }
-                });
-
-                dropdown.querySelectorAll('.dropdown-content a').forEach(function(link) {
-                    link.addEventListener('click', function() {
-                        dropdown.classList.remove('active');
-                    });
-                });
-            }
-        });
-    </script>
 </body>
 </html>
