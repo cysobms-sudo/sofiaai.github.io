@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia AI | توسعه‌دهنده هوش مصنوعی کسب‌وکارها</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سوفیا AI | توسعه‌دهنده دستیارهای هوشمند کسب‌وکار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <style>
         /* ===== تنظیمات پایه با تم روشن ===== */
         * {
@@ -15,51 +15,49 @@
 
         body {
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            background: #f8f9fc;
+            background: #f5f7fc;
             color: #1a1a2e;
             direction: rtl;
-            line-height: 1.8;
-            padding: 0;
-            margin: 0;
-            min-height: 100vh;
+            line-height: 1.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
         /* ===== نوار ناوبری ===== */
         .navbar {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 18px 24px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            gap: 16px;
         }
 
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             text-decoration: none;
         }
 
         .logo-image {
-            height: 52px;
+            height: 50px;
             width: auto;
-            max-width: 220px;
+            max-width: 180px;
             object-fit: contain;
-            transition: 0.3s;
-        }
-
-        .logo-image:hover {
-            transform: scale(1.02);
-            filter: brightness(1.05);
         }
 
         .nav-menu {
@@ -88,7 +86,7 @@
             background: linear-gradient(145deg, #667eea, #764ba2);
             color: #fff !important;
             font-weight: 700;
-            padding: 8px 24px;
+            padding: 8px 28px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
         }
@@ -99,15 +97,13 @@
             background: linear-gradient(145deg, #764ba2, #667eea);
         }
 
-        /* ===== بخش اصلی (Hero) ===== */
+        /* ===== بخش قهرمان (Hero) ===== */
         .hero {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 70px 24px 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 70px 0 50px;
             text-align: center;
+            background: linear-gradient(145deg, #ffffff, #f0f4ff);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 40px;
         }
 
         .hero-badge {
@@ -115,7 +111,7 @@
             background: rgba(102, 126, 234, 0.08);
             border: 1px solid rgba(102, 126, 234, 0.12);
             color: #667eea;
-            padding: 6px 20px;
+            padding: 6px 24px;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 700;
@@ -123,7 +119,7 @@
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 900;
             line-height: 1.2;
             margin-bottom: 16px;
@@ -138,10 +134,10 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: #5a5a7a;
-            max-width: 700px;
-            margin-bottom: 32px;
+            max-width: 720px;
+            margin: 0 auto 32px;
             line-height: 2.2;
         }
 
@@ -159,18 +155,19 @@
             border-radius: 60px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             transition: 0.3s;
             box-shadow: 0 4px 20px rgba(102, 126, 234, 0.25);
+            display: inline-block;
         }
 
         .btn-primary:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
             box-shadow: 0 8px 35px rgba(102, 126, 234, 0.35);
         }
 
         .btn-secondary {
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             color: #1a1a2e;
             padding: 16px 40px;
             border-radius: 60px;
@@ -178,12 +175,13 @@
             font-weight: 600;
             transition: 0.3s;
             background: #fff;
+            display: inline-block;
         }
 
         .btn-secondary:hover {
             background: #f0f2f8;
-            border-color: rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
+            border-color: rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
         }
 
         /* ===== آمار اعتمادسازی ===== */
@@ -197,134 +195,264 @@
             border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .stat-item {
-            text-align: center;
-        }
-
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 900;
             color: #667eea;
             display: block;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #7a7a9a;
             font-weight: 500;
         }
 
-        /* ===== بخش خدمات (۴ مورد کلیدی) ===== */
+        /* ===== بخش خدمات (با عکس و توضیح کامل) ===== */
         .services {
-            max-width: 1200px;
-            margin: 20px auto 0;
-            padding: 50px 24px;
-            background: #fff;
-            border-radius: 30px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
+            padding: 60px 0;
         }
 
-        .services-title {
+        .section-title {
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             margin-bottom: 8px;
             color: #1a1a2e;
         }
 
-        .services-desc {
+        .section-desc {
             text-align: center;
             color: #7a7a9a;
-            margin-bottom: 40px;
-            font-size: 1rem;
+            margin-bottom: 48px;
+            font-size: 1.05rem;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         .service-card {
-            background: #f8f9fc;
-            border-radius: 20px;
-            padding: 30px 20px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 24px;
             text-align: center;
             transition: 0.4s;
             text-decoration: none;
             color: #1a1a2e;
-            border: 1px solid transparent;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
         }
 
         .service-card:hover {
-            background: #fff;
+            transform: translateY(-8px);
             border-color: rgba(102, 126, 234, 0.15);
-            transform: translateY(-6px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
         }
 
         .service-icon {
-            font-size: 3rem;
+            font-size: 3.4rem;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            background: #f0f4ff;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .service-card h4 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .service-card p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #7a7a9a;
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         .service-card .badge {
             display: inline-block;
-            background: rgba(102, 126, 234, 0.08);
+            background: rgba(102, 126, 234, 0.06);
+            color: #667eea;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 12px;
+        }
+
+        /* ===== بخش نمونه‌کارها (کیس استادی) ===== */
+        .case-studies {
+            background: #f8faff;
+            padding: 60px 0;
+            border-radius: 40px;
+            margin: 20px 0 40px;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .case-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: 0.3s;
+        }
+
+        .case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .case-card .case-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #667eea;
+        }
+
+        .case-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .case-card p {
+            color: #7a7a9a;
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        .case-card .result {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.06);
+            color: #667eea;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 12px;
+        }
+
+        /* ===== بخش بلاگ / دانش ===== */
+        .blog-section {
+            padding: 60px 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .blog-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: 0.3s;
+            text-decoration: none;
+            color: #1a1a2e;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .blog-card .blog-tag {
+            display: inline-block;
+            background: #eef2ff;
             color: #667eea;
             padding: 2px 14px;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
-            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+
+        .blog-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .blog-card p {
+            color: #7a7a9a;
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        .blog-card .read-more {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            display: inline-block;
         }
 
         /* ===== CTA نهایی ===== */
         .cta-section {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 50px 30px;
-            text-align: center;
-            background: linear-gradient(145deg, #f8f9fc, #f0f2f8);
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            padding: 60px 30px;
             border-radius: 30px;
-            border: 1px solid rgba(102, 126, 234, 0.06);
+            text-align: center;
+            color: #fff;
+            margin: 40px 0;
         }
 
         .cta-section h2 {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             margin-bottom: 12px;
-            color: #1a1a2e;
         }
 
         .cta-section p {
-            color: #5a5a7a;
+            font-size: 1.1rem;
+            opacity: 0.9;
             margin-bottom: 28px;
-            font-size: 1.05rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .btn-primary {
+            background: #fff;
+            color: #667eea;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-section .btn-primary:hover {
+            background: #f0f2ff;
+            transform: scale(1.04);
         }
 
         /* ===== فوتر ===== */
         footer {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 24px 20px;
+            padding: 40px 0 24px;
             border-top: 1px solid rgba(0, 0, 0, 0.04);
             text-align: center;
             color: #9a9aba;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         footer strong {
@@ -333,59 +461,42 @@
 
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 14px 16px;
-                flex-direction: column;
-                align-items: center;
-            }
-            .nav-menu {
-                justify-content: center;
-                width: 100%;
-                gap: 4px;
-            }
-            .nav-menu a {
-                font-size: 0.8rem;
-                padding: 6px 14px;
-            }
-            .hero {
-                padding: 40px 16px 30px;
-            }
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
             .hero p {
                 font-size: 1rem;
             }
             .stats {
                 gap: 30px;
-                margin-top: 30px;
-                padding-top: 30px;
             }
             .stat-number {
                 font-size: 2rem;
-            }
-            .services {
-                padding: 30px 16px;
             }
             .services-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
             }
-            .cta-section {
-                padding: 30px 20px;
-                margin: 30px 16px;
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
             }
             .cta-section h2 {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
-            .btn-primary,
-            .btn-secondary {
-                padding: 14px 30px;
-                font-size: 1rem;
+            .navbar .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-menu {
+                justify-content: center;
+                width: 100%;
             }
             .logo-image {
-                height: 42px;
-                max-width: 160px;
+                height: 40px;
+                max-width: 140px;
             }
         }
 
@@ -394,24 +505,7 @@
                 font-size: 1.8rem;
             }
             .services-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-            .service-card {
-                padding: 18px 12px;
-            }
-            .service-icon {
-                font-size: 2.2rem;
-            }
-            .service-card h4 {
-                font-size: 0.85rem;
-            }
-            .service-card p {
-                display: none;
-            }
-            .logo-image {
-                height: 36px;
-                max-width: 130px;
+                grid-template-columns: 1fr;
             }
             .hero-buttons {
                 flex-direction: column;
@@ -423,6 +517,18 @@
                 width: 100%;
                 text-align: center;
             }
+            .service-card {
+                padding: 24px 16px;
+            }
+            .service-icon {
+                width: 64px;
+                height: 64px;
+                line-height: 64px;
+                font-size: 2.8rem;
+            }
+            .cta-section {
+                padding: 40px 20px;
+            }
         }
     </style>
 </head>
@@ -430,92 +536,165 @@
 
     <!-- ===== نوار ناوبری ===== -->
     <nav class="navbar">
-        <a href="#" class="logo-wrapper">
-            <img src="logo5.png" alt="Sofia AI Developer" class="logo-image">
-        </a>
-        <div class="nav-menu">
-            <a href="#">خانه</a>
-            <a href="#services">خدمات</a>
-            <a href="#about">درباره ما</a>
-            <a href="#" class="btn-cta">📝 ثبت درخواست</a>
+        <div class="container">
+            <a href="#" class="logo-wrapper">
+                <img src="logo5.png" alt="Sofia AI" class="logo-image" />
+            </a>
+            <div class="nav-menu">
+                <a href="#">خانه</a>
+                <a href="#services">خدمات</a>
+                <a href="#cases">نمونه‌کارها</a>
+                <a href="#blog">مجله</a>
+                <a href="#" class="btn-cta">ثبت درخواست</a>
+            </div>
         </div>
     </nav>
 
-    <!-- ===== بخش اصلی ===== -->
+    <!-- ===== بخش قهرمان ===== -->
     <section class="hero">
-        <span class="hero-badge">✨ هوش مصنوعی برای کسب‌وکار شما</span>
-        <h1>
-            توسعه‌دهنده هوش مصنوعی<br>
-            <span class="highlight">سوفیا</span>
-        </h1>
-        <p>
-            از <strong>طراحی و پیاده‌سازی</strong> تا استقرار و پشتیبانی<br>
-            راه‌حل‌های هوشمند، خصوصی و متناسب با نیاز سازمان شما
-        </p>
-        <div class="hero-buttons">
-            <a href="#" class="btn-primary">🚀 شروع پروژه</a>
-            <a href="#services" class="btn-secondary">مشاهده خدمات</a>
-        </div>
-
-        <!-- آمار -->
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-number">۲۰+</span>
-                <span class="stat-label">سال سابقه</span>
+        <div class="container">
+            <span class="hero-badge">✨ توسعه‌دهنده دستیارهای هوشمند</span>
+            <h1>
+                آینده‌ی کسب‌وکارت را با<br />
+                <span class="highlight">دستیارهای هوشمند</span> بساز
+            </h1>
+            <p>
+                از طراحی و پیاده‌سازی چت‌بات‌های پیشرفته تا سیستم‌های هوشمند RAG و اتوماسیون سازمانی.<br />
+                راه‌حل‌های اختصاصی، خصوصی و مقرون‌به‌صرفه برای رشد کسب‌وکار شما.
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">🚀 شروع پروژه</a>
+                <a href="#services" class="btn-secondary">مشاهده خدمات</a>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">۸۰+</span>
-                <span class="stat-label">پروژه موفق</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">۱۰۰%</span>
-                <span class="stat-label">حریم خصوصی</span>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">۲۰+</span>
+                    <span class="stat-label">سال سابقه</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۸۰+</span>
+                    <span class="stat-label">پروژه موفق</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۱۰۰%</span>
+                    <span class="stat-label">حریم خصوصی</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== خدمات کلیدی ===== -->
+    <!-- ===== بخش خدمات ===== -->
     <section class="services" id="services">
-        <h2 class="services-title">⚡ خدمات تخصصی سوفیا</h2>
-        <p class="services-desc">راه‌حل‌های عملی و تأثیرگذار برای رشد کسب‌وکار شما</p>
-        <div class="services-grid">
-            <a href="#" class="service-card">
-                <span class="service-icon">🧠</span>
-                <h4>دستیار هوشمند RAG</h4>
-                <p>پرسش و پاسخ هوشمند از اسناد سازمانی</p>
-                <span class="badge">🔥 محبوب</span>
-            </a>
-            <a href="#" class="service-card">
-                <span class="service-icon">🤖</span>
-                <h4>دستیار مکالمه‌ای</h4>
-                <p>چت‌بات هوشمند و شخصی‌سازی‌شده</p>
-                <span class="badge">⭐ پرطرفدار</span>
-            </a>
-            <a href="#" class="service-card">
-                <span class="service-icon">⚙️</span>
-                <h4>اتوماسیون هوشمند</h4>
-                <p>طراحی workflow خودکار با n8n</p>
-            </a>
-            <a href="#" class="service-card">
-                <span class="service-icon">👁️</span>
-                <h4>بینایی ماشین</h4>
-                <p>تشخیص اشیا، چهره و آنالیز تصاویر</p>
-            </a>
+        <div class="container">
+            <h2 class="section-title">⚡ خدمات تخصصی سوفیا</h2>
+            <p class="section-desc">راه‌حل‌های عملی و تأثیرگذار برای هوشمندسازی سازمان شما</p>
+            <div class="services-grid">
+                <a href="#" class="service-card">
+                    <span class="service-icon">🧠</span>
+                    <h4>دستیار هوشمند RAG</h4>
+                    <p>سیستم پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی و قابلیت اجرای آفلاین.</p>
+                    <span class="badge">🔥 محبوب</span>
+                </a>
+                <a href="#" class="service-card">
+                    <span class="service-icon">🤖</span>
+                    <h4>دستیار مکالمه‌ای</h4>
+                    <p>چت‌بات‌های هوشمند برای پشتیبانی ۲۴/۷، فروش و تعامل با مشتریان، شخصی‌سازی‌شده برای کسب‌وکار شما.</p>
+                    <span class="badge">⭐ پرطرفدار</span>
+                </a>
+                <a href="#" class="service-card">
+                    <span class="service-icon">⚙️</span>
+                    <h4>اتوماسیون هوشمند</h4>
+                    <p>طراحی و پیاده‌سازی workflowهای خودکار با n8n و ابزارهای پیشرفته برای افزایش بهره‌وری.</p>
+                </a>
+                <a href="#" class="service-card">
+                    <span class="service-icon">👁️</span>
+                    <h4>بینایی ماشین</h4>
+                    <p>تشخیص اشیا، چهره، تحلیل تصاویر و ویدیوها برای کاربردهای صنعتی، امنیتی و خدماتی.</p>
+                </a>
+                <a href="#" class="service-card">
+                    <span class="service-icon">📊</span>
+                    <h4>تحلیل داده و پیش‌بینی</h4>
+                    <p>مدل‌های پیش‌بینی فروش، تحلیل رفتار مشتری و سیستم‌های توصیه‌گر برای تصمیم‌گیری هوشمندانه.</p>
+                </a>
+                <a href="#" class="service-card">
+                    <span class="service-icon">🌐</span>
+                    <h4>طراحی سایت هوشمند</h4>
+                    <p>طراحی وب‌سایت‌های داینامیک و فروشگاهی با قابلیت‌های هوش مصنوعی برای جذب و تعامل مشتری.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== بخش نمونه‌کارها ===== -->
+    <section class="case-studies" id="cases">
+        <div class="container">
+            <h2 class="section-title">📌 نمونه‌کارهای موفق</h2>
+            <p class="section-desc">برخی از پروژه‌های انجام‌شده که به رشد کسب‌وکار مشتریان کمک کرده است</p>
+            <div class="case-grid">
+                <div class="case-card">
+                    <div class="case-image">🤖</div>
+                    <h4>چت‌بات هوشمند رستوران</h4>
+                    <p>طراحی و پیاده‌سازی دستیار مکالمه‌ای برای سفارش‌دهی آنلاین که باعث افزایش ۳۰٪ سفارشات شد.</p>
+                    <span class="result">📈 افزایش ۳۰٪ فروش</span>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">🧠</div>
+                    <h4>سیستم RAG سازمانی</h4>
+                    <p>پیاده‌سازی سیستم پرسش و پاسخ از اسناد حقوقی و مالی برای یک شرکت بزرگ، با حفظ امنیت داده‌ها.</p>
+                    <span class="result">⚡ کاهش ۷۰٪ زمان جستجو</span>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">⚙️</div>
+                    <h4>اتوماسیون فرآیندهای اداری</h4>
+                    <p>طراحی workflow خودکار برای مدیریت درخواست‌های پرسنلی و افزایش سرعت رسیدگی به امور.</p>
+                    <span class="result">⏱️ افزایش ۵۰٪ سرعت</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== بخش بلاگ ===== -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <h2 class="section-title">📖 مجله هوش مصنوعی سوفیا</h2>
+            <p class="section-desc">جدیدترین مقالات و مطالب تخصصی در حوزه دستیارهای هوشمند و هوش مصنوعی</p>
+            <div class="blog-grid">
+                <a href="#" class="blog-card">
+                    <span class="blog-tag">دستیار هوشمند</span>
+                    <h4>RAG چیست و چطور به کسب‌وکار شما کمک می‌کند؟</h4>
+                    <p>سیستم Retrieval-Augmented Generation روشی پیشرفته برای ترکیب جستجو و تولید متن هوشمند است...</p>
+                    <span class="read-more">مطالعه بیشتر →</span>
+                </a>
+                <a href="#" class="blog-card">
+                    <span class="blog-tag">چت‌بات</span>
+                    <h4>مراحل پیاده‌سازی یک چت‌بات هوشمند از صفر تا صد</h4>
+                    <p>آموزش گام‌به‌گام طراحی، آموزش و استقرار چت‌باتی که واقعاً به کار شما بیاید...</p>
+                    <span class="read-more">مطالعه بیشتر →</span>
+                </a>
+                <a href="#" class="blog-card">
+                    <span class="blog-tag">اتوماسیون</span>
+                    <h4>چطور با اتوماسیون هوشمند، بهره‌وری سازمان را دوبرابر کنیم؟</h4>
+                    <p>معرفی ابزارها و روش‌های پیاده‌سازی اتوماسیون در فرآیندهای کسب‌وکار...</p>
+                    <span class="read-more">مطالعه بیشتر →</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- ===== CTA نهایی ===== -->
-    <section class="cta-section" id="about">
-        <h2>آماده‌اید کسب‌وکار خود را متحول کنید؟</h2>
-        <p>
-            با تیم سوفیا همراه شوید و از قدرت هوش مصنوعی برای رشد و بهره‌وری استفاده کنید.
-        </p>
-        <a href="#" class="btn-primary">📋 درخواست مشاوره رایگان</a>
+    <section class="cta-section">
+        <div class="container">
+            <h2>آماده‌اید کسب‌وکار خود را متحول کنید؟</h2>
+            <p>همین حالا با تیم سوفیا تماس بگیرید و از مشاوره رایگان برای شروع پروژه‌ی هوش مصنوعی خود بهره‌مند شوید.</p>
+            <a href="#" class="btn-primary">📋 درخواست مشاوره رایگان</a>
+        </div>
     </section>
 
     <!-- ===== فوتر ===== -->
     <footer>
-        <p>© ۲۰۲۶ <strong>Sofia AI</strong> — توسعه‌دهنده هوش مصنوعی سوفیا</p>
+        <div class="container">
+            <p>© ۲۰۲۶ <strong>Sofia AI</strong> — توسعه‌دهنده دستیارهای هوشمند کسب‌وکار</p>
+        </div>
     </footer>
 
 </body>
