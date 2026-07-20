@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const moment = require('moment-jalaali');
 require('dotenv').config();
 
 const app = express();
@@ -40,44 +41,6 @@ db.connect((err) => {
     console.log('✅ اتصال به دیتابیس با موفقیت برقرار شد!');
 });
 
-// ===== تابع تبدیل تاریخ میلادی به شمسی با استفاده از محاسبات دستی =====
-function toPersianDate(gregorianDate) {
-    const date = new Date(gregorianDate);
-    
-    // تنظیم منطقه زمانی ایران (UTC+3:30)
-    const iranTime = new Date(date.getTime() + (3.5 * 60 * 60 * 1000));
-    
-    const year = iranTime.getFullYear();
-    const month = iranTime.getMonth() + 1;
-    const day = iranTime.getDate();
-    const hours = String(iranTime.getHours()).padStart(2, '0');
-    const minutes = String(iranTime.getMinutes()).padStart(2, '0');
-    
-    // محاسبه سال شمسی
-    let persianYear = year - 621;
-    let persianMonth = month + 2;
-    let persianDay = day;
-    
-    // تنظیم ماه و روز
-    if (persianMonth > 12) {
-        persianMonth = persianMonth - 12;
-        persianYear = persianYear + 1;
-    }
-    
-    // تنظیم روزهای ماه (تقریبی)
-    const persianDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
-    if (persianDay > persianDaysInMonth[persianMonth - 1]) {
-        persianDay = persianDay - persianDaysInMonth[persianMonth - 1];
-        persianMonth = persianMonth + 1;
-        if (persianMonth > 12) {
-            persianMonth = 1;
-            persianYear = persianYear + 1;
-        }
-    }
-    
-    return `${persianYear}/${String(persianMonth).padStart(2, '0')}/${String(persianDay).padStart(2, '0')} ${hours}:${minutes}`;
-}
-
 // ===== صفحات =====
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -91,7 +54,11 @@ app.get('/users.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 
-// ===== دریافت لیست کاربران با تاریخ شمسی =====
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// ===== دریافت لیست کاربران با تاریخ شمسی دقیق =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -99,11 +66,12 @@ app.get('/api/users', (req, res) => {
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
         
-        // ===== تبدیل تاریخ میلادی به شمسی =====
+        // ===== تبدیل دقیق تاریخ میلادی به شمسی با moment-jalaali =====
         const usersWithPersianDate = results.map(user => {
+            const persianDate = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
             return {
                 ...user,
-                created_at: toPersianDate(user.created_at)
+                created_at: persianDate
             };
         });
         
@@ -152,6 +120,43 @@ app.post('/api/register', async (req, res) => {
         });
     } catch (error) {
         console.error('❌ خطا در ثبت‌نام:', error);
+        res.status(500).json({ error: 'خطای سرور' });
+    }
+});
+
+// ===== ورود کاربر =====
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+        return res.status(400).json({ error: 'ایمیل و رمز عبور الزامی هستند.' });
+    }
+    
+    try {
+        db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+            if (err) {
+                console.error('❌ خطا در بررسی ایمیل:', err);
+                return res.status(500).json({ error: 'خطا در دیتابیس' });
+            }
+            
+            if (results.length === 0) {
+                return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
+            }
+            
+            const user = results[0];
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+            
+            if (!isPasswordValid) {
+                return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
+            }
+            
+            res.json({ 
+                message: '✅ ورود با موفقیت انجام شد!',
+                user: { id: user.id, name: user.name, email: user.email }
+            });
+        });
+    } catch (error) {
+        console.error('❌ خطا در ورود:', error);
         res.status(500).json({ error: 'خطای سرور' });
     }
 });
