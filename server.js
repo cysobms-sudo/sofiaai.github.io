@@ -2,11 +2,48 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const moment = require('moment-jalaali');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// ===== تابع تبدیل تاریخ میلادی به شمسی (دقیق) =====
+function toPersianDate(gregorianDate) {
+    const date = new Date(gregorianDate);
+    
+    // تنظیم منطقه زمانی ایران (UTC+3:30)
+    const iranTime = new Date(date.getTime() + (3.5 * 60 * 60 * 1000));
+    
+    const year = iranTime.getFullYear();
+    const month = iranTime.getMonth() + 1;
+    const day = iranTime.getDate();
+    const hours = String(iranTime.getHours()).padStart(2, '0');
+    const minutes = String(iranTime.getMinutes()).padStart(2, '0');
+    
+    // محاسبه سال شمسی
+    let persianYear = year - 621;
+    let persianMonth = month + 2;
+    let persianDay = day;
+    
+    // تنظیم ماه و روز
+    if (persianMonth > 12) {
+        persianMonth = persianMonth - 12;
+        persianYear = persianYear + 1;
+    }
+    
+    // تنظیم روزهای ماه (تقریبی)
+    const persianDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+    if (persianDay > persianDaysInMonth[persianMonth - 1]) {
+        persianDay = persianDay - persianDaysInMonth[persianMonth - 1];
+        persianMonth = persianMonth + 1;
+        if (persianMonth > 12) {
+            persianMonth = 1;
+            persianYear = persianYear + 1;
+        }
+    }
+    
+    return `${persianYear}/${String(persianMonth).padStart(2, '0')}/${String(persianDay).padStart(2, '0')} ${hours}:${minutes}`;
+}
 
 // ===== تنظیمات CORS =====
 app.use((req, res, next) => {
@@ -62,12 +99,11 @@ app.get('/api/users', (req, res) => {
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
         
-        // ===== تبدیل دقیق تاریخ میلادی به شمسی با moment-jalaali =====
+        // ===== تبدیل تاریخ میلادی به شمسی =====
         const usersWithPersianDate = results.map(user => {
-            const persianDate = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
             return {
                 ...user,
-                created_at: persianDate
+                created_at: toPersianDate(user.created_at)
             };
         });
         
