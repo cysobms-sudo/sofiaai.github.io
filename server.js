@@ -2,12 +2,13 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const shamsi = require('shamsi-date');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ===== تنظیمات CORS برای جلوگیری از خطای اتصال =====
+// ===== تنظیمات CORS =====
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -21,8 +22,6 @@ app.use((req, res, next) => {
 // ===== تنظیمات Express =====
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// ===== مسیر فایل‌های استاتیک (HTML, CSS, JS) =====
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ===== اتصال به دیتابیس =====
@@ -55,14 +54,25 @@ app.get('/users.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 
-// ===== دریافت لیست کاربران (برای صفحه مدیریت) =====
+// ===== دریافت لیست کاربران با تاریخ شمسی =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت کاربران:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        res.json(results);
+        
+        // ===== تبدیل تاریخ میلادی به شمسی =====
+        const usersWithPersianDate = results.map(user => {
+            const miladiDate = new Date(user.created_at);
+            const persianDate = shamsi(miladiDate, 'YYYY/MM/DD HH:mm');
+            return {
+                ...user,
+                created_at: persianDate
+            };
+        });
+        
+        res.json(usersWithPersianDate);
     });
 });
 
