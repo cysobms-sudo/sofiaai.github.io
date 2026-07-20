@@ -182,23 +182,26 @@
             }
         }
 
-        // ===== تبدیل تاریخ میلادی به شمسی با استفاده از کتابخانه moment (اگر نصب باشد) یا روش جایگزین =====
+        // ===== تبدیل تاریخ میلادی به شمسی با متد toLocaleDateString =====
         function toPersianDate(isoDate) {
             try {
-                // روش اول: استفاده از Intl.DateTimeFormat (قابلیت داخلی مرورگر)
                 const date = new Date(isoDate);
-                const persianDate = new Intl.DateTimeFormat('fa-IR', {
+                // بررسی اینکه تاریخ معتبر است
+                if (isNaN(date.getTime())) {
+                    return isoDate; // اگر تاریخ نامعتبر بود، خودش را برگردان
+                }
+                
+                // تبدیل به شمسی با استفاده از تنظیمات ایران
+                return date.toLocaleDateString('fa-IR', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit',
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
-                }).format(date);
-                return persianDate;
+                });
             } catch (e) {
-                // اگر خطایی رخ داد، تاریخ را به صورت ساده نشان بده
-                console.error('خطا در تبدیل تاریخ:', e);
+                console.error('❌ خطا در تبدیل تاریخ:', e);
                 return isoDate;
             }
         }
