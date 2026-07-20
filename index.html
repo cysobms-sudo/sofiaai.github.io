@@ -120,7 +120,37 @@
             transform: scale(1.05);
             box-shadow: 0 6px 25px rgba(255, 184, 0, 0.35);
         }
-        .cart-link {
+        .nav-menu .btn-login {
+            background: var(--primary);
+            color: #fff !important;
+            font-weight: 700;
+            padding: 8px 28px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(108, 60, 225, 0.25);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-menu .btn-login:hover {
+            transform: scale(1.05);
+            background: var(--primary-dark);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.35);
+        }
+        .nav-menu .btn-logout {
+            background: #e74c3c;
+            color: #fff !important;
+            font-weight: 700;
+            padding: 8px 28px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-menu .btn-logout:hover {
+            transform: scale(1.05);
+            background: #c0392b;
+        }
+        .nav-menu .cart-link {
             background: var(--primary);
             color: #fff !important;
             padding: 8px 20px !important;
@@ -131,7 +161,7 @@
             font-weight: 700 !important;
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.2);
         }
-        .cart-link:hover {
+        .nav-menu .cart-link:hover {
             background: var(--primary-dark) !important;
             transform: scale(1.04);
         }
@@ -341,6 +371,24 @@
         .assistant-card:hover .link-hint i {
             transform: translateX(-4px);
         }
+        .assistant-card .add-to-cart {
+            display: inline-block;
+            margin-top: 12px;
+            background: var(--secondary);
+            color: var(--text-dark);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .assistant-card .add-to-cart:hover {
+            transform: scale(1.04);
+            background: var(--secondary-light);
+        }
 
         /* ===== ایجنت‌ها ===== */
         .agents-section {
@@ -427,6 +475,24 @@
         }
         .agent-card:hover .link-hint i {
             transform: translateX(-4px);
+        }
+        .agent-card .add-to-cart {
+            display: inline-block;
+            margin-top: 12px;
+            background: var(--secondary);
+            color: var(--text-dark);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .agent-card .add-to-cart:hover {
+            transform: scale(1.04);
+            background: var(--secondary-light);
         }
 
         /* ===== مقالات ===== */
@@ -769,9 +835,9 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <!-- ===== لینک به صفحه ثبت‌نام ===== -->
-                <a href="register.html" class="btn-register"><i class="fas fa-user-plus"></i> ثبت‌نام در سایت</a>
-                <a href="cart.html" class="cart-link">
+                <a href="register.html" class="btn-register"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
+                <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> ورود</a>
+                <a href="dashboard.html" class="cart-link">
                     <i class="fas fa-shopping-cart"></i>
                     سبد خرید
                     <span class="cart-badge" id="cartCount">0</span>
@@ -835,30 +901,34 @@
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="assistant-grid">
-                <a href="#" class="assistant-card">
+                <div class="assistant-card">
                     <span class="icon">🤖</span>
                     <h4>دستیار مکالمه‌ای</h4>
                     <p>پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="assistant-card">
+                    <button class="add-to-cart" onclick="addToCart('دستیار مکالمه‌ای', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="assistant-card">
                     <span class="icon">🧠</span>
                     <h4>سیستم RAG</h4>
                     <p>پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="assistant-card">
+                    <button class="add-to-cart" onclick="addToCart('سیستم RAG', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="assistant-card">
                     <span class="icon">⚙️</span>
                     <h4>اتوماسیون هوشمند</h4>
                     <p>طراحی workflowهای خودکار برای افزایش بهره‌وری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="assistant-card">
+                    <button class="add-to-cart" onclick="addToCart('اتوماسیون هوشمند', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="assistant-card">
                     <span class="icon">📊</span>
                     <h4>تحلیل داده و پیش‌بینی</h4>
                     <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
+                    <button class="add-to-cart" onclick="addToCart('تحلیل داده و پیش‌بینی', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
             </div>
         </div>
     </section>
@@ -874,7 +944,7 @@
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="agents-grid">
-                <a href="#" class="agent-card">
+                <div class="agent-card">
                     <span class="icon">🧠</span>
                     <h4>ایجنت تحلیلگر داده</h4>
                     <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
@@ -883,8 +953,9 @@
                         <span>هوش تجاری</span>
                     </div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="agent-card">
+                    <button class="add-to-cart" onclick="addToCart('ایجنت تحلیلگر داده', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="agent-card">
                     <span class="icon">🤝</span>
                     <h4>ایجنت پشتیبانی مشتری</h4>
                     <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
@@ -893,8 +964,9 @@
                         <span>چت‌بات</span>
                     </div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="agent-card">
+                    <button class="add-to-cart" onclick="addToCart('ایجنت پشتیبانی مشتری', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="agent-card">
                     <span class="icon">📝</span>
                     <h4>ایجنت تولید محتوا</h4>
                     <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
@@ -903,8 +975,9 @@
                         <span>بازاریابی</span>
                     </div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
-                <a href="#" class="agent-card">
+                    <button class="add-to-cart" onclick="addToCart('ایجنت تولید محتوا', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
+                <div class="agent-card">
                     <span class="icon">⚙️</span>
                     <h4>ایجنت اتوماسیون</h4>
                     <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
@@ -913,7 +986,8 @@
                         <span>بهبود بهره‌وری</span>
                     </div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                </a>
+                    <button class="add-to-cart" onclick="addToCart('ایجنت اتوماسیون', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                </div>
             </div>
         </div>
     </section>
@@ -1067,6 +1141,7 @@
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
                 <a href="register.html" class="btn-register" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
+                <a href="login.html" style="background: var(--primary); color: #fff; padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ورود</a>
             </div>
             <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
@@ -1075,6 +1150,9 @@
     <!-- ===== اسکریپت‌ها ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ---- به‌روزرسانی تعداد سبد خرید ----
+            updateCartBadge();
+
             // ---- جستجو ----
             document.querySelector('.search-box button').addEventListener('click', function() {
                 const query = document.querySelector('.search-box input').value.trim();
@@ -1091,13 +1169,35 @@
                 alert('💬 نظر شما با موفقیت ثبت شد. پس از تایید نمایش داده می‌شود.');
                 this.reset();
             });
-
-            // ---- سبد خرید ----
-            document.querySelector('.cart-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('🛒 صفحه سبد خرید در حال تکمیل است.\nشما می‌توانید از طریق صفحات داخلی، خدمات را به سبد اضافه کنید.');
-            });
         });
+
+        // ===== افزودن به سبد خرید =====
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // بررسی تکراری نبودن
+            if (cart.some(item => item.name === name)) {
+                alert('⚠️ این خدمت قبلاً به سبد خرید اضافه شده است.');
+                return;
+            }
+            
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // به‌روزرسانی تعداد
+            updateCartBadge();
+            
+            alert('✅ ' + name + ' به سبد خرید اضافه شد!');
+        }
+
+        // ===== به‌روزرسانی تعداد سبد خرید =====
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const badge = document.getElementById('cartCount');
+            if (badge) {
+                badge.textContent = cart.length;
+            }
+        }
     </script>
 
 </body>
