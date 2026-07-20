@@ -40,6 +40,44 @@ db.connect((err) => {
     console.log('✅ اتصال به دیتابیس با موفقیت برقرار شد!');
 });
 
+// ===== تابع تبدیل تاریخ میلادی به شمسی با استفاده از محاسبات دستی =====
+function toPersianDate(gregorianDate) {
+    const date = new Date(gregorianDate);
+    
+    // تنظیم منطقه زمانی ایران (UTC+3:30)
+    const iranTime = new Date(date.getTime() + (3.5 * 60 * 60 * 1000));
+    
+    const year = iranTime.getFullYear();
+    const month = iranTime.getMonth() + 1;
+    const day = iranTime.getDate();
+    const hours = String(iranTime.getHours()).padStart(2, '0');
+    const minutes = String(iranTime.getMinutes()).padStart(2, '0');
+    
+    // محاسبه سال شمسی
+    let persianYear = year - 621;
+    let persianMonth = month + 2;
+    let persianDay = day;
+    
+    // تنظیم ماه و روز
+    if (persianMonth > 12) {
+        persianMonth = persianMonth - 12;
+        persianYear = persianYear + 1;
+    }
+    
+    // تنظیم روزهای ماه (تقریبی)
+    const persianDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+    if (persianDay > persianDaysInMonth[persianMonth - 1]) {
+        persianDay = persianDay - persianDaysInMonth[persianMonth - 1];
+        persianMonth = persianMonth + 1;
+        if (persianMonth > 12) {
+            persianMonth = 1;
+            persianYear = persianYear + 1;
+        }
+    }
+    
+    return `${persianYear}/${String(persianMonth).padStart(2, '0')}/${String(persianDay).padStart(2, '0')} ${hours}:${minutes}`;
+}
+
 // ===== صفحات =====
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -53,14 +91,23 @@ app.get('/users.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 
-// ===== دریافت لیست کاربران (تاریخ به صورت میلادی) =====
+// ===== دریافت لیست کاربران با تاریخ شمسی =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت کاربران:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        res.json(results);
+        
+        // ===== تبدیل تاریخ میلادی به شمسی =====
+        const usersWithPersianDate = results.map(user => {
+            return {
+                ...user,
+                created_at: toPersianDate(user.created_at)
+            };
+        });
+        
+        res.json(usersWithPersianDate);
     });
 });
 
