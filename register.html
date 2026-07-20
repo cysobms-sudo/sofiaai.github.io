@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ثبت‌نام</title>
+    <title>ثبت‌نام در سوفیا AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,6 +32,11 @@
         input:focus { border-color: #6C3CE1; outline: none; }
         button { width: 100%; margin-top: 24px; background: linear-gradient(145deg, #6C3CE1, #4A1F9E); color: #fff; border: none; padding: 14px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: 'Vazirmatn', sans-serif; }
         button:hover { transform: scale(1.02); box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3); }
+        .login-link { text-align: center; margin-top: 16px; color: #5A4A7A; }
+        .login-link a { color: #6C3CE1; font-weight: 700; text-decoration: none; }
+        .message { text-align: center; margin-top: 12px; padding: 10px; border-radius: 8px; display: none; }
+        .message.success { display: block; background: #d4edda; color: #155724; }
+        .message.error { display: block; background: #f8d7da; color: #721c24; }
         .back-link { display: inline-block; margin-top: 16px; color: #6C3CE1; text-decoration: none; font-weight: 600; text-align: center; width: 100%; }
     </style>
 </head>
@@ -49,19 +54,56 @@
             <input type="tel" id="phone" placeholder="شماره تماس خود را وارد کنید" />
             <button type="submit">ثبت‌نام</button>
         </form>
-        <div id="message" style="text-align:center; margin-top:12px; display:none;"></div>
+        <div id="message" class="message"></div>
+        <div class="login-link">قبلاً ثبت‌نام کرده‌اید؟ <a href="login.html">وارد شوید</a></div>
         <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
     </div>
 
     <script>
-        // فعلاً این اسکریپت فقط یک پیام نمایش می‌دهد تا کار ذخیره‌سازی را بعداً به رانفلر وصل کنیم
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const msg = document.getElementById('message');
-            msg.style.display = 'block';
-            msg.style.color = 'green';
-            msg.innerHTML = '✅ ثبت‌نام شما با موفقیت انجام شد! (فعلاً اطلاعات ذخیره نمی‌شود)';
-            // بعداً اینجا کد اتصال به رانفلر را اضافه می‌کنیم
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+            
+            const messageDiv = document.getElementById('message');
+            
+            messageDiv.className = 'message';
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = '⏳ در حال ثبت‌نام...';
+            messageDiv.style.background = '#e7f3ff';
+            messageDiv.style.color = '#004085';
+            
+            try {
+                // ===== اتصال به رانفلر =====
+                const response = await fetch('https://sofiaaisite.runflare.run/api/register', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password, phone })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = '✅ ثبت‌نام با موفقیت انجام شد!';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.error || 'خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.';
+                }
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً مطمئن شوید سرور در حال اجراست.';
+            }
         });
     </script>
 </body>
