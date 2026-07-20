@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ===== تنظیمات CORS برای جلوگیری از خطای اتصال =====
+// ===== تنظیمات CORS =====
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -77,11 +77,10 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-// ===== حذف کاربر (فقط مدیر) =====
+// ===== حذف کاربر =====
 app.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
     
-    // بررسی اینکه کاربر وجود دارد
     db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
         if (err) {
             console.error('❌ خطا در بررسی کاربر:', err);
@@ -91,7 +90,6 @@ app.delete('/api/users/:id', (req, res) => {
             return res.status(404).json({ error: 'کاربر پیدا نشد.' });
         }
         
-        // حذف کاربر
         db.query('DELETE FROM users WHERE id = ?', [userId], (err, result) => {
             if (err) {
                 console.error('❌ خطا در حذف کاربر:', err);
@@ -116,7 +114,6 @@ app.put('/api/users/:id/password', async (req, res) => {
     }
     
     try {
-        // دریافت کاربر از دیتابیس
         db.query('SELECT * FROM users WHERE id = ?', [userId], async (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی کاربر:', err);
@@ -127,17 +124,13 @@ app.put('/api/users/:id/password', async (req, res) => {
             }
             
             const user = results[0];
-            
-            // بررسی رمز فعلی
             const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
             if (!isPasswordValid) {
                 return res.status(400).json({ error: 'رمز فعلی اشتباه است.' });
             }
             
-            // هش کردن رمز جدید
             const hashedNewPassword = await bcrypt.hash(newPassword, 10);
             
-            // به‌روزرسانی رمز در دیتابیس
             db.query(
                 'UPDATE users SET password = ? WHERE id = ?',
                 [hashedNewPassword, userId],
@@ -201,7 +194,7 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-// ===== ورود کاربر =====
+// ===== ورود کاربر (با تاریخ شمسی) =====
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     
@@ -229,6 +222,9 @@ app.post('/api/login', async (req, res) => {
                 return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
             }
             
+            // ===== تبدیل تاریخ عضویت به شمسی =====
+            const persianCreatedAt = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
+            
             res.json({ 
                 message: '✅ ورود با موفقیت انجام شد!',
                 user: { 
@@ -236,7 +232,7 @@ app.post('/api/login', async (req, res) => {
                     name: user.name, 
                     email: user.email, 
                     phone: user.phone, 
-                    created_at: user.created_at 
+                    created_at: persianCreatedAt
                 }
             });
         });
