@@ -1,100 +1,68 @@
-const express = require('express');
-const mysql = require('mysql2');
-const path = require('path');
-const bcrypt = require('bcryptjs');
-require('dotenv').config();
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ثبت‌نام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #FFB800;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
+        }
+        h1 { text-align: center; color: #1A0F2E; margin-bottom: 24px; font-size: 2rem; }
+        h1 .highlight { background: linear-gradient(145deg, #6C3CE1, #FFB800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        label { display: block; margin-top: 16px; font-weight: 600; color: #1A0F2E; }
+        input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 2px solid rgba(108, 60, 225, 0.08); font-size: 1rem; margin-top: 6px; font-family: 'Vazirmatn', sans-serif; }
+        input:focus { border-color: #6C3CE1; outline: none; }
+        button { width: 100%; margin-top: 24px; background: linear-gradient(145deg, #6C3CE1, #4A1F9E); color: #fff; border: none; padding: 14px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: 'Vazirmatn', sans-serif; }
+        button:hover { transform: scale(1.02); box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3); }
+        .back-link { display: inline-block; margin-top: 16px; color: #6C3CE1; text-decoration: none; font-weight: 600; text-align: center; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ثبت‌نام در <span class="highlight">سوفیا AI</span></h1>
+        <form id="registerForm">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" id="name" placeholder="نام خود را وارد کنید" required />
+            <label>آدرس ایمیل</label>
+            <input type="email" id="email" placeholder="ایمیل خود را وارد کنید" required />
+            <label>رمز عبور</label>
+            <input type="password" id="password" placeholder="رمز عبور خود را وارد کنید" required />
+            <label>شماره تماس</label>
+            <input type="tel" id="phone" placeholder="شماره تماس خود را وارد کنید" />
+            <button type="submit">ثبت‌نام</button>
+        </form>
+        <div id="message" style="text-align:center; margin-top:12px; display:none;"></div>
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+    </div>
 
-const app = express();
-const port = process.env.PORT || 3000;
-
-// ===== تنظیمات CORS =====
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ===== اتصال به دیتابیس =====
-const db = mysql.createConnection({
-    host: process.env.DB_HOST || '188.40.16.3',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'oJ2LXgVwDibBc79qnaPx',
-    database: process.env.DB_NAME || 'sofiaaiskho_db',
-    port: process.env.DB_PORT || 32280
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error('❌ خطا در اتصال به دیتابیس:', err);
-        return;
-    }
-    console.log('✅ اتصال به دیتابیس با موفقیت برقرار شد!');
-});
-
-// ===== صفحات =====
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/register.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
-});
-
-// ===== ثبت‌نام =====
-app.post('/api/register', async (req, res) => {
-    const { name, email, password, phone } = req.body;
-    
-    console.log('📝 دریافت درخواست ثبت‌نام:', { name, email, phone });
-    
-    if (!name || !email || !password) {
-        return res.status(400).json({ error: 'نام، ایمیل و رمز عبور الزامی هستند.' });
-    }
-    
-    try {
-        db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-            if (err) {
-                console.error('❌ خطا در بررسی ایمیل:', err);
-                return res.status(500).json({ error: 'خطا در دیتابیس' });
-            }
-            
-            if (results.length > 0) {
-                return res.status(400).json({ error: 'این ایمیل قبلاً ثبت شده است.' });
-            }
-            
-            const hashedPassword = await bcrypt.hash(password, 10);
-            
-            db.query(
-                'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)',
-                [name, email, hashedPassword, phone || null],
-                (err, result) => {
-                    if (err) {
-                        console.error('❌ خطا در ذخیره کاربر:', err);
-                        return res.status(500).json({ error: 'خطا در ثبت‌نام' });
-                    }
-                    console.log('✅ کاربر با موفقیت ثبت شد:', result.insertId);
-                    res.json({ 
-                        message: '✅ ثبت‌نام با موفقیت انجام شد!',
-                        userId: result.insertId
-                    });
-                }
-            );
+    <script>
+        // فعلاً این اسکریپت فقط یک پیام نمایش می‌دهد تا کار ذخیره‌سازی را بعداً به رانفلر وصل کنیم
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const msg = document.getElementById('message');
+            msg.style.display = 'block';
+            msg.style.color = 'green';
+            msg.innerHTML = '✅ ثبت‌نام شما با موفقیت انجام شد! (فعلاً اطلاعات ذخیره نمی‌شود)';
+            // بعداً اینجا کد اتصال به رانفلر را اضافه می‌کنیم
         });
-    } catch (error) {
-        console.error('❌ خطا در ثبت‌نام:', error);
-        res.status(500).json({ error: 'خطای سرور' });
-    }
-});
-
-// ===== شروع سرور =====
-app.listen(port, '0.0.0.0', () => {
-    console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
-    console.log(`🌐 آدرس: http://localhost:${port}`);
-});
+    </script>
+</body>
+</html>
