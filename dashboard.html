@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>داشبورد کاربری | سوفیا AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #FFB800;
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
+            text-align: center;
+        }
+        h1 {
+            color: #1A0F2E;
+            margin-bottom: 16px;
+            font-size: 2.2rem;
+        }
+        h1 .highlight {
+            background: linear-gradient(145deg, #6C3CE1, #FFB800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            color: #5A4A7A;
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 16px;
+        }
+        .user-info {
+            background: #FBF8FF;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(108, 60, 225, 0.08);
+            margin: 20px 0;
+        }
+        .user-info strong {
+            color: #6C3CE1;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 16px;
+            background: linear-gradient(145deg, #6C3CE1, #4A1F9E);
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        }
+        .btn-secondary {
+            background: #FFB800;
+            color: #1A0F2E;
+        }
+        .btn-secondary:hover {
+            background: #FFD64A;
+        }
+        .logout-btn {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 به <span class="highlight">داشبورد</span> خوش آمدید</h1>
+        <p>شما با موفقیت وارد سایت شدید.</p>
+        
+        <div class="user-info" id="userInfo">
+            <p><strong>👤 نام:</strong> <span id="userName">کاربر</span></p>
+            <p><strong>📧 ایمیل:</strong> <span id="userEmail">ایمیل</span></p>
+        </div>
+
+        <p>این صفحه‌ی اختصاصی شماست. به زودی امکانات بیشتری اضافه می‌شود.</p>
+        
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+            <a href="index.html" class="btn btn-secondary">🏠 بازگشت به خانه</a>
+            <a href="users.html" class="btn">👥 مدیریت کاربران</a>
+            <a href="login.html" class="btn logout-btn" id="logoutBtn">🚪 خروج</a>
+        </div>
+    </div>
+
+    <script>
+        // دریافت اطلاعات کاربر از localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    document.getElementById('userName').textContent = user.name || 'کاربر';
+                    document.getElementById('userEmail').textContent = user.email || 'ایمیل';
+                } catch (e) {
+                    console.error('خطا در خواندن اطلاعات کاربر:', e);
+                }
+            }
+
+            // دکمه خروج
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            });
+        });
+
+        // جلوگیری از بازگشت به صفحه ورود بدون خروج
+        window.addEventListener('load', function() {
+            const userData = localStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
