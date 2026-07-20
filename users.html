@@ -182,30 +182,6 @@
             }
         }
 
-        // ===== تبدیل تاریخ میلادی به شمسی با متد toLocaleDateString =====
-        function toPersianDate(isoDate) {
-            try {
-                const date = new Date(isoDate);
-                // بررسی اینکه تاریخ معتبر است
-                if (isNaN(date.getTime())) {
-                    return isoDate; // اگر تاریخ نامعتبر بود، خودش را برگردان
-                }
-                
-                // تبدیل به شمسی با استفاده از تنظیمات ایران
-                return date.toLocaleDateString('fa-IR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                });
-            } catch (e) {
-                console.error('❌ خطا در تبدیل تاریخ:', e);
-                return isoDate;
-            }
-        }
-
         // ===== بارگذاری لیست کاربران از سرور =====
         function loadUsers() {
             const container = document.getElementById('usersList');
@@ -239,16 +215,14 @@
                     `;
 
                     data.forEach((user, index) => {
-                        // ===== تبدیل تاریخ میلادی به شمسی =====
-                        const persianDate = toPersianDate(user.created_at);
-
+                        // تاریخ از قبل در سرور به شمسی تبدیل شده است
                         html += `
                             <tr>
                                 <td>${index + 1}</td>
                                 <td>${user.name}</td>
                                 <td>${user.email}</td>
                                 <td>${user.phone || '-'}</td>
-                                <td>${persianDate}</td>
+                                <td>${user.created_at}</td>
                             </tr>
                         `;
                     });
