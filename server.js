@@ -54,7 +54,7 @@ app.get('/users.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 
-// ===== دریافت لیست کاربران با تاریخ شمسی دقیق =====
+// ===== دریافت لیست کاربران با تاریخ شمسی =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
