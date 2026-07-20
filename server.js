@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ===== تنظیمات CORS =====
+// ===== تنظیمات CORS برای جلوگیری از خطای اتصال =====
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -18,8 +18,11 @@ app.use((req, res, next) => {
     next();
 });
 
+// ===== تنظیمات Express =====
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ===== مسیر فایل‌های استاتیک (HTML, CSS, JS) =====
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ===== اتصال به دیتابیس =====
@@ -46,6 +49,21 @@ app.get('/', (req, res) => {
 
 app.get('/register.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+app.get('/users.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'users.html'));
+});
+
+// ===== دریافت لیست کاربران (برای صفحه مدیریت) =====
+app.get('/api/users', (req, res) => {
+    db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت کاربران:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        res.json(results);
+    });
 });
 
 // ===== ثبت‌نام =====
