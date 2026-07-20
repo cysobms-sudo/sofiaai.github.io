@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const moment = require('moment-jalaali');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// ===== تنظیمات Express =====
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,34 +40,6 @@ db.connect((err) => {
     }
     console.log('✅ اتصال به دیتابیس با موفقیت برقرار شد!');
 });
-
-// ===== تابع تبدیل تاریخ میلادی به شمسی =====
-function toPersianDate(gregorianDate) {
-    const date = new Date(gregorianDate);
-    const iranTime = new Date(date.getTime() + (3.5 * 60 * 60 * 1000));
-    const year = iranTime.getFullYear();
-    const month = iranTime.getMonth() + 1;
-    const day = iranTime.getDate();
-    const hours = String(iranTime.getHours()).padStart(2, '0');
-    const minutes = String(iranTime.getMinutes()).padStart(2, '0');
-    let persianYear = year - 621;
-    let persianMonth = month + 2;
-    let persianDay = day;
-    if (persianMonth > 12) {
-        persianMonth = persianMonth - 12;
-        persianYear = persianYear + 1;
-    }
-    const persianDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
-    if (persianDay > persianDaysInMonth[persianMonth - 1]) {
-        persianDay = persianDay - persianDaysInMonth[persianMonth - 1];
-        persianMonth = persianMonth + 1;
-        if (persianMonth > 12) {
-            persianMonth = 1;
-            persianYear = persianYear + 1;
-        }
-    }
-    return `${persianYear}/${String(persianMonth).padStart(2, '0')}/${String(persianDay).padStart(2, '0')} ${hours}:${minutes}`;
-}
 
 // ===== صفحات =====
 app.get('/', (req, res) => {
@@ -92,7 +66,8 @@ app.get('/api/users', (req, res) => {
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
         const usersWithPersianDate = results.map(user => {
-            return { ...user, created_at: toPersianDate(user.created_at) };
+            const persianDate = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...user, created_at: persianDate };
         });
         res.json(usersWithPersianDate);
     });
@@ -101,19 +76,26 @@ app.get('/api/users', (req, res) => {
 // ===== ثبت‌نام =====
 app.post('/api/register', async (req, res) => {
     const { name, email, password, phone } = req.body;
+    
+    console.log('📝 دریافت درخواست ثبت‌نام:', { name, email, phone });
+    
     if (!name || !email || !password) {
         return res.status(400).json({ error: 'نام، ایمیل و رمز عبور الزامی هستند.' });
     }
+    
     try {
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی ایمیل:', err);
                 return res.status(500).json({ error: 'خطا در دیتابیس' });
             }
+            
             if (results.length > 0) {
                 return res.status(400).json({ error: 'این ایمیل قبلاً ثبت شده است.' });
             }
+            
             const hashedPassword = await bcrypt.hash(password, 10);
+            
             db.query(
                 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)',
                 [name, email, hashedPassword, phone || null],
@@ -123,7 +105,10 @@ app.post('/api/register', async (req, res) => {
                         return res.status(500).json({ error: 'خطا در ثبت‌نام' });
                     }
                     console.log('✅ کاربر با موفقیت ثبت شد:', result.insertId);
-                    res.json({ message: '✅ ثبت‌نام با موفقیت انجام شد!', userId: result.insertId });
+                    res.json({ 
+                        message: '✅ ثبت‌نام با موفقیت انجام شد!',
+                        userId: result.insertId
+                    });
                 }
             );
         });
@@ -136,23 +121,31 @@ app.post('/api/register', async (req, res) => {
 // ===== ورود کاربر =====
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
+    
+    console.log('📝 دریافت درخواست ورود:', { email });
+    
     if (!email || !password) {
         return res.status(400).json({ error: 'ایمیل و رمز عبور الزامی هستند.' });
     }
+    
     try {
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی ایمیل:', err);
                 return res.status(500).json({ error: 'خطا در دیتابیس' });
             }
+            
             if (results.length === 0) {
                 return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
             }
+            
             const user = results[0];
             const isPasswordValid = await bcrypt.compare(password, user.password);
+            
             if (!isPasswordValid) {
                 return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
             }
+            
             res.json({ 
                 message: '✅ ورود با موفقیت انجام شد!',
                 user: { id: user.id, name: user.name, email: user.email }
