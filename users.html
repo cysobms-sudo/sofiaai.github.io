@@ -28,7 +28,7 @@
             text-align: center;
         }
         .users-box {
-            max-width: 1000px;
+            max-width: 1100px;
             display: none;
         }
         h2 {
@@ -133,6 +133,22 @@
             border-top: 1px solid #f0f0f0;
             padding-top: 16px;
         }
+        .delete-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.8rem;
+        }
+        .delete-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
         @media (max-width: 768px) {
             .login-box, .users-box { padding: 24px 18px; }
             th, td { padding: 10px 12px; font-size: 0.85rem; }
@@ -151,7 +167,7 @@
         <div id="errorMsg" class="error">❌ رمز عبور اشتباه است!</div>
     </div>
 
-    <!-- ===== صفحه نمایش کاربران (پنهان در ابتدا) ===== -->
+    <!-- ===== صفحه نمایش کاربران ===== -->
     <div id="usersBox" class="users-box">
         <h2>📋 <span class="highlight">لیست کاربران</span></h2>
         <p class="sub">همه کاربرانی که در سایت ثبت‌نام کرده‌اند</p>
@@ -182,7 +198,7 @@
             }
         }
 
-        // ===== بارگذاری لیست کاربران از سرور =====
+        // ===== بارگذاری لیست کاربران =====
         function loadUsers() {
             const container = document.getElementById('usersList');
             container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
@@ -209,13 +225,13 @@
                                     <th>ایمیل</th>
                                     <th>شماره تماس</th>
                                     <th>تاریخ ثبت‌نام</th>
+                                    <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
                     `;
 
                     data.forEach((user, index) => {
-                        // تاریخ از قبل در سرور به شمسی تبدیل شده است
                         html += `
                             <tr>
                                 <td>${index + 1}</td>
@@ -223,6 +239,11 @@
                                 <td>${user.email}</td>
                                 <td>${user.phone || '-'}</td>
                                 <td>${user.created_at}</td>
+                                <td>
+                                    <button class="delete-btn" data-id="${user.id}" data-name="${user.name}">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </button>
+                                </td>
                             </tr>
                         `;
                     });
@@ -236,11 +257,44 @@
                     `;
 
                     container.innerHTML = html;
+
+                    // ===== رویداد حذف کاربر =====
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const userId = this.dataset.id;
+                            const userName = this.dataset.name;
+                            
+                            if (confirm(`آیا از حذف کاربر "${userName}" اطمینان دارید؟`)) {
+                                deleteUser(userId);
+                            }
+                        });
+                    });
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
                     container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.</div>';
                 });
+        }
+
+        // ===== حذف کاربر =====
+        function deleteUser(userId) {
+            fetch(`/api/users/${userId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert('✅ ' + data.message);
+                    loadUsers(); // بارگذاری مجدد لیست
+                } else {
+                    alert('❌ ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('❌ خطا در حذف کاربر:', error);
+                alert('❌ خطا در حذف کاربر. لطفاً دوباره تلاش کنید.');
+            });
         }
 
         // ===== ورود با کلید Enter =====
