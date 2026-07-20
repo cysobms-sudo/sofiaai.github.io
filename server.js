@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ===== تنظیمات CORS =====
+// ===== تنظیمات CORS برای جلوگیری از خطای اتصال =====
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -231,7 +231,13 @@ app.post('/api/login', async (req, res) => {
             
             res.json({ 
                 message: '✅ ورود با موفقیت انجام شد!',
-                user: { id: user.id, name: user.name, email: user.email, phone: user.phone, created_at: user.created_at }
+                user: { 
+                    id: user.id, 
+                    name: user.name, 
+                    email: user.email, 
+                    phone: user.phone, 
+                    created_at: user.created_at 
+                }
             });
         });
     } catch (error) {
