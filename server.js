@@ -7,7 +7,17 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ===== تنظیمات Express =====
+// ===== تنظیمات CORS =====
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +44,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/register.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
 // ===== ثبت‌نام =====
 app.post('/api/register', async (req, res) => {
     const { name, email, password, phone } = req.body;
@@ -48,7 +62,7 @@ app.post('/api/register', async (req, res) => {
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی ایمیل:', err);
-                return res.status(500).json({ error: 'خطا در دیتابیس: ' + err.message });
+                return res.status(500).json({ error: 'خطا در دیتابیس' });
             }
             
             if (results.length > 0) {
@@ -63,7 +77,7 @@ app.post('/api/register', async (req, res) => {
                 (err, result) => {
                     if (err) {
                         console.error('❌ خطا در ذخیره کاربر:', err);
-                        return res.status(500).json({ error: 'خطا در ثبت‌نام: ' + err.message });
+                        return res.status(500).json({ error: 'خطا در ثبت‌نام' });
                     }
                     console.log('✅ کاربر با موفقیت ثبت شد:', result.insertId);
                     res.json({ 
@@ -75,12 +89,12 @@ app.post('/api/register', async (req, res) => {
         });
     } catch (error) {
         console.error('❌ خطا در ثبت‌نام:', error);
-        res.status(500).json({ error: 'خطای سرور: ' + error.message });
+        res.status(500).json({ error: 'خطای سرور' });
     }
 });
 
 // ===== شروع سرور =====
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
     console.log(`🌐 آدرس: http://localhost:${port}`);
 });
