@@ -1,65 +1,272 @@
-// ===== بارگذاری لیست کاربران از سرور =====
-function loadUsers() {
-    const container = document.getElementById('usersList');
-    container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پنل مدیریت کاربران</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(145deg, #f0f2f5, #e8ecf1);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            direction: rtl;
+        }
+        .login-box, .users-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #6C3CE1;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .users-box {
+            max-width: 1000px;
+            display: none;
+        }
+        h2 {
+            color: #1A0F2E;
+            margin-bottom: 16px;
+            font-size: 1.8rem;
+        }
+        h2 .highlight {
+            color: #6C3CE1;
+        }
+        .sub {
+            color: #7a7a9a;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            font-size: 1rem;
+            margin-top: 8px;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #6C3CE1;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.08);
+        }
+        button {
+            width: 100%;
+            margin-top: 20px;
+            background: linear-gradient(145deg, #6C3CE1, #4A1F9E);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+        th {
+            background: #6C3CE1;
+            color: #fff;
+            padding: 14px 16px;
+            text-align: right;
+            font-weight: 700;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #1A0F2E;
+        }
+        tr:hover {
+            background: #f8f6ff;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6C3CE1;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .loading {
+            color: #7a7a9a;
+            padding: 20px;
+        }
+        .empty {
+            color: #7a7a9a;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 24px;
+            color: #9a9aba;
+            font-size: 0.8rem;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 16px;
+        }
+        @media (max-width: 768px) {
+            .login-box, .users-box { padding: 24px 18px; }
+            th, td { padding: 10px 12px; font-size: 0.85rem; }
+            table { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
 
-    fetch('/api/users')
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) {
-                container.innerHTML = '<div class="empty">❌ هنوز کاربری ثبت‌نام نکرده است.</div>';
-                return;
+    <!-- ===== صفحه ورود با رمز عبور ===== -->
+    <div id="loginBox" class="login-box">
+        <h2>🔐 <span class="highlight">پنل مدیریت</span></h2>
+        <p class="sub">برای مشاهده لیست کاربران، رمز عبور را وارد کنید</p>
+        <input type="password" id="passwordInput" placeholder="رمز عبور را وارد کنید..." />
+        <button onclick="checkPassword()">ورود</button>
+        <div id="errorMsg" class="error">❌ رمز عبور اشتباه است!</div>
+    </div>
+
+    <!-- ===== صفحه نمایش کاربران (پنهان در ابتدا) ===== -->
+    <div id="usersBox" class="users-box">
+        <h2>📋 <span class="highlight">لیست کاربران</span></h2>
+        <p class="sub">همه کاربرانی که در سایت ثبت‌نام کرده‌اند</p>
+        <div id="usersList">
+            <div class="loading">⏳ در حال بارگذاری...</div>
+        </div>
+        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+        <div class="footer">🔒 فقط با رمز عبور قابل دسترسی است</div>
+    </div>
+
+    <script>
+        // ===== رمز عبور =====
+        const correctPassword = 'Ard$447100';
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (input === correctPassword) {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('usersBox').style.display = 'block';
+                loadUsers();
+            } else {
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
             }
+        }
 
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نام و نام خانوادگی</th>
-                            <th>ایمیل</th>
-                            <th>شماره تماس</th>
-                            <th>تاریخ ثبت‌نام</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+        // ===== تابع تبدیل تاریخ میلادی به شمسی (دقیق) =====
+        function toPersianDate(isoDate) {
+            const date = new Date(isoDate);
+            
+            // استفاده از Intl.DateTimeFormat برای تبدیل دقیق
+            return new Intl.DateTimeFormat('fa-IR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(date);
+        }
 
-            data.forEach((user, index) => {
-                // ===== تبدیل تاریخ میلادی به شمسی در مرورگر =====
-                const date = new Date(user.created_at);
-                const persianDate = new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }).format(date);
+        // ===== بارگذاری لیست کاربران از سرور =====
+        function loadUsers() {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
 
-                html += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>${user.phone || '-'}</td>
-                        <td>${persianDate}</td>
-                    </tr>
-                `;
-            });
+            fetch('/api/users')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('خطا در دریافت اطلاعات');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty">❌ هنوز کاربری ثبت‌نام نکرده است.</div>';
+                        return;
+                    }
 
-            html += `
-                    </tbody>
-                </table>
-                <div style="text-align:center; margin-top: 12px; color:#7a7a9a; font-size:0.85rem;">
-                    🔹 تعداد کل کاربران: ${data.length}
-                </div>
-            `;
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام و نام خانوادگی</th>
+                                    <th>ایمیل</th>
+                                    <th>شماره تماس</th>
+                                    <th>تاریخ ثبت‌نام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
 
-            container.innerHTML = html;
-        })
-        .catch(error => {
-            console.error('❌ خطا:', error);
-            container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.</div>';
+                    data.forEach((user, index) => {
+                        // ===== تبدیل تاریخ میلادی به شمسی =====
+                        const persianDate = toPersianDate(user.created_at);
+
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.phone || '-'}</td>
+                                <td>${persianDate}</td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `
+                            </tbody>
+                        </table>
+                        <div style="text-align:center; margin-top: 12px; color:#7a7a9a; font-size:0.85rem;">
+                            🔹 تعداد کل کاربران: ${data.length}
+                        </div>
+                    `;
+
+                    container.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('❌ خطا:', error);
+                    container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.</div>';
+                });
+        }
+
+        // ===== ورود با کلید Enter =====
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
         });
-}
+    </script>
+
+</body>
+</html>
