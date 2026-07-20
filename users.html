@@ -134,17 +134,21 @@
             border-top: 1px solid #f0f0f0;
             padding-top: 16px;
         }
+        /* ===== دکمه حذف (قرمز رنگ) ===== */
         .delete-btn {
             background: #e74c3c;
             color: #fff;
             border: none;
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
             font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .delete-btn:hover {
             background: #c0392b;
@@ -218,6 +222,7 @@
                         return;
                     }
 
+                    // ===== ساخت جدول با ستون "عملیات" و دکمه حذف =====
                     let html = `
                         <table>
                             <thead>
@@ -227,7 +232,7 @@
                                     <th>ایمیل</th>
                                     <th>شماره تماس</th>
                                     <th>تاریخ ثبت‌نام</th>
-                                    <th>عملیات</th>
+                                    <th>عملیات</th> <!-- اینجا ستون دکمه حذف قرار دارد -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -242,6 +247,7 @@
                                 <td>${user.phone || '-'}</td>
                                 <td>${user.created_at}</td>
                                 <td>
+                                    <!-- ===== دکمه حذف (اینجا قرار دارد) ===== -->
                                     <button class="delete-btn" data-id="${user.id}" data-name="${user.name}">
                                         <i class="fas fa-trash-alt"></i> حذف
                                     </button>
@@ -260,13 +266,13 @@
 
                     container.innerHTML = html;
 
-                    // ===== رویداد حذف کاربر =====
+                    // ===== رویداد کلیک روی دکمه‌های حذف =====
                     document.querySelectorAll('.delete-btn').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const userId = this.dataset.id;
                             const userName = this.dataset.name;
                             
-                            if (confirm(`آیا از حذف کاربر "${userName}" اطمینان دارید؟`)) {
+                            if (confirm(`⚠️ آیا از حذف کاربر "${userName}" اطمینان دارید؟ این عمل غیرقابل بازگشت است.`)) {
                                 deleteUser(userId);
                             }
                         });
@@ -278,7 +284,7 @@
                 });
         }
 
-        // ===== حذف کاربر =====
+        // ===== تابع حذف کاربر =====
         function deleteUser(userId) {
             fetch(`/api/users/${userId}`, {
                 method: 'DELETE',
