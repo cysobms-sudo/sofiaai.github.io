@@ -522,6 +522,30 @@
         // ===== اطلاعات کاربر =====
         let currentUser = null;
 
+        // ===== تابع تبدیل تاریخ میلادی به شمسی =====
+        function toPersianDate(isoDate) {
+            if (!isoDate) return '---';
+            try {
+                const date = new Date(isoDate);
+                // اگر تاریخ نامعتبر بود، خودش را برگردان
+                if (isNaN(date.getTime())) {
+                    return isoDate;
+                }
+                // تبدیل به شمسی با تنظیمات ایران
+                return new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }).format(date);
+            } catch (e) {
+                console.error('خطا در تبدیل تاریخ:', e);
+                return isoDate;
+            }
+        }
+
         function loadUser() {
             try {
                 const userData = localStorage.getItem('user');
@@ -537,8 +561,9 @@
                 document.getElementById('profileEmail').textContent = currentUser.email || '---';
                 document.getElementById('profilePhone').textContent = currentUser.phone || '---';
                 
-                // ===== تاریخ عضویت (همان مقداری که سرور فرستاده) =====
-                document.getElementById('profileDate').textContent = currentUser.created_at || '---';
+                // ===== تبدیل تاریخ عضویت به شمسی =====
+                const persianDate = toPersianDate(currentUser.created_at);
+                document.getElementById('profileDate').textContent = persianDate;
                 
                 document.getElementById('editName').value = currentUser.name || '';
                 document.getElementById('editPhone').value = currentUser.phone || '';
