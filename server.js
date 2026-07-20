@@ -2,46 +2,11 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const moment = require('moment-jalaali');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// ===== تابع تبدیل تاریخ میلادی به شمسی (دستی) =====
-function toPersianDate(gregorianDate) {
-    const date = new Date(gregorianDate);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    
-    // تبدیل سال میلادی به شمسی (تقریبی)
-    const persianYear = year - 621;
-    
-    // نام ماه‌های شمسی
-    const persianMonths = [
-        'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-        'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
-    ];
-    
-    // تبدیل ماه میلادی به شمسی (تقریبی)
-    let persianMonthIndex = (date.getMonth() + 2) % 12;
-    if (persianMonthIndex === 0) persianMonthIndex = 12;
-    const persianMonth = persianMonths[persianMonthIndex - 1];
-    
-    // تنظیم روز تقریبی
-    let persianDay = parseInt(day);
-    if (date.getMonth() >= 2) {
-        persianDay = parseInt(day) + 20;
-        if (persianDay > 31) {
-            persianDay = persianDay - 31;
-            // ماه بعدی
-        }
-    }
-    
-    return `${persianYear}/${String(persianMonthIndex).padStart(2, '0')}/${String(persianDay).padStart(2, '0')} ${hours}:${minutes}`;
-}
 
 // ===== تنظیمات CORS =====
 app.use((req, res, next) => {
@@ -89,7 +54,7 @@ app.get('/users.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 
-// ===== دریافت لیست کاربران با تاریخ شمسی =====
+// ===== دریافت لیست کاربران با تاریخ شمسی دقیق =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -97,11 +62,12 @@ app.get('/api/users', (req, res) => {
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
         
-        // ===== تبدیل تاریخ میلادی به شمسی =====
+        // ===== تبدیل دقیق تاریخ میلادی به شمسی با moment-jalaali =====
         const usersWithPersianDate = results.map(user => {
+            const persianDate = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
             return {
                 ...user,
-                created_at: toPersianDate(user.created_at)
+                created_at: persianDate
             };
         });
         
