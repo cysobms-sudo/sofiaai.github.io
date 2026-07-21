@@ -502,40 +502,14 @@
     <script>
         // ===== اطلاعات کاربر =====
         let currentUser = null;
-
-        // ===== تابع تشخیص تاریخ شمسی معتبر =====
-        function isValidPersianDate(dateStr) {
-            if (!dateStr) return false;
-            // الگوی تاریخ شمسی: ۱۴۰۴/۰۴/۲۱ یا 1404/04/21
-            const pattern = /^(\d{4})\/(\d{2})\/(\d{2})$/;
-            const match = dateStr.match(pattern);
-            if (!match) return false;
-            const year = parseInt(match[1]);
-            const month = parseInt(match[2]);
-            const day = parseInt(match[3]);
-            // بررسی محدوده معقول
-            if (year < 1300 || year > 1500) return false;
-            if (month < 1 || month > 12) return false;
-            if (day < 1 || day > 31) return false;
-            return true;
-        }
+        let userEmail = '';
 
         // ===== تابع تبدیل تاریخ میلادی به شمسی =====
         function toPersianDate(isoDate) {
             if (!isoDate) return '---';
-            
-            // اگر تاریخ به صورت شمسی معتبر است، همان را برگردان
-            if (isValidPersianDate(isoDate)) {
-                return isoDate;
-            }
-            
             try {
                 const date = new Date(isoDate);
-                if (isNaN(date.getTime())) {
-                    // اگر تاریخ قابل شناسایی نبود، تاریخ فعلی را برگردان
-                    return getCurrentPersianDate();
-                }
-                
+                if (isNaN(date.getTime())) return '---';
                 return new Intl.DateTimeFormat('fa-IR', {
                     year: 'numeric',
                     month: '2-digit',
@@ -543,7 +517,7 @@
                 }).format(date);
             } catch (e) {
                 console.error('خطا در تبدیل تاریخ:', e);
-                return getCurrentPersianDate();
+                return '---';
             }
         }
 
@@ -560,28 +534,19 @@
             return result;
         }
 
-        // ===== تابع دریافت تاریخ شمسی فعلی =====
-        function getCurrentPersianDate() {
-            const now = new Date();
-            return new Intl.DateTimeFormat('fa-IR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            }).format(now);
-        }
-
-        // ===== تابع اصلاح خودکار تاریخ خراب =====
-        function fixInvalidDate(userData) {
-            if (!userData || !userData.created_at) return userData;
-            
-            const dateStr = userData.created_at;
-            // اگر تاریخ خراب بود (مثل ۷۸۴/۰۲/۰۸)، آن را با تاریخ فعلی جایگزین کن
-            if (!isValidPersianDate(dateStr)) {
-                userData.created_at = getCurrentPersianDate();
-                // ذخیره در localStorage
-                localStorage.setItem('user', JSON.stringify(userData));
+        // ===== دریافت تاریخ واقعی از سرور =====
+        async function fetchUserDataFromServer(email) {
+            try {
+                const response = await fetch(`https://sofiaaisite.runflare.run/api/users/email/${encodeURIComponent(email)}`);
+                if (!response.ok) {
+                    throw new Error('خطا در دریافت اطلاعات از سرور');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('خطا در دریافت اطلاعات از سرور:', error);
+                return null;
             }
-            return userData;
         }
 
         function loadUser() {
@@ -592,10 +557,9 @@
                     return;
                 }
                 currentUser = JSON.parse(userData);
-                
-                // ===== اصلاح خودکار تاریخ خراب =====
-                currentUser = fixInvalidDate(currentUser);
-                
+                userEmail = currentUser.email;
+
+                // نمایش اطلاعات اولیه از localStorage
                 document.getElementById('userNameDisplay').textContent = currentUser.name || 'کاربر';
                 document.getElementById('userAvatar').textContent = currentUser.name ? currentUser.name.charAt(0) : 'ع';
                 document.getElementById('profileName').textContent = currentUser.name || '---';
@@ -604,13 +568,33 @@
                 const phone = currentUser.phone || '---';
                 document.getElementById('profilePhone').textContent = toPersianNumbers(phone);
                 
-                // ===== نمایش تاریخ عضویت =====
-                const dateToShow = toPersianDate(currentUser.created_at);
-                document.getElementById('profileDate').textContent = dateToShow;
+                // نمایش تاریخ اولیه (موقت)
+                document.getElementById('profileDate').textContent = 'در حال دریافت...';
                 
                 document.getElementById('editName').value = currentUser.name || '';
                 document.getElementById('editPhone').value = currentUser.phone || '';
-                
+
+                // ===== دریافت تاریخ واقعی از سرور =====
+                fetchUserDataFromServer(userEmail).then(serverData => {
+                    if (serverData && serverData.created_at) {
+                        // تاریخ واقعی را از سرور بگیر
+                        const realDate = toPersianDate(serverData.created_at);
+                        document.getElementById('profileDate').textContent = realDate;
+                        
+                        // ذخیره تاریخ صحیح در localStorage برای دفعات بعد
+                        currentUser.created_at = serverData.created_at;
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    } else {
+                        // اگر سرور پاسخ نداد، از تاریخ موجود در localStorage استفاده کن
+                        const localDate = toPersianDate(currentUser.created_at);
+                        document.getElementById('profileDate').textContent = localDate;
+                    }
+                }).catch(() => {
+                    // در صورت خطا، از تاریخ localStorage استفاده کن
+                    const localDate = toPersianDate(currentUser.created_at);
+                    document.getElementById('profileDate').textContent = localDate;
+                });
+
             } catch (e) {
                 console.error('خطا در بارگذاری کاربر:', e);
                 window.location.href = 'login.html';
