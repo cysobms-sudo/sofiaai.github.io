@@ -3,59 +3,78 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>پنل مدیریت | توسعه‌دهنده هوش مصنوعی سوفیا</title>
+    <title>پنل مدیریت جامع | توسعه‌دهنده هوش مصنوعی سوفیا</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== استایل‌های کامل ===== */
+        /* ===== متغیرها و ریست ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6C3CE1;
+            --primary-dark: #4A1F9E;
+            --secondary: #FFB800;
+            --bg-light: #FBF8FF;
+            --text-dark: #1A0F2E;
+            --text-muted: #5A4A7A;
+            --border-color: rgba(108,60,225,0.08);
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --success: #28a745;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
         body {
             font-family: 'Vazirmatn', sans-serif;
             background: #f0f2f5;
-            color: #1A0F2E;
+            color: var(--text-dark);
             direction: rtl;
             min-height: 100vh;
             padding: 20px;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1400px; margin: 0 auto; }
 
         /* ===== ورود ===== */
         .login-box {
             max-width: 420px; margin: 80px auto; background: #fff; padding: 40px;
-            border-radius: 16px; border: 2px solid #FFB800; text-align: center;
+            border-radius: var(--radius); border: 2px solid var(--secondary);
+            box-shadow: var(--shadow); text-align: center;
         }
         .login-box input {
             width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #ddd;
             font-size: 1rem; font-family: 'Vazirmatn', sans-serif; margin-bottom: 12px;
         }
         .login-box .btn-login {
-            width: 100%; padding: 14px; background: #6C3CE1; color: #fff;
+            width: 100%; padding: 14px; background: var(--primary); color: #fff;
             border: none; border-radius: 30px; font-weight: 700; cursor: pointer;
             font-family: 'Vazirmatn', sans-serif; font-size: 1rem;
         }
-        .login-box .btn-login:hover { background: #4A1F9E; }
-        .login-box .error { color: #e74c3c; margin-top: 12px; display: none; }
+        .login-box .btn-login:hover { background: var(--primary-dark); }
+        .login-box .error { color: var(--danger); margin-top: 12px; display: none; }
 
         /* ===== هدر ===== */
         .panel-header {
-            background: #fff; padding: 16px 24px; border-radius: 16px;
-            border: 2px solid #FFB800; display: flex; justify-content: space-between;
+            background: #fff; padding: 16px 24px; border-radius: var(--radius);
+            border: 2px solid var(--secondary); display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+            box-shadow: var(--shadow);
         }
-        .panel-header .logo { font-size: 1.2rem; font-weight: 900; }
-        .panel-header .logo .highlight { color: #6C3CE1; }
+        .panel-header .logo { font-size: 1.2rem; font-weight: 900; color: var(--text-dark); }
+        .panel-header .logo .highlight { color: var(--primary); }
+        .panel-header .logo .sub { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; display: block; }
         .panel-header .user-info { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
         .panel-header .user-info .btn-outline {
-            background: transparent; border: 2px solid #6C3CE1; color: #6C3CE1;
+            background: transparent; border: 2px solid var(--primary); color: var(--primary);
             padding: 6px 18px; border-radius: 30px; font-weight: 600; cursor: pointer;
             font-family: 'Vazirmatn', sans-serif; text-decoration: none; font-size: 0.9rem;
         }
-        .panel-header .user-info .btn-outline:hover { background: #6C3CE1; color: #fff; }
+        .panel-header .user-info .btn-outline:hover { background: var(--primary); color: #fff; }
         .panel-header .user-info .logout-btn {
-            background: #e74c3c; color: #fff; border: none; padding: 8px 20px;
-            border-radius: 30px; font-weight: 600; cursor: pointer;
+            background: var(--danger); color: #fff; border: none;
+            padding: 8px 20px; border-radius: 30px; font-weight: 600; cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
         }
+        .panel-header .user-info .logout-btn:hover { transform: scale(1.05); background: #c0392b; }
 
         /* ===== تب‌ها ===== */
         .tabs {
@@ -63,25 +82,37 @@
             border-bottom: 2px solid #e8ecf1; padding-bottom: 12px;
         }
         .tab-btn {
-            background: transparent; color: #5A4A7A; border: none;
+            background: transparent; color: var(--text-muted); border: none;
             padding: 10px 24px; border-radius: 30px; font-weight: 600; cursor: pointer;
             font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem;
         }
-        .tab-btn:hover { background: rgba(108,60,225,0.06); color: #6C3CE1; }
-        .tab-btn.active { background: #6C3CE1; color: #fff; }
+        .tab-btn:hover { background: rgba(108,60,225,0.06); color: var(--primary); }
+        .tab-btn.active { background: var(--primary); color: #fff; }
         .tab-btn i { margin-left: 8px; }
 
         /* ===== محتوای تب‌ها ===== */
         .tab-content {
-            display: none; background: #fff; padding: 24px; border-radius: 16px;
-            border: 2px solid rgba(108,60,225,0.08); box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            display: none; background: #fff; padding: 24px; border-radius: var(--radius);
+            border: 2px solid var(--border-color); box-shadow: var(--shadow);
         }
         .tab-content.active { display: block; }
-        .tab-content h3 {
-            font-size: 1.4rem; font-weight: 700; margin-bottom: 16px;
-            border-bottom: 2px solid #FFB800; padding-bottom: 12px;
+        .tab-content h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--secondary); padding-bottom: 12px; }
+        .tab-content h3 i { color: var(--primary); margin-left: 8px; }
+
+        /* ===== فرم‌ها ===== */
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-dark); }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 10px 14px; border-radius: 10px;
+            border: 2px solid var(--border-color); font-size: 1rem;
+            font-family: 'Vazirmatn', sans-serif; transition: 0.3s;
         }
-        .tab-content h3 i { color: #6C3CE1; margin-left: 8px; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(108,60,225,0.06);
+        }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
 
         /* ===== دکمه‌ها ===== */
         .btn {
@@ -89,35 +120,22 @@
             border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.3s;
             font-family: 'Vazirmatn', sans-serif; border: none; font-size: 0.9rem;
         }
-        .btn-primary { background: #6C3CE1; color: #fff; }
-        .btn-primary:hover { background: #4A1F9E; transform: scale(1.02); }
-        .btn-success { background: #28a745; color: #fff; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); transform: scale(1.02); }
+        .btn-success { background: var(--success); color: #fff; }
         .btn-success:hover { background: #1e7e34; }
-        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-danger { background: var(--danger); color: #fff; }
         .btn-danger:hover { background: #c0392b; }
-        .btn-warning { background: #f39c12; color: #fff; }
+        .btn-warning { background: var(--warning); color: #fff; }
         .btn-warning:hover { background: #d68910; }
         .btn-sm { padding: 4px 14px; font-size: 0.8rem; }
-
-        /* ===== فرم‌ها ===== */
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 10px 14px; border-radius: 10px;
-            border: 2px solid rgba(108,60,225,0.08); font-size: 1rem;
-            font-family: 'Vazirmatn', sans-serif; transition: 0.3s;
-        }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            border-color: #6C3CE1; outline: none; box-shadow: 0 0 0 3px rgba(108,60,225,0.06);
-        }
-        .form-group textarea { min-height: 120px; resize: vertical; }
 
         /* ===== جدول‌ها ===== */
         .table-responsive { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-        th { background: #6C3CE1; color: #fff; padding: 12px 16px; text-align: right; }
-        td { padding: 12px 16px; border-bottom: 1px solid rgba(108,60,225,0.08); }
-        tr:hover { background: #FBF8FF; }
+        th { background: var(--primary); color: #fff; padding: 12px 16px; text-align: right; white-space: nowrap; }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        tr:hover { background: var(--bg-light); }
 
         /* ===== وضعیت‌ها ===== */
         .badge {
@@ -131,9 +149,9 @@
         .badge-published { background: #d4edda; color: #155724; }
 
         /* ===== وضعیت‌های خالی ===== */
-        .loading { text-align: center; padding: 40px; color: #7a7a9a; }
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
         .loading i { font-size: 2rem; display: block; margin-bottom: 12px; }
-        .empty { text-align: center; padding: 40px; color: #7a7a9a; }
+        .empty { text-align: center; padding: 40px; color: var(--text-muted); }
         .empty i { font-size: 3rem; display: block; margin-bottom: 12px; color: #ddd; }
 
         /* ===== مودال ===== */
@@ -144,8 +162,8 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: #fff; padding: 32px; border-radius: 16px;
-            max-width: 600px; width: 90%; border: 2px solid #FFB800;
+            background: #fff; padding: 32px; border-radius: var(--radius);
+            max-width: 600px; width: 90%; border: 2px solid var(--secondary);
             max-height: 90vh; overflow-y: auto;
         }
         .modal-content h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; }
@@ -165,8 +183,8 @@
 
         <!-- ===== صفحه ورود ===== -->
         <div id="loginPage" class="login-box">
-            <h2>🔐 <span style="color:#6C3CE1;">پنل مدیریت</span></h2>
-            <p style="color:#7a7a9a; margin-bottom:16px;">رمز عبور را وارد کنید</p>
+            <h2>🔐 <span style="color:var(--primary);">پنل مدیریت جامع</span></h2>
+            <p style="color:var(--text-muted); margin-bottom:16px;">رمز عبور را وارد کنید</p>
             <input type="password" id="adminPassword" placeholder="رمز عبور..." />
             <button class="btn-login" onclick="checkLogin()">ورود</button>
             <div id="loginError" class="error">❌ رمز عبور اشتباه است!</div>
@@ -179,7 +197,7 @@
             <header class="panel-header">
                 <div class="logo">
                     توسعه‌دهنده هوش مصنوعی <span class="highlight">سوفیا</span>
-                    <span style="display:block; font-size:0.65rem; color:#7a7a9a;">پنل مدیریت</span>
+                    <span class="sub">پنل مدیریت جامع</span>
                 </div>
                 <div class="user-info">
                     <span style="font-weight:700;"><i class="fas fa-user-cog"></i> مدیر</span>
@@ -191,20 +209,51 @@
 
             <!-- ===== تب‌ها ===== -->
             <div class="tabs">
-                <button class="tab-btn active" data-tab="articles"><i class="fas fa-newspaper"></i> مقالات</button>
+                <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> داشبورد</button>
+                <button class="tab-btn" data-tab="articles"><i class="fas fa-newspaper"></i> مقالات</button>
                 <button class="tab-btn" data-tab="comments"><i class="fas fa-comment-dots"></i> نظرات</button>
                 <button class="tab-btn" data-tab="users"><i class="fas fa-users"></i> کاربران</button>
                 <button class="tab-btn" data-tab="requests"><i class="fas fa-clipboard-list"></i> درخواست‌ها</button>
                 <button class="tab-btn" data-tab="cart"><i class="fas fa-shopping-cart"></i> سبد خرید</button>
+                <button class="tab-btn" data-tab="pages"><i class="fas fa-file-alt"></i> صفحات</button>
                 <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> تنظیمات</button>
             </div>
 
+            <!-- ===== تب داشبورد ===== -->
+            <div id="tab-dashboard" class="tab-content active">
+                <h3><i class="fas fa-chart-pie"></i> خلاصه مدیریت</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:16px;">
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--primary);" id="statsArticles">0</span>
+                        <span style="font-weight:600;">📝 مقالات</span>
+                    </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--secondary);" id="statsComments">0</span>
+                        <span style="font-weight:600;">💬 نظرات</span>
+                    </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--success);" id="statsPending">0</span>
+                        <span style="font-weight:600;">⏳ در انتظار تایید</span>
+                    </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--info);" id="statsUsers">0</span>
+                        <span style="font-weight:600;">👥 کاربران</span>
+                    </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--warning);" id="statsRequests">0</span>
+                        <span style="font-weight:600;">📋 درخواست‌ها</span>
+                    </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--danger);" id="statsCart">0</span>
+                        <span style="font-weight:600;">🛒 سبد خرید</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- ===== تب مقالات ===== -->
-            <div id="tab-articles" class="tab-content active">
+            <div id="tab-articles" class="tab-content">
                 <h3><i class="fas fa-newspaper"></i> مدیریت مقالات</h3>
-                <button class="btn btn-primary" onclick="showAddArticle()" style="margin-bottom:16px;">
-                    <i class="fas fa-plus"></i> مقاله جدید
-                </button>
+                <button class="btn btn-primary" onclick="showAddArticle()" style="margin-bottom:16px;"><i class="fas fa-plus"></i> مقاله جدید</button>
                 <div id="articlesList"><div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
             </div>
 
@@ -232,32 +281,213 @@
                 <div id="cartList"><div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
             </div>
 
+            <!-- ===== تب صفحات ===== -->
+            <div id="tab-pages" class="tab-content">
+                <h3><i class="fas fa-file-alt"></i> مدیریت صفحات</h3>
+                
+                <!-- صفحه اصلی -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">🏠 صفحه اصلی (Hero)</h4>
+                    <div class="form-group">
+                        <label>عنوان اصلی</label>
+                        <input type="text" id="page_hero_title" placeholder="عنوان اصلی صفحه" />
+                    </div>
+                    <div class="form-group">
+                        <label>زیر عنوان</label>
+                        <input type="text" id="page_hero_subtitle" placeholder="زیر عنوان صفحه" />
+                    </div>
+                    <div class="form-group">
+                        <label>متن توصیفی</label>
+                        <textarea id="page_hero_text" rows="2" placeholder="متن توصیفی صفحه اصلی"></textarea>
+                    </div>
+                </div>
+
+                <!-- درباره ما -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📖 درباره ما</h4>
+                    <div class="form-group">
+                        <label>عنوان بخش درباره ما</label>
+                        <input type="text" id="page_about_title" placeholder="عنوان بخش درباره ما" />
+                    </div>
+                    <div class="form-group">
+                        <label>متن درباره ما</label>
+                        <textarea id="page_about_text" rows="6" placeholder="متن کامل درباره ما"></textarea>
+                    </div>
+                </div>
+
+                <!-- فوتر -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📌 فوتر</h4>
+                    <div class="form-group">
+                        <label>متن فوتر</label>
+                        <input type="text" id="page_footer_text" placeholder="متن فوتر سایت" />
+                    </div>
+                    <div class="form-group">
+                        <label>متن کپی‌رایت</label>
+                        <input type="text" id="page_copyright_text" placeholder="متن کپی‌رایت" />
+                    </div>
+                </div>
+
+                <!-- آمار -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📊 آمار نمایش داده شده در سایت</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>سال سابقه</label>
+                            <input type="text" id="page_stat_years" placeholder="مثال: ۲۰+" />
+                        </div>
+                        <div class="form-group">
+                            <label>پروژه‌های موفق</label>
+                            <input type="text" id="page_stat_projects" placeholder="مثال: ۸۰+" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>حریم خصوصی</label>
+                        <input type="text" id="page_stat_privacy" placeholder="مثال: ۱۰۰%" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="savePages()"><i class="fas fa-save"></i> ذخیره تمام صفحات</button>
+            </div>
+
             <!-- ===== تب تنظیمات ===== -->
             <div id="tab-settings" class="tab-content">
                 <h3><i class="fas fa-cog"></i> تنظیمات سایت</h3>
-                <div id="settingsForm">
-                    <div class="form-group">
-                        <label>متن درباره ما</label>
-                        <textarea id="setting_about_text" rows="6"></textarea>
+
+                <!-- اطلاعات عمومی -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">🌐 اطلاعات عمومی</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>نام سایت</label>
+                            <input type="text" id="setting_site_name" />
+                        </div>
+                        <div class="form-group">
+                            <label>شعار سایت</label>
+                            <input type="text" id="setting_site_tagline" />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>شماره تماس</label>
-                        <input type="text" id="setting_phone" />
+                        <label>توضیحات متا (Meta Description)</label>
+                        <textarea id="setting_meta_description" rows="2"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>ایمیل</label>
-                        <input type="email" id="setting_email" />
+                        <label>کلمات کلیدی (Meta Keywords)</label>
+                        <input type="text" id="setting_meta_keywords" placeholder="هوش مصنوعی، دستیار هوشمند، چت‌بات، ..." />
+                    </div>
+                </div>
+
+                <!-- اطلاعات تماس -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📞 اطلاعات تماس</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>شماره تماس</label>
+                            <input type="text" id="setting_phone" />
+                        </div>
+                        <div class="form-group">
+                            <label>شماره تماس ۲ (اختیاری)</label>
+                            <input type="text" id="setting_phone2" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ایمیل</label>
+                            <input type="email" id="setting_email" />
+                        </div>
+                        <div class="form-group">
+                            <label>ایمیل ۲ (اختیاری)</label>
+                            <input type="email" id="setting_email2" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>آدرس</label>
                         <input type="text" id="setting_address" />
                     </div>
                     <div class="form-group">
-                        <label>متن فوتر</label>
-                        <input type="text" id="setting_footer_text" />
+                        <label>ساعت کاری</label>
+                        <input type="text" id="setting_working_hours" placeholder="شنبه تا چهارشنبه ۹-۱۷" />
                     </div>
-                    <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
                 </div>
+
+                <!-- شبکه‌های اجتماعی -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📱 شبکه‌های اجتماعی</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>واتساپ</label>
+                            <input type="text" id="setting_whatsapp" placeholder="https://wa.me/..." />
+                        </div>
+                        <div class="form-group">
+                            <label>تلگرام</label>
+                            <input type="text" id="setting_telegram" placeholder="https://t.me/..." />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>لینکدین</label>
+                            <input type="text" id="setting_linkedin" placeholder="https://linkedin.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label>اینستاگرام</label>
+                            <input type="text" id="setting_instagram" placeholder="https://instagram.com/..." />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ایتا</label>
+                            <input type="text" id="setting_eitaa" placeholder="https://eitaa.com/..." />
+                        </div>
+                        <div class="form-group">
+                            <label>بله</label>
+                            <input type="text" id="setting_bale" placeholder="https://bale.ai/..." />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تنظیمات ظاهری -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">🎨 تنظیمات ظاهری</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>رنگ اصلی (Primary)</label>
+                            <input type="color" id="setting_color_primary" value="#6C3CE1" />
+                        </div>
+                        <div class="form-group">
+                            <label>رنگ ثانویه (Secondary)</label>
+                            <input type="color" id="setting_color_secondary" value="#FFB800" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>فونت سایت</label>
+                        <select id="setting_font">
+                            <option value="Vazirmatn">وزیرمتن</option>
+                            <option value="Yekan">یکان</option>
+                            <option value="Shabnam">شبنم</option>
+                            <option value="Sahel">ساحل</option>
+                            <option value="Gandom">گندم</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- کدهای تحلیلی -->
+                <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">📊 کدهای تحلیلی</h4>
+                    <div class="form-group">
+                        <label>Google Analytics</label>
+                        <textarea id="setting_analytics" rows="3" placeholder="کد Google Analytics را وارد کنید..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>کدهای سربرگ (Header)</label>
+                        <textarea id="setting_header_codes" rows="3" placeholder="کدهای اضافی برای بخش HEAD..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>کدهای فوتر (Footer)</label>
+                        <textarea id="setting_footer_codes" rows="3" placeholder="کدهای اضافی برای بخش فوتر..."></textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> ذخیره تمام تنظیمات</button>
             </div>
 
         </div><!-- end adminPanel -->
@@ -281,6 +511,8 @@
                     <option value="ایجنت AI">ایجنت AI</option>
                     <option value="آموزش">آموزش</option>
                     <option value="اتوماسیون">اتوماسیون</option>
+                    <option value="تحلیل داده">تحلیل داده</option>
+                    <option value="اخبار">اخبار</option>
                 </select>
             </div>
             <div class="form-group">
@@ -379,27 +611,45 @@
 
         function loadTabContent(tab) {
             switch(tab) {
+                case 'dashboard': loadDashboardStats(); break;
                 case 'articles': loadArticles(); break;
                 case 'comments': loadComments(); break;
                 case 'users': loadUsers(); break;
                 case 'requests': loadRequests(); break;
                 case 'cart': loadCartItems(); break;
+                case 'pages': loadPages(); break;
                 case 'settings': loadSettings(); break;
             }
         }
 
         function loadAllTabs() {
-            loadArticles(); loadComments(); loadUsers();
-            loadRequests(); loadCartItems(); loadSettings();
+            loadDashboardStats(); loadArticles(); loadComments(); loadUsers();
+            loadRequests(); loadCartItems(); loadPages(); loadSettings();
         }
 
         // =============================================
-        // ===== ۱. مدیریت مقالات =====
+        // ===== ۱. آمار داشبورد =====
+        // =============================================
+        function loadDashboardStats() {
+            fetch(`${API_BASE}/api/admin/stats`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('statsArticles').textContent = data.articles || 0;
+                    document.getElementById('statsComments').textContent = data.comments || 0;
+                    document.getElementById('statsPending').textContent = data.pending || 0;
+                    document.getElementById('statsUsers').textContent = data.users || 0;
+                    document.getElementById('statsRequests').textContent = data.requests || 0;
+                    document.getElementById('statsCart').textContent = data.cart || 0;
+                })
+                .catch(() => {});
+        }
+
+        // =============================================
+        // ===== ۲. مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
             fetch(`${API_BASE}/api/admin/articles`)
                 .then(res => res.json())
                 .then(data => {
@@ -411,7 +661,7 @@
                         <th>#</th><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th>
                     </tr></thead><tbody>`;
                     data.forEach((item, index) => {
-                        const statusBadge = item.status === 'published' ? 'badge-approved' : 'badge-draft';
+                        const statusBadge = item.status === 'published' ? 'badge-published' : 'badge-draft';
                         const statusText = item.status === 'published' ? 'منتشر شده' : 'پیش‌نویس';
                         html += `<tr>
                             <td>${index+1}</td>
@@ -429,12 +679,9 @@
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
-                .catch(() => {
-                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>';
-                });
+                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
         }
 
-        // ===== نمایش فرم افزودن مقاله =====
         function showAddArticle() {
             document.getElementById('articleModalTitle').textContent = '✍️ مقاله جدید';
             document.getElementById('articleEditId').value = '';
@@ -446,7 +693,6 @@
             document.getElementById('articleModal').classList.add('active');
         }
 
-        // ===== ویرایش مقاله =====
         function editArticle(id) {
             fetch(`${API_BASE}/api/articles/${id}`)
                 .then(res => res.json())
@@ -463,70 +709,35 @@
                 .catch(() => alert('❌ خطا در دریافت اطلاعات مقاله'));
         }
 
-        // ===== بستن مودال =====
         function closeArticleModal() {
             document.getElementById('articleModal').classList.remove('active');
         }
 
-        // =============================================
-        // ===== ذخیره مقاله (اصلاح‌شده با لاگ) =====
-        // =============================================
         function saveArticle() {
             const id = document.getElementById('articleEditId').value;
-            const title = document.getElementById('articleTitle').value.trim();
-            const category = document.getElementById('articleCategory').value;
-            const content = document.getElementById('articleContent').value.trim();
-            const author = document.getElementById('articleAuthor').value.trim() || 'توسعه دهنده هوش مصنوعی سوفیا';
-            const status = document.getElementById('articleStatus').value;
+            const data = {
+                title: document.getElementById('articleTitle').value.trim(),
+                category: document.getElementById('articleCategory').value,
+                content: document.getElementById('articleContent').value.trim(),
+                author: document.getElementById('articleAuthor').value.trim() || 'توسعه دهنده هوش مصنوعی سوفیا',
+                status: document.getElementById('articleStatus').value
+            };
+            if (!data.title || !data.content) { alert('⚠️ عنوان و متن مقاله الزامی است.'); return; }
 
-            // ===== اعتبارسنجی =====
-            if (!title || !content) {
-                alert('⚠️ عنوان و متن مقاله الزامی است.');
-                return;
-            }
-
-            const data = { title, category, content, author, status };
             const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
 
-            // ===== نمایش داده در کنسول برای عیب‌یابی =====
-            console.log('📤 ارسال داده به:', url);
-            console.log('📤 متد:', method);
-            console.log('📤 داده:', data);
-
-            fetch(url, {
-                method: method,
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                console.log('📥 وضعیت پاسخ:', response.status);
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        console.error('❌ پاسخ خطا:', text);
-                        throw new Error('خطا در ذخیره مقاله (وضعیت: ' + response.status + ')');
-                    });
-                }
-                return response.json();
-            })
-            .then(result => {
-                console.log('✅ پاسخ موفق:', result);
-                alert(result.message || '✅ مقاله با موفقیت ذخیره شد!');
-                closeArticleModal();
-                loadArticles();
-            })
-            .catch(error => {
-                console.error('❌ خطا:', error);
-                alert('❌ خطا در ذخیره مقاله: ' + error.message);
-            });
+            fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+                .then(res => res.json())
+                .then(result => {
+                    alert(result.message || '✅ مقاله با موفقیت ذخیره شد!');
+                    closeArticleModal();
+                    loadArticles();
+                    loadDashboardStats();
+                })
+                .catch(() => alert('❌ خطا در ذخیره مقاله'));
         }
 
-        // =============================================
-        // ===== حذف مقاله =====
-        // =============================================
         function deleteArticle(id) {
             if (!confirm('⚠️ آیا از حذف این مقاله اطمینان دارید؟')) return;
             fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
@@ -534,12 +745,13 @@
                 .then(data => {
                     alert(data.message || '✅ مقاله با موفقیت حذف شد!');
                     loadArticles();
+                    loadDashboardStats();
                 })
                 .catch(() => alert('❌ خطا در حذف مقاله'));
         }
 
         // =============================================
-        // ===== ۲. نظرات =====
+        // ===== ۳. نظرات =====
         // =============================================
         function loadComments() {
             const container = document.getElementById('commentsList');
@@ -586,7 +798,7 @@
         function approveComment(id) {
             fetch(`${API_BASE}/api/admin/comments/${id}/approve`, { method: 'PUT' })
                 .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر تایید شد!'); loadComments(); })
+                .then(data => { alert(data.message || '✅ نظر تایید شد!'); loadComments(); loadDashboardStats(); })
                 .catch(() => alert('❌ خطا در تایید نظر'));
         }
 
@@ -594,7 +806,7 @@
             if (!confirm('⚠️ آیا از رد این نظر اطمینان دارید؟')) return;
             fetch(`${API_BASE}/api/admin/comments/${id}/reject`, { method: 'PUT' })
                 .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر رد شد!'); loadComments(); })
+                .then(data => { alert(data.message || '✅ نظر رد شد!'); loadComments(); loadDashboardStats(); })
                 .catch(() => alert('❌ خطا در رد نظر'));
         }
 
@@ -602,12 +814,12 @@
             if (!confirm('⚠️ آیا از حذف این نظر اطمینان دارید؟')) return;
             fetch(`${API_BASE}/api/admin/comments/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر حذف شد!'); loadComments(); })
+                .then(data => { alert(data.message || '✅ نظر حذف شد!'); loadComments(); loadDashboardStats(); })
                 .catch(() => alert('❌ خطا در حذف نظر'));
         }
 
         // =============================================
-        // ===== ۳. کاربران =====
+        // ===== ۴. کاربران =====
         // =============================================
         function loadUsers() {
             const container = document.getElementById('usersList');
@@ -642,12 +854,12 @@
             if (!confirm(`⚠️ آیا از حذف کاربر "${userName}" اطمینان دارید؟`)) return;
             fetch(`${API_BASE}/api/users/${userId}`, { method: 'DELETE' })
                 .then(res => res.json())
-                .then(data => { alert(data.message || '✅ کاربر حذف شد!'); loadUsers(); })
+                .then(data => { alert(data.message || '✅ کاربر حذف شد!'); loadUsers(); loadDashboardStats(); })
                 .catch(() => alert('❌ خطا در حذف کاربر'));
         }
 
         // =============================================
-        // ===== ۴. درخواست‌ها =====
+        // ===== ۵. درخواست‌ها =====
         // =============================================
         function loadRequests() {
             const container = document.getElementById('requestsList');
@@ -688,7 +900,7 @@
         }
 
         // =============================================
-        // ===== ۵. سبد خرید =====
+        // ===== ۶. سبد خرید =====
         // =============================================
         function loadCartItems() {
             const container = document.getElementById('cartList');
@@ -730,29 +942,120 @@
         }
 
         // =============================================
-        // ===== ۶. تنظیمات =====
+        // ===== ۷. صفحات =====
+        // =============================================
+        function loadPages() {
+            fetch(`${API_BASE}/api/admin/settings`)
+                .then(res => res.json())
+                .then(data => {
+                    // صفحه اصلی
+                    document.getElementById('page_hero_title').value = data.hero_title || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI';
+                    document.getElementById('page_hero_subtitle').value = data.hero_subtitle || 'از مقاله‌های تخصصی تا پیاده‌سازی عملی';
+                    document.getElementById('page_hero_text').value = data.hero_text || 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی';
+                    // درباره ما
+                    document.getElementById('page_about_title').value = data.about_title || 'درباره سوفیا AI';
+                    document.getElementById('page_about_text').value = data.about_text || 'تیم سوفیا با بیش از ۲۰ سال سابقه در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند...';
+                    // فوتر
+                    document.getElementById('page_footer_text').value = data.footer_text || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران';
+                    document.getElementById('page_copyright_text').value = data.copyright_text || '© ۲۰۲۶ توسعه‌دهنده هوش مصنوعی سوفیا — تمامی حقوق محفوظ است';
+                    // آمار
+                    document.getElementById('page_stat_years').value = data.stat_years || '۲۰+';
+                    document.getElementById('page_stat_projects').value = data.stat_projects || '۸۰+';
+                    document.getElementById('page_stat_privacy').value = data.stat_privacy || '۱۰۰%';
+                })
+                .catch(() => {});
+        }
+
+        function savePages() {
+            const data = {
+                hero_title: document.getElementById('page_hero_title').value,
+                hero_subtitle: document.getElementById('page_hero_subtitle').value,
+                hero_text: document.getElementById('page_hero_text').value,
+                about_title: document.getElementById('page_about_title').value,
+                about_text: document.getElementById('page_about_text').value,
+                footer_text: document.getElementById('page_footer_text').value,
+                copyright_text: document.getElementById('page_copyright_text').value,
+                stat_years: document.getElementById('page_stat_years').value,
+                stat_projects: document.getElementById('page_stat_projects').value,
+                stat_privacy: document.getElementById('page_stat_privacy').value
+            };
+            
+            fetch(`${API_BASE}/api/admin/settings`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(result => {
+                alert(result.message || '✅ صفحات با موفقیت ذخیره شدند!');
+            })
+            .catch(() => alert('❌ خطا در ذخیره صفحات'));
+        }
+
+        // =============================================
+        // ===== ۸. تنظیمات =====
         // =============================================
         function loadSettings() {
             fetch(`${API_BASE}/api/admin/settings`)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('setting_about_text').value = data.about_text || '';
+                    // اطلاعات عمومی
+                    document.getElementById('setting_site_name').value = data.site_name || 'سوفیا AI';
+                    document.getElementById('setting_site_tagline').value = data.site_tagline || 'توسعه‌دهنده هوش مصنوعی';
+                    document.getElementById('setting_meta_description').value = data.meta_description || '';
+                    document.getElementById('setting_meta_keywords').value = data.meta_keywords || 'هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون';
+                    // اطلاعات تماس
                     document.getElementById('setting_phone').value = data.phone || '';
+                    document.getElementById('setting_phone2').value = data.phone2 || '';
                     document.getElementById('setting_email').value = data.email || '';
+                    document.getElementById('setting_email2').value = data.email2 || '';
                     document.getElementById('setting_address').value = data.address || '';
-                    document.getElementById('setting_footer_text').value = data.footer_text || '';
+                    document.getElementById('setting_working_hours').value = data.working_hours || 'شنبه تا چهارشنبه ۹-۱۷';
+                    // شبکه‌های اجتماعی
+                    document.getElementById('setting_whatsapp').value = data.whatsapp || '';
+                    document.getElementById('setting_telegram').value = data.telegram || '';
+                    document.getElementById('setting_linkedin').value = data.linkedin || '';
+                    document.getElementById('setting_instagram').value = data.instagram || '';
+                    document.getElementById('setting_eitaa').value = data.eitaa || '';
+                    document.getElementById('setting_bale').value = data.bale || '';
+                    // ظاهر
+                    document.getElementById('setting_color_primary').value = data.color_primary || '#6C3CE1';
+                    document.getElementById('setting_color_secondary').value = data.color_secondary || '#FFB800';
+                    document.getElementById('setting_font').value = data.font || 'Vazirmatn';
+                    // کدها
+                    document.getElementById('setting_analytics').value = data.analytics || '';
+                    document.getElementById('setting_header_codes').value = data.header_codes || '';
+                    document.getElementById('setting_footer_codes').value = data.footer_codes || '';
                 })
                 .catch(() => {});
         }
 
         function saveSettings() {
             const data = {
-                about_text: document.getElementById('setting_about_text').value,
+                site_name: document.getElementById('setting_site_name').value,
+                site_tagline: document.getElementById('setting_site_tagline').value,
+                meta_description: document.getElementById('setting_meta_description').value,
+                meta_keywords: document.getElementById('setting_meta_keywords').value,
                 phone: document.getElementById('setting_phone').value,
+                phone2: document.getElementById('setting_phone2').value,
                 email: document.getElementById('setting_email').value,
+                email2: document.getElementById('setting_email2').value,
                 address: document.getElementById('setting_address').value,
-                footer_text: document.getElementById('setting_footer_text').value
+                working_hours: document.getElementById('setting_working_hours').value,
+                whatsapp: document.getElementById('setting_whatsapp').value,
+                telegram: document.getElementById('setting_telegram').value,
+                linkedin: document.getElementById('setting_linkedin').value,
+                instagram: document.getElementById('setting_instagram').value,
+                eitaa: document.getElementById('setting_eitaa').value,
+                bale: document.getElementById('setting_bale').value,
+                color_primary: document.getElementById('setting_color_primary').value,
+                color_secondary: document.getElementById('setting_color_secondary').value,
+                font: document.getElementById('setting_font').value,
+                analytics: document.getElementById('setting_analytics').value,
+                header_codes: document.getElementById('setting_header_codes').value,
+                footer_codes: document.getElementById('setting_footer_codes').value
             };
+            
             fetch(`${API_BASE}/api/admin/settings`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -788,28 +1091,35 @@
 
             if (oldPassword !== currentPassword) {
                 messageDiv.style.display = 'block';
-                messageDiv.style.color = '#e74c3c';
+                messageDiv.style.color = 'var(--danger)';
                 messageDiv.textContent = '❌ رمز فعلی اشتباه است!';
                 return;
             }
             if (newPassword.length < 4) {
                 messageDiv.style.display = 'block';
-                messageDiv.style.color = '#e74c3c';
+                messageDiv.style.color = 'var(--danger)';
                 messageDiv.textContent = '⚠️ رمز جدید باید حداقل ۴ کاراکتر باشد!';
                 return;
             }
             if (newPassword !== confirmNewPassword) {
                 messageDiv.style.display = 'block';
-                messageDiv.style.color = '#e74c3c';
+                messageDiv.style.color = 'var(--danger)';
                 messageDiv.textContent = '⚠️ رمز جدید با تکرار آن مطابقت ندارد!';
                 return;
             }
 
             localStorage.setItem(ADMIN_PASSWORD_KEY, newPassword);
             messageDiv.style.display = 'block';
-            messageDiv.style.color = '#28a745';
+            messageDiv.style.color = 'var(--success)';
             messageDiv.textContent = '✅ رمز عبور با موفقیت تغییر یافت!';
             setTimeout(() => { closeChangePassword(); }, 2000);
+        });
+
+        // =============================================
+        // ===== بارگذاری اولیه =====
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // صفحه ورود نشان داده می‌شود
         });
     </script>
 
