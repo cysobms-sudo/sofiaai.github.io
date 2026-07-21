@@ -546,7 +546,11 @@ app.delete('/api/admin/articles/:id', (req, res) => {
     });
 });
 
-// ===== مدیریت نظرات =====
+// ==================================================
+// ===== APIهای نظرات (کامل) =====
+// ==================================================
+
+// ===== دریافت نظرات برای پنل مدیریت =====
 app.get('/api/admin/comments', (req, res) => {
     db.query('SELECT id, name, email, text, status, created_at FROM comments ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -561,6 +565,7 @@ app.get('/api/admin/comments', (req, res) => {
     });
 });
 
+// ===== ثبت نظر جدید (با وضعیت pending) =====
 app.post('/api/comments', (req, res) => {
     const { name, email, text } = req.body;
     
@@ -578,6 +583,7 @@ app.post('/api/comments', (req, res) => {
     });
 });
 
+// ===== تایید نظر =====
 app.put('/api/admin/comments/:id/approve', (req, res) => {
     const commentId = req.params.id;
     db.query('UPDATE comments SET status = "approved" WHERE id = ?', [commentId], (err, result) => {
@@ -592,6 +598,7 @@ app.put('/api/admin/comments/:id/approve', (req, res) => {
     });
 });
 
+// ===== رد نظر =====
 app.put('/api/admin/comments/:id/reject', (req, res) => {
     const commentId = req.params.id;
     db.query('UPDATE comments SET status = "rejected" WHERE id = ?', [commentId], (err, result) => {
@@ -606,6 +613,7 @@ app.put('/api/admin/comments/:id/reject', (req, res) => {
     });
 });
 
+// ===== حذف نظر =====
 app.delete('/api/admin/comments/:id', (req, res) => {
     const commentId = req.params.id;
     db.query('DELETE FROM comments WHERE id = ?', [commentId], (err, result) => {
@@ -620,7 +628,26 @@ app.delete('/api/admin/comments/:id', (req, res) => {
     });
 });
 
+// ===== دریافت نظرات تایید شده برای نمایش در سایت =====
+app.get('/api/comments/approved', (req, res) => {
+    db.query('SELECT name, text, created_at FROM comments WHERE status = "approved" ORDER BY id DESC LIMIT 4', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت نظرات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const commentsWithPersianDate = results.map(comment => {
+            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD');
+            return { ...comment, created_at: persianDate };
+        });
+        res.json(commentsWithPersianDate);
+    });
+});
+
+// ==================================================
 // ===== مدیریت تنظیمات سایت =====
+// ==================================================
+
+// ===== دریافت تنظیمات سایت =====
 app.get('/api/admin/settings', (req, res) => {
     const query = 'SELECT setting_key, setting_value FROM site_settings';
     db.query(query, (err, results) => {
@@ -636,6 +663,7 @@ app.get('/api/admin/settings', (req, res) => {
     });
 });
 
+// ===== ذخیره تنظیمات سایت =====
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
     const queries = Object.keys(settings).map(key => {
@@ -694,21 +722,6 @@ app.get('/api/articles/:id', (req, res) => {
         const article = results[0];
         article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD');
         res.json(article);
-    });
-});
-
-// ===== دریافت نظرات تایید شده برای نمایش در سایت =====
-app.get('/api/comments/approved', (req, res) => {
-    db.query('SELECT name, text, created_at FROM comments WHERE status = "approved" ORDER BY id DESC LIMIT 4', (err, results) => {
-        if (err) {
-            console.error('❌ خطا در دریافت نظرات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
-        }
-        const commentsWithPersianDate = results.map(comment => {
-            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD');
-            return { ...comment, created_at: persianDate };
-        });
-        res.json(commentsWithPersianDate);
     });
 });
 
