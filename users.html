@@ -178,15 +178,6 @@
             padding-top: 16px;
             text-align: center;
         }
-        .badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        .badge-new { background: #d4edda; color: #155724; }
-        .badge-seen { background: #e8ecf1; color: #5A4A7A; }
 
         @media (max-width: 768px) {
             .login-box, .admin-box { padding: 20px 16px; }
@@ -266,14 +257,12 @@
                 document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
                 document.getElementById('tab-' + this.dataset.tab).classList.add('active');
                 
-                // بارگذاری مجدد محتوای تب
                 if (this.dataset.tab === 'users') loadUsers();
                 else if (this.dataset.tab === 'requests') loadRequests();
                 else if (this.dataset.tab === 'cart') loadCartItems();
             });
         });
 
-        // ===== بارگذاری همه تب‌ها =====
         function loadAllTabs() {
             loadUsers();
             loadRequests();
@@ -455,15 +444,87 @@
             const container = document.getElementById('cartList');
             container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات سبد خرید...</div>';
 
-            // برای نمایش سبد خرید همه کاربران، نیاز به API جدید است
-            // فعلاً یک پیام نمایش می‌دهیم
-            container.innerHTML = `
-                <div class="empty">
-                    <i class="fas fa-info-circle"></i>
-                    <p>برای مشاهده سبد خرید کاربران، باید API جدیدی در سرور تعریف شود.</p>
-                    <p style="font-size:0.85rem; margin-top:8px;">در حال حاضر می‌توانید سبد خرید را در <a href="dashboard.html" style="color:#6C3CE1;font-weight:700;">داشبورد کاربری</a> مشاهده کنید.</p>
-                </div>
-            `;
+            fetch('/api/admin/cart')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('خطا در دریافت اطلاعات');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty">❌ هیچ آیتمی در سبد خرید کاربران وجود ندارد.</div>';
+                        return;
+                    }
+
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام کاربر</th>
+                                    <th>ایمیل</th>
+                                    <th>نام خدمت</th>
+                                    <th>قیمت</th>
+                                    <th>تاریخ افزودن</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    data.forEach((item, index) => {
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.user_name}</td>
+                                <td>${item.user_email}</td>
+                                <td>${item.item_name}</td>
+                                <td>${item.item_price}</td>
+                                <td>${item.created_at}</td>
+                                <td>
+                                    <button class="delete-btn" data-id="${item.id}" data-name="${item.item_name}">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `</tbody></table><div style="text-align:center; margin-top:12px; color:#7a7a9a; font-size:0.85rem;">🔹 تعداد کل آیتم‌ها: ${data.length}</div>`;
+                    container.innerHTML = html;
+
+                    document.querySelectorAll('#cartList .delete-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const cartId = this.dataset.id;
+                            const itemName = this.dataset.name;
+                            if (confirm(`⚠️ آیا از حذف آیتم "${itemName}" از سبد خرید اطمینان دارید؟`)) {
+                                deleteCartItem(cartId);
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('❌ خطا:', error);
+                    container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات سبد خرید.</div>';
+                });
+        }
+
+        function deleteCartItem(cartId) {
+            fetch(`/api/cart/${cartId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert('✅ ' + data.message);
+                        loadCartItems();
+                    } else {
+                        alert('❌ ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ خطا:', error);
+                    alert('❌ خطا در حذف آیتم از سبد خرید.');
+                });
         }
 
         // ===== ورود با کلید Enter =====
@@ -471,6 +532,5 @@
             if (e.key === 'Enter') checkPassword();
         });
     </script>
-
 </body>
 </html>
