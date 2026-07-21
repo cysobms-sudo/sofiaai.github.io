@@ -305,7 +305,7 @@ app.post('/api/cart/add', (req, res) => {
         (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی سبد خرید:', err);
-                return res.status(500).json({ error: 'خطا در بررسی سبد خرید' });
+                return res.status(500).json({ error: 'خطا در بررسی سبد購買' });
             }
             
             if (results.length > 0) {
@@ -558,6 +558,23 @@ app.get('/api/admin/comments', (req, res) => {
             return { ...comment, created_at: persianDate };
         });
         res.json(commentsWithPersianDate);
+    });
+});
+
+app.post('/api/comments', (req, res) => {
+    const { name, email, text } = req.body;
+    
+    if (!name || !text) {
+        return res.status(400).json({ error: 'نام و متن نظر الزامی است.' });
+    }
+    
+    const query = 'INSERT INTO comments (name, email, text, status) VALUES (?, ?, ?, "pending")';
+    db.query(query, [name, email || null, text], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره نظر:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره نظر' });
+        }
+        res.json({ message: '✅ نظر شما با موفقیت ثبت شد! پس از تایید نمایش داده می‌شود.' });
     });
 });
 
