@@ -520,7 +520,7 @@
             return true;
         }
 
-        // ===== تابع تبدیل تاریخ میلادی به شمسی (دقیق) =====
+        // ===== تابع تبدیل تاریخ میلادی به شمسی =====
         function toPersianDate(isoDate) {
             if (!isoDate) return '---';
             
@@ -533,30 +533,17 @@
                 const date = new Date(isoDate);
                 if (isNaN(date.getTime())) {
                     // اگر تاریخ قابل شناسایی نبود، تاریخ فعلی را برگردان
-                    const now = new Date();
-                    return new Intl.DateTimeFormat('fa-IR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).format(now);
+                    return getCurrentPersianDate();
                 }
                 
-                const persianDate = new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                }).format(date);
-                
-                return persianDate;
-            } catch (e) {
-                console.error('خطا در تبدیل تاریخ:', e);
-                // در صورت خطا، تاریخ فعلی را برگردان
-                const now = new Date();
                 return new Intl.DateTimeFormat('fa-IR', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit'
-                }).format(now);
+                }).format(date);
+            } catch (e) {
+                console.error('خطا در تبدیل تاریخ:', e);
+                return getCurrentPersianDate();
             }
         }
 
@@ -583,6 +570,20 @@
             }).format(now);
         }
 
+        // ===== تابع اصلاح خودکار تاریخ خراب =====
+        function fixInvalidDate(userData) {
+            if (!userData || !userData.created_at) return userData;
+            
+            const dateStr = userData.created_at;
+            // اگر تاریخ خراب بود (مثل ۷۸۴/۰۲/۰۸)، آن را با تاریخ فعلی جایگزین کن
+            if (!isValidPersianDate(dateStr)) {
+                userData.created_at = getCurrentPersianDate();
+                // ذخیره در localStorage
+                localStorage.setItem('user', JSON.stringify(userData));
+            }
+            return userData;
+        }
+
         function loadUser() {
             try {
                 const userData = localStorage.getItem('user');
@@ -592,6 +593,9 @@
                 }
                 currentUser = JSON.parse(userData);
                 
+                // ===== اصلاح خودکار تاریخ خراب =====
+                currentUser = fixInvalidDate(currentUser);
+                
                 document.getElementById('userNameDisplay').textContent = currentUser.name || 'کاربر';
                 document.getElementById('userAvatar').textContent = currentUser.name ? currentUser.name.charAt(0) : 'ع';
                 document.getElementById('profileName').textContent = currentUser.name || '---';
@@ -600,17 +604,8 @@
                 const phone = currentUser.phone || '---';
                 document.getElementById('profilePhone').textContent = toPersianNumbers(phone);
                 
-                // ===== نمایش تاریخ عضویت با اصلاح خودکار =====
-                let dateToShow = '---';
-                if (currentUser.created_at) {
-                    dateToShow = toPersianDate(currentUser.created_at);
-                } else {
-                    // اگر تاریخ وجود نداشت، تاریخ فعلی را تنظیم کن
-                    const now = getCurrentPersianDate();
-                    dateToShow = now;
-                    currentUser.created_at = now;
-                    localStorage.setItem('user', JSON.stringify(currentUser));
-                }
+                // ===== نمایش تاریخ عضویت =====
+                const dateToShow = toPersianDate(currentUser.created_at);
                 document.getElementById('profileDate').textContent = dateToShow;
                 
                 document.getElementById('editName').value = currentUser.name || '';
