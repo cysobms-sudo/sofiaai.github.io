@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== استایل‌های کامل (همان نسخه قبلی) ===== */
+        /* ===== تمام استایل‌های قبلی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -534,7 +534,7 @@
             return result;
         }
 
-        // ===== دریافت تاریخ واقعی از سرور =====
+        // ===== دریافت تاریخ واقعی از سرور (همان منبع پنل مدیریت) =====
         async function fetchUserDataFromServer(email) {
             try {
                 const response = await fetch(`https://sofiaaisite.runflare.run/api/users/email/${encodeURIComponent(email)}`);
@@ -568,7 +568,7 @@
                 const phone = currentUser.phone || '---';
                 document.getElementById('profilePhone').textContent = toPersianNumbers(phone);
                 
-                // نمایش تاریخ اولیه (موقت)
+                // نمایش تاریخ (در حال بارگذاری)
                 document.getElementById('profileDate').textContent = 'در حال دریافت...';
                 
                 document.getElementById('editName').value = currentUser.name || '';
@@ -577,7 +577,7 @@
                 // ===== دریافت تاریخ واقعی از سرور =====
                 fetchUserDataFromServer(userEmail).then(serverData => {
                     if (serverData && serverData.created_at) {
-                        // تاریخ واقعی را از سرور بگیر
+                        // تاریخ واقعی را از سرور بگیر (همان تاریخی که در پنل مدیریت می‌بینید)
                         const realDate = toPersianDate(serverData.created_at);
                         document.getElementById('profileDate').textContent = realDate;
                         
