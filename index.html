@@ -436,7 +436,7 @@
             font-weight: 700;
         }
 
-        .add-to-cart {
+        .add-to-cart-btn {
             display: inline-block;
             margin-top: 12px;
             background: var(--secondary);
@@ -450,7 +450,7 @@
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
         }
-        .add-to-cart:hover {
+        .add-to-cart-btn:hover {
             transform: scale(1.04);
             background: var(--secondary-light);
         }
@@ -765,7 +765,7 @@
                 <a href="#about">درباره ما</a>
                 <a href="register.html" class="btn-register"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
                 <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> ورود</a>
-                <a href="dashboard.html" class="cart-link">
+                <a href="cart.html" class="cart-link">
                     <i class="fas fa-shopping-cart"></i>
                     سبد خرید
                     <span class="cart-badge" id="cartCount">0</span>
@@ -822,28 +822,28 @@
                     <h4>دستیار مکالمه‌ای</h4>
                     <p>پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('دستیار مکالمه‌ای', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('دستیار مکالمه‌ای', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="assistant-card">
                     <span class="icon">🧠</span>
                     <h4>سیستم RAG</h4>
                     <p>پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('سیستم RAG', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('سیستم RAG', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="assistant-card">
                     <span class="icon">⚙️</span>
                     <h4>اتوماسیون هوشمند</h4>
                     <p>طراحی workflowهای خودکار برای افزایش بهره‌وری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('اتوماسیون هوشمند', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('اتوماسیون هوشمند', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="assistant-card">
                     <span class="icon">📊</span>
                     <h4>تحلیل داده و پیش‌بینی</h4>
                     <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('تحلیل داده و پیش‌بینی', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('تحلیل داده و پیش‌بینی', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
             </div>
         </div>
@@ -863,7 +863,7 @@
                     <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
                     <div class="tags"><span>تحلیل داده</span><span>هوش تجاری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('ایجنت تحلیلگر داده', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('ایجنت تحلیلگر داده', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="agent-card">
                     <span class="icon">🤝</span>
@@ -871,7 +871,7 @@
                     <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
                     <div class="tags"><span>پشتیبانی</span><span>چت‌بات</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('ایجنت پشتیبانی مشتری', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('ایجنت پشتیبانی مشتری', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="agent-card">
                     <span class="icon">📝</span>
@@ -879,7 +879,7 @@
                     <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
                     <div class="tags"><span>تولید محتوا</span><span>بازاریابی</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('ایجنت تولید محتوا', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('ایجنت تولید محتوا', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
                 <div class="agent-card">
                     <span class="icon">⚙️</span>
@@ -887,7 +887,7 @@
                     <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
                     <div class="tags"><span>اتوماسیون</span><span>بهبود بهره‌وری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
-                    <button class="add-to-cart" onclick="addToCart('ایجنت اتوماسیون', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
+                    <button class="add-to-cart-btn" onclick="addToCart('ایجنت اتوماسیون', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
             </div>
         </div>
@@ -1008,11 +1008,13 @@
         </div>
     </footer>
 
-    <!-- ===== اسکریپت‌ها ===== -->
+    <!-- ===== اسکریپت‌ها (نسخه متصل به سرور) ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== به‌روزرسانی تعداد سبد خرید =====
             updateCartBadge();
 
+            // ===== جستجو =====
             document.querySelector('.search-box button').addEventListener('click', function() {
                 const query = document.querySelector('.search-box input').value.trim();
                 if (query) {
@@ -1022,6 +1024,7 @@
                 }
             });
 
+            // ===== ارسال نظر =====
             document.getElementById('commentForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('💬 نظر شما با موفقیت ثبت شد. پس از تایید نمایش داده می‌شود.');
@@ -1029,22 +1032,66 @@
             });
         });
 
-        function addToCart(name, price) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (cart.some(item => item.name === name)) {
-                alert('⚠️ این خدمت قبلاً به سبد خرید اضافه شده است.');
+        // ===== افزودن به سبد خرید (متصل به سرور) =====
+        async function addToCart(itemName, itemPrice) {
+            // بررسی ورود کاربر
+            const userData = localStorage.getItem('user');
+            if (!userData) {
+                alert('⚠️ لطفاً ابتدا وارد شوید.');
+                window.location.href = 'login.html';
                 return;
             }
-            cart.push({ name, price });
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge();
-            alert('✅ ' + name + ' به سبد خرید اضافه شد!');
+            
+            const user = JSON.parse(userData);
+            const userId = user.id;
+            
+            try {
+                const response = await fetch('https://sofiaaisite.runflare.run/api/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        user_id: userId, 
+                        item_name: itemName, 
+                        item_price: itemPrice || 'رایگان'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ ' + data.message);
+                    updateCartBadge();
+                } else {
+                    alert('❌ ' + data.error);
+                }
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                alert('❌ خطا در ارتباط با سرور.');
+            }
         }
 
+        // ===== به‌روزرسانی تعداد سبد خرید از سرور =====
         function updateCartBadge() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const userData = localStorage.getItem('user');
             const badge = document.getElementById('cartCount');
-            if (badge) badge.textContent = cart.length;
+            
+            if (!userData) {
+                if (badge) badge.textContent = '0';
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            const userId = user.id;
+            
+            fetch(`https://sofiaaisite.runflare.run/api/cart/${userId}`)
+                .then(res => res.json())
+                .then(cart => {
+                    if (badge) badge.textContent = cart.length;
+                })
+                .catch(() => {
+                    // در صورت خطا، مقدار 0 نمایش داده شود
+                    if (badge) badge.textContent = '0';
+                });
         }
     </script>
 
