@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>سوفیا AI | مرجع تخصصی دستیارهای هوشمند و ایجنت‌ها</title>
+    <title>توسعه‌دهنده هوش مصنوعی سوفیا | مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI</title>
+    <meta name="description" content="توسعه‌دهنده هوش مصنوعی سوفیا - مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI در ایران. خدمات تخصصی هوش مصنوعی، طراحی چت‌بات، سیستم RAG و اتوماسیون هوشمند." />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
+        /* ===== متغیرهای رنگی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -25,11 +27,7 @@
             --transition: 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             background: var(--bg-light);
@@ -37,21 +35,17 @@
             direction: rtl;
             line-height: 1.9;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; }
+
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .fade-up {
-            animation: fadeUp 0.8s ease;
+        .fade-up { animation: fadeUp 0.8s ease; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
         /* ===== نوار ناوبری ===== */
@@ -84,9 +78,24 @@
             object-fit: contain;
             transition: transform var(--transition);
         }
-        .logo-image:hover {
-            transform: scale(1.04);
+        .logo-image:hover { transform: scale(1.04); }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
         }
+        .logo-text .main {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .logo-text .main .highlight { color: var(--primary); }
+        .logo-text .sub {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
         .nav-menu {
             display: flex;
             gap: 6px;
@@ -136,20 +145,6 @@
             background: var(--primary-dark);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.35);
         }
-        .nav-menu .btn-logout {
-            background: #e74c3c;
-            color: #fff !important;
-            font-weight: 700;
-            padding: 8px 28px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .nav-menu .btn-logout:hover {
-            transform: scale(1.05);
-            background: #c0392b;
-        }
         .nav-menu .cart-link {
             background: var(--primary);
             color: #fff !important;
@@ -182,18 +177,43 @@
             padding: 60px 0 40px;
             background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
             border-bottom: 2px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.03), transparent 60%);
+            pointer-events: none;
         }
         .hero .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .hero-badge {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.06);
+            border: 1px solid rgba(108, 60, 225, 0.1);
+            color: var(--primary);
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
         .hero h1 {
             font-size: 3.2rem;
             font-weight: 900;
             line-height: 1.3;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             color: var(--text-dark);
         }
         .hero h1 .highlight {
@@ -201,6 +221,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        .hero .hero-title-sub {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-weight: 400;
         }
         .hero p {
             font-size: 1.2rem;
@@ -217,6 +243,11 @@
             width: 100%;
             box-shadow: var(--shadow);
             border: 2px solid var(--secondary);
+            transition: var(--transition);
+        }
+        .hero .search-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 60, 225, 0.06);
         }
         .hero .search-box input {
             flex: 1;
@@ -262,9 +293,7 @@
             margin-bottom: 16px;
             color: var(--text-dark);
         }
-        .about-text h2 .highlight {
-            color: var(--primary);
-        }
+        .about-text h2 .highlight { color: var(--primary); }
         .about-text p {
             color: var(--text-muted);
             font-size: 1.05rem;
@@ -276,9 +305,7 @@
             margin-top: 24px;
             flex-wrap: wrap;
         }
-        .about-text .about-stats .stat {
-            font-weight: 700;
-        }
+        .about-text .about-stats .stat { font-weight: 700; }
         .about-text .about-stats .stat span {
             display: block;
             font-size: 2rem;
@@ -298,12 +325,13 @@
             color: var(--primary-light);
         }
 
-        /* ===== دستیارهای هوشمند ===== */
-        .assistant-section {
+        /* ===== بخش‌های خدمات ===== */
+        .assistant-section, .agents-section {
             padding: 60px 0;
             background: var(--bg-light);
             border-bottom: 1px solid var(--border-color);
         }
+        .agents-section { background: #fff; }
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -321,88 +349,20 @@
             color: var(--text-muted);
             font-size: 1rem;
         }
+
         .assistant-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
-        }
-        .assistant-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-            display: block;
-            color: var(--text-dark);
-            cursor: pointer;
-        }
-        .assistant-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary);
-        }
-        .assistant-card .icon {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-        .assistant-card h4 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .assistant-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.9;
-        }
-        .assistant-card .link-hint {
-            display: inline-block;
-            margin-top: 12px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .assistant-card .link-hint i {
-            margin-right: 6px;
-            transition: transform 0.3s;
-        }
-        .assistant-card:hover .link-hint i {
-            transform: translateX(-4px);
-        }
-        .assistant-card .add-to-cart {
-            display: inline-block;
-            margin-top: 12px;
-            background: var(--secondary);
-            color: var(--text-dark);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .assistant-card .add-to-cart:hover {
-            transform: scale(1.04);
-            background: var(--secondary-light);
-        }
-
-        /* ===== ایجنت‌ها ===== */
-        .agents-section {
-            padding: 60px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
         }
         .agents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
-        .agent-card {
-            background: var(--bg-light);
+
+        .assistant-card, .agent-card {
+            background: #fff;
             border-radius: var(--radius);
             padding: 28px 24px;
             border: 2px solid var(--border-color);
@@ -411,7 +371,10 @@
             color: var(--text-dark);
             cursor: pointer;
             position: relative;
-            overflow: hidden;
+        }
+        .assistant-card:hover, .agent-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
         }
         .agent-card::before {
             content: '';
@@ -424,29 +387,39 @@
             opacity: 0;
             transition: var(--transition);
         }
-        .agent-card:hover::before {
-            opacity: 1;
-        }
-        .agent-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-        }
-        .agent-card .icon {
+        .agent-card:hover::before { opacity: 1; }
+        .agent-card:hover { border-color: var(--secondary); }
+        .assistant-card:hover { border-color: var(--primary); }
+
+        .assistant-card .icon, .agent-card .icon {
             font-size: 3rem;
             display: block;
             margin-bottom: 12px;
             color: var(--primary);
         }
-        .agent-card h4 {
+        .assistant-card h4, .agent-card h4 {
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .agent-card p {
+        .assistant-card p, .agent-card p {
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.9;
+        }
+        .assistant-card .link-hint, .agent-card .link-hint {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .assistant-card .link-hint i, .agent-card .link-hint i {
+            margin-right: 6px;
+            transition: transform 0.3s;
+        }
+        .assistant-card:hover .link-hint i, .agent-card:hover .link-hint i {
+            transform: translateX(-4px);
         }
         .agent-card .tags {
             margin-top: 14px;
@@ -462,21 +435,8 @@
             font-size: 0.7rem;
             font-weight: 700;
         }
-        .agent-card .link-hint {
-            display: inline-block;
-            margin-top: 16px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .agent-card .link-hint i {
-            margin-right: 6px;
-            transition: transform 0.3s;
-        }
-        .agent-card:hover .link-hint i {
-            transform: translateX(-4px);
-        }
-        .agent-card .add-to-cart {
+
+        .add-to-cart {
             display: inline-block;
             margin-top: 12px;
             background: var(--secondary);
@@ -490,7 +450,7 @@
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
         }
-        .agent-card .add-to-cart:hover {
+        .add-to-cart:hover {
             transform: scale(1.04);
             background: var(--secondary-light);
         }
@@ -545,9 +505,7 @@
             font-size: 0.8rem;
             color: #9a9aba;
         }
-        .article-card .meta i {
-            margin-left: 6px;
-        }
+        .article-card .meta i { margin-left: 6px; }
 
         /* ===== گالری ===== */
         .gallery-section {
@@ -591,17 +549,9 @@
             opacity: 0;
             transition: var(--transition);
         }
-        .gallery-item:hover .overlay {
-            opacity: 1;
-        }
-        .gallery-item .overlay h4 {
-            font-size: 1rem;
-            font-weight: 700;
-        }
-        .gallery-item .overlay p {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
+        .gallery-item:hover .overlay { opacity: 1; }
+        .gallery-item .overlay h4 { font-size: 1rem; font-weight: 700; }
+        .gallery-item .overlay p { font-size: 0.8rem; opacity: 0.8; }
 
         /* ===== نظرات ===== */
         .comments-section {
@@ -631,8 +581,7 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
-        .comments-form input,
-        .comments-form textarea {
+        .comments-form input, .comments-form textarea {
             width: 100%;
             padding: 12px 16px;
             border-radius: 12px;
@@ -643,16 +592,12 @@
             background: #fff;
             transition: var(--transition);
         }
-        .comments-form input:focus,
-        .comments-form textarea:focus {
+        .comments-form input:focus, .comments-form textarea:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.06);
         }
-        .comments-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+        .comments-form textarea { min-height: 120px; resize: vertical; }
         .comments-form .btn-submit {
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
             color: #fff;
@@ -688,21 +633,10 @@
             border-bottom: 1px solid var(--border-color);
             padding: 16px 0;
         }
-        .comment-item:last-child {
-            border-bottom: none;
-        }
-        .comment-item .name {
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-        .comment-item .date {
-            font-size: 0.8rem;
-            color: #9a9aba;
-        }
-        .comment-item .text {
-            margin-top: 6px;
-            color: var(--text-muted);
-        }
+        .comment-item:last-child { border-bottom: none; }
+        .comment-item .name { font-weight: 700; color: var(--text-dark); }
+        .comment-item .date { font-size: 0.8rem; color: #9a9aba; }
+        .comment-item .text { margin-top: 6px; color: var(--text-muted); }
 
         /* ===== CTA ===== */
         .cta-section {
@@ -752,9 +686,7 @@
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-        footer strong {
-            color: var(--text-dark);
-        }
+        footer strong { color: var(--text-dark); }
         footer .footer-links {
             display: flex;
             justify-content: center;
@@ -766,9 +698,7 @@
             color: var(--text-muted);
             transition: var(--transition);
         }
-        footer .footer-links a:hover {
-            color: var(--primary);
-        }
+        footer .footer-links a:hover { color: var(--primary); }
 
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
@@ -796,14 +726,8 @@
             .agents-grid { grid-template-columns: 1fr 1fr; }
             .articles-grid { grid-template-columns: 1fr; }
             .gallery-grid { grid-template-columns: 1fr 1fr; }
-            .navbar .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .nav-menu {
-                justify-content: center;
-                width: 100%;
-            }
+            .navbar .container { flex-direction: column; align-items: center; }
+            .nav-menu { justify-content: center; width: 100%; }
             .cta-section h2 { font-size: 1.8rem; }
             .logo-image { height: 70px; max-width: 240px; }
             .about-image { font-size: 4rem; padding: 30px; min-height: 150px; }
@@ -826,7 +750,11 @@
     <nav class="navbar">
         <div class="container">
             <a href="/" class="logo-wrapper">
-                <img src="/logo5.png" alt="سوفیا AI" class="logo-image" />
+                <img src="/logo5.png" alt="توسعه‌دهنده هوش مصنوعی سوفیا" class="logo-image" />
+                <div class="logo-text">
+                    <span class="main">توسعه‌دهنده هوش مصنوعی <span class="highlight">سوفیا</span></span>
+                    <span class="sub">مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI</span>
+                </div>
             </a>
             <div class="nav-menu">
                 <a href="/">خانه</a>
@@ -849,8 +777,10 @@
     <!-- ===== بخش قهرمان ===== -->
     <section class="hero fade-up">
         <div class="container">
+            <span class="hero-badge">✨ توسعه‌دهنده هوش مصنوعی سوفیا</span>
             <h1>مرجع تخصصی <span class="highlight">دستیارهای هوشمند</span> و <span class="highlight">ایجنت‌های AI</span></h1>
-            <p>از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
+            <p class="hero-title-sub">از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
+            <p>با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی</p>
             <div class="search-box">
                 <input type="text" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
                 <button>جستجو</button>
@@ -869,23 +799,12 @@
                         ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.
                     </p>
                     <div class="about-stats">
-                        <div class="stat">
-                            <span>۲۰+</span>
-                            سال سابقه
-                        </div>
-                        <div class="stat">
-                            <span>۸۰+</span>
-                            پروژه موفق
-                        </div>
-                        <div class="stat">
-                            <span>۱۰۰%</span>
-                            حریم خصوصی
-                        </div>
+                        <div class="stat"><span>۲۰+</span> سال سابقه</div>
+                        <div class="stat"><span>۸۰+</span> پروژه موفق</div>
+                        <div class="stat"><span>۱۰۰%</span> حریم خصوصی</div>
                     </div>
                 </div>
-                <div class="about-image">
-                    <i class="fas fa-robot"></i>
-                </div>
+                <div class="about-image"><i class="fas fa-robot"></i></div>
             </div>
         </div>
     </section>
@@ -894,10 +813,7 @@
     <section class="assistant-section fade-up" id="assistant">
         <div class="container">
             <div class="section-header">
-                <div>
-                    <h2>🧠 دستیارهای هوشمند</h2>
-                    <span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span>
-                </div>
+                <div><h2>🧠 دستیارهای هوشمند</h2><span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="assistant-grid">
@@ -937,10 +853,7 @@
     <section class="agents-section fade-up" id="agents">
         <div class="container">
             <div class="section-header">
-                <div>
-                    <h2>🤖 ایجنت‌های هوش مصنوعی</h2>
-                    <span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span>
-                </div>
+                <div><h2>🤖 ایجنت‌های هوش مصنوعی</h2><span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="agents-grid">
@@ -948,10 +861,7 @@
                     <span class="icon">🧠</span>
                     <h4>ایجنت تحلیلگر داده</h4>
                     <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
-                    <div class="tags">
-                        <span>تحلیل داده</span>
-                        <span>هوش تجاری</span>
-                    </div>
+                    <div class="tags"><span>تحلیل داده</span><span>هوش تجاری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                     <button class="add-to-cart" onclick="addToCart('ایجنت تحلیلگر داده', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
@@ -959,10 +869,7 @@
                     <span class="icon">🤝</span>
                     <h4>ایجنت پشتیبانی مشتری</h4>
                     <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
-                    <div class="tags">
-                        <span>پشتیبانی</span>
-                        <span>چت‌بات</span>
-                    </div>
+                    <div class="tags"><span>پشتیبانی</span><span>چت‌بات</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                     <button class="add-to-cart" onclick="addToCart('ایجنت پشتیبانی مشتری', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
@@ -970,10 +877,7 @@
                     <span class="icon">📝</span>
                     <h4>ایجنت تولید محتوا</h4>
                     <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
-                    <div class="tags">
-                        <span>تولید محتوا</span>
-                        <span>بازاریابی</span>
-                    </div>
+                    <div class="tags"><span>تولید محتوا</span><span>بازاریابی</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                     <button class="add-to-cart" onclick="addToCart('ایجنت تولید محتوا', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
@@ -981,10 +885,7 @@
                     <span class="icon">⚙️</span>
                     <h4>ایجنت اتوماسیون</h4>
                     <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
-                    <div class="tags">
-                        <span>اتوماسیون</span>
-                        <span>بهبود بهره‌وری</span>
-                    </div>
+                    <div class="tags"><span>اتوماسیون</span><span>بهبود بهره‌وری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                     <button class="add-to-cart" onclick="addToCart('ایجنت اتوماسیون', 'رایگان')"><i class="fas fa-plus"></i> افزودن به سبد خرید</button>
                 </div>
@@ -1004,28 +905,19 @@
                     <span class="tag">ایجنت AI</span>
                     <h3>ایجنت هوش مصنوعی چیست و چه کاربردی در کسب‌وکار دارد؟</h3>
                     <p>عامل‌های هوشمند (AI Agents) نسل جدیدی از اتوماسیون هستند که می‌توانند وظایف پیچیده را به‌طور مستقل انجام دهند...</p>
-                    <div class="meta">
-                        <span><i class="far fa-calendar"></i> ۲۵ تیر ۱۴۰۴</span>
-                        <span><i class="far fa-comment"></i> ۱۵ نظر</span>
-                    </div>
+                    <div class="meta"><span><i class="far fa-calendar"></i> ۲۵ تیر ۱۴۰۴</span><span><i class="far fa-comment"></i> ۱۵ نظر</span></div>
                 </div>
                 <div class="article-card">
                     <span class="tag">دستیار هوشمند</span>
                     <h3>دستیار هوشمند RAG؛ تحولی در مدیریت دانش سازمانی</h3>
                     <p>سیستم Retrieval-Augmented Generation به سازمان‌ها کمک می‌کند تا از داده‌های خود پاسخ‌های دقیق و سریع دریافت کنند...</p>
-                    <div class="meta">
-                        <span><i class="far fa-calendar"></i> ۲۰ تیر ۱۴۰۴</span>
-                        <span><i class="far fa-comment"></i> ۱۲ نظر</span>
-                    </div>
+                    <div class="meta"><span><i class="far fa-calendar"></i> ۲۰ تیر ۱۴۰۴</span><span><i class="far fa-comment"></i> ۱۲ نظر</span></div>
                 </div>
                 <div class="article-card">
                     <span class="tag">آموزش</span>
                     <h3>مراحل پیاده‌سازی یک دستیار مکالمه‌ای از صفر تا صد</h3>
                     <p>آموزش گام‌به‌گام طراحی، آموزش و استقرار دستیاری که واقعاً به کار شما بیاید و تجربه‌ی کاربری را متحول کند...</p>
-                    <div class="meta">
-                        <span><i class="far fa-calendar"></i> ۱۵ تیر ۱۴۰۴</span>
-                        <span><i class="far fa-comment"></i> ۸ نظر</span>
-                    </div>
+                    <div class="meta"><span><i class="far fa-calendar"></i> ۱۵ تیر ۱۴۰۴</span><span><i class="far fa-comment"></i> ۸ نظر</span></div>
                 </div>
             </div>
         </div>
@@ -1035,40 +927,25 @@
     <section class="gallery-section fade-up" id="gallery">
         <div class="container">
             <div class="section-header">
-                <div>
-                    <h2>🖼️ گالری نمونه‌کارها</h2>
-                    <span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span>
-                </div>
+                <div><h2>🖼️ گالری نمونه‌کارها</h2><span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <i class="fas fa-robot"></i>
-                    <div class="overlay">
-                        <h4>دستیار مکالمه‌ای رستوران</h4>
-                        <p>افزایش ۳۰٪ سفارشات آنلاین</p>
-                    </div>
+                    <div class="overlay"><h4>دستیار مکالمه‌ای رستوران</h4><p>افزایش ۳۰٪ سفارشات آنلاین</p></div>
                 </div>
                 <div class="gallery-item">
                     <i class="fas fa-brain"></i>
-                    <div class="overlay">
-                        <h4>سیستم RAG سازمانی</h4>
-                        <p>کاهش ۷۰٪ زمان جستجو</p>
-                    </div>
+                    <div class="overlay"><h4>سیستم RAG سازمانی</h4><p>کاهش ۷۰٪ زمان جستجو</p></div>
                 </div>
                 <div class="gallery-item">
                     <i class="fas fa-chart-line"></i>
-                    <div class="overlay">
-                        <h4>داشبورد تحلیل داده</h4>
-                        <p>پیش‌بینی دقیق فروش</p>
-                    </div>
+                    <div class="overlay"><h4>داشبورد تحلیل داده</h4><p>پیش‌بینی دقیق فروش</p></div>
                 </div>
                 <div class="gallery-item">
                     <i class="fas fa-cogs"></i>
-                    <div class="overlay">
-                        <h4>اتوماسیون اداری</h4>
-                        <p>افزایش ۵۰٪ سرعت رسیدگی</p>
-                    </div>
+                    <div class="overlay"><h4>اتوماسیون اداری</h4><p>افزایش ۵۰٪ سرعت رسیدگی</p></div>
                 </div>
             </div>
         </div>
@@ -1096,26 +973,10 @@
                 </div>
                 <div class="comments-list">
                     <h3>📋 نظرات اخیر</h3>
-                    <div class="comment-item">
-                        <span class="name">احمد رضایی</span>
-                        <span class="date">— ۲ روز پیش</span>
-                        <div class="text">مقاله‌ی ایجنت‌های هوش مصنوعی بسیار کاربردی بود. ممنون از تیم سوفیا.</div>
-                    </div>
-                    <div class="comment-item">
-                        <span class="name">سارا محمدی</span>
-                        <span class="date">— ۵ روز پیش</span>
-                        <div class="text">دستیار مکالمه‌ای که برای ما طراحی کردید، تحول عالی در پشتیبانی ایجاد کرد.</div>
-                    </div>
-                    <div class="comment-item">
-                        <span class="name">علی کریمی</span>
-                        <span class="date">— ۱ هفته پیش</span>
-                        <div class="text">سیستم RAG شما دقیقاً همان چیزی بود که برای مدیریت اسناد سازمانی نیاز داشتیم.</div>
-                    </div>
-                    <div class="comment-item">
-                        <span class="name">مریم حسینی</span>
-                        <span class="date">— ۲ هفته پیش</span>
-                        <div class="text">اتوماسیون هوشمند باعث صرفه‌جویی زیادی در زمان تیم ما شد.</div>
-                    </div>
+                    <div class="comment-item"><span class="name">احمد رضایی</span><span class="date">— ۲ روز پیش</span><div class="text">مقاله‌ی ایجنت‌های هوش مصنوعی بسیار کاربردی بود. ممنون از تیم سوفیا.</div></div>
+                    <div class="comment-item"><span class="name">سارا محمدی</span><span class="date">— ۵ روز پیش</span><div class="text">دستیار مکالمه‌ای که برای ما طراحی کردید، تحول عالی در پشتیبانی ایجاد کرد.</div></div>
+                    <div class="comment-item"><span class="name">علی کریمی</span><span class="date">— ۱ هفته پیش</span><div class="text">سیستم RAG شما دقیقاً همان چیزی بود که برای مدیریت اسناد سازمانی نیاز داشتیم.</div></div>
+                    <div class="comment-item"><span class="name">مریم حسینی</span><span class="date">— ۲ هفته پیش</span><div class="text">اتوماسیون هوشمند باعث صرفه‌جویی زیادی در زمان تیم ما شد.</div></div>
                 </div>
             </div>
         </div>
@@ -1140,20 +1001,18 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <a href="register.html" class="btn-register" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
+                <a href="register.html" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
                 <a href="login.html" style="background: var(--primary); color: #fff; padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ورود</a>
             </div>
-            <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
+            <p>© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
     </footer>
 
     <!-- ===== اسکریپت‌ها ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ---- به‌روزرسانی تعداد سبد خرید ----
             updateCartBadge();
 
-            // ---- جستجو ----
             document.querySelector('.search-box button').addEventListener('click', function() {
                 const query = document.querySelector('.search-box input').value.trim();
                 if (query) {
@@ -1163,7 +1022,6 @@
                 }
             });
 
-            // ---- ارسال نظر ----
             document.getElementById('commentForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('💬 نظر شما با موفقیت ثبت شد. پس از تایید نمایش داده می‌شود.');
@@ -1171,32 +1029,22 @@
             });
         });
 
-        // ===== افزودن به سبد خرید =====
         function addToCart(name, price) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // بررسی تکراری نبودن
             if (cart.some(item => item.name === name)) {
                 alert('⚠️ این خدمت قبلاً به سبد خرید اضافه شده است.');
                 return;
             }
-            
             cart.push({ name, price });
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // به‌روزرسانی تعداد
             updateCartBadge();
-            
             alert('✅ ' + name + ' به سبد خرید اضافه شد!');
         }
 
-        // ===== به‌روزرسانی تعداد سبد خرید =====
         function updateCartBadge() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const badge = document.getElementById('cartCount');
-            if (badge) {
-                badge.textContent = cart.length;
-            }
+            if (badge) badge.textContent = cart.length;
         }
     </script>
 
