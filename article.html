@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مطالعه مقاله | توسعه‌دهنده هوش مصنوعی سوفیا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #f8f9fc;
+            color: #1A0F2E;
+            direction: rtl;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .article-header { border-bottom: 2px solid #FFB800; padding-bottom: 16px; margin-bottom: 24px; }
+        .article-header h1 { font-size: 2rem; font-weight: 900; color: #1A0F2E; margin-bottom: 8px; }
+        .article-header .meta { display: flex; gap: 16px; color: #7a7a9a; font-size: 0.9rem; flex-wrap: wrap; }
+        .article-header .meta i { margin-left: 4px; }
+        .article-body { font-size: 1.05rem; line-height: 2.2rem; color: #2d2d3f; text-align: justify; }
+        .article-body p { margin-bottom: 16px; }
+        .back-link { display: inline-block; margin-top: 24px; color: #6C3CE1; font-weight: 600; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .loading { text-align: center; padding: 60px 0; color: #7a7a9a; }
+        .loading i { font-size: 2rem; display: block; margin-bottom: 12px; }
+        .error { text-align: center; padding: 60px 0; color: #e74c3c; }
+        .error i { font-size: 2rem; display: block; margin-bottom: 12px; }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-body { font-size: 0.95rem; line-height: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="articleContainer">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری مقاله...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://sofiaaisite.runflare.run';
+
+        // دریافت ID مقاله از آدرس
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+
+        if (!articleId) {
+            document.getElementById('articleContainer').innerHTML = `
+                <div class="error"><i class="fas fa-exclamation-circle"></i>هیچ مقاله‌ای انتخاب نشده است.</div>
+                <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+            `;
+        } else {
+            fetch(`${API_BASE}/api/articles/${articleId}`)
+                .then(res => {
+                    if (!res.ok) throw new Error('مقاله یافت نشد');
+                    return res.json();
+                })
+                .then(article => {
+                    document.getElementById('articleContainer').innerHTML = `
+                        <div class="article-header">
+                            <h1>${article.title}</h1>
+                            <div class="meta">
+                                <span><i class="fas fa-tag"></i> ${article.category}</span>
+                                <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
+                                <span><i class="far fa-calendar"></i> ${article.created_at}</span>
+                            </div>
+                        </div>
+                        <div class="article-body">
+                            ${article.content.replace(/\n/g, '<br>')}
+                        </div>
+                        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('articleContainer').innerHTML = `
+                        <div class="error"><i class="fas fa-exclamation-circle"></i>${error.message}</div>
+                        <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>
