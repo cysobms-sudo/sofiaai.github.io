@@ -305,7 +305,7 @@ app.post('/api/cart/add', (req, res) => {
         (err, results) => {
             if (err) {
                 console.error('❌ خطا در بررسی سبد خرید:', err);
-                return res.status(500).json({ error: 'خطا در بررسی سبد購買' });
+                return res.status(500).json({ error: 'خطا در بررسی سبد خرید' });
             }
             
             if (results.length > 0) {
