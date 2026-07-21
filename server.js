@@ -412,7 +412,6 @@ app.get('/api/chatbot-requests', (req, res) => {
             console.error('❌ خطا در دریافت درخواست‌ها:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        // تبدیل تاریخ به شمسی
         const requestsWithPersianDate = results.map(req => {
             const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
             return { ...req, created_at: persianDate };
@@ -454,10 +453,9 @@ app.get('/api/admin/cart', (req, res) => {
             console.error('❌ خطا در دریافت سبد خرید همه کاربران:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        // ===== تبدیل تاریخ به شمسی و ساعت ایران =====
+        // ===== تبدیل تاریخ به شمسی با فرمت جلالی =====
         const itemsWithPersianDate = results.map(item => {
-            // تنظیم منطقه زمانی ایران (UTC+3:30)
-            const persianDate = moment(item.created_at).tz('Asia/Tehran').format('jYYYY/jMM/jDD HH:mm');
+            const persianDate = moment(item.created_at).format('jYYYY/jMM/jDD HH:mm');
             return { ...item, created_at: persianDate };
         });
         res.json(itemsWithPersianDate);
