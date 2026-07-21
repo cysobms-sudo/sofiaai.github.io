@@ -72,6 +72,10 @@ app.get('/admin.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
+app.get('/article.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'article.html'));
+});
+
 app.get('/service-chatbot.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
 });
@@ -507,12 +511,12 @@ app.get('/api/admin/stats', (req, res) => {
 // ===== APIهای مدیریت مقالات =====
 // ==================================================
 
-// ===== دریافت لیست مقالات =====
+// ===== دریافت لیست مقالات (برای پنل مدیریت) =====
 app.get('/api/admin/articles', (req, res) => {
     db.query('SELECT id, title, category, author, status, created_at FROM articles ORDER BY id DESC', (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت مقالات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات: ' + err.message });
         }
         const articlesWithPersianDate = results.map(article => {
             const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
@@ -528,77 +532,109 @@ app.get('/api/articles/:id', (req, res) => {
     db.query('SELECT * FROM articles WHERE id = ?', [articleId], (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت مقاله:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            return res.status(500).json({ error: 'خطا در دریافت مقاله: ' + err.message });
         }
         if (results.length === 0) {
             return res.status(404).json({ error: 'مقاله یافت نشد' });
         }
-        res.json(results[0]);
+        const article = results[0];
+        article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD');
+        res.json(article);
+    });
+});
+
+// ===== دریافت مقالات برای نمایش در صفحه اصلی (فقط منتشر شده) =====
+app.get('/api/articles', (req, res) => {
+    db.query('SELECT id, title, category, author, content, created_at FROM articles WHERE status = "published" ORDER BY id DESC LIMIT 3', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت مقالات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات: ' + err.message });
+        }
+        const articlesWithPersianDate = results.map(article => {
+            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
+            return { ...article, created_at: persianDate };
+        });
+        res.json(articlesWithPersianDate);
     });
 });
 
 // ===== افزودن مقاله جدید =====
 app.post('/api/admin/articles', (req, res) => {
-    const { title, category, content, author, status } = req.body;
-    
-    console.log('📝 دریافت درخواست مقاله جدید:', { title, category });
-    
-    if (!title || !category || !content) {
-        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
-    }
-    
-    const query = 'INSERT INTO articles (title, category, content, author, status) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [title, category, content, author || 'توسعه دهنده هوش مصنوعی سوفیا', status || 'published'], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در ذخیره مقاله:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره مقاله: ' + err.message });
+    try {
+        const { title, category, content, author, status } = req.body;
+        
+        console.log('📝 دریافت درخواست مقاله جدید:', { title, category });
+        
+        if (!title || !category || !content) {
+            return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
         }
-        console.log('✅ مقاله با موفقیت ذخیره شد، ID:', result.insertId);
-        res.json({ message: '✅ مقاله با موفقیت ذخیره شد!', id: result.insertId });
-    });
+        
+        const query = 'INSERT INTO articles (title, category, content, author, status) VALUES (?, ?, ?, ?, ?)';
+        db.query(query, [title, category, content, author || 'توسعه دهنده هوش مصنوعی سوفیا', status || 'published'], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره مقاله:', err);
+                return res.status(500).json({ error: 'خطا در ذخیره مقاله: ' + err.message });
+            }
+            console.log('✅ مقاله با موفقیت ذخیره شد، ID:', result.insertId);
+            res.json({ message: '✅ مقاله با موفقیت ذخیره شد!', id: result.insertId });
+        });
+    } catch (error) {
+        console.error('❌ خطای غیرمنتظره:', error);
+        res.status(500).json({ error: 'خطای داخلی سرور: ' + error.message });
+    }
 });
 
 // ===== ویرایش مقاله =====
 app.put('/api/admin/articles/:id', (req, res) => {
-    const articleId = req.params.id;
-    const { title, category, content, author, status } = req.body;
-    
-    console.log('📝 دریافت درخواست ویرایش مقاله:', { articleId, title });
-    
-    if (!title || !category || !content) {
-        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
+    try {
+        const articleId = req.params.id;
+        const { title, category, content, author, status } = req.body;
+        
+        console.log('📝 دریافت درخواست ویرایش مقاله:', { articleId, title });
+        
+        if (!title || !category || !content) {
+            return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
+        }
+        
+        const query = 'UPDATE articles SET title = ?, category = ?, content = ?, author = ?, status = ? WHERE id = ?';
+        db.query(query, [title, category, content, author || 'توسعه دهنده هوش مصنوعی سوفیا', status || 'published', articleId], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در به‌روزرسانی مقاله:', err);
+                return res.status(500).json({ error: 'خطا در به‌روزرسانی مقاله: ' + err.message });
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ error: 'مقاله یافت نشد' });
+            }
+            console.log('✅ مقاله با موفقیت به‌روزرسانی شد، ID:', articleId);
+            res.json({ message: '✅ مقاله با موفقیت به‌روزرسانی شد!' });
+        });
+    } catch (error) {
+        console.error('❌ خطای غیرمنتظره:', error);
+        res.status(500).json({ error: 'خطای داخلی سرور: ' + error.message });
     }
-    
-    const query = 'UPDATE articles SET title = ?, category = ?, content = ?, author = ?, status = ? WHERE id = ?';
-    db.query(query, [title, category, content, author || 'توسعه دهنده هوش مصنوعی سوفیا', status || 'published', articleId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در به‌روزرسانی مقاله:', err);
-            return res.status(500).json({ error: 'خطا در به‌روزرسانی مقاله: ' + err.message });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'مقاله یافت نشد' });
-        }
-        console.log('✅ مقاله با موفقیت به‌روزرسانی شد، ID:', articleId);
-        res.json({ message: '✅ مقاله با موفقیت به‌روزرسانی شد!' });
-    });
 });
 
 // ===== حذف مقاله =====
 app.delete('/api/admin/articles/:id', (req, res) => {
-    const articleId = req.params.id;
-    console.log('📝 دریافت درخواست حذف مقاله:', articleId);
-    
-    db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در حذف مقاله:', err);
-            return res.status(500).json({ error: 'خطا در حذف مقاله: ' + err.message });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'مقاله یافت نشد' });
-        }
-        console.log('✅ مقاله با موفقیت حذف شد، ID:', articleId);
-        res.json({ message: '✅ مقاله با موفقیت حذف شد!' });
-    });
+    try {
+        const articleId = req.params.id;
+        console.log('📝 دریافت درخواست حذف مقاله:', articleId);
+        
+        db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در حذف مقاله:', err);
+                return res.status(500).json({ error: 'خطا در حذف مقاله: ' + err.message });
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ error: 'مقاله یافت نشد' });
+            }
+            console.log('✅ مقاله با موفقیت حذف شد، ID:', articleId);
+            res.json({ message: '✅ مقاله با موفقیت حذف شد!' });
+        });
+    } catch (error) {
+        console.error('❌ خطای غیرمنتظره:', error);
+        res.status(500).json({ error: 'خطای داخلی سرور: ' + error.message });
+    }
 });
 
 // ==================================================
@@ -610,7 +646,7 @@ app.get('/api/admin/comments', (req, res) => {
     db.query('SELECT id, name, email, text, status, created_at FROM comments ORDER BY id DESC', (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت نظرات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات: ' + err.message });
         }
         const commentsWithPersianDate = results.map(comment => {
             const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD HH:mm');
@@ -632,7 +668,7 @@ app.post('/api/comments', (req, res) => {
     db.query(query, [name, email || null, text], (err, result) => {
         if (err) {
             console.error('❌ خطا در ذخیره نظر:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره نظر' });
+            return res.status(500).json({ error: 'خطا در ذخیره نظر: ' + err.message });
         }
         res.json({ message: '✅ نظر شما با موفقیت ثبت شد! پس از تایید نمایش داده می‌شود.' });
     });
@@ -644,7 +680,7 @@ app.put('/api/admin/comments/:id/approve', (req, res) => {
     db.query('UPDATE comments SET status = "approved" WHERE id = ?', [commentId], (err, result) => {
         if (err) {
             console.error('❌ خطا در تایید نظر:', err);
-            return res.status(500).json({ error: 'خطا در تایید نظر' });
+            return res.status(500).json({ error: 'خطا در تایید نظر: ' + err.message });
         }
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'نظر یافت نشد' });
@@ -659,7 +695,7 @@ app.put('/api/admin/comments/:id/reject', (req, res) => {
     db.query('UPDATE comments SET status = "rejected" WHERE id = ?', [commentId], (err, result) => {
         if (err) {
             console.error('❌ خطا در رد نظر:', err);
-            return res.status(500).json({ error: 'خطا در رد نظر' });
+            return res.status(500).json({ error: 'خطا در رد نظر: ' + err.message });
         }
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'نظر یافت نشد' });
@@ -674,7 +710,7 @@ app.delete('/api/admin/comments/:id', (req, res) => {
     db.query('DELETE FROM comments WHERE id = ?', [commentId], (err, result) => {
         if (err) {
             console.error('❌ خطا در حذف نظر:', err);
-            return res.status(500).json({ error: 'خطا در حذف نظر' });
+            return res.status(500).json({ error: 'خطا در حذف نظر: ' + err.message });
         }
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'نظر یافت نشد' });
@@ -688,7 +724,7 @@ app.get('/api/comments/approved', (req, res) => {
     db.query('SELECT name, text, created_at FROM comments WHERE status = "approved" ORDER BY id DESC LIMIT 4', (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت نظرات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات: ' + err.message });
         }
         const commentsWithPersianDate = results.map(comment => {
             const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD');
@@ -708,7 +744,7 @@ app.get('/api/admin/settings', (req, res) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت تنظیمات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات: ' + err.message });
         }
         const settings = {};
         results.forEach(row => {
@@ -740,27 +776,8 @@ app.put('/api/admin/settings', (req, res) => {
         })
         .catch(err => {
             console.error('❌ خطا در ذخیره تنظیمات:', err);
-            res.status(500).json({ error: 'خطا در ذخیره تنظیمات' });
+            res.status(500).json({ error: 'خطا در ذخیره تنظیمات: ' + err.message });
         });
-});
-
-// ==================================================
-// ===== APIهای عمومی برای نمایش در سایت =====
-// ==================================================
-
-// ===== دریافت مقالات برای نمایش در صفحه اصلی =====
-app.get('/api/articles', (req, res) => {
-    db.query('SELECT id, title, category, author, created_at FROM articles WHERE status = "published" ORDER BY id DESC LIMIT 3', (err, results) => {
-        if (err) {
-            console.error('❌ خطا در دریافت مقالات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
-        }
-        const articlesWithPersianDate = results.map(article => {
-            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
-            return { ...article, created_at: persianDate };
-        });
-        res.json(articlesWithPersianDate);
-    });
 });
 
 // ==================================================
