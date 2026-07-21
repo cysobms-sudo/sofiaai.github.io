@@ -735,7 +735,7 @@ app.get('/api/comments/approved', (req, res) => {
 });
 
 // ==================================================
-// ===== مدیریت تنظیمات سایت =====
+// ===== مدیریت تنظیمات سایت (نسخه کامل) =====
 // ==================================================
 
 // ===== دریافت تنظیمات سایت =====
@@ -754,21 +754,43 @@ app.get('/api/admin/settings', (req, res) => {
     });
 });
 
-// ===== ذخیره تنظیمات سایت =====
+// ===== ذخیره تنظیمات سایت (نسخه کامل) =====
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
-    const queries = Object.keys(settings).map(key => {
-        return new Promise((resolve, reject) => {
-            db.query(
-                'UPDATE site_settings SET setting_value = ? WHERE setting_key = ?',
-                [settings[key], key],
-                (err, result) => {
-                    if (err) reject(err);
-                    else resolve(result);
-                }
-            );
+    
+    // لیست تمام کلیدهای مجاز
+    const allowedKeys = [
+        // صفحات
+        'hero_title', 'hero_subtitle', 'hero_text',
+        'about_title', 'about_text',
+        'footer_text', 'copyright_text',
+        'stat_years', 'stat_projects', 'stat_privacy',
+        // اطلاعات عمومی
+        'site_name', 'site_tagline', 'meta_description', 'meta_keywords',
+        // تماس
+        'phone', 'phone2', 'email', 'email2', 'address', 'working_hours',
+        // شبکه‌های اجتماعی
+        'whatsapp', 'telegram', 'linkedin', 'instagram', 'eitaa', 'bale',
+        // ظاهر
+        'color_primary', 'color_secondary', 'font',
+        // کدها
+        'analytics', 'header_codes', 'footer_codes'
+    ];
+    
+    const queries = Object.keys(settings)
+        .filter(key => allowedKeys.includes(key))
+        .map(key => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    'INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)',
+                    [key, settings[key] || ''],
+                    (err, result) => {
+                        if (err) reject(err);
+                        else resolve(result);
+                    }
+                );
+            });
         });
-    });
     
     Promise.all(queries)
         .then(() => {
