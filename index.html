@@ -457,6 +457,9 @@
             border: 1px solid var(--border-color);
             transition: var(--transition);
             box-shadow: var(--shadow);
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .article-card:hover {
             transform: translateY(-6px);
@@ -482,6 +485,10 @@
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.9;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .article-card .meta {
             display: flex;
@@ -1047,7 +1054,7 @@
                     let html = '';
                     data.forEach(article => {
                         html += `
-                            <div class="article-card">
+                            <a href="article.html?id=${article.id}" class="article-card">
                                 <span class="tag">${article.category}</span>
                                 <h3>${article.title}</h3>
                                 <p>${article.content ? article.content.substring(0, 120) + '...' : ''}</p>
@@ -1055,7 +1062,7 @@
                                     <span><i class="far fa-calendar"></i> ${article.created_at}</span>
                                     <span><i class="far fa-user"></i> ${article.author}</span>
                                 </div>
-                            </div>
+                            </a>
                         `;
                     });
                     container.innerHTML = html;
