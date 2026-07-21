@@ -454,7 +454,13 @@ app.get('/api/admin/cart', (req, res) => {
             console.error('❌ خطا در دریافت سبد خرید همه کاربران:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        res.json(results);
+        // ===== تبدیل تاریخ به شمسی و ساعت ایران =====
+        const itemsWithPersianDate = results.map(item => {
+            // تنظیم منطقه زمانی ایران (UTC+3:30)
+            const persianDate = moment(item.created_at).tz('Asia/Tehran').format('jYYYY/jMM/jDD HH:mm');
+            return { ...item, created_at: persianDate };
+        });
+        res.json(itemsWithPersianDate);
     });
 });
 
