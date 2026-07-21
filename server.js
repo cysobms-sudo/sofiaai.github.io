@@ -443,7 +443,15 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 // ===== دریافت سبد خرید همه کاربران (برای پنل مدیریت) =====
 app.get('/api/admin/cart', (req, res) => {
     const query = `
-        SELECT cart.id, cart.user_id, cart.item_name, cart.item_price, cart.created_at, users.name as user_name, users.email as user_email
+        SELECT 
+            cart.id, 
+            cart.user_id, 
+            cart.item_name, 
+            cart.item_price, 
+            cart.created_at, 
+            users.name as user_name, 
+            users.email as user_email,
+            users.phone as user_phone
         FROM cart
         JOIN users ON cart.user_id = users.id
         ORDER BY cart.created_at DESC
