@@ -68,6 +68,10 @@ app.get('/cart.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'cart.html'));
 });
 
+app.get('/admin.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
 app.get('/service-chatbot.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
 });
@@ -461,12 +465,233 @@ app.get('/api/admin/cart', (req, res) => {
             console.error('❌ خطا در دریافت سبد خرید همه کاربران:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        // ===== تبدیل تاریخ به شمسی با فرمت جلالی =====
         const itemsWithPersianDate = results.map(item => {
             const persianDate = moment(item.created_at).format('jYYYY/jMM/jDD HH:mm');
             return { ...item, created_at: persianDate };
         });
         res.json(itemsWithPersianDate);
+    });
+});
+
+// ==================================================
+// ===== APIهای پنل مدیریت (مقالات، نظرات، تنظیمات) =====
+// ==================================================
+
+// ===== آمار داشبورد =====
+app.get('/api/admin/stats', (req, res) => {
+    const queries = {
+        articles: 'SELECT COUNT(*) as count FROM articles',
+        comments: 'SELECT COUNT(*) as count FROM comments',
+        pending: "SELECT COUNT(*) as count FROM comments WHERE status = 'pending'"
+    };
+    
+    let results = { articles: 0, comments: 0, pending: 0 };
+    let completed = 0;
+    const totalQueries = Object.keys(queries).length;
+    
+    Object.keys(queries).forEach(key => {
+        db.query(queries[key], (err, result) => {
+            if (!err) results[key] = parseInt(result[0].count) || 0;
+            completed++;
+            if (completed === totalQueries) {
+                res.json(results);
+            }
+        });
+    });
+});
+
+// ===== مدیریت مقالات =====
+app.get('/api/admin/articles', (req, res) => {
+    db.query('SELECT id, title, category, author, created_at FROM articles ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت مقالات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const articlesWithPersianDate = results.map(article => {
+            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...article, created_at: persianDate };
+        });
+        res.json(articlesWithPersianDate);
+    });
+});
+
+app.post('/api/admin/articles', (req, res) => {
+    const { title, category, content, author } = req.body;
+    
+    if (!title || !category || !content) {
+        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
+    }
+    
+    const query = 'INSERT INTO articles (title, category, content, author) VALUES (?, ?, ?, ?)';
+    db.query(query, [title, category, content, author || 'سوفیا AI'], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره مقاله:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره مقاله' });
+        }
+        res.json({ message: '✅ مقاله با موفقیت ذخیره شد!', id: result.insertId });
+    });
+});
+
+app.delete('/api/admin/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف مقاله:', err);
+            return res.status(500).json({ error: 'خطا در حذف مقاله' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'مقاله یافت نشد' });
+        }
+        res.json({ message: '✅ مقاله با موفقیت حذف شد!' });
+    });
+});
+
+// ===== مدیریت نظرات =====
+app.get('/api/admin/comments', (req, res) => {
+    db.query('SELECT id, name, email, text, status, created_at FROM comments ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت نظرات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const commentsWithPersianDate = results.map(comment => {
+            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...comment, created_at: persianDate };
+        });
+        res.json(commentsWithPersianDate);
+    });
+});
+
+app.put('/api/admin/comments/:id/approve', (req, res) => {
+    const commentId = req.params.id;
+    db.query('UPDATE comments SET status = "approved" WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در تایید نظر:', err);
+            return res.status(500).json({ error: 'خطا در تایید نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت تایید شد!' });
+    });
+});
+
+app.put('/api/admin/comments/:id/reject', (req, res) => {
+    const commentId = req.params.id;
+    db.query('UPDATE comments SET status = "rejected" WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در رد نظر:', err);
+            return res.status(500).json({ error: 'خطا در رد نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت رد شد!' });
+    });
+});
+
+app.delete('/api/admin/comments/:id', (req, res) => {
+    const commentId = req.params.id;
+    db.query('DELETE FROM comments WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف نظر:', err);
+            return res.status(500).json({ error: 'خطا در حذف نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت حذف شد!' });
+    });
+});
+
+// ===== مدیریت تنظیمات سایت =====
+app.get('/api/admin/settings', (req, res) => {
+    const query = 'SELECT setting_key, setting_value FROM site_settings';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت تنظیمات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const settings = {};
+        results.forEach(row => {
+            settings[row.setting_key] = row.setting_value;
+        });
+        res.json(settings);
+    });
+});
+
+app.put('/api/admin/settings', (req, res) => {
+    const settings = req.body;
+    const queries = Object.keys(settings).map(key => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                'UPDATE site_settings SET setting_value = ? WHERE setting_key = ?',
+                [settings[key], key],
+                (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                }
+            );
+        });
+    });
+    
+    Promise.all(queries)
+        .then(() => {
+            res.json({ message: '✅ تنظیمات با موفقیت ذخیره شد!' });
+        })
+        .catch(err => {
+            console.error('❌ خطا در ذخیره تنظیمات:', err);
+            res.status(500).json({ error: 'خطا در ذخیره تنظیمات' });
+        });
+});
+
+// ==================================================
+// ===== APIهای عمومی برای نمایش در سایت =====
+// ==================================================
+
+// ===== دریافت مقالات برای نمایش در صفحه اصلی =====
+app.get('/api/articles', (req, res) => {
+    db.query('SELECT id, title, category, author, created_at FROM articles ORDER BY id DESC LIMIT 3', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت مقالات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const articlesWithPersianDate = results.map(article => {
+            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
+            return { ...article, created_at: persianDate };
+        });
+        res.json(articlesWithPersianDate);
+    });
+});
+
+// ===== دریافت یک مقاله کامل =====
+app.get('/api/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    db.query('SELECT * FROM articles WHERE id = ?', [articleId], (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت مقاله:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'مقاله یافت نشد' });
+        }
+        const article = results[0];
+        article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD');
+        res.json(article);
+    });
+});
+
+// ===== دریافت نظرات تایید شده برای نمایش در سایت =====
+app.get('/api/comments/approved', (req, res) => {
+    db.query('SELECT name, text, created_at FROM comments WHERE status = "approved" ORDER BY id DESC LIMIT 4', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت نظرات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const commentsWithPersianDate = results.map(comment => {
+            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD');
+            return { ...comment, created_at: persianDate };
+        });
+        res.json(commentsWithPersianDate);
     });
 });
 
