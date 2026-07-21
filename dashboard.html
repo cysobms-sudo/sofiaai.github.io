@@ -20,6 +20,8 @@
             --shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
             --radius: 24px;
             --transition: 0.3s ease;
+            --success: #28a745;
+            --success-bg: #d4edda;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -314,6 +316,7 @@
             border: 2px solid var(--secondary);
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
         .modal-content h3 {
             font-size: 1.4rem;
@@ -367,6 +370,28 @@
             border: 1px solid var(--border-color);
         }
         .modal-actions .cancel-btn:hover { background: #e74c3c; color: #fff; }
+        
+        /* ===== پیام موفقیت تغییر رمز ===== */
+        .success-message {
+            display: none;
+            background: var(--success-bg);
+            color: var(--success);
+            padding: 14px 18px;
+            border-radius: 12px;
+            border-right: 4px solid var(--success);
+            margin-bottom: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            animation: fadeSlide 0.5s ease;
+        }
+        .success-message.show {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .footer {
             text-align: center;
             padding: 30px 0 20px;
@@ -405,14 +430,13 @@
         </div>
 
         <div class="dashboard-grid">
-            <!-- اطلاعات کاربری (بدون تاریخ عضویت) -->
+            <!-- اطلاعات کاربری -->
             <div class="panel">
                 <h3><i class="fas fa-user-circle"></i> اطلاعات شخصی</h3>
                 <div class="profile-info" id="profileInfo">
                     <p><strong>نام و نام خانوادگی</strong> <span id="profileName">---</span></p>
                     <p><strong>ایمیل</strong> <span id="profileEmail">---</span></p>
                     <p><strong>شماره تماس</strong> <span id="profilePhone">---</span></p>
-                    <!-- خط تاریخ عضویت حذف شد -->
                     <button class="edit-btn" id="changePasswordBtn"><i class="fas fa-key"></i> تغییر رمز عبور</button>
                     <button class="edit-btn" id="editProfileBtn"><i class="fas fa-edit"></i> ویرایش اطلاعات</button>
                 </div>
@@ -436,13 +460,35 @@
         <div class="footer"><p>© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — تمامی حقوق محفوظ است</p></div>
     </div>
 
-    <!-- ===== مودال‌ها ===== -->
-    <div class="modal" id="passwordModal"><div class="modal-content"><h3><i class="fas fa-key"></i> تغییر رمز عبور</h3><form id="changePasswordForm"><label>رمز عبور فعلی</label><input type="password" id="currentPassword" placeholder="رمز عبور فعلی را وارد کنید" required /><label>رمز عبور جدید</label><input type="password" id="newPassword" placeholder="رمز عبور جدید را وارد کنید" required /><label>تکرار رمز عبور جدید</label><input type="password" id="confirmPassword" placeholder="رمز عبور جدید را دوباره وارد کنید" required /><div class="modal-actions"><button type="submit" class="save-btn">💾 تغییر رمز</button><button type="button" class="cancel-btn" id="closePasswordModalBtn">انصراف</button></div></form></div></div>
+    <!-- ===== مودال تغییر رمز با پیام موفقیت ===== -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-key"></i> تغییر رمز عبور</h3>
+            <!-- ===== پیام موفقیت ===== -->
+            <div class="success-message" id="passwordSuccessMessage">
+                ✅ رمز عبور شما با موفقیت تغییر یافت.
+            </div>
+            <form id="changePasswordForm">
+                <label>رمز عبور فعلی</label>
+                <input type="password" id="currentPassword" placeholder="رمز عبور فعلی را وارد کنید" required />
+                <label>رمز عبور جدید</label>
+                <input type="password" id="newPassword" placeholder="رمز عبور جدید را وارد کنید" required />
+                <label>تکرار رمز عبور جدید</label>
+                <input type="password" id="confirmPassword" placeholder="رمز عبور جدید را دوباره وارد کنید" required />
+                <div class="modal-actions">
+                    <button type="submit" class="save-btn" id="submitPasswordBtn">💾 تغییر رمز</button>
+                    <button type="button" class="cancel-btn" id="closePasswordModalBtn">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== مودال ویرایش ===== -->
     <div class="modal" id="editModal"><div class="modal-content"><h3><i class="fas fa-edit"></i> ویرایش اطلاعات</h3><form id="editProfileForm"><label>نام و نام خانوادگی</label><input type="text" id="editName" placeholder="نام خود را وارد کنید" required /><label>شماره تماس</label><input type="tel" id="editPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" /><div class="modal-actions"><button type="submit" class="save-btn">💾 ذخیره</button><button type="button" class="cancel-btn" id="closeModalBtn">انصراف</button></div></form></div></div>
 
     <script>
         // ========================================================
-        // ===== نسخه‌ی نهایی بدون تاریخ عضویت =====
+        // ===== نسخه‌ی نهایی با پیام موفقیت تغییر رمز =====
         // ========================================================
 
         let currentUser = null;
@@ -493,12 +539,34 @@
 
         // ===== مودال تغییر رمز =====
         const passwordModal = document.getElementById('passwordModal');
-        document.getElementById('changePasswordBtn').addEventListener('click', () => passwordModal.classList.add('active'));
-        document.getElementById('closePasswordModalBtn').addEventListener('click', () => passwordModal.classList.remove('active'));
-        passwordModal.addEventListener('click', (e) => { if (e.target === passwordModal) passwordModal.classList.remove('active'); });
+        const passwordSuccessMessage = document.getElementById('passwordSuccessMessage');
+        const passwordForm = document.getElementById('changePasswordForm');
 
+        document.getElementById('changePasswordBtn').addEventListener('click', function() {
+            // مخفی کردن پیام موفقیت در دفعات بعدی
+            passwordSuccessMessage.classList.remove('show');
+            passwordForm.reset();
+            passwordModal.classList.add('active');
+        });
+
+        document.getElementById('closePasswordModalBtn').addEventListener('click', function() {
+            passwordModal.classList.remove('active');
+            passwordSuccessMessage.classList.remove('show');
+            passwordForm.reset();
+        });
+
+        passwordModal.addEventListener('click', function(e) {
+            if (e.target === passwordModal) {
+                passwordModal.classList.remove('active');
+                passwordSuccessMessage.classList.remove('show');
+                passwordForm.reset();
+            }
+        });
+
+        // ===== تغییر رمز با نمایش پیام موفقیت =====
         document.getElementById('changePasswordForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -519,10 +587,29 @@
                     body: JSON.stringify({ currentPassword, newPassword })
                 });
                 const data = await response.json();
+                
                 if (response.ok) {
-                    alert('✅ ' + data.message);
-                    passwordModal.classList.remove('active');
-                    document.getElementById('changePasswordForm').reset();
+                    // ===== نمایش پیام موفقیت =====
+                    passwordSuccessMessage.classList.add('show');
+                    
+                    // ===== پاک کردن فرم =====
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                    
+                    // ===== غیرفعال کردن دکمه برای ۳ ثانیه (جلوگیری از ارسال مجدد) =====
+                    const submitBtn = document.getElementById('submitPasswordBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '✅ انجام شد';
+                    
+                    // ===== پس از ۳ ثانیه، مودال را ببند =====
+                    setTimeout(() => {
+                        passwordModal.classList.remove('active');
+                        passwordSuccessMessage.classList.remove('show');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = '💾 تغییر رمز';
+                    }, 3000);
+                    
                 } else {
                     alert('❌ ' + data.error);
                 }
