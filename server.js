@@ -438,6 +438,27 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 });
 
 // ==================================================
+// ===== APIهای مدیریت سبد خرید (برای ادمین) =====
+// ==================================================
+
+// ===== دریافت سبد خرید همه کاربران (برای پنل مدیریت) =====
+app.get('/api/admin/cart', (req, res) => {
+    const query = `
+        SELECT cart.id, cart.user_id, cart.item_name, cart.item_price, cart.created_at, users.name as user_name, users.email as user_email
+        FROM cart
+        JOIN users ON cart.user_id = users.id
+        ORDER BY cart.created_at DESC
+    `;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت سبد خرید همه کاربران:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        res.json(results);
+    });
+});
+
+// ==================================================
 // ===== شروع سرور =====
 // ==================================================
 app.listen(port, '0.0.0.0', () => {
