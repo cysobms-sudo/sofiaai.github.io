@@ -41,7 +41,9 @@ db.connect((err) => {
     console.log('✅ اتصال به دیتابیس با موفقیت برقرار شد!');
 });
 
-// ===== صفحات =====
+// ==================================================
+// ===== صفحات HTML =====
+// ==================================================
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -64,6 +66,38 @@ app.get('/dashboard.html', (req, res) => {
 
 app.get('/cart.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'cart.html'));
+});
+
+app.get('/service-chatbot.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
+});
+
+app.get('/service-rag.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-rag.html'));
+});
+
+app.get('/service-automation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-automation.html'));
+});
+
+app.get('/service-data.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-data.html'));
+});
+
+app.get('/service-agent-data.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-data.html'));
+});
+
+app.get('/service-agent-support.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-support.html'));
+});
+
+app.get('/service-agent-content.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-content.html'));
+});
+
+app.get('/service-agent-automation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-automation.html'));
 });
 
 // ==================================================
@@ -342,6 +376,64 @@ app.post('/api/cart/checkout/:user_id', (req, res) => {
                 items: items.length
             });
         });
+    });
+});
+
+// ==================================================
+// ===== APIهای درخواست ساخت چت‌بات سفارشی =====
+// ==================================================
+
+// ===== ذخیره درخواست جدید =====
+app.post('/api/chatbot-request', (req, res) => {
+    const { name, phone, email, description } = req.body;
+    
+    console.log('📝 دریافت درخواست جدید:', { name, phone, email });
+    
+    if (!name || !phone || !email || !description) {
+        return res.status(400).json({ error: 'همه فیلدها الزامی هستند.' });
+    }
+    
+    const query = 'INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, phone, email, description], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره درخواست:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+        }
+        console.log('✅ درخواست با موفقیت ثبت شد، ID:', result.insertId);
+        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!' });
+    });
+});
+
+// ===== دریافت لیست درخواست‌ها (برای پنل مدیریت) =====
+app.get('/api/chatbot-requests', (req, res) => {
+    const query = 'SELECT id, name, phone, email, description, created_at FROM chatbot_requests ORDER BY id DESC';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت درخواست‌ها:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        // تبدیل تاریخ به شمسی
+        const requestsWithPersianDate = results.map(req => {
+            const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...req, created_at: persianDate };
+        });
+        res.json(requestsWithPersianDate);
+    });
+});
+
+// ===== حذف درخواست =====
+app.delete('/api/chatbot-requests/:id', (req, res) => {
+    const requestId = req.params.id;
+    const query = 'DELETE FROM chatbot_requests WHERE id = ?';
+    db.query(query, [requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف درخواست:', err);
+            return res.status(500).json({ error: 'خطا در حذف درخواست' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ درخواست با موفقیت حذف شد!' });
     });
 });
 
