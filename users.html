@@ -21,7 +21,7 @@
             padding: 40px;
             border-radius: 24px;
             border: 2px solid #6C3CE1;
-            max-width: 1100px;
+            max-width: 1200px;
             width: 100%;
             margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -132,11 +132,13 @@
             padding: 14px 16px;
             text-align: right;
             font-weight: 700;
+            white-space: nowrap;
         }
         td {
             padding: 12px 16px;
             border-bottom: 1px solid #f0f0f0;
             color: #1A0F2E;
+            word-break: break-word;
         }
         tr:hover { background: #f8f6ff; }
         .loading { color: #7a7a9a; padding: 20px; text-align: center; }
@@ -464,6 +466,7 @@
                                     <th>#</th>
                                     <th>نام کاربر</th>
                                     <th>ایمیل</th>
+                                    <th>شماره تماس</th>
                                     <th>نام خدمت</th>
                                     <th>قیمت</th>
                                     <th>تاریخ افزودن</th>
@@ -479,6 +482,7 @@
                                 <td>${index + 1}</td>
                                 <td>${item.user_name}</td>
                                 <td>${item.user_email}</td>
+                                <td>${item.user_phone || '-'}</td>
                                 <td>${item.item_name}</td>
                                 <td>${item.item_price}</td>
                                 <td>${item.created_at}</td>
