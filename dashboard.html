@@ -45,7 +45,7 @@
             box-shadow: var(--shadow);
         }
         .topbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 900;
             color: var(--text-dark);
         }
@@ -53,7 +53,7 @@
             color: var(--primary);
         }
         .topbar .logo .sub {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             font-weight: 400;
             display: block;
@@ -424,6 +424,13 @@
         .footer strong {
             color: var(--text-dark);
         }
+        /* ---- استایل اعداد فارسی در ورودی ---- */
+        input[type="tel"] {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        input[type="tel"]::placeholder {
+            font-family: 'Vazirmatn', sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -431,8 +438,8 @@
     <!-- ===== نوار بالایی ===== -->
     <header class="topbar">
         <div class="logo">
-            سوفیا <span class="highlight">AI</span>
-            <span class="sub">توسعه‌دهنده هوش مصنوعی سوفیا</span>
+            توسعه‌دهنده هوش مصنوعی <span class="highlight">سوفیا</span>
+            <span class="sub">ارائه‌دهنده خدمات تخصصی دستیارهای هوشمند و ایجنت‌های AI</span>
         </div>
         <div class="user-info">
             <a href="index.html" class="btn-outline"><i class="fas fa-home"></i> بازگشت به خانه</a>
@@ -511,7 +518,7 @@
         </div>
 
         <div class="footer">
-            <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — توسعه‌دهنده هوش مصنوعی سوفیا</p>
+            <p>© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — تمامی حقوق محفوظ است</p>
         </div>
     </div>
 
@@ -541,8 +548,8 @@
             <form id="editProfileForm">
                 <label>نام و نام خانوادگی</label>
                 <input type="text" id="editName" placeholder="نام خود را وارد کنید" required />
-                <label>شماره تماس (فارسی)</label>
-                <input type="tel" id="editPhone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" />
+                <label>شماره تماس</label>
+                <input type="tel" id="editPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" />
                 <div class="modal-actions">
                     <button type="submit" class="save-btn">💾 ذخیره</button>
                     <button type="button" class="cancel-btn" id="closeModalBtn">انصراف</button>
@@ -555,30 +562,40 @@
         // ===== اطلاعات کاربر =====
         let currentUser = null;
 
-        // ===== تابع تبدیل تاریخ میلادی به شمسی =====
+        // ===== تابع تبدیل تاریخ میلادی به شمسی (دقیق و ساده) =====
         function toPersianDate(isoDate) {
             if (!isoDate) return '---';
             try {
                 const date = new Date(isoDate);
                 if (isNaN(date.getTime())) return isoDate;
                 
-                // تبدیل به شمسی با فرمت ۱۴۰۴/۰۴/۲۱
-                const persianDate = new Intl.DateTimeFormat('fa-IR', {
+                // استفاده از toLocaleDateString با تنظیمات ایران
+                const options = {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit'
-                }).format(date);
+                };
+                const persianDate = new Intl.DateTimeFormat('fa-IR', options).format(date);
                 
-                // حذف اسلش‌ها و تبدیل به فرمت ۱۴۰۴/۰۴/۲۱
-                const parts = persianDate.split('/');
-                if (parts.length === 3) {
-                    return `${parts[0]}/${parts[1]}/${parts[2]}`;
-                }
+                // خروجی: ۱۴۰۴/۰۴/۲۱
                 return persianDate;
             } catch (e) {
                 console.error('خطا در تبدیل تاریخ:', e);
                 return isoDate;
             }
+        }
+
+        // ===== تابع تبدیل اعداد انگلیسی به فارسی =====
+        function toPersianNumbers(text) {
+            if (!text) return text;
+            const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+            const englishDigits = '0123456789';
+            let result = text;
+            for (let i = 0; i < 10; i++) {
+                const regex = new RegExp(englishDigits[i], 'g');
+                result = result.replace(regex, persianDigits[i]);
+            }
+            return result;
         }
 
         function loadUser() {
@@ -594,7 +611,10 @@
                 document.getElementById('userAvatar').textContent = currentUser.name ? currentUser.name.charAt(0) : 'ع';
                 document.getElementById('profileName').textContent = currentUser.name || '---';
                 document.getElementById('profileEmail').textContent = currentUser.email || '---';
-                document.getElementById('profilePhone').textContent = currentUser.phone || '---';
+                
+                // نمایش شماره موبایل با اعداد فارسی
+                const phone = currentUser.phone || '---';
+                document.getElementById('profilePhone').textContent = toPersianNumbers(phone);
                 
                 // ===== تبدیل تاریخ عضویت به شمسی =====
                 const persianDate = toPersianDate(currentUser.created_at);
@@ -613,7 +633,7 @@
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
             localStorage.removeItem('user');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
 
         // ===== مودال تغییر رمز =====
@@ -702,7 +722,7 @@
             document.getElementById('userNameDisplay').textContent = name;
             document.getElementById('userAvatar').textContent = name.charAt(0);
             document.getElementById('profileName').textContent = name;
-            document.getElementById('profilePhone').textContent = phone || '---';
+            document.getElementById('profilePhone').textContent = toPersianNumbers(phone) || '---';
             
             editModal.classList.remove('active');
             alert('✅ اطلاعات شما با موفقیت به‌روزرسانی شد!');
