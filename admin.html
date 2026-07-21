@@ -96,7 +96,10 @@
             border: 2px solid var(--border-color); box-shadow: var(--shadow);
         }
         .tab-content.active { display: block; }
-        .tab-content h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--secondary); padding-bottom: 12px; }
+        .tab-content h3 {
+            font-size: 1.4rem; font-weight: 700; margin-bottom: 16px;
+            border-bottom: 2px solid var(--secondary); padding-bottom: 12px;
+        }
         .tab-content h3 i { color: var(--primary); margin-left: 8px; }
 
         /* ===== فرم‌ها ===== */
@@ -169,6 +172,17 @@
         .modal-content h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; }
         .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
         .modal-actions .btn { flex: 1; justify-content: center; }
+
+        /* ===== رنگ‌ها ===== */
+        .color-picker-wrapper { display: flex; align-items: center; gap: 12px; }
+        .color-picker-wrapper input[type="color"] {
+            width: 50px; height: 50px; padding: 0; border: 2px solid var(--border-color);
+            border-radius: 10px; cursor: pointer;
+        }
+        .color-picker-wrapper input[type="color"]:hover { border-color: var(--primary); }
+        .color-picker-wrapper .color-hex {
+            font-family: monospace; font-size: 0.9rem; color: var(--text-muted);
+        }
 
         @media (max-width: 768px) {
             .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
@@ -284,8 +298,8 @@
             <!-- ===== تب صفحات ===== -->
             <div id="tab-pages" class="tab-content">
                 <h3><i class="fas fa-file-alt"></i> مدیریت صفحات</h3>
-                
-                <!-- صفحه اصلی -->
+
+                <!-- صفحه اصلی (Hero) -->
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary); margin-bottom:12px;">🏠 صفحه اصلی (Hero)</h4>
                     <div class="form-group">
@@ -382,7 +396,7 @@
                     <h4 style="color:var(--primary); margin-bottom:12px;">📞 اطلاعات تماس</h4>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>شماره تماس</label>
+                            <label>شماره تماس اصلی</label>
                             <input type="text" id="setting_phone" />
                         </div>
                         <div class="form-group">
@@ -392,7 +406,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>ایمیل</label>
+                            <label>ایمیل اصلی</label>
                             <input type="email" id="setting_email" />
                         </div>
                         <div class="form-group">
@@ -451,11 +465,17 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>رنگ اصلی (Primary)</label>
-                            <input type="color" id="setting_color_primary" value="#6C3CE1" />
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="setting_color_primary" value="#6C3CE1" />
+                                <span class="color-hex" id="color_primary_hex">#6C3CE1</span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>رنگ ثانویه (Secondary)</label>
-                            <input type="color" id="setting_color_secondary" value="#FFB800" />
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="setting_color_secondary" value="#FFB800" />
+                                <span class="color-hex" id="color_secondary_hex">#FFB800</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -564,7 +584,9 @@
     </div>
 
     <script>
-        // ===== تنظیمات =====
+        // =============================================
+        // ===== تنظیمات اولیه =====
+        // =============================================
         const API_BASE = 'https://sofiaaisite.runflare.run';
         const ADMIN_PASSWORD_KEY = 'admin_password';
         const DEFAULT_PASSWORD = 'Ard$447100';
@@ -575,7 +597,19 @@
             return password;
         }
 
+        // =============================================
+        // ===== نمایش کد رنگ =====
+        // =============================================
+        document.getElementById('setting_color_primary').addEventListener('input', function() {
+            document.getElementById('color_primary_hex').textContent = this.value;
+        });
+        document.getElementById('setting_color_secondary').addEventListener('input', function() {
+            document.getElementById('color_secondary_hex').textContent = this.value;
+        });
+
+        // =============================================
         // ===== ورود و خروج =====
+        // =============================================
         function checkLogin() {
             const input = document.getElementById('adminPassword').value;
             if (input === getAdminPassword()) {
@@ -598,7 +632,9 @@
             if (e.key === 'Enter') checkLogin();
         });
 
+        // =============================================
         // ===== مدیریت تب‌ها =====
+        // =============================================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -942,28 +978,34 @@
         }
 
         // =============================================
-        // ===== ۷. صفحات =====
+        // ===== ۷. مدیریت صفحات (اصلاح‌شده) =====
         // =============================================
         function loadPages() {
             fetch(`${API_BASE}/api/admin/settings`)
                 .then(res => res.json())
                 .then(data => {
-                    // صفحه اصلی
+                    // صفحه اصلی (Hero)
                     document.getElementById('page_hero_title').value = data.hero_title || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI';
                     document.getElementById('page_hero_subtitle').value = data.hero_subtitle || 'از مقاله‌های تخصصی تا پیاده‌سازی عملی';
                     document.getElementById('page_hero_text').value = data.hero_text || 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی';
+                    
                     // درباره ما
                     document.getElementById('page_about_title').value = data.about_title || 'درباره سوفیا AI';
-                    document.getElementById('page_about_text').value = data.about_text || 'تیم سوفیا با بیش از ۲۰ سال سابقه در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند...';
+                    document.getElementById('page_about_text').value = data.about_text || 'تیم سوفیا با بیش از ۲۰ سال سابقه در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند تا از قدرت دستیارهای هوشمند و ایجنت‌های AI برای رشد و بهره‌وری استفاده کنند. ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.';
+                    
                     // فوتر
                     document.getElementById('page_footer_text').value = data.footer_text || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران';
                     document.getElementById('page_copyright_text').value = data.copyright_text || '© ۲۰۲۶ توسعه‌دهنده هوش مصنوعی سوفیا — تمامی حقوق محفوظ است';
+                    
                     // آمار
                     document.getElementById('page_stat_years').value = data.stat_years || '۲۰+';
                     document.getElementById('page_stat_projects').value = data.stat_projects || '۸۰+';
                     document.getElementById('page_stat_privacy').value = data.stat_privacy || '۱۰۰%';
                 })
-                .catch(() => {});
+                .catch(error => {
+                    console.error('❌ خطا در دریافت تنظیمات صفحات:', error);
+                    alert('❌ خطا در دریافت تنظیمات صفحات');
+                });
         }
 
         function savePages() {
@@ -980,16 +1022,34 @@
                 stat_privacy: document.getElementById('page_stat_privacy').value
             };
             
+            console.log('📤 ارسال داده صفحات:', data);
+            
             fetch(`${API_BASE}/api/admin/settings`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify(data)
             })
-            .then(res => res.json())
+            .then(response => {
+                console.log('📥 وضعیت پاسخ:', response.status);
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        console.error('❌ پاسخ خطا:', text);
+                        throw new Error('خطا در ذخیره صفحات (وضعیت: ' + response.status + ')');
+                    });
+                }
+                return response.json();
+            })
             .then(result => {
                 alert(result.message || '✅ صفحات با موفقیت ذخیره شدند!');
+                loadPages(); // بارگذاری مجدد
             })
-            .catch(() => alert('❌ خطا در ذخیره صفحات'));
+            .catch(error => {
+                console.error('❌ خطا:', error);
+                alert('❌ خطا در ذخیره صفحات: ' + error.message);
+            });
         }
 
         // =============================================
@@ -1004,6 +1064,7 @@
                     document.getElementById('setting_site_tagline').value = data.site_tagline || 'توسعه‌دهنده هوش مصنوعی';
                     document.getElementById('setting_meta_description').value = data.meta_description || '';
                     document.getElementById('setting_meta_keywords').value = data.meta_keywords || 'هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون';
+                    
                     // اطلاعات تماس
                     document.getElementById('setting_phone').value = data.phone || '';
                     document.getElementById('setting_phone2').value = data.phone2 || '';
@@ -1011,6 +1072,7 @@
                     document.getElementById('setting_email2').value = data.email2 || '';
                     document.getElementById('setting_address').value = data.address || '';
                     document.getElementById('setting_working_hours').value = data.working_hours || 'شنبه تا چهارشنبه ۹-۱۷';
+                    
                     // شبکه‌های اجتماعی
                     document.getElementById('setting_whatsapp').value = data.whatsapp || '';
                     document.getElementById('setting_telegram').value = data.telegram || '';
@@ -1018,10 +1080,16 @@
                     document.getElementById('setting_instagram').value = data.instagram || '';
                     document.getElementById('setting_eitaa').value = data.eitaa || '';
                     document.getElementById('setting_bale').value = data.bale || '';
+                    
                     // ظاهر
-                    document.getElementById('setting_color_primary').value = data.color_primary || '#6C3CE1';
-                    document.getElementById('setting_color_secondary').value = data.color_secondary || '#FFB800';
+                    const primaryColor = data.color_primary || '#6C3CE1';
+                    const secondaryColor = data.color_secondary || '#FFB800';
+                    document.getElementById('setting_color_primary').value = primaryColor;
+                    document.getElementById('color_primary_hex').textContent = primaryColor;
+                    document.getElementById('setting_color_secondary').value = secondaryColor;
+                    document.getElementById('color_secondary_hex').textContent = secondaryColor;
                     document.getElementById('setting_font').value = data.font || 'Vazirmatn';
+                    
                     // کدها
                     document.getElementById('setting_analytics').value = data.analytics || '';
                     document.getElementById('setting_header_codes').value = data.header_codes || '';
