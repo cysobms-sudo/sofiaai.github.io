@@ -62,6 +62,14 @@ app.get('/dashboard.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
+app.get('/cart.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'cart.html'));
+});
+
+// ==================================================
+// ===== APIهای مدیریت کاربران =====
+// ==================================================
+
 // ===== دریافت لیست کاربران =====
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
@@ -222,7 +230,6 @@ app.post('/api/login', async (req, res) => {
                 return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
             }
             
-            // ===== تبدیل تاریخ عضویت به شمسی =====
             const persianCreatedAt = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
             
             res.json({ 
@@ -242,7 +249,105 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// ==================================================
+// ===== APIهای سبد خرید =====
+// ==================================================
+
+// ===== افزودن آیتم به سبد خرید =====
+app.post('/api/cart/add', (req, res) => {
+    const { user_id, item_name, item_price } = req.body;
+    
+    if (!user_id || !item_name) {
+        return res.status(400).json({ error: 'شناسه کاربر و نام آیتم الزامی است.' });
+    }
+    
+    db.query(
+        'SELECT * FROM cart WHERE user_id = ? AND item_name = ?',
+        [user_id, item_name],
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در بررسی سبد خرید:', err);
+                return res.status(500).json({ error: 'خطا در بررسی سبد خرید' });
+            }
+            
+            if (results.length > 0) {
+                return res.status(400).json({ error: 'این آیتم قبلاً به سبد خرید اضافه شده است.' });
+            }
+            
+            const query = 'INSERT INTO cart (user_id, item_name, item_price) VALUES (?, ?, ?)';
+            db.query(query, [user_id, item_name, item_price || 'رایگان'], (err, result) => {
+                if (err) {
+                    console.error('❌ خطا در افزودن به سبد خرید:', err);
+                    return res.status(500).json({ error: 'خطا در افزودن به سبد خرید' });
+                }
+                res.json({ 
+                    message: '✅ آیتم به سبد خرید اضافه شد!',
+                    cart_id: result.insertId
+                });
+            });
+        }
+    );
+});
+
+// ===== دریافت آیتم‌های سبد خرید یک کاربر =====
+app.get('/api/cart/:user_id', (req, res) => {
+    const userId = req.params.user_id;
+    const query = 'SELECT id, item_name, item_price, created_at FROM cart WHERE user_id = ? ORDER BY created_at DESC';
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت سبد خرید:', err);
+            return res.status(500).json({ error: 'خطا در دریافت سبد خرید' });
+        }
+        res.json(results);
+    });
+});
+
+// ===== حذف یک آیتم از سبد خرید =====
+app.delete('/api/cart/:id', (req, res) => {
+    const cartId = req.params.id;
+    const query = 'DELETE FROM cart WHERE id = ?';
+    db.query(query, [cartId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف آیتم از سبد خرید:', err);
+            return res.status(500).json({ error: 'خطا در حذف آیتم' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'آیتم یافت نشد' });
+        }
+        res.json({ message: '✅ آیتم با موفقیت از سبد خرید حذف شد' });
+    });
+});
+
+// ===== ثبت نهایی درخواست (چک‌اوت) =====
+app.post('/api/cart/checkout/:user_id', (req, res) => {
+    const userId = req.params.user_id;
+    
+    db.query('SELECT * FROM cart WHERE user_id = ?', [userId], (err, items) => {
+        if (err) {
+            console.error('❌ خطا در دریافت آیتم‌های سبد خرید:', err);
+            return res.status(500).json({ error: 'خطا در دریافت آیتم‌ها' });
+        }
+        
+        if (items.length === 0) {
+            return res.status(400).json({ error: 'سبد خرید شما خالی است.' });
+        }
+        
+        db.query('DELETE FROM cart WHERE user_id = ?', [userId], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در خالی کردن سبد خرید:', err);
+                return res.status(500).json({ error: 'خطا در ثبت درخواست' });
+            }
+            res.json({ 
+                message: '✅ درخواست شما با موفقیت ثبت شد! به زودی با شما تماس می‌گیریم.',
+                items: items.length
+            });
+        });
+    });
+});
+
+// ==================================================
 // ===== شروع سرور =====
+// ==================================================
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
     console.log(`🌐 آدرس: http://localhost:${port}`);
