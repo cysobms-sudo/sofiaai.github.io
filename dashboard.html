@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>داشبورد کاربری | سوفیا AI</title>
+    <title>داشبورد کاربری | توسعه‌دهنده هوش مصنوعی سوفیا</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -52,10 +52,17 @@
         .topbar .logo .highlight {
             color: var(--primary);
         }
+        .topbar .logo .sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            display: block;
+        }
         .topbar .user-info {
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-wrap: wrap;
         }
         .topbar .user-info .name {
             font-weight: 700;
@@ -72,6 +79,26 @@
             justify-content: center;
             font-weight: 700;
             font-size: 1.2rem;
+        }
+        .topbar .user-info .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .topbar .user-info .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
         }
         .topbar .user-info .logout-btn {
             background: #e74c3c;
@@ -263,6 +290,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .order-item .order-id {
             font-weight: 700;
@@ -299,7 +328,7 @@
             color: var(--border-color);
         }
 
-        /* ===== مودال تغییر رمز ===== */
+        /* ===== مودال‌ها ===== */
         .modal {
             display: none;
             position: fixed;
@@ -401,8 +430,12 @@
 
     <!-- ===== نوار بالایی ===== -->
     <header class="topbar">
-        <div class="logo">سوفیا <span class="highlight">AI</span></div>
+        <div class="logo">
+            سوفیا <span class="highlight">AI</span>
+            <span class="sub">توسعه‌دهنده هوش مصنوعی سوفیا</span>
+        </div>
         <div class="user-info">
+            <a href="index.html" class="btn-outline"><i class="fas fa-home"></i> بازگشت به خانه</a>
             <span class="name" id="userNameDisplay">کاربر</span>
             <div class="avatar" id="userAvatar">ع</div>
             <a href="index.html" class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</a>
@@ -478,7 +511,7 @@
         </div>
 
         <div class="footer">
-            <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — پنل کاربری</p>
+            <p>© ۲۰۲۶ <strong>سوفیا AI</strong> — توسعه‌دهنده هوش مصنوعی سوفیا</p>
         </div>
     </div>
 
@@ -508,8 +541,8 @@
             <form id="editProfileForm">
                 <label>نام و نام خانوادگی</label>
                 <input type="text" id="editName" placeholder="نام خود را وارد کنید" required />
-                <label>شماره تماس</label>
-                <input type="tel" id="editPhone" placeholder="شماره تماس" />
+                <label>شماره تماس (فارسی)</label>
+                <input type="tel" id="editPhone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" />
                 <div class="modal-actions">
                     <button type="submit" class="save-btn">💾 ذخیره</button>
                     <button type="button" class="cancel-btn" id="closeModalBtn">انصراف</button>
@@ -527,19 +560,21 @@
             if (!isoDate) return '---';
             try {
                 const date = new Date(isoDate);
-                // اگر تاریخ نامعتبر بود، خودش را برگردان
-                if (isNaN(date.getTime())) {
-                    return isoDate;
-                }
-                // تبدیل به شمسی با تنظیمات ایران
-                return new Intl.DateTimeFormat('fa-IR', {
+                if (isNaN(date.getTime())) return isoDate;
+                
+                // تبدیل به شمسی با فرمت ۱۴۰۴/۰۴/۲۱
+                const persianDate = new Intl.DateTimeFormat('fa-IR', {
                     year: 'numeric',
                     month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
+                    day: '2-digit'
                 }).format(date);
+                
+                // حذف اسلش‌ها و تبدیل به فرمت ۱۴۰۴/۰۴/۲۱
+                const parts = persianDate.split('/');
+                if (parts.length === 3) {
+                    return `${parts[0]}/${parts[1]}/${parts[2]}`;
+                }
+                return persianDate;
             } catch (e) {
                 console.error('خطا در تبدیل تاریخ:', e);
                 return isoDate;
