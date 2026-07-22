@@ -42,7 +42,6 @@
             line-height: 1.7;
         }
 
-        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -57,10 +56,7 @@
         }
         .fade-in { animation: fadeIn 0.5s ease forwards; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
         /* ===== هدر ===== */
         .dashboard-header {
@@ -76,61 +72,23 @@
             gap: 16px;
             margin-bottom: 24px;
         }
-        .dashboard-header .brand h1 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-dark);
-        }
+        .dashboard-header .brand h1 { font-size: 1.6rem; font-weight: 800; color: var(--text-dark); }
         .dashboard-header .brand h1 .highlight { color: var(--primary); }
-        .dashboard-header .brand .sub {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .dashboard-header .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+        .dashboard-header .brand .sub { color: var(--text-muted); font-size: 0.9rem; }
+        .dashboard-header .user-info { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
         .dashboard-header .user-info .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 700;
+            width: 48px; height: 48px; border-radius: 50%; background: var(--primary);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700;
         }
-        .dashboard-header .user-info .details .name {
-            font-weight: 700;
-            color: var(--text-dark);
-            font-size: 1.05rem;
-        }
-        .dashboard-header .user-info .details .email {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        .dashboard-header .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .dashboard-header .user-info .details .name { font-weight: 700; color: var(--text-dark); font-size: 1.05rem; }
+        .dashboard-header .user-info .details .email { font-size: 0.85rem; color: var(--text-muted); }
+        .dashboard-header .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
         .btn {
-            border: none;
-            padding: 10px 24px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            border: none; padding: 10px 24px; border-radius: var(--radius-sm); font-weight: 600;
+            cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-size: 0.9rem;
+            transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
         }
         .btn-primary { background: var(--primary); color: #fff; }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(108,60,225,0.3); }
@@ -150,150 +108,57 @@
             margin-bottom: 24px;
         }
         .stat-card {
-            background: var(--bg-card);
-            padding: 20px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            text-align: center;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
+            background: var(--bg-card); padding: 20px; border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color); text-align: center; transition: var(--transition); box-shadow: var(--shadow);
         }
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        .stat-card .stat-icon {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        .stat-card .number {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            line-height: 1.2;
-        }
-        .stat-card .label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 2px;
-        }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .stat-card .stat-icon { font-size: 1.8rem; color: var(--primary); margin-bottom: 4px; }
+        .stat-card .number { font-size: 2rem; font-weight: 900; color: var(--primary); line-height: 1.2; }
+        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 2px; }
 
         /* ===== بخش‌ها ===== */
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .section-title { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
         .section-title i { color: var(--primary); }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
         /* ===== کارت ===== */
         .card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            background: var(--bg-card); border-radius: var(--radius); padding: 24px;
+            border: 1px solid var(--border-color); box-shadow: var(--shadow);
         }
-        .card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-dark);
-        }
+        .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--text-dark); }
         .card h3 i { color: var(--primary); margin-left: 8px; }
 
         /* ===== فرم ===== */
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
-        .form-group label .required {
-            color: var(--danger);
-        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-weight: 600; color: var(--text-dark); font-size: 0.9rem; margin-bottom: 4px; }
+        .form-group label .required { color: var(--danger); }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            font-size: 0.95rem;
-            font-family: 'Vazirmatn', sans-serif;
-            transition: var(--transition);
-            background: var(--bg-body);
-            color: var(--text-dark);
+            width: 100%; padding: 10px 14px; border-radius: var(--radius-sm);
+            border: 2px solid var(--border-color); font-size: 0.95rem;
+            font-family: 'Vazirmatn', sans-serif; transition: var(--transition);
+            background: var(--bg-body); color: var(--text-dark);
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(108,60,225,0.06);
-            background: #fff;
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(108,60,225,0.06); background: #fff;
         }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        .form-group .hint {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 4px;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group .hint { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-        /* ===== جدول درخواست‌ها ===== */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
+        /* ===== جدول ===== */
+        .table-wrapper { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         th {
-            background: var(--bg-body);
-            padding: 12px 16px;
-            text-align: right;
-            font-weight: 700;
-            color: var(--text-dark);
-            border-bottom: 2px solid var(--border-color);
-            white-space: nowrap;
+            background: var(--bg-body); padding: 12px 16px; text-align: right; font-weight: 700;
+            color: var(--text-dark); border-bottom: 2px solid var(--border-color); white-space: nowrap;
         }
-        td {
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-dark);
-            word-break: break-word;
-        }
+        td { padding: 10px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-dark); word-break: break-word; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: rgba(108,60,225,0.03); }
 
         .badge {
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: inline-block;
+            padding: 4px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; display: inline-block;
         }
         .badge-pending { background: #fff3cd; color: #856404; }
         .badge-approved { background: #d4edda; color: #155724; }
@@ -304,52 +169,25 @@
         .priority-medium { color: var(--warning); font-weight: 700; }
         .priority-low { color: var(--success); font-weight: 700; }
 
-        .empty-state {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--text-muted);
-        }
-        .empty-state i {
-            font-size: 2.5rem;
-            color: var(--border-color);
-            display: block;
-            margin-bottom: 8px;
-        }
+        .empty-state { text-align: center; padding: 30px 20px; color: var(--text-muted); }
+        .empty-state i { font-size: 2.5rem; color: var(--border-color); display: block; margin-bottom: 8px; }
 
         /* ===== Toast ===== */
         .toast-container {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            direction: rtl;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; direction: rtl;
         }
         .toast {
-            padding: 14px 28px;
-            border-radius: var(--radius-sm);
-            color: #fff;
-            font-weight: 600;
-            font-family: 'Vazirmatn', sans-serif;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: slideDown 0.5s ease;
-            min-width: 200px;
-            text-align: center;
-            font-size: 0.95rem;
+            padding: 14px 28px; border-radius: var(--radius-sm); color: #fff; font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif; box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease; min-width: 200px; text-align: center; font-size: 0.95rem;
         }
         .toast.success { background: var(--success); }
         .toast.error { background: var(--danger); }
         .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
 
-        /* ===== واکنش‌گرایی ===== */
-        @media (max-width: 992px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 992px) { .grid-2 { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .dashboard-header { padding: 16px; flex-direction: column; text-align: center; }
             .dashboard-header .user-info { justify-content: center; }
@@ -558,6 +396,34 @@
         }
 
         // =============================================
+        // ===== محاسبه روزهای عضویت =====
+        // =============================================
+        function calculateMemberDays(createdAt) {
+            if (!createdAt) return 1;
+            
+            try {
+                // تبدیل تاریخ میلادی به شیء Date
+                const joinDate = new Date(createdAt);
+                
+                // بررسی معتبر بودن تاریخ
+                if (isNaN(joinDate.getTime())) {
+                    console.warn('تاریخ نامعتبر:', createdAt);
+                    return 1;
+                }
+                
+                const now = new Date();
+                const diffTime = Math.abs(now.getTime() - joinDate.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                // اگر تاریخ عضویت در آینده است یا کمتر از 1 روز است
+                return diffDays < 1 ? 1 : diffDays;
+            } catch (e) {
+                console.error('خطا در محاسبه روزهای عضویت:', e);
+                return 1;
+            }
+        }
+
+        // =============================================
         // ===== نمایش اطلاعات کاربر =====
         // =============================================
         function displayUserInfo(user) {
@@ -570,13 +436,9 @@
             document.getElementById('profilePhone').textContent = user.phone || 'ثبت نشده';
             document.getElementById('profileDate').textContent = user.created_at || '-';
 
-            // محاسبه روزهای عضویت
-            if (user.created_at) {
-                const joinDate = new Date(user.created_at);
-                const now = new Date();
-                const days = Math.floor((now - joinDate) / (1000 * 60 * 60 * 24));
-                document.getElementById('memberDays').textContent = days || 1;
-            }
+            // ===== محاسبه صحیح روزهای عضویت =====
+            const memberDays = calculateMemberDays(user.created_at);
+            document.getElementById('memberDays').textContent = memberDays;
         }
 
         // =============================================
@@ -638,12 +500,16 @@
                                            req.status === 'approved' ? 'badge-approved' :
                                            req.status === 'rejected' ? 'badge-rejected' : 'badge-processing';
 
-                        const categoryLabel = req.category === 'chatbot' ? 'چت‌بات' :
-                                             req.category === 'rag' ? 'سیستم RAG' :
-                                             req.category === 'automation' ? 'اتوماسیون' :
-                                             req.category === 'analysis' ? 'تحلیل داده' :
-                                             req.category === 'agent' ? 'ایجنت هوشمند' :
-                                             req.category === 'other' ? 'سایر' : 'عمومی';
+                        const categoryLabels = {
+                            'general': 'عمومی',
+                            'chatbot': 'چت‌بات',
+                            'rag': 'سیستم RAG',
+                            'automation': 'اتوماسیون',
+                            'analysis': 'تحلیل داده',
+                            'agent': 'ایجنت هوشمند',
+                            'other': 'سایر'
+                        };
+                        const categoryLabel = categoryLabels[req.category] || req.category;
 
                         html += `
                             <tr>
@@ -654,9 +520,16 @@
                                 <td><span class="badge ${statusClass}">${statusLabel}</span></td>
                                 <td>${req.created_at}</td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteRequest(${req.id})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    ${req.status === 'pending' ? `
+                                        <button class="btn btn-danger btn-sm" onclick="deleteRequest(${req.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    ` : ''}
+                                    ${req.status !== 'pending' ? `
+                                        <button class="btn btn-danger btn-sm" onclick="deleteRequest(${req.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    ` : ''}
                                 </td>
                             </tr>
                         `;
