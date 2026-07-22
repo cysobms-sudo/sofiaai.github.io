@@ -66,8 +66,7 @@ const db = mysql.createConnection({
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'oJ2LXgVwDibBc79qnaPx',
     database: process.env.DB_NAME || 'sofiaaiskho_db',
-    port: process.env.DB_PORT || 32280,
-    charset: 'utf8mb4'
+    port: process.env.DB_PORT || 32280
 });
 
 db.connect((err) => {
@@ -126,6 +125,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 
         const imageUrl = '/images/gallery/' + req.file.filename;
         console.log('✅ تصویر با موفقیت ذخیره شد:', imageUrl);
+        console.log('📁 مسیر فیزیکی:', req.file.path);
         
         res.json({ 
             success: true,
@@ -135,7 +135,9 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
         });
     } catch (error) {
         console.error('❌ خطا در آپلود:', error);
-        res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
+        res.status(500).json({ 
+            error: 'خطا در آپلود تصویر: ' + error.message 
+        });
     }
 });
 
