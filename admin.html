@@ -295,6 +295,7 @@
         .badge-approved { background: #d4edda; color: #155724; }
         .badge-pending { background: #fff3cd; color: #856404; }
         .badge-rejected { background: #f8d7da; color: #721c24; }
+        .badge-processing { background: #cce5ff; color: #004085; }
 
         /* ===== دکمه‌ها ===== */
         .btn {
@@ -412,7 +413,7 @@
             box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.06);
             background: #fff;
         }
-        .modal textarea { min-height: 100px; resize: vertical; }
+        .modal textarea { min-height: 120px; resize: vertical; }
         .modal .file-upload-area {
             border: 2px dashed var(--border-color);
             border-radius: var(--radius-sm);
@@ -521,6 +522,12 @@
         .admin-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-light); font-size: 0.85rem; }
         .admin-footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
         .admin-footer a:hover { text-decoration: underline; }
+
+        /* ===== اولویت‌ها ===== */
+        .priority-high { color: var(--danger); font-weight: 700; }
+        .priority-medium { color: var(--warning); font-weight: 700; }
+        .priority-low { color: var(--success); font-weight: 700; }
+        .priority-urgent { color: #e74c3c; font-weight: 700; }
 
         @media (max-width: 992px) { .pages-grid { grid-template-columns: 1fr; } .settings-grid { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
@@ -932,7 +939,6 @@
                 })
                 .catch(err => console.error('❌ خطا در دریافت آمار:', err));
             
-            // دریافت تعداد درخواست‌ها
             fetch(`${API_BASE}/api/admin/user-requests`)
                 .then(res => res.json())
                 .then(data => {
@@ -1152,7 +1158,7 @@
         });
 
         // =============================================
-        // ===== مقالات =====
+        // ===== مقالات (با ویرایش) =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
@@ -1177,6 +1183,9 @@
                                 <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
                                 <td>${article.created_at}</td>
                                 <td>
+                                    <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                     <button class="btn btn-danger btn-sm" onclick="deleteArticle(${article.id})">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -1204,11 +1213,36 @@
             document.getElementById('articleModal').classList.add('active');
         }
 
+        function editArticle(id) {
+            fetch(`${API_BASE}/api/admin/articles`)
+                .then(res => res.json())
+                .then(data => {
+                    const article = data.find(a => a.id === id);
+                    if (!article) {
+                        showToast('❌ مقاله یافت نشد', 'error');
+                        return;
+                    }
+                    document.getElementById('articleEditId').value = id;
+                    document.getElementById('articleTitle').value = article.title;
+                    document.getElementById('articleCategory').value = article.category;
+                    document.getElementById('articleAuthor').value = article.author;
+                    document.getElementById('articleContent').value = article.content || '';
+                    document.getElementById('articleStatus').value = article.status;
+                    document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
+                    document.getElementById('articleModal').classList.add('active');
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در دریافت اطلاعات مقاله', 'error');
+                });
+        }
+
         function closeArticleModal() {
             document.getElementById('articleModal').classList.remove('active');
         }
 
         function saveArticle() {
+            const id = document.getElementById('articleEditId').value;
             const title = document.getElementById('articleTitle').value.trim();
             const category = document.getElementById('articleCategory').value.trim();
             const author = document.getElementById('articleAuthor').value.trim();
@@ -1220,8 +1254,11 @@
                 return;
             }
             
-            fetch(`${API_BASE}/api/admin/articles`, {
-                method: 'POST',
+            const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
+            const method = id ? 'PUT' : 'POST';
+            
+            fetch(url, {
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, category, content, author, status })
             })
@@ -1401,11 +1438,14 @@
                     }
                     
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     data.forEach(req => {
                         const priorityLabel = req.priority === 'urgent' ? 'فوری' :
                                              req.priority === 'high' ? 'بالا' :
                                              req.priority === 'medium' ? 'متوسط' : 'کم';
+                        const priorityClass = req.priority === 'urgent' || req.priority === 'high' ? 'priority-high' :
+                                             req.priority === 'medium' ? 'priority-medium' : 'priority-low';
+                        
                         const statusLabel = req.status === 'pending' ? 'در انتظار' :
                                            req.status === 'approved' ? 'تایید شده' :
                                            req.status === 'rejected' ? 'رد شده' : 'در حال بررسی';
@@ -1413,18 +1453,33 @@
                                            req.status === 'approved' ? 'badge-approved' :
                                            req.status === 'rejected' ? 'badge-rejected' : 'badge-processing';
                         
+                        const categoryLabels = {
+                            'general': 'عمومی',
+                            'chatbot': 'چت‌بات',
+                            'rag': 'سیستم RAG',
+                            'automation': 'اتوماسیون',
+                            'analysis': 'تحلیل داده',
+                            'agent': 'ایجنت هوشمند',
+                            'other': 'سایر'
+                        };
+                        const categoryLabel = categoryLabels[req.category] || req.category;
+                        
                         html += `
                             <tr>
                                 <td><strong>${req.user_name}</strong></td>
                                 <td>${req.user_email}</td>
                                 <td>${req.title}</td>
-                                <td><span class="${req.priority === 'high' || req.priority === 'urgent' ? 'priority-high' : req.priority === 'medium' ? 'priority-medium' : 'priority-low'}">${priorityLabel}</span></td>
+                                <td>${categoryLabel}</td>
+                                <td><span class="${priorityClass}">${priorityLabel}</span></td>
                                 <td><span class="badge ${statusClass}">${statusLabel}</span></td>
                                 <td>${req.created_at}</td>
                                 <td>
                                     ${req.status === 'pending' ? `
                                         <button class="btn btn-success btn-sm" onclick="updateRequestStatus(${req.id}, 'approved')"><i class="fas fa-check"></i></button>
                                         <button class="btn btn-danger btn-sm" onclick="updateRequestStatus(${req.id}, 'rejected')"><i class="fas fa-times"></i></button>
+                                    ` : ''}
+                                    ${req.status === 'approved' ? `
+                                        <button class="btn btn-warning btn-sm" onclick="updateRequestStatus(${req.id}, 'processing')"><i class="fas fa-spinner"></i></button>
                                     ` : ''}
                                     <button class="btn btn-danger btn-sm" onclick="deleteUserRequest(${req.id})"><i class="fas fa-trash"></i></button>
                                 </td>
