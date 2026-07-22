@@ -33,7 +33,7 @@ if (!fs.existsSync(uploadDir)) {
     console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
 }
 
-// ===== تنظیمات Multer با کیفیت مناسب =====
+// ===== تنظیمات Multer =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadDir);
@@ -45,7 +45,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// فیلتر فقط برای تصاویر
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
         cb(null, true);
@@ -57,7 +56,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage,
     limits: { 
-        fileSize: 10 * 1024 * 1024, // 10MB
+        fileSize: 10 * 1024 * 1024,
         files: 1
     },
     fileFilter: fileFilter
@@ -121,7 +120,6 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 
         const imageUrl = '/images/gallery/' + req.file.filename;
         console.log('✅ تصویر ذخیره شد:', imageUrl);
-        console.log('📁 اندازه:', req.file.size, 'bytes');
         
         res.json({ 
             success: true,
@@ -190,7 +188,7 @@ app.delete('/api/gallery/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== API مقالات =====
+// ===== API مقالات (اصلاح شده) =====
 // ==================================================
 app.get('/api/articles', (req, res) => {
     db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC', 
@@ -210,7 +208,7 @@ app.get('/api/articles', (req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
     const articleId = req.params.id;
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ? AND status = "published"',
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?', // حذف شرط status
         [articleId],
         (err, results) => {
             if (err) {
@@ -581,7 +579,6 @@ app.get('/api/admin/settings', (req, res) => {
 
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
-    console.log('📝 ذخیره تنظیمات:', settings);
     const queries = Object.keys(settings).map(key => {
         return new Promise((resolve, reject) => {
             db.query(
@@ -668,14 +665,12 @@ app.get('/api/admin/user-requests', (req, res) => {
             const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
             return { ...req, created_at: persianDate };
         });
-        console.log('📋 درخواست‌های دریافتی:', requestsWithPersianDate.length);
         res.json(requestsWithPersianDate);
     });
 });
 
 app.post('/api/user-requests', (req, res) => {
     const { user_id, title, description, priority, category } = req.body;
-    console.log('📝 دریافت درخواست جدید:', { user_id, title, priority, category });
     if (!user_id || !title) {
         return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
     }
@@ -685,7 +680,6 @@ app.post('/api/user-requests', (req, res) => {
             console.error('❌ خطا در ذخیره درخواست:', err);
             return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
         }
-        console.log('✅ درخواست ثبت شد، ID:', result.insertId);
         res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
     });
 });
