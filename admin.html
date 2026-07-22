@@ -664,7 +664,7 @@
         }
 
         // =============================================
-        // ===== ۱. آمار داشبورد =====
+        // ===== １. آمار داشبورد =====
         // =============================================
         function loadDashboardStats() {
             fetch(`${API_BASE}/api/admin/stats`)
@@ -681,7 +681,7 @@
         }
 
         // =============================================
-        // ===== ۲. مقالات =====
+        // ===== ２. مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
@@ -787,7 +787,7 @@
         }
 
         // =============================================
-        // ===== ۳. نظرات =====
+        // ===== ３. نظرات =====
         // =============================================
         function loadComments() {
             const container = document.getElementById('commentsList');
@@ -855,7 +855,7 @@
         }
 
         // =============================================
-        // ===== ۴. کاربران =====
+        // ===== ４. کاربران =====
         // =============================================
         function loadUsers() {
             const container = document.getElementById('usersList');
@@ -895,7 +895,7 @@
         }
 
         // =============================================
-        // ===== ۵. درخواست‌ها =====
+        // ===== ５. درخواست‌ها =====
         // =============================================
         function loadRequests() {
             const container = document.getElementById('requestsList');
@@ -936,7 +936,7 @@
         }
 
         // =============================================
-        // ===== ۶. سبد خرید =====
+        // ===== ６. سبد خرید =====
         // =============================================
         function loadCartItems() {
             const container = document.getElementById('cartList');
@@ -978,29 +978,40 @@
         }
 
         // =============================================
-        // ===== ۷. مدیریت صفحات (اصلاح‌شده) =====
+        // ===== ７. مدیریت صفحات (اصلاح‌شده) =====
         // =============================================
         function loadPages() {
+            const heroTitle = document.getElementById('page_hero_title');
+            const heroSubtitle = document.getElementById('page_hero_subtitle');
+            const heroText = document.getElementById('page_hero_text');
+            const aboutTitle = document.getElementById('page_about_title');
+            const aboutText = document.getElementById('page_about_text');
+            const footerText = document.getElementById('page_footer_text');
+            const copyrightText = document.getElementById('page_copyright_text');
+            const statYears = document.getElementById('page_stat_years');
+            const statProjects = document.getElementById('page_stat_projects');
+            const statPrivacy = document.getElementById('page_stat_privacy');
+
             fetch(`${API_BASE}/api/admin/settings`)
                 .then(res => res.json())
                 .then(data => {
-                    // صفحه اصلی (Hero)
-                    document.getElementById('page_hero_title').value = data.hero_title || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI';
-                    document.getElementById('page_hero_subtitle').value = data.hero_subtitle || 'از مقاله‌های تخصصی تا پیاده‌سازی عملی';
-                    document.getElementById('page_hero_text').value = data.hero_text || 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی';
+                    console.log('📥 داده دریافتی از سرور:', data);
                     
-                    // درباره ما
-                    document.getElementById('page_about_title').value = data.about_title || 'درباره سوفیا AI';
-                    document.getElementById('page_about_text').value = data.about_text || 'تیم سوفیا با بیش از ۲۰ سال سابقه در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند تا از قدرت دستیارهای هوشمند و ایجنت‌های AI برای رشد و بهره‌وری استفاده کنند. ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.';
+                    heroTitle.value = data.hero_title || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI';
+                    heroSubtitle.value = data.hero_subtitle || 'از مقاله‌های تخصصی تا پیاده‌سازی عملی';
+                    heroText.value = data.hero_text || 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی';
                     
-                    // فوتر
-                    document.getElementById('page_footer_text').value = data.footer_text || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران';
-                    document.getElementById('page_copyright_text').value = data.copyright_text || '© ۲۰۲۶ توسعه‌دهنده هوش مصنوعی سوفیا — تمامی حقوق محفوظ است';
+                    aboutTitle.value = data.about_title || 'درباره سوفیا AI';
+                    aboutText.value = data.about_text || 'تیم سوفیا با بیش از ۲۰ سال سابقه در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند تا از قدرت دستیارهای هوشمند و ایجنت‌های AI برای رشد و بهره‌وری استفاده کنند. ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.';
                     
-                    // آمار
-                    document.getElementById('page_stat_years').value = data.stat_years || '۲۰+';
-                    document.getElementById('page_stat_projects').value = data.stat_projects || '۸۰+';
-                    document.getElementById('page_stat_privacy').value = data.stat_privacy || '۱۰۰%';
+                    footerText.value = data.footer_text || 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران';
+                    copyrightText.value = data.copyright_text || '© ۲۰۲۶ توسعه‌دهنده هوش مصنوعی سوفیا — تمامی حقوق محفوظ است';
+                    
+                    statYears.value = data.stat_years || '۲۰+';
+                    statProjects.value = data.stat_projects || '۸۰+';
+                    statPrivacy.value = data.stat_privacy || '۱۰۰%';
+                    
+                    console.log('✅ تنظیمات صفحات با موفقیت بارگذاری شدند!');
                 })
                 .catch(error => {
                     console.error('❌ خطا در دریافت تنظیمات صفحات:', error);
@@ -1035,14 +1046,12 @@
             .then(response => {
                 console.log('📥 وضعیت پاسخ:', response.status);
                 if (!response.ok) {
-                    return response.text().then(text => {
-                        console.error('❌ پاسخ خطا:', text);
-                        throw new Error('خطا در ذخیره صفحات (وضعیت: ' + response.status + ')');
-                    });
+                    throw new Error('خطا در ذخیره صفحات (وضعیت: ' + response.status + ')');
                 }
                 return response.json();
             })
             .then(result => {
+                console.log('✅ نتیجه:', result);
                 alert(result.message || '✅ صفحات با موفقیت ذخیره شدند!');
                 loadPages(); // بارگذاری مجدد
             })
@@ -1053,7 +1062,7 @@
         }
 
         // =============================================
-        // ===== ۸. تنظیمات =====
+        // ===== ８. تنظیمات =====
         // =============================================
         function loadSettings() {
             fetch(`${API_BASE}/api/admin/settings`)
