@@ -40,11 +40,61 @@
         .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
         a { text-decoration: none; color: inherit; }
 
+        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .fade-up { animation: fadeUp 0.8s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-up {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+        .fade-up.delay-1 { animation-delay: 0.1s; }
+        .fade-up.delay-2 { animation-delay: 0.2s; }
+        .fade-up.delay-3 { animation-delay: 0.3s; }
+        .fade-up.delay-4 { animation-delay: 0.4s; }
+
+        /* ===== توست ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
+        }
+        .toast {
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        .toast.success { background: #28a745; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+        .toast.warning { background: #f39c12; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+        }
 
         /* ===== نوار ناوبری ===== */
         .navbar {
@@ -143,6 +193,21 @@
             background: var(--primary-dark);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.35);
         }
+        .nav-menu .btn-logout {
+            background: var(--danger) !important;
+            color: #fff !important;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .nav-menu .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(231, 76, 60, 0.3);
+        }
         .nav-menu .cart-link {
             background: var(--primary);
             color: #fff !important;
@@ -174,6 +239,10 @@
             color: var(--primary);
             padding: 8px 16px;
             font-size: 0.95rem;
+            display: none;
+        }
+        .user-name-display.show {
+            display: inline-block;
         }
         .admin-link {
             color: var(--primary-dark) !important;
@@ -189,7 +258,7 @@
             color: #fff !important;
         }
 
-        /* ===== بخش قهرمان با عنوان سه‌رنگ ===== */
+        /* ===== بخش قهرمان ===== */
         .hero {
             padding: 60px 0 40px;
             background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
@@ -222,7 +291,6 @@
             margin-bottom: 8px;
             color: var(--text-dark);
         }
-        /* ===== عنوان سه‌رنگ ===== */
         .hero h1 .purple { color: var(--primary); }
         .hero h1 .yellow { color: var(--secondary-dark); }
         .hero h1 .dark { color: var(--text-dark); }
@@ -280,7 +348,7 @@
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.3);
         }
 
-        /* ===== درباره ما با تصویر قابل ویرایش ===== */
+        /* ===== درباره ما ===== */
         .about-section {
             padding: 50px 0;
             background: #fff;
@@ -624,6 +692,11 @@
             transform: scale(1.02);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
         }
+        .comments-form .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
         .comments-list {
             background: var(--bg-light);
             padding: 32px;
@@ -643,7 +716,7 @@
         }
         .comment-item:last-child { border-bottom: none; }
         .comment-item .name { font-weight: 700; color: var(--text-dark); }
-        .comment-item .date { font-size: 0.8rem; color: #9a9aba; }
+        .comment-item .date { font-size: 0.8rem; color: #9a9aba; margin-right: 8px; }
         .comment-item .text { margin-top: 6px; color: var(--text-muted); }
 
         /* ===== CTA ===== */
@@ -707,6 +780,18 @@
             transition: var(--transition);
         }
         footer .footer-links a:hover { color: var(--primary); }
+
+        /* ===== اسکلتون لودینگ ===== */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton 1.5s infinite;
+            border-radius: 8px;
+        }
+        @keyframes skeleton {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
 
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
@@ -776,6 +861,9 @@
                 <span id="userNameDisplay" class="user-name-display"></span>
                 <a href="register.html" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
                 <a href="login.html" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> ورود</a>
+                <button class="btn-logout" id="logoutBtn" style="display:none;" onclick="logoutUser()">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </button>
                 <a href="dashboard.html" class="cart-link">
                     <i class="fas fa-shopping-cart"></i>
                     سبد خرید
@@ -785,7 +873,7 @@
         </div>
     </nav>
 
-    <!-- ===== بخش قهرمان با عنوان سه‌رنگ ===== -->
+    <!-- ===== بخش قهرمان ===== -->
     <section class="hero fade-up">
         <div class="container">
             <h1>
@@ -798,14 +886,14 @@
             <p class="hero-title-sub" id="heroSubtitle">از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
             <p id="heroText">با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی</p>
             <div class="search-box">
-                <input type="text" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
-                <button>جستجو</button>
+                <input type="text" id="searchInput" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
+                <button onclick="searchSite()">جستجو</button>
             </div>
         </div>
     </section>
 
-    <!-- ===== درباره ما با تصویر قابل ویرایش ===== -->
-    <section class="about-section fade-up" id="about">
+    <!-- ===== درباره ما ===== -->
+    <section class="about-section fade-up delay-1" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text">
@@ -828,32 +916,32 @@
     </section>
 
     <!-- ===== دستیارهای هوشمند ===== -->
-    <section class="assistant-section fade-up" id="assistant">
+    <section class="assistant-section fade-up delay-2" id="assistant">
         <div class="container">
             <div class="section-header">
                 <div><h2>🧠 دستیارهای هوشمند</h2><span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="assistant-grid">
-                <a href="service-chatbot.html" class="assistant-card">
+                <a href="#" class="assistant-card">
                     <span class="icon">🤖</span>
                     <h4>دستیار مکالمه‌ای</h4>
                     <p>پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-rag.html" class="assistant-card">
+                <a href="#" class="assistant-card">
                     <span class="icon">🧠</span>
                     <h4>سیستم RAG</h4>
                     <p>پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-automation.html" class="assistant-card">
+                <a href="#" class="assistant-card">
                     <span class="icon">⚙️</span>
                     <h4>اتوماسیون هوشمند</h4>
                     <p>طراحی workflowهای خودکار برای افزایش بهره‌وری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-data.html" class="assistant-card">
+                <a href="#" class="assistant-card">
                     <span class="icon">📊</span>
                     <h4>تحلیل داده و پیش‌بینی</h4>
                     <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
@@ -864,35 +952,35 @@
     </section>
 
     <!-- ===== ایجنت‌ها ===== -->
-    <section class="agents-section fade-up" id="agents">
+    <section class="agents-section fade-up delay-3" id="agents">
         <div class="container">
             <div class="section-header">
                 <div><h2>🤖 ایجنت‌های هوش مصنوعی</h2><span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="agents-grid">
-                <a href="service-agent-data.html" class="agent-card">
+                <a href="#" class="agent-card">
                     <span class="icon">🧠</span>
                     <h4>ایجنت تحلیلگر داده</h4>
                     <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
                     <div class="tags"><span>تحلیل داده</span><span>هوش تجاری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-agent-support.html" class="agent-card">
+                <a href="#" class="agent-card">
                     <span class="icon">🤝</span>
                     <h4>ایجنت پشتیبانی مشتری</h4>
                     <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
                     <div class="tags"><span>پشتیبانی</span><span>چت‌بات</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-agent-content.html" class="agent-card">
+                <a href="#" class="agent-card">
                     <span class="icon">📝</span>
                     <h4>ایجنت تولید محتوا</h4>
                     <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
                     <div class="tags"><span>تولید محتوا</span><span>بازاریابی</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="service-agent-automation.html" class="agent-card">
+                <a href="#" class="agent-card">
                     <span class="icon">⚙️</span>
                     <h4>ایجنت اتوماسیون</h4>
                     <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
@@ -904,7 +992,7 @@
     </section>
 
     <!-- ===== گالری ===== -->
-    <section class="gallery-section fade-up" id="gallery">
+    <section class="gallery-section fade-up delay-3" id="gallery">
         <div class="container">
             <div class="section-header">
                 <div><h2>🖼️ گالری نمونه‌کارها</h2><span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span></div>
@@ -921,7 +1009,7 @@
     </section>
 
     <!-- ===== مقالات ===== -->
-    <section class="articles-section fade-up" id="articles">
+    <section class="articles-section fade-up delay-4" id="articles">
         <div class="container">
             <div class="section-header">
                 <h2>📚 جدیدترین مقالات</h2>
@@ -937,7 +1025,7 @@
     </section>
 
     <!-- ===== نظرات ===== -->
-    <section class="comments-section fade-up" id="comments">
+    <section class="comments-section fade-up delay-4" id="comments">
         <div class="container">
             <div class="section-header">
                 <h2>💬 نظرات کاربران</h2>
@@ -947,13 +1035,13 @@
                 <div class="comments-form">
                     <h3>✍️ ارسال نظر</h3>
                     <form id="commentForm">
-                        <label>نام و نام خانوادگی</label>
+                        <label>نام و نام خانوادگی <span style="color:red;">*</span></label>
                         <input type="text" id="commentName" placeholder="نام خود را وارد کنید" required />
                         <label>ایمیل (اختیاری)</label>
                         <input type="email" id="commentEmail" placeholder="ایمیل خود را وارد کنید" />
-                        <label>نظر شما</label>
+                        <label>نظر شما <span style="color:red;">*</span></label>
                         <textarea id="commentText" placeholder="نظر خود را بنویسید..." required></textarea>
-                        <button type="submit" class="btn-submit">ارسال نظر</button>
+                        <button type="submit" class="btn-submit" id="commentSubmitBtn">ارسال نظر</button>
                     </form>
                 </div>
                 <div class="comments-list" id="commentsContainer">
@@ -968,7 +1056,7 @@
     </section>
 
     <!-- ===== CTA ===== -->
-    <section class="cta-section fade-up">
+    <section class="cta-section fade-up delay-4">
         <div class="container">
             <h2>آماده‌اید با ایجنت‌ها و دستیارهای هوشمند، کسب‌وکار خود را متحول کنید؟</h2>
             <p>همین حالا ثبت‌نام کنید و از مشاوره‌ی رایگان تیم سوفیا بهره‌مند شوید.</p>
@@ -995,29 +1083,73 @@
 
     <!-- ===== اسکریپت‌ها ===== -->
     <script>
-        // ===== API URL =====
+        // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
         // =============================================
-        // ===== مدیریت نمایش نام کاربر =====
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // =============================================
+        // ===== مدیریت کاربر =====
         // =============================================
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
             const registerBtn = document.getElementById('registerBtn');
             const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
             
             if (userData) {
-                const user = JSON.parse(userData);
-                display.textContent = '👤 ' + user.name;
-                display.style.display = 'inline-block';
-                registerBtn.style.display = 'none';
-                loginBtn.style.display = 'none';
+                try {
+                    const user = JSON.parse(userData);
+                    display.textContent = '👤 ' + user.name;
+                    display.className = 'user-name-display show';
+                    registerBtn.style.display = 'none';
+                    loginBtn.style.display = 'none';
+                    logoutBtn.style.display = 'inline-block';
+                } catch(e) {
+                    console.error('خطا در解析 اطلاعات کاربر:', e);
+                    resetUserDisplay();
+                }
             } else {
-                display.textContent = '';
-                display.style.display = 'none';
-                registerBtn.style.display = 'inline-block';
-                loginBtn.style.display = 'inline-block';
+                resetUserDisplay();
+            }
+        }
+
+        function resetUserDisplay() {
+            document.getElementById('userNameDisplay').className = 'user-name-display';
+            document.getElementById('userNameDisplay').textContent = '';
+            document.getElementById('registerBtn').style.display = 'inline-block';
+            document.getElementById('loginBtn').style.display = 'inline-block';
+            document.getElementById('logoutBtn').style.display = 'none';
+        }
+
+        function logoutUser() {
+            if (confirm('آیا از خروج از حساب کاربری مطمئن هستید؟')) {
+                localStorage.removeItem('user');
+                updateUserDisplay();
+                updateCartBadge();
+                showToast('👋 شما با موفقیت خارج شدید', 'info');
             }
         }
 
@@ -1033,17 +1165,21 @@
                 return;
             }
             
-            const user = JSON.parse(userData);
-            const userId = user.id;
-            
-            fetch(`${API_BASE}/api/cart/${userId}`)
-                .then(res => res.json())
-                .then(cart => {
-                    if (badge) badge.textContent = cart.length;
-                })
-                .catch(() => {
-                    if (badge) badge.textContent = '0';
-                });
+            try {
+                const user = JSON.parse(userData);
+                const userId = user.id;
+                
+                fetch(`${API_BASE}/api/cart/${userId}`)
+                    .then(res => res.json())
+                    .then(cart => {
+                        if (badge) badge.textContent = cart.length || 0;
+                    })
+                    .catch(() => {
+                        if (badge) badge.textContent = '0';
+                    });
+            } catch(e) {
+                if (badge) badge.textContent = '0';
+            }
         }
 
         // =============================================
@@ -1069,7 +1205,7 @@
                     data.forEach(item => {
                         html += `
                             <div class="gallery-item">
-                                <img src="${item.image_url}" alt="${item.title}" loading="lazy" />
+                                <img src="${item.image_url}" alt="${item.title}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image\\' style=\\'font-size:4rem;color:#ccc;\\'></i>'" />
                                 <div class="overlay">
                                     <h4>${item.title}</h4>
                                     <p>${item.description || ''}</p>
@@ -1085,6 +1221,7 @@
                         <div style="grid-column:1/-1; text-align:center; padding:40px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                             <p>خطا در دریافت گالری. لطفاً دوباره تلاش کنید.</p>
+                            <button onclick="loadGallery()" style="margin-top:12px; padding:8px 24px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer;">تلاش مجدد</button>
                         </div>
                     `;
                 });
@@ -1111,14 +1248,15 @@
                     
                     let html = '';
                     data.forEach(article => {
+                        const summary = article.content ? article.content.substring(0, 120) + '...' : '';
                         html += `
                             <a href="article.html?id=${article.id}" class="article-card">
                                 <span class="tag">${article.category}</span>
                                 <h3>${article.title}</h3>
-                                <p>${article.content ? article.content.substring(0, 120) + '...' : ''}</p>
+                                <p>${summary}</p>
                                 <div class="meta">
                                     <span><i class="far fa-calendar"></i> ${article.created_at}</span>
-                                    <span><i class="far fa-user"></i> ${article.author}</span>
+                                    <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
                                 </div>
                             </a>
                         `;
@@ -1131,6 +1269,7 @@
                         <div style="grid-column:1/-1; text-align:center; padding:40px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                             <p>خطا در دریافت مقالات. لطفاً دوباره تلاش کنید.</p>
+                            <button onclick="loadArticles()" style="margin-top:12px; padding:8px 24px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer;">تلاش مجدد</button>
                         </div>
                     `;
                 });
@@ -1190,7 +1329,7 @@
             const email = document.getElementById('commentEmail').value.trim();
             const text = document.getElementById('commentText').value.trim();
             
-            const submitBtn = this.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('commentSubmitBtn');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = '⏳ در حال ارسال...';
             submitBtn.disabled = true;
@@ -1205,15 +1344,15 @@
                 const data = await response.json();
                 
                 if (response.ok) {
-                    alert('✅ ' + data.message);
+                    showToast('✅ ' + data.message, 'success');
                     this.reset();
                     loadComments();
                 } else {
-                    alert('❌ ' + data.error);
+                    showToast('❌ ' + (data.error || 'خطا در ارسال نظر'), 'error');
                 }
             } catch (error) {
                 console.error('❌ خطا:', error);
-                alert('❌ خطا در ارسال نظر. لطفاً دوباره تلاش کنید.');
+                showToast('❌ خطا در ارسال نظر. لطفاً دوباره تلاش کنید.', 'error');
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -1223,12 +1362,19 @@
         // =============================================
         // ===== جستجو =====
         // =============================================
-        document.querySelector('.search-box button').addEventListener('click', function() {
-            const query = document.querySelector('.search-box input').value.trim();
+        function searchSite() {
+            const query = document.getElementById('searchInput').value.trim();
             if (query) {
-                alert('🔍 جستجو برای: "' + query + '"\n(این یک نمونه نمایشی است)');
+                showToast('🔍 جستجو برای: "' + query + '"', 'info');
+                // می‌توانید این بخش را به جستجوی واقعی متصل کنید
             } else {
-                alert('لطفاً عبارت جستجو را وارد کنید.');
+                showToast('لطفاً عبارت جستجو را وارد کنید.', 'warning');
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchSite();
             }
         });
 
@@ -1241,7 +1387,7 @@
                 .then(data => {
                     console.log('📥 تنظیمات دریافت شد:', data);
                     
-                    // ===== به‌روزرسانی صفحه اصلی (Hero) =====
+                    // به‌روزرسانی صفحه اصلی (Hero)
                     const heroSubtitle = document.getElementById('heroSubtitle');
                     if (heroSubtitle && data.hero_subtitle) {
                         heroSubtitle.textContent = data.hero_subtitle;
@@ -1252,7 +1398,7 @@
                         heroText.textContent = data.hero_text;
                     }
                     
-                    // ===== به‌روزرسانی درباره ما =====
+                    // به‌روزرسانی درباره ما
                     const aboutTitle = document.getElementById('aboutTitle');
                     if (aboutTitle && data.about_title) {
                         aboutTitle.innerHTML = data.about_title;
@@ -1263,7 +1409,7 @@
                         aboutText.innerHTML = data.about_text.replace(/\n/g, '<br>');
                     }
                     
-                    // ===== به‌روزرسانی تصویر درباره ما =====
+                    // به‌روزرسانی تصویر درباره ما
                     if (data.about_image) {
                         const img = document.getElementById('aboutImage');
                         const placeholder = document.getElementById('aboutPlaceholder');
@@ -1272,7 +1418,7 @@
                         placeholder.style.display = 'none';
                     }
                     
-                    // ===== به‌روزرسانی آمار =====
+                    // به‌روزرسانی آمار
                     const statYears = document.getElementById('statYears');
                     if (statYears && data.stat_years) {
                         statYears.innerHTML = `<span>${data.stat_years}</span> سال سابقه`;
@@ -1288,18 +1434,18 @@
                         statPrivacy.innerHTML = `<span>${data.stat_privacy}</span> حریم خصوصی`;
                     }
                     
-                    // ===== به‌روزرسانی فوتر =====
+                    // به‌روزرسانی فوتر
                     const footerText = document.getElementById('footerText');
                     if (footerText && data.footer_text) {
                         footerText.innerHTML = data.footer_text;
                     }
                     
-                    // ===== به‌روزرسانی عنوان سایت =====
+                    // به‌روزرسانی عنوان سایت
                     if (data.site_name) {
                         document.title = data.site_name + ' | توسعه‌دهنده هوش مصنوعی';
                     }
                     
-                    // ===== به‌روزرسانی تگ‌های متا =====
+                    // به‌روزرسانی تگ‌های متا
                     if (data.meta_description) {
                         const metaDesc = document.querySelector('meta[name="description"]');
                         if (metaDesc) metaDesc.content = data.meta_description;
@@ -1310,17 +1456,12 @@
                         if (metaKeywords) metaKeywords.content = data.meta_keywords;
                     }
                     
-                    // ===== به‌روزرسانی رنگ‌ها =====
+                    // به‌روزرسانی رنگ‌ها
                     if (data.color_primary) {
                         document.documentElement.style.setProperty('--primary', data.color_primary);
                     }
                     if (data.color_secondary) {
                         document.documentElement.style.setProperty('--secondary', data.color_secondary);
-                    }
-                    
-                    // ===== به‌روزرسانی فونت =====
-                    if (data.font) {
-                        document.body.style.fontFamily = data.font + ', sans-serif';
                     }
                 })
                 .catch(error => {
@@ -1338,6 +1479,9 @@
             loadArticles();
             loadComments();
             loadSettings();
+            
+            // به‌روزرسانی دوره‌ای سبد خرید
+            setInterval(updateCartBadge, 30000);
         });
     </script>
 
