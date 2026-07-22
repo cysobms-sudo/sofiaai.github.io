@@ -344,6 +344,7 @@
             object-fit: cover;
             border-radius: var(--radius-sm);
             background: #eee;
+            onerror: "this.src='/images/placeholder.jpg'";
         }
         .gallery-item-card h4 { margin: 8px 0 4px; font-size: 0.95rem; font-weight: 700; }
         .gallery-item-card p { font-size: 0.8rem; color: var(--text-muted); }
@@ -939,6 +940,7 @@
                 })
                 .catch(err => console.error('❌ خطا در دریافت آمار:', err));
             
+            // دریافت تعداد درخواست‌ها
             fetch(`${API_BASE}/api/admin/user-requests`)
                 .then(res => res.json())
                 .then(data => {
@@ -1214,20 +1216,19 @@
         }
 
         function editArticle(id) {
-            fetch(`${API_BASE}/api/admin/articles`)
+            fetch(`${API_BASE}/api/admin/articles/${id}`)
                 .then(res => res.json())
                 .then(data => {
-                    const article = data.find(a => a.id === id);
-                    if (!article) {
+                    if (!data || data.error) {
                         showToast('❌ مقاله یافت نشد', 'error');
                         return;
                     }
                     document.getElementById('articleEditId').value = id;
-                    document.getElementById('articleTitle').value = article.title;
-                    document.getElementById('articleCategory').value = article.category;
-                    document.getElementById('articleAuthor').value = article.author;
-                    document.getElementById('articleContent').value = article.content || '';
-                    document.getElementById('articleStatus').value = article.status;
+                    document.getElementById('articleTitle').value = data.title || '';
+                    document.getElementById('articleCategory').value = data.category || '';
+                    document.getElementById('articleAuthor').value = data.author || '';
+                    document.getElementById('articleContent').value = data.content || '';
+                    document.getElementById('articleStatus').value = data.status || 'published';
                     document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
                     document.getElementById('articleModal').classList.add('active');
                 })
@@ -1430,15 +1431,31 @@
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
             
             fetch(`${API_BASE}/api/admin/user-requests`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return res.json();
+                })
                 .then(data => {
+                    console.log('📋 درخواست‌های دریافتی:', data);
+                    
                     if (data.length === 0) {
                         container.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
                         return;
                     }
                     
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                        <thead><tr>
+                            <th>کاربر</th>
+                            <th>ایمیل</th>
+                            <th>عنوان</th>
+                            <th>توضیحات</th>
+                            <th>دسته</th>
+                            <th>اولویت</th>
+                            <th>وضعیت</th>
+                            <th>تاریخ</th>
+                            <th>عملیات</th>
+                        </tr></thead><tbody>`;
+                    
                     data.forEach(req => {
                         const priorityLabel = req.priority === 'urgent' ? 'فوری' :
                                              req.priority === 'high' ? 'بالا' :
@@ -1454,13 +1471,9 @@
                                            req.status === 'rejected' ? 'badge-rejected' : 'badge-processing';
                         
                         const categoryLabels = {
-                            'general': 'عمومی',
-                            'chatbot': 'چت‌بات',
-                            'rag': 'سیستم RAG',
-                            'automation': 'اتوماسیون',
-                            'analysis': 'تحلیل داده',
-                            'agent': 'ایجنت هوشمند',
-                            'other': 'سایر'
+                            'general': 'عمومی', 'chatbot': 'چت‌بات', 'rag': 'سیستم RAG',
+                            'automation': 'اتوماسیون', 'analysis': 'تحلیل داده',
+                            'agent': 'ایجنت هوشمند', 'other': 'سایر'
                         };
                         const categoryLabel = categoryLabels[req.category] || req.category;
                         
@@ -1469,6 +1482,7 @@
                                 <td><strong>${req.user_name}</strong></td>
                                 <td>${req.user_email}</td>
                                 <td>${req.title}</td>
+                                <td style="max-width:200px; word-break:break-word;">${req.description || '-'}</td>
                                 <td>${categoryLabel}</td>
                                 <td><span class="${priorityClass}">${priorityLabel}</span></td>
                                 <td><span class="badge ${statusClass}">${statusLabel}</span></td>
@@ -1486,11 +1500,12 @@
                             </tr>
                         `;
                     });
+                    
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در دریافت درخواست‌ها:', err);
                     container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
                 });
         }
