@@ -285,6 +285,28 @@ app.post('/api/admin/articles', (req, res) => {
     });
 });
 
+// ویرایش مقاله
+app.put('/api/admin/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    const { title, category, content, author, status } = req.body;
+    
+    if (!title || !category || !content) {
+        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
+    }
+    
+    const query = 'UPDATE articles SET title = ?, category = ?, content = ?, author = ?, status = ? WHERE id = ?';
+    db.query(query, [title, category, content, author || 'سوفیا AI', status || 'published', articleId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ویرایش مقاله:', err);
+            return res.status(500).json({ error: 'خطا در ویرایش مقاله' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'مقاله یافت نشد' });
+        }
+        res.json({ message: '✅ مقاله با موفقیت ویرایش شد!' });
+    });
+});
+
 // حذف مقاله
 app.delete('/api/admin/articles/:id', (req, res) => {
     const articleId = req.params.id;
@@ -414,6 +436,23 @@ app.get('/api/users', (req, res) => {
             return { ...user, created_at: persianDate };
         });
         res.json(usersWithPersianDate);
+    });
+});
+
+// دریافت اطلاعات یک کاربر
+app.get('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+    db.query('SELECT id, name, email, phone, created_at FROM users WHERE id = ?', [userId], (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت کاربر:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'کاربر یافت نشد' });
+        }
+        const user = results[0];
+        user.created_at = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
+        res.json(user);
     });
 });
 
@@ -738,7 +777,7 @@ app.get('/api/admin/stats', (req, res) => {
 app.get('/api/user-requests/:userId', (req, res) => {
     const userId = req.params.userId;
     db.query(
-        'SELECT id, title, description, priority, status, created_at FROM user_requests WHERE user_id = ? ORDER BY id DESC',
+        'SELECT id, user_id, title, description, priority, category, status, created_at FROM user_requests WHERE user_id = ? ORDER BY id DESC',
         [userId],
         (err, results) => {
             if (err) {
@@ -763,6 +802,7 @@ app.get('/api/admin/user-requests', (req, res) => {
             ur.title, 
             ur.description, 
             ur.priority, 
+            ur.category,
             ur.status, 
             ur.created_at,
             u.name as user_name,
@@ -787,14 +827,14 @@ app.get('/api/admin/user-requests', (req, res) => {
 
 // افزودن درخواست جدید
 app.post('/api/user-requests', (req, res) => {
-    const { user_id, title, description, priority } = req.body;
+    const { user_id, title, description, priority, category } = req.body;
     
     if (!user_id || !title) {
         return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
     }
     
-    const query = 'INSERT INTO user_requests (user_id, title, description, priority, status) VALUES (?, ?, ?, ?, "pending")';
-    db.query(query, [user_id, title, description || null, priority || 'medium'], (err, result) => {
+    const query = 'INSERT INTO user_requests (user_id, title, description, priority, category, status) VALUES (?, ?, ?, ?, ?, "pending")';
+    db.query(query, [user_id, title, description || null, priority || 'medium', category || 'general'], (err, result) => {
         if (err) {
             console.error('❌ خطا در ذخیره درخواست:', err);
             return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
