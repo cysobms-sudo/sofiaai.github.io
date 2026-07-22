@@ -23,19 +23,17 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-// مسیرهای استاتیک
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// پوشه آپلود
+// ===== پوشه آپلود =====
 const uploadDir = path.join(__dirname, 'public', 'images', 'gallery');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
     console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
 }
 
-// تنظیمات Multer
+// ===== Multer =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadDir);
@@ -59,7 +57,7 @@ const upload = multer({
     }
 });
 
-// اتصال به دیتابیس
+// ===== دیتابیس =====
 const db = mysql.createConnection({
     host: process.env.DB_HOST || '188.40.16.3',
     user: process.env.DB_USER || 'root',
@@ -109,15 +107,12 @@ app.get('/article.html', (req, res) => {
 // ==================================================
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
-        console.log('📤 درخواست آپلود دریافت شد');
         if (!req.file) {
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
         const imageUrl = '/images/gallery/' + req.file.filename;
-        console.log('✅ تصویر ذخیره شد:', imageUrl);
         res.json({ success: true, url: imageUrl, filename: req.file.filename, message: '✅ تصویر با موفقیت آپلود شد!' });
     } catch (error) {
-        console.error('❌ خطا در آپلود:', error);
         res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
     }
 });
@@ -389,22 +384,6 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-app.get('/api/users/:id', (req, res) => {
-    const userId = req.params.id;
-    db.query('SELECT id, name, email, phone, created_at FROM users WHERE id = ?', [userId], (err, results) => {
-        if (err) {
-            console.error('❌ خطا در دریافت کاربر:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
-        }
-        if (results.length === 0) {
-            return res.status(404).json({ error: 'کاربر یافت نشد' });
-        }
-        const user = results[0];
-        user.created_at = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
-        res.json(user);
-    });
-});
-
 app.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
     db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
@@ -423,44 +402,6 @@ app.delete('/api/users/:id', (req, res) => {
             res.json({ message: '✅ کاربر با موفقیت حذف شد!' });
         });
     });
-});
-
-app.put('/api/users/:id/password', async (req, res) => {
-    const userId = req.params.id;
-    const { currentPassword, newPassword } = req.body;
-    if (!currentPassword || !newPassword) {
-        return res.status(400).json({ error: 'رمز فعلی و رمز جدید الزامی هستند.' });
-    }
-    if (newPassword.length < 4) {
-        return res.status(400).json({ error: 'رمز جدید باید حداقل ۴ کاراکتر باشد.' });
-    }
-    try {
-        db.query('SELECT * FROM users WHERE id = ?', [userId], async (err, results) => {
-            if (err) {
-                console.error('❌ خطا در بررسی کاربر:', err);
-                return res.status(500).json({ error: 'خطا در دیتابیس' });
-            }
-            if (results.length === 0) {
-                return res.status(404).json({ error: 'کاربر پیدا نشد.' });
-            }
-            const user = results[0];
-            const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
-            if (!isPasswordValid) {
-                return res.status(400).json({ error: 'رمز فعلی اشتباه است.' });
-            }
-            const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-            db.query('UPDATE users SET password = ? WHERE id = ?', [hashedNewPassword, userId], (err, result) => {
-                if (err) {
-                    console.error('❌ خطا در به‌روزرسانی رمز:', err);
-                    return res.status(500).json({ error: 'خطا در تغییر رمز' });
-                }
-                res.json({ message: '✅ رمز عبور با موفقیت تغییر کرد!' });
-            });
-        });
-    } catch (error) {
-        console.error('❌ خطا در تغییر رمز:', error);
-        res.status(500).json({ error: 'خطای سرور' });
-    }
 });
 
 app.post('/api/register', async (req, res) => {
@@ -604,7 +545,7 @@ app.delete('/api/cart/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== API تنظیمات =====
+// ===== API تنظیمات (مهم) =====
 // ==================================================
 app.get('/api/admin/settings', (req, res) => {
     db.query('SELECT setting_key, setting_value FROM site_settings', (err, results) => {
@@ -622,6 +563,8 @@ app.get('/api/admin/settings', (req, res) => {
 
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
+    console.log('📝 ذخیره تنظیمات:', settings);
+    
     const queries = Object.keys(settings).map(key => {
         return new Promise((resolve, reject) => {
             db.query(
@@ -634,8 +577,12 @@ app.put('/api/admin/settings', (req, res) => {
             );
         });
     });
+    
     Promise.all(queries)
-        .then(() => res.json({ message: '✅ تنظیمات با موفقیت ذخیره شد!' }))
+        .then(() => {
+            console.log('✅ تنظیمات ذخیره شد');
+            res.json({ message: '✅ تنظیمات با موفقیت ذخیره شد!' });
+        })
         .catch(err => {
             console.error('❌ خطا در ذخیره تنظیمات:', err);
             res.status(500).json({ error: 'خطا در ذخیره تنظیمات' });
@@ -669,10 +616,8 @@ app.get('/api/admin/stats', (req, res) => {
 });
 
 // ==================================================
-// ===== API درخواست‌های کاربران (مهم) =====
+// ===== API درخواست‌های کاربران =====
 // ==================================================
-
-// دریافت لیست درخواست‌های کاربر
 app.get('/api/user-requests/:userId', (req, res) => {
     const userId = req.params.userId;
     db.query(
@@ -692,7 +637,6 @@ app.get('/api/user-requests/:userId', (req, res) => {
     );
 });
 
-// دریافت همه درخواست‌ها (برای مدیریت)
 app.get('/api/admin/user-requests', (req, res) => {
     const query = `
         SELECT ur.id, ur.user_id, ur.title, ur.description, ur.priority, ur.category, ur.status, ur.created_at,
@@ -708,13 +652,15 @@ app.get('/api/admin/user-requests', (req, res) => {
             const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
             return { ...req, created_at: persianDate };
         });
+        console.log('📋 درخواست‌های دریافتی:', requestsWithPersianDate.length);
         res.json(requestsWithPersianDate);
     });
 });
 
-// افزودن درخواست جدید
 app.post('/api/user-requests', (req, res) => {
     const { user_id, title, description, priority, category } = req.body;
+    
+    console.log('📝 دریافت درخواست جدید:', { user_id, title, priority, category });
     
     if (!user_id || !title) {
         return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
@@ -726,11 +672,11 @@ app.post('/api/user-requests', (req, res) => {
             console.error('❌ خطا در ذخیره درخواست:', err);
             return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
         }
+        console.log('✅ درخواست ثبت شد، ID:', result.insertId);
         res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
     });
 });
 
-// تغییر وضعیت درخواست
 app.put('/api/admin/user-requests/:id/status', (req, res) => {
     const requestId = req.params.id;
     const { status } = req.body;
@@ -751,7 +697,6 @@ app.put('/api/admin/user-requests/:id/status', (req, res) => {
     });
 });
 
-// حذف درخواست
 app.delete('/api/user-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM user_requests WHERE id = ?', [requestId], (err, result) => {
@@ -819,6 +764,5 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 // ==================================================
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
-    console.log(`🌐 آدرس: http://localhost:${port}`);
     console.log(`📁 پوشه آپلود: ${uploadDir}`);
 });
