@@ -189,46 +189,44 @@
         .status-msg.error { color: var(--danger); }
         .status-msg.loading { color: var(--warning); }
 
-        /* ===== تصویر آپلود و پیش‌نمایش ===== */
-        .image-upload-container {
-            background: var(--bg-light);
+        /* ===== آپلودر تصویر ===== */
+        .upload-area {
             border: 2px dashed var(--border-color);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 30px;
             text-align: center;
-            transition: var(--transition);
             cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg-light);
+            margin-bottom: 12px;
         }
-        .image-upload-container:hover {
+        .upload-area:hover {
             border-color: var(--primary);
             background: #f5f0ff;
         }
-        .image-upload-container .upload-icon {
+        .upload-area .upload-icon {
             font-size: 3rem;
             color: var(--primary-light);
             display: block;
             margin-bottom: 8px;
         }
-        .image-upload-container input[type="file"] {
+        .upload-area input[type="file"] {
             display: none;
         }
-        .image-upload-container .upload-text {
+        .upload-area .upload-text {
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-        .image-upload-preview {
-            width: 100%;
+        .image-preview {
+            max-width: 100%;
             max-height: 200px;
             object-fit: contain;
             border-radius: 10px;
             border: 2px solid var(--border-color);
-            margin-top: 12px;
-            background: #fff;
+            margin-top: 10px;
+            display: none;
         }
-        .image-upload-preview.show { display: block; }
-        .image-upload-preview.hide { display: none; }
-
-        /* ===== دکمه حذف تصویر ===== */
+        .image-preview.show { display: block; }
         .btn-remove-image {
             background: var(--danger);
             color: #fff;
@@ -241,11 +239,13 @@
             font-size: 0.8rem;
             margin-top: 8px;
             transition: var(--transition);
+            display: none;
         }
         .btn-remove-image:hover {
             background: #c0392b;
             transform: scale(1.05);
         }
+        .btn-remove-image.show { display: inline-block; }
 
         @media (max-width: 768px) {
             .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
@@ -339,9 +339,8 @@
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary);">🏠 صفحه اصلی (Hero)</h4>
                     <div class="form-group">
-                        <label>عنوان اصلی (سه رنگ: بنفش، زرد، مشکی)</label>
-                        <input type="text" id="page_hero_title" value="مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI" />
-                        <small style="color:var(--text-muted); font-size:0.8rem;">💡 متن عنوان به سه رنگ نمایش داده می‌شود</small>
+                        <label>عنوان اصلی</label>
+                        <input type="text" id="page_hero_title" />
                     </div>
                     <div class="form-group">
                         <label>زیر عنوان</label>
@@ -364,13 +363,9 @@
                         <textarea id="page_about_text" rows="5"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>تصویر درباره ما</label>
+                        <label>تصویر درباره ما (آدرس)</label>
                         <input type="text" id="page_about_image" placeholder="/images/about.jpg" />
                         <small style="color:var(--text-muted); font-size:0.8rem;">💡 آدرس تصویر را وارد کنید یا از گالری کپی کنید</small>
-                    </div>
-                    <div class="form-group">
-                        <label>پیش‌نمایش</label>
-                        <img id="aboutImagePreview" class="image-upload-preview hide" src="" alt="پیش‌نمایش" />
                     </div>
                 </div>
 
@@ -418,18 +413,14 @@
                     <!-- ===== آپلودر تصویر ===== -->
                     <div class="form-group">
                         <label>آپلود تصویر</label>
-                        <div class="image-upload-container" id="galleryUploadContainer" onclick="document.getElementById('galleryFileInput').click()">
+                        <div class="upload-area" id="uploadArea" onclick="document.getElementById('galleryFileInput').click()">
                             <span class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></span>
-                            <span class="upload-text">برای آپلود تصویر کلیک کنید یا بکشید</span>
+                            <span class="upload-text">برای آپلود تصویر کلیک کنید</span>
                             <input type="file" id="galleryFileInput" accept="image/*" />
                         </div>
-                        <small style="color:var(--text-muted); font-size:0.8rem;">📁 فرمت‌های مجاز: JPG, PNG, GIF, SVG</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>پیش‌نمایش</label>
-                        <img id="galleryImagePreview" class="image-upload-preview hide" src="" alt="پیش‌نمایش" />
-                        <button class="btn-remove-image" id="removeGalleryImageBtn" style="display:none;" onclick="removeGalleryImage()"><i class="fas fa-trash-alt"></i> حذف تصویر</button>
+                        <img id="galleryImagePreview" class="image-preview" src="" alt="پیش‌نمایش" />
+                        <button class="btn-remove-image" id="removeGalleryImageBtn" onclick="removeGalleryImage()"><i class="fas fa-trash-alt"></i> حذف تصویر</button>
+                        <small style="color:var(--text-muted); font-size:0.8rem; display:block; margin-top:6px;">📁 فرمت‌های مجاز: JPG, PNG, GIF, WEBP, SVG</small>
                     </div>
 
                     <div class="form-row">
@@ -626,773 +617,3 @@
                     <input type="password" id="confirmNewPassword" required />
                 </div>
                 <div id="passwordChangeMessage" style="margin-top:12px; font-weight:600; display:none;"></div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn btn-primary">💾 تغییر</button>
-                    <button type="button" class="btn btn-danger" onclick="closeChangePassword()">انصراف</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // =============================================
-        // ===== تنظیمات اولیه =====
-        // =============================================
-        const API_BASE = 'https://sofiaaisite.runflare.run';
-        const ADMIN_PASSWORD_KEY = 'admin_password';
-        const DEFAULT_PASSWORD = 'Ard$447100';
-
-        function getAdminPassword() {
-            let password = localStorage.getItem(ADMIN_PASSWORD_KEY);
-            if (!password) { password = DEFAULT_PASSWORD; localStorage.setItem(ADMIN_PASSWORD_KEY, password); }
-            return password;
-        }
-
-        // =============================================
-        // ===== آپلودر تصویر گالری =====
-        // =============================================
-        let uploadedImageUrl = '';
-
-        document.getElementById('galleryFileInput').addEventListener('change', function(e) {
-            const file = this.files[0];
-            if (!file) return;
-
-            const status = document.getElementById('galleryStatus');
-            status.textContent = '⏳ در حال آپلود...';
-            status.className = 'status-msg loading';
-
-            const formData = new FormData();
-            formData.append('image', file);
-
-            fetch(`${API_BASE}/api/upload`, {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.url) {
-                    uploadedImageUrl = data.url;
-                    document.getElementById('gallery_image_url').value = data.url;
-                    
-                    const preview = document.getElementById('galleryImagePreview');
-                    preview.src = data.url;
-                    preview.className = 'image-upload-preview show';
-                    
-                    document.getElementById('removeGalleryImageBtn').style.display = 'inline-block';
-                    
-                    status.textContent = '✅ تصویر آپلود شد!';
-                    status.className = 'status-msg success';
-                } else {
-                    status.textContent = '❌ ' + (data.error || 'خطا در آپلود');
-                    status.className = 'status-msg error';
-                }
-            })
-            .catch(() => {
-                status.textContent = '❌ خطا در آپلود تصویر';
-                status.className = 'status-msg error';
-            });
-        });
-
-        function removeGalleryImage() {
-            document.getElementById('gallery_image_url').value = '';
-            document.getElementById('galleryImagePreview').className = 'image-upload-preview hide';
-            document.getElementById('galleryImagePreview').src = '';
-            document.getElementById('removeGalleryImageBtn').style.display = 'none';
-            document.getElementById('galleryFileInput').value = '';
-            uploadedImageUrl = '';
-            
-            const status = document.getElementById('galleryStatus');
-            status.textContent = '🗑️ تصویر حذف شد';
-            status.className = 'status-msg success';
-            setTimeout(() => {
-                status.textContent = '';
-                status.className = 'status-msg';
-            }, 2000);
-        }
-
-        function resetGalleryForm() {
-            document.getElementById('gallery_title').value = '';
-            document.getElementById('gallery_description').value = '';
-            document.getElementById('gallery_image_url').value = '';
-            document.getElementById('galleryFileInput').value = '';
-            document.getElementById('galleryImagePreview').className = 'image-upload-preview hide';
-            document.getElementById('galleryImagePreview').src = '';
-            document.getElementById('removeGalleryImageBtn').style.display = 'none';
-            uploadedImageUrl = '';
-            
-            const status = document.getElementById('galleryStatus');
-            status.textContent = '🔄 فرم پاک شد';
-            status.className = 'status-msg success';
-            setTimeout(() => {
-                status.textContent = '';
-                status.className = 'status-msg';
-            }, 2000);
-        }
-
-        // =============================================
-        // ===== پیش‌نمایش تصویر درباره ما =====
-        // =============================================
-        document.getElementById('page_about_image').addEventListener('input', function() {
-            const preview = document.getElementById('aboutImagePreview');
-            if (this.value) {
-                preview.src = this.value;
-                preview.className = 'image-upload-preview show';
-                preview.onerror = function() { this.className = 'image-upload-preview hide'; };
-            } else {
-                preview.className = 'image-upload-preview hide';
-            }
-        });
-
-        document.getElementById('setting_color_primary').addEventListener('input', function() {
-            document.getElementById('color_primary_hex').textContent = this.value;
-        });
-        document.getElementById('setting_color_secondary').addEventListener('input', function() {
-            document.getElementById('color_secondary_hex').textContent = this.value;
-        });
-
-        // =============================================
-        // ===== ورود و خروج =====
-        // =============================================
-        function checkLogin() {
-            const input = document.getElementById('adminPassword').value;
-            if (input === getAdminPassword()) {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAllTabs();
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-                setTimeout(() => { document.getElementById('loginError').style.display = 'none'; }, 3000);
-            }
-        }
-
-        function logout() {
-            document.getElementById('loginPage').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
-
-        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkLogin();
-        });
-
-        // =============================================
-        // ===== مدیریت تب‌ها =====
-        // =============================================
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-                loadTabContent(this.dataset.tab);
-            });
-        });
-
-        function loadTabContent(tab) {
-            switch(tab) {
-                case 'dashboard': loadDashboardStats(); break;
-                case 'pages': loadPages(); break;
-                case 'gallery': loadGalleryItems(); break;
-                case 'articles': loadArticles(); break;
-                case 'comments': loadComments(); break;
-                case 'users': loadUsers(); break;
-                case 'requests': loadRequests(); break;
-                case 'cart': loadCartItems(); break;
-                case 'settings': loadSettings(); break;
-            }
-        }
-
-        function loadAllTabs() {
-            loadDashboardStats();
-            loadPages();
-            loadGalleryItems();
-            loadArticles();
-            loadComments();
-            loadUsers();
-            loadRequests();
-            loadCartItems();
-            loadSettings();
-        }
-
-        // =============================================
-        // ===== ۱. آمار داشبورد =====
-        // =============================================
-        function loadDashboardStats() {
-            fetch(`${API_BASE}/api/admin/stats`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('statsArticles').textContent = data.articles || 0;
-                    document.getElementById('statsComments').textContent = data.comments || 0;
-                    document.getElementById('statsPending').textContent = data.pending || 0;
-                    document.getElementById('statsUsers').textContent = data.users || 0;
-                    document.getElementById('statsRequests').textContent = data.requests || 0;
-                    document.getElementById('statsCart').textContent = data.cart || 0;
-                    document.getElementById('statsGallery').textContent = data.gallery || 0;
-                })
-                .catch(() => {});
-        }
-
-        // =============================================
-        // ===== ۲. صفحات =====
-        // =============================================
-        function loadPages() {
-            fetch(`${API_BASE}/api/admin/settings`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('page_hero_title').value = data.hero_title || '';
-                    document.getElementById('page_hero_subtitle').value = data.hero_subtitle || '';
-                    document.getElementById('page_hero_text').value = data.hero_text || '';
-                    document.getElementById('page_about_title').value = data.about_title || '';
-                    document.getElementById('page_about_text').value = data.about_text || '';
-                    document.getElementById('page_about_image').value = data.about_image || '';
-                    document.getElementById('page_footer_text').value = data.footer_text || '';
-                    document.getElementById('page_copyright_text').value = data.copyright_text || '';
-                    document.getElementById('page_stat_years').value = data.stat_years || '';
-                    document.getElementById('page_stat_projects').value = data.stat_projects || '';
-                    document.getElementById('page_stat_privacy').value = data.stat_privacy || '';
-
-                    const preview = document.getElementById('aboutImagePreview');
-                    if (data.about_image) {
-                        preview.src = data.about_image;
-                        preview.className = 'image-upload-preview show';
-                        preview.onerror = function() { this.className = 'image-upload-preview hide'; };
-                    } else {
-                        preview.className = 'image-upload-preview hide';
-                    }
-                })
-                .catch(() => {});
-        }
-
-        function savePages() {
-            const status = document.getElementById('saveStatus');
-            status.textContent = '⏳ در حال ذخیره...';
-            status.className = 'status-msg loading';
-
-            const data = {
-                hero_title: document.getElementById('page_hero_title').value || '',
-                hero_subtitle: document.getElementById('page_hero_subtitle').value || '',
-                hero_text: document.getElementById('page_hero_text').value || '',
-                about_title: document.getElementById('page_about_title').value || '',
-                about_text: document.getElementById('page_about_text').value || '',
-                about_image: document.getElementById('page_about_image').value || '',
-                footer_text: document.getElementById('page_footer_text').value || '',
-                copyright_text: document.getElementById('page_copyright_text').value || '',
-                stat_years: document.getElementById('page_stat_years').value || '',
-                stat_projects: document.getElementById('page_stat_projects').value || '',
-                stat_privacy: document.getElementById('page_stat_privacy').value || ''
-            };
-
-            fetch(`${API_BASE}/api/admin/settings`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(result => {
-                status.textContent = '✅ ' + (result.message || 'ذخیره شد!');
-                status.className = 'status-msg success';
-                loadPages();
-            })
-            .catch(() => {
-                status.textContent = '❌ خطا در ذخیره';
-                status.className = 'status-msg error';
-            });
-        }
-
-        // =============================================
-        // ===== ۳. گالری =====
-        // =============================================
-        function loadGalleryItems() {
-            const container = document.getElementById('galleryList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/gallery`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-images"></i>هیچ تصویری در گالری وجود ندارد.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>تصویر</th><th>عنوان</th><th>توضیحات</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((item, index) => {
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td><img src="${item.image_url}" alt="${item.title}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;" onerror="this.style.display='none'" /></td>
-                            <td>${item.title}</td>
-                            <td>${item.description || '-'}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button>
-                            </td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
-        }
-
-        function addGalleryItem() {
-            const status = document.getElementById('galleryStatus');
-            const title = document.getElementById('gallery_title').value.trim();
-            const description = document.getElementById('gallery_description').value.trim();
-            const image_url = document.getElementById('gallery_image_url').value.trim();
-
-            if (!title || !image_url) {
-                status.textContent = '⚠️ عنوان و تصویر الزامی است.';
-                status.className = 'status-msg error';
-                return;
-            }
-
-            status.textContent = '⏳ در حال افزودن...';
-            status.className = 'status-msg loading';
-
-            fetch(`${API_BASE}/api/gallery`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, description, image_url })
-            })
-            .then(res => res.json())
-            .then(result => {
-                status.textContent = '✅ ' + (result.message || 'تصویر اضافه شد!');
-                status.className = 'status-msg success';
-                resetGalleryForm();
-                loadGalleryItems();
-                loadDashboardStats();
-            })
-            .catch(() => {
-                status.textContent = '❌ خطا در افزودن تصویر';
-                status.className = 'status-msg error';
-            });
-        }
-
-        function deleteGalleryItem(id) {
-            if (!confirm('⚠️ آیا از حذف این تصویر اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/gallery/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => {
-                    alert(data.message || '✅ تصویر حذف شد!');
-                    loadGalleryItems();
-                    loadDashboardStats();
-                })
-                .catch(() => alert('❌ خطا در حذف تصویر'));
-        }
-
-        // =============================================
-        // ===== ۴. مقالات =====
-        // =============================================
-        function loadArticles() {
-            const container = document.getElementById('articlesList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/admin/articles`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>هیچ مقاله‌ای وجود ندارد.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((item, index) => {
-                        const statusBadge = item.status === 'published' ? 'badge-published' : 'badge-draft';
-                        const statusText = item.status === 'published' ? 'منتشر شده' : 'پیش‌نویس';
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td>${item.title}</td>
-                            <td>${item.category}</td>
-                            <td>${item.author}</td>
-                            <td><span class="badge ${statusBadge}">${statusText}</span></td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editArticle(${item.id})"><i class="fas fa-edit"></i> ویرایش</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteArticle(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button>
-                            </td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
-        }
-
-        function showAddArticle() {
-            document.getElementById('articleModal').classList.add('active');
-            document.getElementById('articleModalTitle').textContent = '✍️ مقاله جدید';
-            document.getElementById('articleEditId').value = '';
-            document.getElementById('articleTitle').value = '';
-            document.getElementById('articleCategory').value = 'هوش مصنوعی';
-            document.getElementById('articleContent').value = '';
-            document.getElementById('articleAuthor').value = 'سوفیا AI';
-            document.getElementById('articleStatus').value = 'published';
-        }
-
-        function editArticle(id) {
-            fetch(`${API_BASE}/api/articles/${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('articleModal').classList.add('active');
-                    document.getElementById('articleModalTitle').textContent = '✍️ ویرایش مقاله';
-                    document.getElementById('articleEditId').value = id;
-                    document.getElementById('articleTitle').value = data.title;
-                    document.getElementById('articleCategory').value = data.category;
-                    document.getElementById('articleContent').value = data.content;
-                    document.getElementById('articleAuthor').value = data.author;
-                    document.getElementById('articleStatus').value = data.status || 'draft';
-                })
-                .catch(() => alert('❌ خطا در دریافت اطلاعات مقاله'));
-        }
-
-        function closeArticleModal() {
-            document.getElementById('articleModal').classList.remove('active');
-        }
-
-        function saveArticle() {
-            const id = document.getElementById('articleEditId').value;
-            const data = {
-                title: document.getElementById('articleTitle').value.trim(),
-                category: document.getElementById('articleCategory').value,
-                content: document.getElementById('articleContent').value.trim(),
-                author: document.getElementById('articleAuthor').value.trim() || 'سوفیا AI',
-                status: document.getElementById('articleStatus').value
-            };
-            if (!data.title || !data.content) { alert('⚠️ عنوان و متن مقاله الزامی است.'); return; }
-
-            const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
-            const method = id ? 'PUT' : 'POST';
-
-            fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-                .then(res => res.json())
-                .then(result => {
-                    alert(result.message || '✅ مقاله با موفقیت ذخیره شد!');
-                    closeArticleModal();
-                    loadArticles();
-                    loadDashboardStats();
-                })
-                .catch(() => alert('❌ خطا در ذخیره مقاله'));
-        }
-
-        function deleteArticle(id) {
-            if (!confirm('⚠️ آیا از حذف این مقاله اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => {
-                    alert(data.message || '✅ مقاله با موفقیت حذف شد!');
-                    loadArticles();
-                    loadDashboardStats();
-                })
-                .catch(() => alert('❌ خطا در حذف مقاله'));
-        }
-
-        // =============================================
-        // ===== ۵. نظرات =====
-        // =============================================
-        function loadComments() {
-            const container = document.getElementById('commentsList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/admin/comments`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>هیچ نظری وجود ندارد.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>نام</th><th>ایمیل</th><th>متن</th><th>وضعیت</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((item, index) => {
-                        const statusMap = {
-                            'pending': '<span class="badge badge-pending">در انتظار تایید</span>',
-                            'approved': '<span class="badge badge-approved">تایید شده</span>',
-                            'rejected': '<span class="badge badge-rejected">رد شده</span>'
-                        };
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td>${item.name}</td>
-                            <td>${item.email || '-'}</td>
-                            <td style="max-width:200px; word-break:break-word;">${item.text}</td>
-                            <td>${statusMap[item.status] || item.status}</td>
-                            <td>
-                                ${item.status === 'pending' ? `
-                                    <button class="btn btn-success btn-sm" onclick="approveComment(${item.id})"><i class="fas fa-check"></i> تایید</button>
-                                    <button class="btn btn-danger btn-sm" onclick="rejectComment(${item.id})"><i class="fas fa-times"></i> رد</button>
-                                ` : `
-                                    <button class="btn btn-danger btn-sm" onclick="deleteComment(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button>
-                                `}
-                            </td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
-        }
-
-        function approveComment(id) {
-            fetch(`${API_BASE}/api/admin/comments/${id}/approve`, { method: 'PUT' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر تایید شد!'); loadComments(); loadDashboardStats(); })
-                .catch(() => alert('❌ خطا در تایید نظر'));
-        }
-
-        function rejectComment(id) {
-            if (!confirm('⚠️ آیا از رد این نظر اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/admin/comments/${id}/reject`, { method: 'PUT' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر رد شد!'); loadComments(); loadDashboardStats(); })
-                .catch(() => alert('❌ خطا در رد نظر'));
-        }
-
-        function deleteComment(id) {
-            if (!confirm('⚠️ آیا از حذف این نظر اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/admin/comments/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ نظر حذف شد!'); loadComments(); loadDashboardStats(); })
-                .catch(() => alert('❌ خطا در حذف نظر'));
-        }
-
-        // =============================================
-        // ===== ۶. کاربران =====
-        // =============================================
-        function loadUsers() {
-            const container = document.getElementById('usersList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/users`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-users-slash"></i>هیچ کاربری ثبت‌نام نکرده است.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>نام</th><th>ایمیل</th><th>شماره تماس</th><th>تاریخ ثبت‌نام</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((user, index) => {
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td>${user.name}</td>
-                            <td>${user.email}</td>
-                            <td>${user.phone || '-'}</td>
-                            <td>${user.created_at}</td>
-                            <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id}, '${user.name}')"><i class="fas fa-trash-alt"></i> حذف</button></td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
-        }
-
-        function deleteUser(userId, userName) {
-            if (!confirm(`⚠️ آیا از حذف کاربر "${userName}" اطمینان دارید؟`)) return;
-            fetch(`${API_BASE}/api/users/${userId}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ کاربر حذف شد!'); loadUsers(); loadDashboardStats(); })
-                .catch(() => alert('❌ خطا در حذف کاربر'));
-        }
-
-        // =============================================
-        // ===== ۷. درخواست‌ها =====
-        // =============================================
-        function loadRequests() {
-            const container = document.getElementById('requestsList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/chatbot-requests`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i>هیچ درخواستی ثبت نشده است.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>نام</th><th>شماره تماس</th><th>ایمیل</th><th>توضیحات</th><th>تاریخ</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((req, index) => {
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td>${req.name}</td>
-                            <td>${req.phone}</td>
-                            <td>${req.email}</td>
-                            <td style="max-width:200px; word-break:break-word;">${req.description}</td>
-                            <td>${req.created_at}</td>
-                            <td><button class="btn btn-danger btn-sm" onclick="deleteRequest(${req.id})"><i class="fas fa-trash-alt"></i> حذف</button></td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت درخواست‌ها.</div>'; });
-        }
-
-        function deleteRequest(id) {
-            if (!confirm('⚠️ آیا از حذف این درخواست اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/chatbot-requests/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ درخواست حذف شد!'); loadRequests(); })
-                .catch(() => alert('❌ خطا در حذف درخواست'));
-        }
-
-        // =============================================
-        // ===== ۸. سبد خرید =====
-        // =============================================
-        function loadCartItems() {
-            const container = document.getElementById('cartList');
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
-
-            fetch(`${API_BASE}/api/admin/cart`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        container.innerHTML = '<div class="empty"><i class="fas fa-shopping-basket"></i>هیچ آیتمی در سبد خرید وجود ندارد.</div>';
-                        return;
-                    }
-                    let html = `<div class="table-responsive"><table><thead><tr>
-                        <th>#</th><th>نام کاربر</th><th>ایمیل</th><th>شماره تماس</th><th>نام خدمت</th><th>قیمت</th><th>تاریخ</th><th>عملیات</th>
-                    </tr></thead><tbody>`;
-                    data.forEach((item, index) => {
-                        html += `<tr>
-                            <td>${index+1}</td>
-                            <td>${item.user_name}</td>
-                            <td>${item.user_email}</td>
-                            <td>${item.user_phone || '-'}</td>
-                            <td>${item.item_name}</td>
-                            <td>${item.item_price}</td>
-                            <td>${item.created_at}</td>
-                            <td><button class="btn btn-danger btn-sm" onclick="deleteCartItem(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button></td>
-                        </tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                    container.innerHTML = html;
-                })
-                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
-        }
-
-        function deleteCartItem(id) {
-            if (!confirm('⚠️ آیا از حذف این آیتم از سبد خرید اطمینان دارید؟')) return;
-            fetch(`${API_BASE}/api/cart/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => { alert(data.message || '✅ آیتم حذف شد!'); loadCartItems(); })
-                .catch(() => alert('❌ خطا در حذف آیتم'));
-        }
-
-        // =============================================
-        // ===== ۹. تنظیمات =====
-        // =============================================
-        function loadSettings() {
-            fetch(`${API_BASE}/api/admin/settings`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('setting_site_name').value = data.site_name || '';
-                    document.getElementById('setting_site_tagline').value = data.site_tagline || '';
-                    document.getElementById('setting_meta_description').value = data.meta_description || '';
-                    document.getElementById('setting_phone').value = data.phone || '';
-                    document.getElementById('setting_email').value = data.email || '';
-                    document.getElementById('setting_address').value = data.address || '';
-                    document.getElementById('setting_whatsapp').value = data.whatsapp || '';
-                    document.getElementById('setting_telegram').value = data.telegram || '';
-                    document.getElementById('setting_instagram').value = data.instagram || '';
-                    document.getElementById('setting_linkedin').value = data.linkedin || '';
-                    document.getElementById('setting_analytics').value = data.analytics || '';
-                    
-                    const primaryColor = data.color_primary || '#6C3CE1';
-                    const secondaryColor = data.color_secondary || '#FFB800';
-                    document.getElementById('setting_color_primary').value = primaryColor;
-                    document.getElementById('color_primary_hex').textContent = primaryColor;
-                    document.getElementById('setting_color_secondary').value = secondaryColor;
-                    document.getElementById('color_secondary_hex').textContent = secondaryColor;
-                })
-                .catch(() => {});
-        }
-
-        function saveSettings() {
-            const status = document.getElementById('settingsStatus');
-            status.textContent = '⏳ در حال ذخیره...';
-            status.className = 'status-msg loading';
-
-            const data = {
-                site_name: document.getElementById('setting_site_name').value || '',
-                site_tagline: document.getElementById('setting_site_tagline').value || '',
-                meta_description: document.getElementById('setting_meta_description').value || '',
-                phone: document.getElementById('setting_phone').value || '',
-                email: document.getElementById('setting_email').value || '',
-                address: document.getElementById('setting_address').value || '',
-                whatsapp: document.getElementById('setting_whatsapp').value || '',
-                telegram: document.getElementById('setting_telegram').value || '',
-                instagram: document.getElementById('setting_instagram').value || '',
-                linkedin: document.getElementById('setting_linkedin').value || '',
-                analytics: document.getElementById('setting_analytics').value || '',
-                color_primary: document.getElementById('setting_color_primary').value || '#6C3CE1',
-                color_secondary: document.getElementById('setting_color_secondary').value || '#FFB800'
-            };
-
-            fetch(`${API_BASE}/api/admin/settings`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(result => {
-                status.textContent = '✅ ' + (result.message || 'ذخیره شد!');
-                status.className = 'status-msg success';
-                loadSettings();
-            })
-            .catch(() => {
-                status.textContent = '❌ خطا در ذخیره';
-                status.className = 'status-msg error';
-            });
-        }
-
-        // =============================================
-        // ===== تغییر رمز =====
-        // =============================================
-        function showChangePassword() {
-            document.getElementById('changePasswordModal').classList.add('active');
-            document.getElementById('passwordChangeMessage').style.display = 'none';
-            document.getElementById('changePasswordForm').reset();
-        }
-
-        function closeChangePassword() {
-            document.getElementById('changePasswordModal').classList.remove('active');
-        }
-
-        document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const oldPassword = document.getElementById('oldPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
-            const messageDiv = document.getElementById('passwordChangeMessage');
-            const currentPassword = getAdminPassword();
-
-            if (oldPassword !== currentPassword) {
-                messageDiv.style.display = 'block';
-                messageDiv.style.color = 'var(--danger)';
-                messageDiv.textContent = '❌ رمز فعلی اشتباه است!';
-                return;
-            }
-            if (newPassword.length < 4) {
-                messageDiv.style.display = 'block';
-                messageDiv.style.color = 'var(--danger)';
-                messageDiv.textContent = '⚠️ رمز جدید باید حداقل ۴ کاراکتر باشد!';
-                return;
-            }
-            if (newPassword !== confirmNewPassword) {
-                messageDiv.style.display = 'block';
-                messageDiv.style.color = 'var(--danger)';
-                messageDiv.textContent = '⚠️ رمز جدید با تکرار آن مطابقت ندارد!';
-                return;
-            }
-
-            localStorage.setItem(ADMIN_PASSWORD_KEY, newPassword);
-            messageDiv.style.display = 'block';
-            messageDiv.style.color = 'var(--success)';
-            messageDiv.textContent = '✅ رمز عبور با موفقیت تغییر یافت!';
-            setTimeout(() => { closeChangePassword(); }, 2000);
-        });
-    </script>
-
-</body>
-</html>
