@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== متغیرهای رنگی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -27,6 +26,7 @@
             --radius: 24px;
             --transition: 0.3s ease;
             --max-width: 1200px;
+            --danger: #e74c3c;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,61 +40,11 @@
         .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
         a { text-decoration: none; color: inherit; }
 
-        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .fade-up {
-            animation: fadeUp 0.8s ease forwards;
-            opacity: 0;
-        }
-        .fade-up.delay-1 { animation-delay: 0.1s; }
-        .fade-up.delay-2 { animation-delay: 0.2s; }
-        .fade-up.delay-3 { animation-delay: 0.3s; }
-        .fade-up.delay-4 { animation-delay: 0.4s; }
-
-        /* ===== توست ===== */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            direction: rtl;
-        }
-        .toast {
-            padding: 14px 28px;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 600;
-            font-family: 'Vazirmatn', sans-serif;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: slideDown 0.5s ease;
-            min-width: 200px;
-            text-align: center;
-        }
-        .toast.success { background: #28a745; }
-        .toast.error { background: #e74c3c; }
-        .toast.info { background: #3498db; }
-        .toast.warning { background: #f39c12; }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes slideUp {
-            from { opacity: 1; transform: translateX(-50%) translateY(0); }
-            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-        }
+        .fade-up { animation: fadeUp 0.8s ease; }
 
         /* ===== نوار ناوبری ===== */
         .navbar {
@@ -194,7 +144,7 @@
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.35);
         }
         .nav-menu .btn-logout {
-            background: var(--danger) !important;
+            background: var(--danger);
             color: #fff !important;
             font-weight: 700;
             padding: 8px 20px;
@@ -203,6 +153,7 @@
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
+            display: none;
         }
         .nav-menu .btn-logout:hover {
             transform: scale(1.05);
@@ -692,11 +643,6 @@
             transform: scale(1.02);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
         }
-        .comments-form .btn-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
         .comments-list {
             background: var(--bg-light);
             padding: 32px;
@@ -716,7 +662,7 @@
         }
         .comment-item:last-child { border-bottom: none; }
         .comment-item .name { font-weight: 700; color: var(--text-dark); }
-        .comment-item .date { font-size: 0.8rem; color: #9a9aba; margin-right: 8px; }
+        .comment-item .date { font-size: 0.8rem; color: #9a9aba; }
         .comment-item .text { margin-top: 6px; color: var(--text-muted); }
 
         /* ===== CTA ===== */
@@ -781,16 +727,42 @@
         }
         footer .footer-links a:hover { color: var(--primary); }
 
-        /* ===== اسکلتون لودینگ ===== */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: skeleton 1.5s infinite;
-            border-radius: 8px;
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
         }
-        @keyframes skeleton {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .toast {
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        .toast.success { background: #28a745; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+        .toast.warning { background: #f39c12; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
         }
 
         /* ===== واکنش‌گرایی ===== */
@@ -861,9 +833,7 @@
                 <span id="userNameDisplay" class="user-name-display"></span>
                 <a href="register.html" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
                 <a href="login.html" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> ورود</a>
-                <button class="btn-logout" id="logoutBtn" style="display:none;" onclick="logoutUser()">
-                    <i class="fas fa-sign-out-alt"></i> خروج
-                </button>
+                <button class="btn-logout" id="logoutBtn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> خروج</button>
                 <a href="dashboard.html" class="cart-link">
                     <i class="fas fa-shopping-cart"></i>
                     سبد خرید
@@ -886,14 +856,14 @@
             <p class="hero-title-sub" id="heroSubtitle">از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
             <p id="heroText">با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی</p>
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
-                <button onclick="searchSite()">جستجو</button>
+                <input type="text" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
+                <button>جستجو</button>
             </div>
         </div>
     </section>
 
     <!-- ===== درباره ما ===== -->
-    <section class="about-section fade-up delay-1" id="about">
+    <section class="about-section fade-up" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text">
@@ -916,7 +886,7 @@
     </section>
 
     <!-- ===== دستیارهای هوشمند ===== -->
-    <section class="assistant-section fade-up delay-2" id="assistant">
+    <section class="assistant-section fade-up" id="assistant">
         <div class="container">
             <div class="section-header">
                 <div><h2>🧠 دستیارهای هوشمند</h2><span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span></div>
@@ -952,7 +922,7 @@
     </section>
 
     <!-- ===== ایجنت‌ها ===== -->
-    <section class="agents-section fade-up delay-3" id="agents">
+    <section class="agents-section fade-up" id="agents">
         <div class="container">
             <div class="section-header">
                 <div><h2>🤖 ایجنت‌های هوش مصنوعی</h2><span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span></div>
@@ -992,14 +962,13 @@
     </section>
 
     <!-- ===== گالری ===== -->
-    <section class="gallery-section fade-up delay-3" id="gallery">
+    <section class="gallery-section fade-up" id="gallery">
         <div class="container">
             <div class="section-header">
                 <div><h2>🖼️ گالری نمونه‌کارها</h2><span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="gallery-grid" id="galleryContainer">
-                <!-- آیتم‌های گالری از دیتابیس بارگذاری می‌شوند -->
                 <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
                     <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
                     <p>در حال بارگذاری گالری...</p>
@@ -1009,7 +978,7 @@
     </section>
 
     <!-- ===== مقالات ===== -->
-    <section class="articles-section fade-up delay-4" id="articles">
+    <section class="articles-section fade-up" id="articles">
         <div class="container">
             <div class="section-header">
                 <h2>📚 جدیدترین مقالات</h2>
@@ -1025,7 +994,7 @@
     </section>
 
     <!-- ===== نظرات ===== -->
-    <section class="comments-section fade-up delay-4" id="comments">
+    <section class="comments-section fade-up" id="comments">
         <div class="container">
             <div class="section-header">
                 <h2>💬 نظرات کاربران</h2>
@@ -1035,13 +1004,13 @@
                 <div class="comments-form">
                     <h3>✍️ ارسال نظر</h3>
                     <form id="commentForm">
-                        <label>نام و نام خانوادگی <span style="color:red;">*</span></label>
+                        <label>نام و نام خانوادگی</label>
                         <input type="text" id="commentName" placeholder="نام خود را وارد کنید" required />
                         <label>ایمیل (اختیاری)</label>
                         <input type="email" id="commentEmail" placeholder="ایمیل خود را وارد کنید" />
-                        <label>نظر شما <span style="color:red;">*</span></label>
+                        <label>نظر شما</label>
                         <textarea id="commentText" placeholder="نظر خود را بنویسید..." required></textarea>
-                        <button type="submit" class="btn-submit" id="commentSubmitBtn">ارسال نظر</button>
+                        <button type="submit" class="btn-submit">ارسال نظر</button>
                     </form>
                 </div>
                 <div class="comments-list" id="commentsContainer">
@@ -1056,7 +1025,7 @@
     </section>
 
     <!-- ===== CTA ===== -->
-    <section class="cta-section fade-up delay-4">
+    <section class="cta-section fade-up">
         <div class="container">
             <h2>آماده‌اید با ایجنت‌ها و دستیارهای هوشمند، کسب‌وکار خود را متحول کنید؟</h2>
             <p>همین حالا ثبت‌نام کنید و از مشاوره‌ی رایگان تیم سوفیا بهره‌مند شوید.</p>
@@ -1081,7 +1050,6 @@
         </div>
     </footer>
 
-    <!-- ===== اسکریپت‌ها ===== -->
     <script>
         // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
@@ -1128,7 +1096,7 @@
                     loginBtn.style.display = 'none';
                     logoutBtn.style.display = 'inline-block';
                 } catch(e) {
-                    console.error('خطا در解析 اطلاعات کاربر:', e);
+                    console.error('خطا در خواندن اطلاعات کاربر:', e);
                     resetUserDisplay();
                 }
             } else {
@@ -1205,7 +1173,7 @@
                     data.forEach(item => {
                         html += `
                             <div class="gallery-item">
-                                <img src="${item.image_url}" alt="${item.title}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image\\' style=\\'font-size:4rem;color:#ccc;\\'></i>'" />
+                                <img src="${item.image_url}" alt="${item.title}" loading="lazy" />
                                 <div class="overlay">
                                     <h4>${item.title}</h4>
                                     <p>${item.description || ''}</p>
@@ -1221,7 +1189,6 @@
                         <div style="grid-column:1/-1; text-align:center; padding:40px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                             <p>خطا در دریافت گالری. لطفاً دوباره تلاش کنید.</p>
-                            <button onclick="loadGallery()" style="margin-top:12px; padding:8px 24px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer;">تلاش مجدد</button>
                         </div>
                     `;
                 });
@@ -1248,15 +1215,14 @@
                     
                     let html = '';
                     data.forEach(article => {
-                        const summary = article.content ? article.content.substring(0, 120) + '...' : '';
                         html += `
                             <a href="article.html?id=${article.id}" class="article-card">
                                 <span class="tag">${article.category}</span>
                                 <h3>${article.title}</h3>
-                                <p>${summary}</p>
+                                <p>${article.content ? article.content.substring(0, 120) + '...' : ''}</p>
                                 <div class="meta">
                                     <span><i class="far fa-calendar"></i> ${article.created_at}</span>
-                                    <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
+                                    <span><i class="far fa-user"></i> ${article.author}</span>
                                 </div>
                             </a>
                         `;
@@ -1269,7 +1235,6 @@
                         <div style="grid-column:1/-1; text-align:center; padding:40px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                             <p>خطا در دریافت مقالات. لطفاً دوباره تلاش کنید.</p>
-                            <button onclick="loadArticles()" style="margin-top:12px; padding:8px 24px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer;">تلاش مجدد</button>
                         </div>
                     `;
                 });
@@ -1329,7 +1294,7 @@
             const email = document.getElementById('commentEmail').value.trim();
             const text = document.getElementById('commentText').value.trim();
             
-            const submitBtn = document.getElementById('commentSubmitBtn');
+            const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = '⏳ در حال ارسال...';
             submitBtn.disabled = true;
@@ -1348,7 +1313,7 @@
                     this.reset();
                     loadComments();
                 } else {
-                    showToast('❌ ' + (data.error || 'خطا در ارسال نظر'), 'error');
+                    showToast('❌ ' + data.error, 'error');
                 }
             } catch (error) {
                 console.error('❌ خطا:', error);
@@ -1362,19 +1327,18 @@
         // =============================================
         // ===== جستجو =====
         // =============================================
-        function searchSite() {
-            const query = document.getElementById('searchInput').value.trim();
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const query = document.querySelector('.search-box input').value.trim();
             if (query) {
                 showToast('🔍 جستجو برای: "' + query + '"', 'info');
-                // می‌توانید این بخش را به جستجوی واقعی متصل کنید
             } else {
                 showToast('لطفاً عبارت جستجو را وارد کنید.', 'warning');
             }
-        }
+        });
 
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                searchSite();
+                document.querySelector('.search-box button').click();
             }
         });
 
@@ -1479,9 +1443,6 @@
             loadArticles();
             loadComments();
             loadSettings();
-            
-            // به‌روزرسانی دوره‌ای سبد خرید
-            setInterval(updateCartBadge, 30000);
         });
     </script>
 
