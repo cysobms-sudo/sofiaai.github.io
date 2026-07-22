@@ -817,12 +817,65 @@
             document.getElementById('userNameText').textContent = user.name;
             document.getElementById('welcomeName').textContent = user.name;
             
-            // محاسبه روزهای عضویت
-            if (user.created_at) {
-                const joinDate = new Date(user.created_at);
+            // ===== محاسبه صحیح روزهای عضویت =====
+            calculateAndDisplayMemberDays(user);
+        }
+
+        // ===== تابع جداگانه برای محاسبه روزهای عضویت =====
+        function calculateAndDisplayMemberDays(user) {
+            const memberDaysElement = document.getElementById('memberDays');
+            
+            try {
+                // اگر تاریخ عضویت وجود نداشته باشد
+                if (!user.created_at) {
+                    memberDaysElement.textContent = '۱';
+                    return;
+                }
+
+                // تبدیل تاریخ به شیء Date
+                let joinDate;
+                
+                // اگر تاریخ به فرمت شمسی است (jYYYY/jMM/jDD)
+                if (user.created_at.includes('/')) {
+                    // تاریخ را به میلادی تبدیل می‌کنیم
+                    const parts = user.created_at.split(' ');
+                    const dateParts = parts[0].split('/');
+                    if (dateParts.length === 3) {
+                        // استفاده از moment-jalaali برای تبدیل
+                        const jalaliDate = moment(dateParts.join('/'), 'jYYYY/jMM/jDD');
+                        if (jalaliDate && jalaliDate.isValid()) {
+                            joinDate = jalaliDate.toDate();
+                        } else {
+                            // اگر تبدیل نشد، از تاریخ فعلی استفاده کن
+                            memberDaysElement.textContent = '۱';
+                            return;
+                        }
+                    } else {
+                        memberDaysElement.textContent = '۱';
+                        return;
+                    }
+                } else {
+                    // تاریخ میلادی معمولی
+                    joinDate = new Date(user.created_at);
+                }
+
+                // بررسی اعتبار تاریخ
+                if (!joinDate || isNaN(joinDate.getTime())) {
+                    memberDaysElement.textContent = '۱';
+                    return;
+                }
+
+                // محاسبه تفاوت روزها
                 const now = new Date();
-                const days = Math.floor((now - joinDate) / (1000 * 60 * 60 * 24));
-                document.getElementById('memberDays').textContent = days < 1 ? 1 : days;
+                const diffTime = Math.abs(now.getTime() - joinDate.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                // اگر کمتر از ۱ روز است، ۱ نمایش بده
+                memberDaysElement.textContent = diffDays < 1 ? '۱' : diffDays;
+                
+            } catch (e) {
+                console.error('خطا در محاسبه روزهای عضویت:', e);
+                memberDaysElement.textContent = '۱';
             }
         }
 
@@ -867,7 +920,10 @@
             const totalItems = document.getElementById('cartTotalItems');
             
             fetch(`${API_BASE}/api/cart/${userId}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('خطا در دریافت');
+                    return response.json();
+                })
                 .then(data => {
                     document.getElementById('cartCount').textContent = data.length;
                     totalItems.textContent = data.length + ' آیتم';
@@ -877,7 +933,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-shopping-cart"></i>
                                 <p>سبد خرید شما خالی است.</p>
-                                <a href="#services" class="btn btn-primary" style="margin-top:8px;">
+                                <a href="#services" class="btn btn-primary" style="margin-top:8px; text-decoration:none;">
                                     <i class="fas fa-plus"></i> افزودن خدمت
                                 </a>
                             </div>
@@ -896,15 +952,17 @@
                         </tr></thead><tbody>`;
 
                     data.forEach((item, index) => {
-                        const price = parseFloat(item.item_price?.replace(/[^0-9.]/g, '') || 0);
+                        const price = parseFloat(String(item.item_price || '0').replace(/[^0-9.]/g, ''));
                         if (!isNaN(price)) total += price;
+                        
+                        const date = item.created_at ? new Date(item.created_at).toLocaleDateString('fa-IR') : '-';
                         
                         html += `
                             <tr>
                                 <td>${index + 1}</td>
                                 <td>${item.item_name}</td>
                                 <td>${item.item_price || '-'}</td>
-                                <td>${item.created_at ? new Date(item.created_at).toLocaleDateString('fa-IR') : '-'}</td>
+                                <td>${date}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" onclick="removeFromCart(${item.id})">
                                         <i class="fas fa-trash"></i>
@@ -934,7 +992,8 @@
 
                     container.innerHTML = html;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('خطا در سبد خرید:', error);
                     container.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
@@ -980,7 +1039,10 @@
             const container = document.getElementById('requestsList');
             
             fetch(`${API_BASE}/api/user-requests/${userId}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('خطا در دریافت');
+                    return response.json();
+                })
                 .then(data => {
                     document.getElementById('requestCount').textContent = data.length;
                     document.getElementById('pendingCount').textContent = data.filter(r => r.status === 'pending').length;
@@ -991,6 +1053,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-inbox"></i>
                                 <p>هیچ درخواستی ثبت نکرده‌اید.</p>
+                                <p style="font-size:0.85rem; color:var(--text-muted);">از فرم بالا برای ثبت درخواست استفاده کنید.</p>
                             </div>
                         `;
                         return;
@@ -1048,7 +1111,8 @@
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('❌ خطا در دریافت درخواست‌ها:', error);
                     container.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
@@ -1092,20 +1156,27 @@
                 const response = await fetch(`${API_BASE}/api/user-requests`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: user.id, title, description, priority, category })
+                    body: JSON.stringify({ 
+                        user_id: user.id, 
+                        title, 
+                        description, 
+                        priority, 
+                        category 
+                    })
                 });
+                
                 const data = await response.json();
 
                 if (response.ok) {
                     showToast('✅ ' + data.message, 'success');
                     this.reset();
                     loadRequests(user.id);
-                    loadCart(user.id);
                 } else {
-                    showToast('❌ ' + data.error, 'error');
+                    showToast('❌ ' + (data.error || 'خطا در ثبت درخواست'), 'error');
                 }
-            } catch {
-                showToast('❌ خطا در ثبت درخواست.', 'error');
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                showToast('❌ خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.', 'error');
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
