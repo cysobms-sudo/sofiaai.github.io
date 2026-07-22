@@ -142,6 +142,7 @@ app.get('/api/gallery', (req, res) => {
             console.error('❌ خطا در دریافت گالری:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
+        console.log('📸 تعداد تصاویر گالری:', results.length);
         res.json(results);
     });
 });
@@ -188,15 +189,16 @@ app.delete('/api/gallery/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== API مقالات (اصلاح شده) =====
+// ===== API مقالات =====
 // ==================================================
 app.get('/api/articles', (req, res) => {
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC', 
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles ORDER BY id DESC', 
         (err, results) => {
             if (err) {
                 console.error('❌ خطا در دریافت مقالات:', err);
                 return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
             }
+            console.log('📚 تعداد مقالات:', results.length);
             const articlesWithPersianDate = results.map(article => {
                 const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
                 return { ...article, created_at: persianDate };
@@ -208,7 +210,9 @@ app.get('/api/articles', (req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
     const articleId = req.params.id;
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?', // حذف شرط status
+    console.log('📖 دریافت مقاله با ID:', articleId);
+    
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?',
         [articleId],
         (err, results) => {
             if (err) {
@@ -216,10 +220,12 @@ app.get('/api/articles/:id', (req, res) => {
                 return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
             }
             if (results.length === 0) {
+                console.log('❌ مقاله با ID', articleId, 'پیدا نشد');
                 return res.status(404).json({ error: 'مقاله یافت نشد' });
             }
             const article = results[0];
             article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
+            console.log('✅ مقاله پیدا شد:', article.title);
             res.json(article);
         }
     );
