@@ -731,10 +731,119 @@ app.get('/api/admin/stats', (req, res) => {
 });
 
 // ==================================================
+// ===== API درخواست‌های کاربران =====
+// ==================================================
+
+// دریافت لیست درخواست‌های کاربر
+app.get('/api/user-requests/:userId', (req, res) => {
+    const userId = req.params.userId;
+    db.query(
+        'SELECT id, title, description, priority, status, created_at FROM user_requests WHERE user_id = ? ORDER BY id DESC',
+        [userId],
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت درخواست‌ها:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            const requestsWithPersianDate = results.map(req => {
+                const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
+                return { ...req, created_at: persianDate };
+            });
+            res.json(requestsWithPersianDate);
+        }
+    );
+});
+
+// دریافت همه درخواست‌ها (برای مدیریت)
+app.get('/api/admin/user-requests', (req, res) => {
+    const query = `
+        SELECT 
+            ur.id, 
+            ur.user_id, 
+            ur.title, 
+            ur.description, 
+            ur.priority, 
+            ur.status, 
+            ur.created_at,
+            u.name as user_name,
+            u.email as user_email,
+            u.phone as user_phone
+        FROM user_requests ur
+        JOIN users u ON ur.user_id = u.id
+        ORDER BY ur.id DESC
+    `;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت درخواست‌ها:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const requestsWithPersianDate = results.map(req => {
+            const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...req, created_at: persianDate };
+        });
+        res.json(requestsWithPersianDate);
+    });
+});
+
+// افزودن درخواست جدید
+app.post('/api/user-requests', (req, res) => {
+    const { user_id, title, description, priority } = req.body;
+    
+    if (!user_id || !title) {
+        return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
+    }
+    
+    const query = 'INSERT INTO user_requests (user_id, title, description, priority, status) VALUES (?, ?, ?, ?, "pending")';
+    db.query(query, [user_id, title, description || null, priority || 'medium'], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره درخواست:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+        }
+        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
+    });
+});
+
+// تغییر وضعیت درخواست
+app.put('/api/admin/user-requests/:id/status', (req, res) => {
+    const requestId = req.params.id;
+    const { status } = req.body;
+    
+    if (!status) {
+        return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
+    }
+    
+    db.query('UPDATE user_requests SET status = ? WHERE id = ?', [status, requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
+            return res.status(500).json({ error: 'خطا در به‌روزرسانی وضعیت' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ وضعیت درخواست با موفقیت تغییر کرد!' });
+    });
+});
+
+// حذف درخواست
+app.delete('/api/user-requests/:id', (req, res) => {
+    const requestId = req.params.id;
+    db.query('DELETE FROM user_requests WHERE id = ?', [requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف درخواست:', err);
+            return res.status(500).json({ error: 'خطا در حذف درخواست' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ درخواست با موفقیت حذف شد!' });
+    });
+});
+
+// ==================================================
 // ===== API درخواست‌های چت‌بات =====
 // ==================================================
 
-// دریافت لیست درخواست‌ها
+// دریافت لیست درخواست‌های چت‌بات
 app.get('/api/chatbot-requests', (req, res) => {
     db.query('SELECT id, name, phone, email, description, created_at FROM chatbot_requests ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -749,7 +858,7 @@ app.get('/api/chatbot-requests', (req, res) => {
     });
 });
 
-// افزودن درخواست جدید
+// افزودن درخواست چت‌بات جدید
 app.post('/api/chatbot-requests', (req, res) => {
     const { name, phone, email, description } = req.body;
     
@@ -767,7 +876,7 @@ app.post('/api/chatbot-requests', (req, res) => {
     });
 });
 
-// حذف درخواست
+// حذف درخواست چت‌بات
 app.delete('/api/chatbot-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM chatbot_requests WHERE id = ?', [requestId], (err, result) => {
