@@ -3,6 +3,8 @@ const mysql = require('mysql2');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const moment = require('moment-jalaali');
+const multer = require('multer');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +25,39 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ===== اطمینان از وجود پوشه آپلود =====
+const uploadDir = path.join(__dirname, 'public', 'images', 'gallery');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// ===== تنظیمات آپلود تصویر =====
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function(req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'gallery-' + uniqueSuffix + ext);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('فرمت فایل پشتیبانی نمی‌شود. فقط JPG, PNG, GIF, WEBP, SVG'), false);
+    }
+};
+
+const upload = multer({ 
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+});
 
 // ===== اتصال به دیتابیس =====
 const db = mysql.createConnection({
@@ -106,6 +141,89 @@ app.get('/service-agent-content.html', (req, res) => {
 
 app.get('/service-agent-automation.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-agent-automation.html'));
+});
+
+// ==================================================
+// ===== API آپلود تصویر =====
+// ==================================================
+app.post('/api/upload', upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'هیچ تصویری آپلود نشد' });
+        }
+        const imageUrl = '/images/gallery/' + req.file.filename;
+        console.log('✅ تصویر آپلود شد:', imageUrl);
+        res.json({ url: imageUrl, filename: req.file.filename });
+    } catch (error) {
+        console.error('❌ خطا در آپلود:', error);
+        res.status(500).json({ error: 'خطا در آپلود تصویر' });
+    }
+});
+
+// ==================================================
+// ===== APIهای گالری =====
+// ==================================================
+
+// ===== دریافت لیست گالری =====
+app.get('/api/gallery', (req, res) => {
+    db.query('SELECT id, title, description, image_url, created_at FROM gallery ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت گالری:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        res.json(results);
+    });
+});
+
+// ===== افزودن تصویر به گالری =====
+app.post('/api/gallery', (req, res) => {
+    const { title, description, image_url } = req.body;
+    
+    if (!title || !image_url) {
+        return res.status(400).json({ error: 'عنوان و آدرس تصویر الزامی است.' });
+    }
+    
+    const query = 'INSERT INTO gallery (title, description, image_url) VALUES (?, ?, ?)';
+    db.query(query, [title, description || '', image_url], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در افزودن به گالری:', err);
+            return res.status(500).json({ error: 'خطا در افزودن تصویر' });
+        }
+        res.json({ message: '✅ تصویر با موفقیت به گالری اضافه شد!', id: result.insertId });
+    });
+});
+
+// ===== حذف تصویر از گالری =====
+app.delete('/api/gallery/:id', (req, res) => {
+    const galleryId = req.params.id;
+    
+    // ابتدا آدرس تصویر را دریافت می‌کنیم
+    db.query('SELECT image_url FROM gallery WHERE id = ?', [galleryId], (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت تصویر:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'تصویر یافت نشد' });
+        }
+        
+        const imageUrl = results[0].image_url;
+        const imagePath = path.join(__dirname, 'public', imageUrl);
+        
+        // حذف فایل از سرور
+        if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+        }
+        
+        // حذف از دیتابیس
+        db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در حذف تصویر:', err);
+                return res.status(500).json({ error: 'خطا در حذف تصویر' });
+            }
+            res.json({ message: '✅ تصویر با موفقیت حذف شد!' });
+        });
+    });
 });
 
 // ==================================================
@@ -489,10 +607,11 @@ app.get('/api/admin/stats', (req, res) => {
         pending: "SELECT COUNT(*) as count FROM comments WHERE status = 'pending'",
         users: 'SELECT COUNT(*) as count FROM users',
         requests: 'SELECT COUNT(*) as count FROM chatbot_requests',
-        cart: 'SELECT COUNT(*) as count FROM cart'
+        cart: 'SELECT COUNT(*) as count FROM cart',
+        gallery: 'SELECT COUNT(*) as count FROM gallery'
     };
     
-    let results = { articles: 0, comments: 0, pending: 0, users: 0, requests: 0, cart: 0 };
+    let results = { articles: 0, comments: 0, pending: 0, users: 0, requests: 0, cart: 0, gallery: 0 };
     let completed = 0;
     const totalQueries = Object.keys(queries).length;
     
@@ -758,22 +877,15 @@ app.get('/api/admin/settings', (req, res) => {
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
     
-    // لیست تمام کلیدهای مجاز
     const allowedKeys = [
-        // صفحات
         'hero_title', 'hero_subtitle', 'hero_text',
-        'about_title', 'about_text',
+        'about_title', 'about_text', 'about_image',
         'footer_text', 'copyright_text',
         'stat_years', 'stat_projects', 'stat_privacy',
-        // اطلاعات عمومی
         'site_name', 'site_tagline', 'meta_description', 'meta_keywords',
-        // تماس
         'phone', 'phone2', 'email', 'email2', 'address', 'working_hours',
-        // شبکه‌های اجتماعی
         'whatsapp', 'telegram', 'linkedin', 'instagram', 'eitaa', 'bale',
-        // ظاهر
         'color_primary', 'color_secondary', 'font',
-        // کدها
         'analytics', 'header_codes', 'footer_codes'
     ];
     
