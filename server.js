@@ -33,7 +33,7 @@ if (!fs.existsSync(uploadDir)) {
     console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
 }
 
-// ===== Multer =====
+// ===== تنظیمات Multer با کیفیت مناسب =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadDir);
@@ -45,16 +45,22 @@ const storage = multer.diskStorage({
     }
 });
 
+// فیلتر فقط برای تصاویر
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+    } else {
+        cb(new Error('فایل باید تصویر باشد'), false);
+    }
+};
+
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 },
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype.startsWith('image/')) {
-            cb(null, true);
-        } else {
-            cb(new Error('فایل باید تصویر باشد'), false);
-        }
-    }
+    limits: { 
+        fileSize: 10 * 1024 * 1024, // 10MB
+        files: 1
+    },
+    fileFilter: fileFilter
 });
 
 // ===== دیتابیس =====
@@ -107,12 +113,24 @@ app.get('/article.html', (req, res) => {
 // ==================================================
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
+        console.log('📤 درخواست آپلود دریافت شد');
+        
         if (!req.file) {
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
+
         const imageUrl = '/images/gallery/' + req.file.filename;
-        res.json({ success: true, url: imageUrl, filename: req.file.filename, message: '✅ تصویر با موفقیت آپلود شد!' });
+        console.log('✅ تصویر ذخیره شد:', imageUrl);
+        console.log('📁 اندازه:', req.file.size, 'bytes');
+        
+        res.json({ 
+            success: true,
+            url: imageUrl,
+            filename: req.file.filename,
+            message: '✅ تصویر با موفقیت آپلود شد!'
+        });
     } catch (error) {
+        console.error('❌ خطا در آپلود:', error);
         res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
     }
 });
@@ -545,7 +563,7 @@ app.delete('/api/cart/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== API تنظیمات (مهم) =====
+// ===== API تنظیمات =====
 // ==================================================
 app.get('/api/admin/settings', (req, res) => {
     db.query('SELECT setting_key, setting_value FROM site_settings', (err, results) => {
@@ -564,7 +582,6 @@ app.get('/api/admin/settings', (req, res) => {
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
     console.log('📝 ذخیره تنظیمات:', settings);
-    
     const queries = Object.keys(settings).map(key => {
         return new Promise((resolve, reject) => {
             db.query(
@@ -577,7 +594,6 @@ app.put('/api/admin/settings', (req, res) => {
             );
         });
     });
-    
     Promise.all(queries)
         .then(() => {
             console.log('✅ تنظیمات ذخیره شد');
@@ -659,13 +675,10 @@ app.get('/api/admin/user-requests', (req, res) => {
 
 app.post('/api/user-requests', (req, res) => {
     const { user_id, title, description, priority, category } = req.body;
-    
     console.log('📝 دریافت درخواست جدید:', { user_id, title, priority, category });
-    
     if (!user_id || !title) {
         return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
     }
-    
     const query = 'INSERT INTO user_requests (user_id, title, description, priority, category, status) VALUES (?, ?, ?, ?, ?, "pending")';
     db.query(query, [user_id, title, description || null, priority || 'medium', category || 'general'], (err, result) => {
         if (err) {
@@ -680,11 +693,9 @@ app.post('/api/user-requests', (req, res) => {
 app.put('/api/admin/user-requests/:id/status', (req, res) => {
     const requestId = req.params.id;
     const { status } = req.body;
-    
     if (!status) {
         return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
     }
-    
     db.query('UPDATE user_requests SET status = ? WHERE id = ?', [status, requestId], (err, result) => {
         if (err) {
             console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
