@@ -1,796 +1,1273 @@
-<script>
-// ===== تنظیمات =====
-const ADMIN_PASSWORD = "123456"; // رمز عبور پیش‌فرض - حتماً تغییر دهید!
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پنل مدیریت | سوفیا AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* ===== متغیرها ===== */
+        :root {
+            --primary: #6C3CE1;
+            --primary-dark: #4A1F9E;
+            --secondary: #FFB800;
+            --success: #28a745;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --text-dark: #1A0F2E;
+            --text-muted: #5A4A7A;
+            --bg-light: #FBF8FF;
+            --border-color: rgba(108, 60, 225, 0.08);
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.10);
+        }
 
-// ===== توابع ورود =====
-function checkLogin() {
-    const passwordInput = document.getElementById('adminPassword');
-    const errorDiv = document.getElementById('loginError');
-    const password = passwordInput.value.trim();
-    
-    if (password === ADMIN_PASSWORD) {
-        errorDiv.style.display = 'none';
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        loadData(); // بارگذاری داده‌ها
-        showToast('✅ ورود موفق!', 'success');
-    } else {
-        errorDiv.style.display = 'block';
-        passwordInput.value = '';
-        passwordInput.focus();
-        showToast('❌ رمز عبور اشتباه است!', 'error');
-    }
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(145deg, #f0f2f5, #e8ecf1);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
 
-// ===== ورود با کلید Enter =====
-document.addEventListener('DOMContentLoaded', function() {
-    const passwordInput = document.getElementById('adminPassword');
-    if (passwordInput) {
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkLogin();
-            }
-        });
-    }
-    
-    // فعال‌سازی تب‌ها
-    initTabs();
-    
-    // بارگذاری تنظیمات رنگ
-    loadColorSettings();
-});
+        /* ===== صفحه ورود ===== */
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid var(--primary);
+            max-width: 450px;
+            width: 100%;
+            margin: 40px auto;
+            box-shadow: var(--shadow);
+            animation: fadeUp 0.6s ease;
+        }
+        .login-box h2 {
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+        .login-box h2 .highlight { color: var(--primary); }
+        .login-box .sub {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            font-size: 1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: 0.3s;
+        }
+        .login-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.08);
+        }
+        .login-box .btn-login {
+            width: 100%;
+            margin-top: 20px;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .login-box .btn-login:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        }
+        .login-box .error {
+            color: var(--danger);
+            margin-top: 12px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
 
-// ===== خروج =====
-function logout() {
-    if (confirm('آیا مطمئن هستید؟')) {
-        document.getElementById('adminPanel').style.display = 'none';
-        document.getElementById('loginPage').style.display = 'block';
-        document.getElementById('adminPassword').value = '';
-        document.getElementById('loginError').style.display = 'none';
-        showToast('👋 خروج انجام شد', 'info');
-    }
-}
+        /* ===== پنل مدیریت ===== */
+        .admin-box {
+            background: #fff;
+            padding: 32px;
+            border-radius: 24px;
+            border: 2px solid var(--primary);
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeUp 0.6s ease;
+        }
+        .admin-box .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .admin-box .header h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+        .admin-box .header h2 .highlight { color: var(--primary); }
+        .admin-box .header .sub {
+            color: var(--text-muted);
+        }
+        .admin-box .header .logout-btn {
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: 0.3s;
+        }
+        .admin-box .header .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+        }
 
-// ===== نمایش پیام =====
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-        padding: 16px 24px; border-radius: 12px; z-index: 9999;
-        font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        animation: slideDown 0.5s ease;
-        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#e74c3c' : '#3498db'};
-        color: #fff; font-family: 'Vazirmatn', sans-serif;
-        min-width: 200px; text-align: center;
-    `;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.animation = 'slideUp 0.5s ease';
-        setTimeout(() => toast.remove(), 500);
-    }, 3000);
-}
+        /* ===== تب‌ها ===== */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+        .tab-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.95rem;
+        }
+        .tab-btn:hover {
+            background: rgba(108, 60, 225, 0.06);
+            color: var(--primary);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
 
-// ===== استایل انیمیشن =====
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateX(-50%) translateY(-100px); }
-        to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-    @keyframes slideUp {
-        from { opacity: 1; transform: translateX(-50%) translateY(0); }
-        to { opacity: 0; transform: translateX(-50%) translateY(-100px); }
-    }
-`;
-document.head.appendChild(style);
+        /* ===== کارت‌های آمار ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
 
-// ===== فعال‌سازی تب‌ها =====
-function initTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // حذف active از همه تب‌ها
-            tabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            
-            // مخفی کردن همه محتواها
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // نمایش محتوای مربوطه
-            const tabId = this.dataset.tab;
-            const target = document.getElementById(`tab-${tabId}`);
-            if (target) {
-                target.classList.add('active');
-                // بارگذاری داده‌های مربوط به تب
-                loadTabData(tabId);
-            }
-        });
-    });
-}
+        /* ===== جدول‌ها ===== */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        th {
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 16px;
+            text-align: right;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--text-dark);
+            word-break: break-word;
+        }
+        tr:hover { background: #f8f6ff; }
 
-// ===== بارگذاری داده‌های تب =====
-function loadTabData(tabId) {
-    switch(tabId) {
-        case 'dashboard':
-            updateDashboardStats();
-            break;
-        case 'pages':
-            loadPagesData();
-            break;
-        case 'gallery':
-            loadGallery();
-            break;
-        case 'articles':
-            loadArticles();
-            break;
-        case 'comments':
-            loadComments();
-            break;
-        case 'users':
-            loadUsers();
-            break;
-        case 'requests':
-            loadRequests();
-            break;
-        case 'cart':
-            loadCart();
-            break;
-        case 'settings':
-            loadSettings();
-            break;
-    }
-}
+        /* ===== بج‌ها ===== */
+        .badge {
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-published { background: #d4edda; color: #155724; }
+        .badge-draft { background: #fff3cd; color: #856404; }
+        .badge-approved { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-rejected { background: #f8d7da; color: #721c24; }
 
-// ===== بارگذاری اولیه داده‌ها =====
-function loadData() {
-    updateDashboardStats();
-    loadPagesData();
-    loadGallery();
-    loadArticles();
-    loadComments();
-    loadUsers();
-    loadRequests();
-    loadCart();
-    loadSettings();
-}
+        /* ===== دکمه‌ها ===== */
+        .btn {
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-success:hover { background: #218838; transform: scale(1.05); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { background: #c0392b; transform: scale(1.05); }
+        .btn-warning { background: var(--warning); color: #fff; }
+        .btn-warning:hover { background: #e08e0b; transform: scale(1.05); }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); transform: scale(1.05); }
 
-// ===== آمار داشبورد =====
-function updateDashboardStats() {
-    const data = getMockData();
-    document.getElementById('statsArticles').textContent = data.articles.length;
-    document.getElementById('statsComments').textContent = data.comments.length;
-    document.getElementById('statsPending').textContent = data.requests.filter(r => r.status === 'pending').length;
-    document.getElementById('statsUsers').textContent = data.users.length;
-    document.getElementById('statsRequests').textContent = data.requests.length;
-    document.getElementById('statsCart').textContent = data.cart.length;
-    document.getElementById('statsGallery').textContent = data.gallery.length;
-}
+        /* ===== مودال ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease;
+        }
+        .modal h3 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .modal label {
+            display: block;
+            margin-top: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .modal input, .modal textarea, .modal select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            font-size: 1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            margin-top: 4px;
+            transition: 0.3s;
+        }
+        .modal input:focus, .modal textarea:focus, .modal select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .modal textarea { min-height: 120px; resize: vertical; }
+        .modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        .modal .modal-actions .btn {
+            padding: 10px 28px;
+            font-size: 0.95rem;
+        }
+        .modal .modal-actions .btn-cancel {
+            background: #e8ecf1;
+            color: var(--text-dark);
+        }
+        .modal .modal-actions .btn-cancel:hover {
+            background: #d5d9e0;
+        }
 
-// ===== دیتای آزمایشی =====
-function getMockData() {
-    return {
-        articles: [
-            { id: 1, title: 'آینده هوش مصنوعی', category: 'هوش مصنوعی', status: 'published', author: 'سوفیا AI' },
-            { id: 2, title: 'چت‌بات‌های پیشرفته', category: 'دستیار هوشمند', status: 'draft', author: 'سوفیا AI' }
-        ],
-        comments: [
-            { id: 1, name: 'احمد رضایی', text: 'مقاله عالی بود!', status: 'approved', date: '1405-04-15' },
-            { id: 2, name: 'سارا محمدی', text: 'خیلی مفید بود ممنون', status: 'pending', date: '1405-04-14' }
-        ],
-        users: [
-            { id: 1, name: 'علی کریمی', email: 'ali@email.com', role: 'user', date: '1405-01-10' },
-            { id: 2, name: 'مریم احمدی', email: 'maryam@email.com', role: 'admin', date: '1405-01-05' }
-        ],
-        requests: [
-            { id: 1, user: 'رضا نوری', subject: 'مشاوره هوش مصنوعی', status: 'pending', date: '1405-04-16' },
-            { id: 2, user: 'زهرا حسینی', subject: 'سفارش پروژه', status: 'approved', date: '1405-04-15' }
-        ],
-        cart: [
-            { id: 1, user: 'محمد رضایی', items: 3, total: '۲,۵۰۰,۰۰۰ تومان', date: '1405-04-16' },
-            { id: 2, user: 'نگار محمدی', items: 1, total: '۸۵۰,۰۰۰ تومان', date: '1405-04-15' }
-        ],
-        gallery: [
-            { id: 1, title: 'لوگوی سوفیا', description: 'لوگوی رسمی', image: '/images/logo.png' },
-            { id: 2, title: 'تیم سوفیا', description: 'تیم توسعه', image: '/images/team.jpg' }
-        ]
-    };
-}
+        /* ===== خالی ===== */
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+        .empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 12px;
+            color: var(--border-color);
+        }
 
-// ===== مدیریت صفحات =====
-function loadPagesData() {
-    // بارگذاری داده‌های صفحات (از localStorage یا دیتای پیش‌فرض)
-    const pages = JSON.parse(localStorage.getItem('sophia_pages')) || {
-        hero_title: 'سوفیا AI - دستیار هوشمند شما',
-        hero_subtitle: 'قدرت هوش مصنوعی در اختیار شما',
-        hero_text: 'با سوفیا، آینده را امروز تجربه کنید',
-        about_title: 'درباره سوفیا',
-        about_text: 'سوفیا یک پلتفرم پیشرفته هوش مصنوعی است...',
-        about_image: '/images/about.jpg',
-        footer_text: 'سوفیا AI - دستیار هوشمند',
-        copyright_text: '© ۱۴۰۵ تمامی حقوق محفوظ است',
-        stat_years: '۵+ سال سابقه',
-        stat_projects: '۱۰۰+ پروژه موفق',
-        stat_privacy: 'حریم خصوصی کاربران'
-    };
-    
-    document.getElementById('page_hero_title').value = pages.hero_title || '';
-    document.getElementById('page_hero_subtitle').value = pages.hero_subtitle || '';
-    document.getElementById('page_hero_text').value = pages.hero_text || '';
-    document.getElementById('page_about_title').value = pages.about_title || '';
-    document.getElementById('page_about_text').value = pages.about_text || '';
-    document.getElementById('page_about_image').value = pages.about_image || '';
-    document.getElementById('page_footer_text').value = pages.footer_text || '';
-    document.getElementById('page_copyright_text').value = pages.copyright_text || '';
-    document.getElementById('page_stat_years').value = pages.stat_years || '';
-    document.getElementById('page_stat_projects').value = pages.stat_projects || '';
-    document.getElementById('page_stat_privacy').value = pages.stat_privacy || '';
-}
+        /* ===== انیمیشن‌ها ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-function savePages() {
-    const pages = {
-        hero_title: document.getElementById('page_hero_title').value,
-        hero_subtitle: document.getElementById('page_hero_subtitle').value,
-        hero_text: document.getElementById('page_hero_text').value,
-        about_title: document.getElementById('page_about_title').value,
-        about_text: document.getElementById('page_about_text').value,
-        about_image: document.getElementById('page_about_image').value,
-        footer_text: document.getElementById('page_footer_text').value,
-        copyright_text: document.getElementById('page_copyright_text').value,
-        stat_years: document.getElementById('page_stat_years').value,
-        stat_projects: document.getElementById('page_stat_projects').value,
-        stat_privacy: document.getElementById('page_stat_privacy').value
-    };
-    
-    localStorage.setItem('sophia_pages', JSON.stringify(pages));
-    const status = document.getElementById('saveStatus');
-    status.textContent = '✅ ذخیره شد!';
-    status.className = 'status-msg success';
-    setTimeout(() => {
-        status.textContent = '';
-        status.className = 'status-msg';
-    }, 3000);
-    showToast('✅ صفحات با موفقیت ذخیره شدند', 'success');
-}
+        /* ===== واکنش‌گرایی ===== */
+        @media (max-width: 768px) {
+            .admin-box { padding: 16px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            th, td { padding: 8px 10px; font-size: 0.75rem; }
+            .tab-btn { padding: 6px 14px; font-size: 0.8rem; }
+            .modal { padding: 20px; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .admin-box .header { flex-direction: column; align-items: stretch; text-align: center; }
+        }
+    </style>
+</head>
+<body>
 
-// ===== مدیریت گالری =====
-function loadGallery() {
-    const gallery = JSON.parse(localStorage.getItem('sophia_gallery')) || getMockData().gallery;
-    renderGallery(gallery);
-}
+    <!-- ===== صفحه ورود ===== -->
+    <div id="loginPage" class="login-box">
+        <h2>🔐 <span class="highlight">پنل مدیریت</span></h2>
+        <p class="sub">برای ورود، رمز عبور را وارد کنید</p>
+        <input type="password" id="adminPassword" placeholder="رمز عبور را وارد کنید..." />
+        <button class="btn-login" onclick="checkLogin()">ورود</button>
+        <div id="loginError" class="error">❌ رمز عبور اشتباه است!</div>
+    </div>
 
-function renderGallery(gallery) {
-    const container = document.getElementById('galleryList');
-    if (!gallery || gallery.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-images"></i>هیچ تصویری در گالری وجود ندارد</div>`;
-        return;
-    }
-    
-    let html = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px;">`;
-    gallery.forEach((item, index) => {
-        html += `
-            <div style="background:var(--bg-light); border-radius:var(--radius); padding:12px; border:1px solid var(--border-color);">
-                <img src="${item.image || '/images/placeholder.jpg'}" alt="${item.title}" 
-                     style="width:100%; height:150px; object-fit:cover; border-radius:8px; background:#eee;" />
-                <h4 style="margin:8px 0 4px;">${item.title}</h4>
-                <p style="font-size:0.8rem; color:var(--text-muted);">${item.description || ''}</p>
-                <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${index})" style="margin-top:8px;">
-                    <i class="fas fa-trash"></i> حذف
-                </button>
+    <!-- ===== پنل مدیریت ===== -->
+    <div id="adminPanel" class="admin-box">
+        <div class="header">
+            <div>
+                <h2>📋 <span class="highlight">پنل مدیریت</span></h2>
+                <span class="sub">مدیریت کامل سایت</span>
             </div>
-        `;
-    });
-    html += `</div>`;
-    container.innerHTML = html;
-}
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+        </div>
 
-function addGalleryItem() {
-    const title = document.getElementById('gallery_title').value.trim();
-    const description = document.getElementById('gallery_description').value.trim();
-    const image = document.getElementById('gallery_image_url').value.trim();
-    
-    if (!title || !image) {
-        showToast('❌ لطفاً عنوان و تصویر را وارد کنید', 'error');
-        return;
-    }
-    
-    const gallery = JSON.parse(localStorage.getItem('sophia_gallery')) || [];
-    gallery.push({ id: Date.now(), title, description, image });
-    localStorage.setItem('sophia_gallery', JSON.stringify(gallery));
-    renderGallery(gallery);
-    resetGalleryForm();
-    showToast('✅ تصویر با موفقیت اضافه شد', 'success');
-}
+        <!-- ===== تب‌ها ===== -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="dashboard">📊 داشبورد</button>
+            <button class="tab-btn" data-tab="gallery">🖼️ گالری</button>
+            <button class="tab-btn" data-tab="articles">📝 مقالات</button>
+            <button class="tab-btn" data-tab="comments">💬 نظرات</button>
+            <button class="tab-btn" data-tab="users">👥 کاربران</button>
+            <button class="tab-btn" data-tab="cart">🛒 سبد خرید</button>
+            <button class="tab-btn" data-tab="settings">⚙️ تنظیمات</button>
+        </div>
 
-function deleteGalleryItem(index) {
-    if (!confirm('آیا از حذف این تصویر مطمئن هستید؟')) return;
-    const gallery = JSON.parse(localStorage.getItem('sophia_gallery')) || [];
-    gallery.splice(index, 1);
-    localStorage.setItem('sophia_gallery', JSON.stringify(gallery));
-    renderGallery(gallery);
-    showToast('🗑️ تصویر حذف شد', 'info');
-}
+        <!-- ===== تب داشبورد ===== -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card"><div class="number" id="statsArticles">0</div><div class="label">📄 مقالات</div></div>
+                <div class="stat-card"><div class="number" id="statsComments">0</div><div class="label">💬 نظرات</div></div>
+                <div class="stat-card"><div class="number" id="statsPending">0</div><div class="label">⏳ در انتظار</div></div>
+                <div class="stat-card"><div class="number" id="statsUsers">0</div><div class="label">👥 کاربران</div></div>
+                <div class="stat-card"><div class="number" id="statsCart">0</div><div class="label">🛒 سبد خرید</div></div>
+                <div class="stat-card"><div class="number" id="statsGallery">0</div><div class="label">🖼️ گالری</div></div>
+            </div>
+            <p style="color:var(--text-muted); text-align:center; font-size:0.85rem;">آخرین به‌روزرسانی: <span id="lastUpdate"></span></p>
+        </div>
 
-function resetGalleryForm() {
-    document.getElementById('gallery_title').value = '';
-    document.getElementById('gallery_description').value = '';
-    document.getElementById('gallery_image_url').value = '';
-    document.getElementById('galleryFileInput').value = '';
-    document.getElementById('galleryImagePreview').className = 'image-preview';
-    document.getElementById('galleryImagePreview').src = '';
-    document.getElementById('removeGalleryImageBtn').className = 'btn-remove-image';
-}
+        <!-- ===== تب گالری ===== -->
+        <div id="tab-gallery" class="tab-content">
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <button class="btn btn-primary" onclick="showAddGallery()"><i class="fas fa-plus"></i> افزودن تصویر</button>
+            </div>
+            <div id="galleryList"><div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
+        </div>
 
-// ===== آپلود تصویر گالری =====
-document.addEventListener('DOMContentLoaded', function() {
-    const fileInput = document.getElementById('galleryFileInput');
-    if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('galleryImagePreview');
-                    preview.src = e.target.result;
-                    preview.className = 'image-preview show';
-                    document.getElementById('removeGalleryImageBtn').className = 'btn-remove-image show';
-                    document.getElementById('gallery_image_url').value = e.target.result;
-                };
-                reader.readAsDataURL(file);
+        <!-- ===== تب مقالات ===== -->
+        <div id="tab-articles" class="tab-content">
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <button class="btn btn-primary" onclick="showAddArticle()"><i class="fas fa-plus"></i> مقاله جدید</button>
+            </div>
+            <div id="articlesList"><div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
+        </div>
+
+        <!-- ===== تب نظرات ===== -->
+        <div id="tab-comments" class="tab-content">
+            <div id="commentsList"><div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
+        </div>
+
+        <!-- ===== تب کاربران ===== -->
+        <div id="tab-users" class="tab-content">
+            <div id="usersList"><div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
+        </div>
+
+        <!-- ===== تب سبد خرید ===== -->
+        <div id="tab-cart" class="tab-content">
+            <div id="cartList"><div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
+        </div>
+
+        <!-- ===== تب تنظیمات ===== -->
+        <div id="tab-settings" class="tab-content">
+            <div style="max-width:800px;">
+                <h3 style="margin-bottom:16px;">⚙️ تنظیمات سایت</h3>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <label>عنوان سایت</label>
+                        <input type="text" id="setting_site_name" placeholder="عنوان سایت" />
+                    </div>
+                    <div>
+                        <label>زیر عنوان</label>
+                        <input type="text" id="setting_site_tagline" placeholder="زیر عنوان" />
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <label>توضیحات متا</label>
+                        <input type="text" id="setting_meta_description" placeholder="توضیحات برای سئو" />
+                    </div>
+                    <div>
+                        <label>شماره تماس</label>
+                        <input type="text" id="setting_phone" placeholder="شماره تماس" />
+                    </div>
+                    <div>
+                        <label>ایمیل</label>
+                        <input type="text" id="setting_email" placeholder="ایمیل" />
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <label>آدرس</label>
+                        <input type="text" id="setting_address" placeholder="آدرس" />
+                    </div>
+                    <div>
+                        <label>رنگ اصلی</label>
+                        <input type="color" id="setting_color_primary" value="#6C3CE1" />
+                    </div>
+                    <div>
+                        <label>رنگ ثانویه</label>
+                        <input type="color" id="setting_color_secondary" value="#FFB800" />
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <label>متن فوتر</label>
+                        <input type="text" id="setting_footer_text" placeholder="متن فوتر" />
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <label>کد تحلیل (Google Analytics)</label>
+                        <textarea id="setting_analytics" rows="3" placeholder="کد تحلیل خود را وارد کنید"></textarea>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="saveSettings()" style="margin-top:20px; padding:12px 36px;">
+                    <i class="fas fa-save"></i> ذخیره تنظیمات
+                </button>
+                <div id="settingsStatus" style="margin-top:12px; color:var(--success);"></div>
+            </div>
+        </div>
+
+        <a href="index.html" style="display:inline-block; margin-top:24px; color:var(--primary); text-decoration:none; font-weight:600;">
+            ← بازگشت به صفحه اصلی
+        </a>
+    </div>
+
+    <!-- ===== مودال گالری ===== -->
+    <div class="modal-overlay" id="galleryModal">
+        <div class="modal">
+            <h3 id="galleryModalTitle">🖼️ افزودن تصویر</h3>
+            <input type="hidden" id="galleryEditId" />
+            <label>عنوان تصویر</label>
+            <input type="text" id="gallery_title" placeholder="عنوان تصویر" />
+            <label>توضیحات</label>
+            <textarea id="gallery_description" placeholder="توضیحات تصویر" rows="2"></textarea>
+            <label>آدرس تصویر</label>
+            <input type="text" id="gallery_image_url" placeholder="https://example.com/image.jpg" />
+            <div style="margin-top:12px;">
+                <label>یا آپلود تصویر</label>
+                <input type="file" id="galleryFileInput" accept="image/*" style="padding:8px;" />
+                <div id="galleryImagePreview" style="margin-top:8px; display:none;">
+                    <img id="galleryPreviewImg" style="max-width:200px; max-height:150px; border-radius:8px; border:1px solid var(--border-color);" />
+                    <button class="btn btn-danger btn-sm" onclick="removeGalleryImage()" style="margin-top:4px;">حذف تصویر</button>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="closeGalleryModal()">انصراف</button>
+                <button class="btn btn-primary" onclick="saveGallery()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== مودال مقاله ===== -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="modal">
+            <h3 id="articleModalTitle">✍️ مقاله جدید</h3>
+            <input type="hidden" id="articleEditId" />
+            <label>عنوان مقاله</label>
+            <input type="text" id="articleTitle" placeholder="عنوان مقاله" />
+            <label>دسته‌بندی</label>
+            <input type="text" id="articleCategory" placeholder="دسته‌بندی" />
+            <label>نویسنده</label>
+            <input type="text" id="articleAuthor" placeholder="نویسنده" />
+            <label>متن مقاله</label>
+            <textarea id="articleContent" rows="6" placeholder="متن مقاله"></textarea>
+            <label>وضعیت</label>
+            <select id="articleStatus">
+                <option value="published">منتشر شده</option>
+                <option value="draft">پیش‌نویس</option>
+            </select>
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="closeArticleModal()">انصراف</button>
+                <button class="btn btn-primary" onclick="saveArticle()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://sofiaaisite.runflare.run';
+        const ADMIN_PASSWORD = "123456";
+
+        // =============================================
+        // ===== ورود =====
+        // =============================================
+        function checkLogin() {
+            const passwordInput = document.getElementById('adminPassword');
+            const errorDiv = document.getElementById('loginError');
+            const password = passwordInput.value.trim();
+            
+            if (password === ADMIN_PASSWORD) {
+                errorDiv.style.display = 'none';
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAllData();
+                showToast('✅ ورود موفق!', 'success');
+            } else {
+                errorDiv.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                showToast('❌ رمز عبور اشتباه است!', 'error');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('adminPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') checkLogin();
+                });
+            }
+            initTabs();
+        });
+
+        function logout() {
+            if (confirm('آیا مطمئن هستید؟')) {
+                document.getElementById('adminPanel').style.display = 'none';
+                document.getElementById('loginPage').style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('loginError').style.display = 'none';
+                showToast('👋 خروج انجام شد', 'info');
+            }
+        }
+
+        // =============================================
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 9999;
+                display: flex; flex-direction: column; gap: 10px;
+                direction: rtl;
+            `;
+            document.body.appendChild(container);
+            
+            // اضافه کردن استایل انیمیشن خروج
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideOutRight {
+                    from { opacity: 1; transform: translateX(0); }
+                    to { opacity: 0; transform: translateX(100px); }
+                }
+            `;
+            document.head.appendChild(style);
+            return container;
+        }
+
+        // =============================================
+        // ===== تب‌ها =====
+        // =============================================
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    const tabId = this.dataset.tab;
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                    loadTabData(tabId);
+                });
+            });
+        }
+
+        function loadTabData(tabId) {
+            switch(tabId) {
+                case 'dashboard': loadStats(); break;
+                case 'gallery': loadGallery(); break;
+                case 'articles': loadArticles(); break;
+                case 'comments': loadComments(); break;
+                case 'users': loadUsers(); break;
+                case 'cart': loadCart(); break;
+                case 'settings': loadSettings(); break;
+            }
+        }
+
+        function loadAllData() {
+            loadStats();
+            loadGallery();
+            loadArticles();
+            loadComments();
+            loadUsers();
+            loadCart();
+            loadSettings();
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString('fa-IR');
+        }
+
+        // =============================================
+        // ===== آمار =====
+        // =============================================
+        function loadStats() {
+            fetch(`${API_BASE}/api/admin/stats`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('statsArticles').textContent = data.articles || 0;
+                    document.getElementById('statsComments').textContent = data.comments || 0;
+                    document.getElementById('statsPending').textContent = data.pending || 0;
+                    document.getElementById('statsUsers').textContent = data.users || 0;
+                    document.getElementById('statsCart').textContent = data.cart || 0;
+                    document.getElementById('statsGallery').textContent = data.gallery || 0;
+                })
+                .catch(err => {
+                    console.error('❌ خطا در دریافت آمار:', err);
+                });
+        }
+
+        // =============================================
+        // ===== گالری =====
+        // =============================================
+        function loadGallery() {
+            const container = document.getElementById('galleryList');
+            container.innerHTML = '<div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+            
+            fetch(`${API_BASE}/api/gallery`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-images"></i>هیچ تصویری در گالری وجود ندارد</div>';
+                        return;
+                    }
+                    
+                    let html = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px;">`;
+                    data.forEach(item => {
+                        html += `
+                            <div style="background:var(--bg-light); border-radius:var(--radius); padding:12px; border:1px solid var(--border-color);">
+                                <img src="${item.image_url}" alt="${item.title}" 
+                                     style="width:100%; height:160px; object-fit:cover; border-radius:8px; background:#eee;" 
+                                     onerror="this.src='/images/placeholder.jpg'" />
+                                <h4 style="margin:8px 0 4px; font-size:0.95rem;">${item.title}</h4>
+                                <p style="font-size:0.8rem; color:var(--text-muted);">${item.description || ''}</p>
+                                <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${item.id})" style="margin-top:8px;">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت گالری</div>';
+                });
+        }
+
+        function showAddGallery() {
+            document.getElementById('galleryEditId').value = '';
+            document.getElementById('gallery_title').value = '';
+            document.getElementById('gallery_description').value = '';
+            document.getElementById('gallery_image_url').value = '';
+            document.getElementById('galleryFileInput').value = '';
+            document.getElementById('galleryPreviewImg').src = '';
+            document.getElementById('galleryImagePreview').style.display = 'none';
+            document.getElementById('galleryModalTitle').textContent = '🖼️ افزودن تصویر';
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function saveGallery() {
+            const id = document.getElementById('galleryEditId').value;
+            const title = document.getElementById('gallery_title').value.trim();
+            const description = document.getElementById('gallery_description').value.trim();
+            const imageUrl = document.getElementById('gallery_image_url').value.trim();
+            
+            if (!title || !imageUrl) {
+                showToast('❌ عنوان و آدرس تصویر الزامی است.', 'error');
+                return;
+            }
+            
+            fetch(`${API_BASE}/api/gallery`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, description, image_url: imageUrl })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    closeGalleryModal();
+                    loadGallery();
+                    loadStats();
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => {
+                console.error('❌ خطا:', err);
+                showToast('❌ خطا در ذخیره تصویر', 'error');
+            });
+        }
+
+        function deleteGalleryItem(id) {
+            if (!confirm('آیا از حذف این تصویر مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/gallery/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadGallery();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف تصویر', 'error');
+                });
+        }
+
+        // آپلود تصویر گالری
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('galleryFileInput');
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = this.files[0];
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('image', file);
+                        
+                        showToast('⏳ در حال آپلود...', 'info');
+                        
+                        fetch(`${API_BASE}/api/upload`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById('gallery_image_url').value = data.url;
+                                document.getElementById('galleryPreviewImg').src = data.url;
+                                document.getElementById('galleryImagePreview').style.display = 'block';
+                                showToast('✅ ' + data.message, 'success');
+                            } else {
+                                showToast('❌ ' + data.error, 'error');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('❌ خطا:', err);
+                            showToast('❌ خطا در آپلود تصویر', 'error');
+                        });
+                    }
+                });
             }
         });
-    }
-});
 
-function removeGalleryImage() {
-    document.getElementById('galleryFileInput').value = '';
-    document.getElementById('galleryImagePreview').className = 'image-preview';
-    document.getElementById('galleryImagePreview').src = '';
-    document.getElementById('removeGalleryImageBtn').className = 'btn-remove-image';
-    document.getElementById('gallery_image_url').value = '';
-}
+        function removeGalleryImage() {
+            document.getElementById('galleryFileInput').value = '';
+            document.getElementById('gallery_image_url').value = '';
+            document.getElementById('galleryPreviewImg').src = '';
+            document.getElementById('galleryImagePreview').style.display = 'none';
+        }
 
-// ===== مدیریت مقالات =====
-function loadArticles() {
-    const articles = JSON.parse(localStorage.getItem('sophia_articles')) || getMockData().articles;
-    renderArticles(articles);
-}
-
-function renderArticles(articles) {
-    const container = document.getElementById('articlesList');
-    if (!articles || articles.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-newspaper"></i>هیچ مقاله‌ای وجود ندارد</div>`;
-        return;
-    }
-    
-    let html = `<div class="table-responsive"><table>
-        <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>`;
-    articles.forEach((article, index) => {
-        html += `
-            <tr>
-                <td>${article.title}</td>
-                <td>${article.category}</td>
-                <td>${article.author}</td>
-                <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="editArticle(${index})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteArticle(${index})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
-    });
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
-}
-
-function showAddArticle() {
-    document.getElementById('articleEditId').value = '';
-    document.getElementById('articleTitle').value = '';
-    document.getElementById('articleCategory').value = 'هوش مصنوعی';
-    document.getElementById('articleContent').value = '';
-    document.getElementById('articleAuthor').value = 'سوفیا AI';
-    document.getElementById('articleStatus').value = 'published';
-    document.getElementById('articleModalTitle').textContent = '✍️ مقاله جدید';
-    document.getElementById('articleModal').classList.add('active');
-}
-
-function editArticle(index) {
-    const articles = JSON.parse(localStorage.getItem('sophia_articles')) || getMockData().articles;
-    const article = articles[index];
-    document.getElementById('articleEditId').value = index;
-    document.getElementById('articleTitle').value = article.title;
-    document.getElementById('articleCategory').value = article.category;
-    document.getElementById('articleContent').value = article.content || '';
-    document.getElementById('articleAuthor').value = article.author;
-    document.getElementById('articleStatus').value = article.status;
-    document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
-    document.getElementById('articleModal').classList.add('active');
-}
-
-function saveArticle() {
-    const id = document.getElementById('articleEditId').value;
-    const title = document.getElementById('articleTitle').value.trim();
-    const category = document.getElementById('articleCategory').value;
-    const content = document.getElementById('articleContent').value.trim();
-    const author = document.getElementById('articleAuthor').value.trim();
-    const status = document.getElementById('articleStatus').value;
-    
-    if (!title || !content) {
-        showToast('❌ عنوان و متن مقاله الزامی است', 'error');
-        return;
-    }
-    
-    let articles = JSON.parse(localStorage.getItem('sophia_articles')) || getMockData().articles;
-    
-    if (id === '') {
-        // افزودن جدید
-        articles.push({ id: Date.now(), title, category, content, author, status });
-        showToast('✅ مقاله جدید اضافه شد', 'success');
-    } else {
-        // ویرایش
-        articles[id] = { ...articles[id], title, category, content, author, status };
-        showToast('✅ مقاله ویرایش شد', 'success');
-    }
-    
-    localStorage.setItem('sophia_articles', JSON.stringify(articles));
-    renderArticles(articles);
-    closeArticleModal();
-}
-
-function deleteArticle(index) {
-    if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
-    const articles = JSON.parse(localStorage.getItem('sophia_articles')) || [];
-    articles.splice(index, 1);
-    localStorage.setItem('sophia_articles', JSON.stringify(articles));
-    renderArticles(articles);
-    showToast('🗑️ مقاله حذف شد', 'info');
-}
-
-function closeArticleModal() {
-    document.getElementById('articleModal').classList.remove('active');
-}
-
-// ===== مدیریت نظرات =====
-function loadComments() {
-    const comments = JSON.parse(localStorage.getItem('sophia_comments')) || getMockData().comments;
-    renderComments(comments);
-}
-
-function renderComments(comments) {
-    const container = document.getElementById('commentsList');
-    if (!comments || comments.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-comment-dots"></i>هیچ نظری وجود ندارد</div>`;
-        return;
-    }
-    
-    let html = `<div class="table-responsive"><table>
-        <thead><tr><th>کاربر</th><th>متن</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
-    comments.forEach((comment, index) => {
-        html += `
-            <tr>
-                <td>${comment.name}</td>
-                <td>${comment.text}</td>
-                <td><span class="badge ${comment.status === 'approved' ? 'badge-approved' : 'badge-pending'}">${comment.status === 'approved' ? 'تایید شده' : 'در انتظار'}</span></td>
-                <td>${comment.date}</td>
-                <td>
-                    ${comment.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="approveComment(${index})"><i class="fas fa-check"></i></button>` : ''}
-                    <button class="btn btn-danger btn-sm" onclick="deleteComment(${index})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
-    });
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
-}
-
-function approveComment(index) {
-    const comments = JSON.parse(localStorage.getItem('sophia_comments')) || getMockData().comments;
-    comments[index].status = 'approved';
-    localStorage.setItem('sophia_comments', JSON.stringify(comments));
-    renderComments(comments);
-    showToast('✅ نظر تایید شد', 'success');
-}
-
-function deleteComment(index) {
-    if (!confirm('آیا از حذف این نظر مطمئن هستید؟')) return;
-    const comments = JSON.parse(localStorage.getItem('sophia_comments')) || [];
-    comments.splice(index, 1);
-    localStorage.setItem('sophia_comments', JSON.stringify(comments));
-    renderComments(comments);
-    showToast('🗑️ نظر حذف شد', 'info');
-}
-
-// ===== مدیریت کاربران =====
-function loadUsers() {
-    const users = JSON.parse(localStorage.getItem('sophia_users')) || getMockData().users;
-    renderUsers(users);
-}
-
-function renderUsers(users) {
-    const container = document.getElementById('usersList');
-    if (!users || users.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-users"></i>هیچ کاربری وجود ندارد</div>`;
-        return;
-    }
-    
-    let html = `<div class="table-responsive"><table>
-        <thead><tr><th>نام</th><th>ایمیل</th><th>نقش</th><th>تاریخ عضویت</th><th>عملیات</th></tr></thead><tbody>`;
-    users.forEach((user, index) => {
-        html += `
-            <tr>
-                <td>${user.name}</td>
-                <td>${user.email}</td>
-                <td><span class="badge ${user.role === 'admin' ? 'badge-approved' : 'badge-draft'}">${user.role === 'admin' ? 'مدیر' : 'کاربر'}</span></td>
-                <td>${user.date}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteUser(${index})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
-    });
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
-}
-
-function deleteUser(index) {
-    if (!confirm('آیا از حذف این کاربر مطمئن هستید؟')) return;
-    const users = JSON.parse(localStorage.getItem('sophia_users')) || [];
-    users.splice(index, 1);
-    localStorage.setItem('sophia_users', JSON.stringify(users));
-    renderUsers(users);
-    showToast('🗑️ کاربر حذف شد', 'info');
-}
-
-// ===== مدیریت درخواست‌ها =====
-function loadRequests() {
-    const requests = JSON.parse(localStorage.getItem('sophia_requests')) || getMockData().requests;
-    renderRequests(requests);
-}
-
-function renderRequests(requests) {
-    const container = document.getElementById('requestsList');
-    if (!requests || requests.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-clipboard-list"></i>هیچ درخواستی وجود ندارد</div>`;
-        return;
-    }
-    
-    let html = `<div class="table-responsive"><table>
-        <thead><tr><th>کاربر</th><th>موضوع</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
-    requests.forEach((req, index) => {
-        html += `
-            <tr>
-                <td>${req.user}</td>
-                <td>${req.subject}</td>
-                <td><span class="badge ${req.status === 'approved' ? 'badge-approved' : req.status === 'rejected' ? 'badge-rejected' : 'badge-pending'}">${req.status === 'approved' ? 'تایید شده' : req.status === 'rejected' ? 'رد شده' : 'در انتظار'}</span></td>
-                <td>${req.date}</td>
-                <td>
-                    ${req.status === 'pending' ? `
-                        <button class="btn btn-success btn-sm" onclick="approveRequest(${index})"><i class="fas fa-check"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="rejectRequest(${index})"><i class="fas fa-times"></i></button>
-                    ` : ''}
-                    <button class="btn btn-danger btn-sm" onclick="deleteRequest(${index})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
-    });
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
-}
-
-function approveRequest(index) {
-    const requests = JSON.parse(localStorage.getItem('sophia_requests')) || [];
-    requests[index].status = 'approved';
-    localStorage.setItem('sophia_requests', JSON.stringify(requests));
-    renderRequests(requests);
-    showToast('✅ درخواست تایید شد', 'success');
-}
-
-function rejectRequest(index) {
-    const requests = JSON.parse(localStorage.getItem('sophia_requests')) || [];
-    requests[index].status = 'rejected';
-    localStorage.setItem('sophia_requests', JSON.stringify(requests));
-    renderRequests(requests);
-    showToast('❌ درخواست رد شد', 'info');
-}
-
-function deleteRequest(index) {
-    if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
-    const requests = JSON.parse(localStorage.getItem('sophia_requests')) || [];
-    requests.splice(index, 1);
-    localStorage.setItem('sophia_requests', JSON.stringify(requests));
-    renderRequests(requests);
-    showToast('🗑️ درخواست حذف شد', 'info');
-}
-
-// ===== مدیریت سبد خرید =====
-function loadCart() {
-    const cart = JSON.parse(localStorage.getItem('sophia_cart')) || getMockData().cart;
-    renderCart(cart);
-}
-
-function renderCart(cart) {
-    const container = document.getElementById('cartList');
-    if (!cart || cart.length === 0) {
-        container.innerHTML = `<div class="empty"><i class="fas fa-shopping-cart"></i>سبد خرید خالی است</div>`;
-        return;
-    }
-    
-    let html = `<div class="table-responsive"><table>
-        <thead><tr><th>کاربر</th><th>تعداد آیتم</th><th>مبلغ کل</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
-    cart.forEach((item, index) => {
-        html += `
-            <tr>
-                <td>${item.user}</td>
-                <td>${item.items}</td>
-                <td>${item.total}</td>
-                <td>${item.date}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCartItem(${index})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
-    });
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
-}
-
-function deleteCartItem(index) {
-    if (!confirm('آیا از حذف این آیتم مطمئن هستید؟')) return;
-    const cart = JSON.parse(localStorage.getItem('sophia_cart')) || [];
-    cart.splice(index, 1);
-    localStorage.setItem('sophia_cart', JSON.stringify(cart));
-    renderCart(cart);
-    showToast('🗑️ آیتم حذف شد', 'info');
-}
-
-// ===== تنظیمات =====
-function loadSettings() {
-    const settings = JSON.parse(localStorage.getItem('sophia_settings')) || {
-        site_name: 'سوفیا AI',
-        site_tagline: 'دستیار هوشمند شما',
-        meta_description: 'پلتفرم پیشرفته هوش مصنوعی',
-        phone: '۰۹۱۲-۱۲۳-۴۵۶۷',
-        email: 'info@sophia.ai',
-        address: 'تهران، ایران',
-        whatsapp: 'https://wa.me/09121234567',
-        telegram: 'https://t.me/sophia_ai',
-        instagram: 'https://instagram.com/sophia_ai',
-        linkedin: 'https://linkedin.com/company/sophia-ai',
-        color_primary: '#6C3CE1',
-        color_secondary: '#FFB800',
-        analytics: ''
-    };
-    
-    document.getElementById('setting_site_name').value = settings.site_name || '';
-    document.getElementById('setting_site_tagline').value = settings.site_tagline || '';
-    document.getElementById('setting_meta_description').value = settings.meta_description || '';
-    document.getElementById('setting_phone').value = settings.phone || '';
-    document.getElementById('setting_email').value = settings.email || '';
-    document.getElementById('setting_address').value = settings.address || '';
-    document.getElementById('setting_whatsapp').value = settings.whatsapp || '';
-    document.getElementById('setting_telegram').value = settings.telegram || '';
-    document.getElementById('setting_instagram').value = settings.instagram || '';
-    document.getElementById('setting_linkedin').value = settings.linkedin || '';
-    document.getElementById('setting_color_primary').value = settings.color_primary || '#6C3CE1';
-    document.getElementById('setting_color_secondary').value = settings.color_secondary || '#FFB800';
-    document.getElementById('setting_analytics').value = settings.analytics || '';
-}
-
-function saveSettings() {
-    const settings = {
-        site_name: document.getElementById('setting_site_name').value,
-        site_tagline: document.getElementById('setting_site_tagline').value,
-        meta_description: document.getElementById('setting_meta_description').value,
-        phone: document.getElementById('setting_phone').value,
-        email: document.getElementById('setting_email').value,
-        address: document.getElementById('setting_address').value,
-        whatsapp: document.getElementById('setting_whatsapp').value,
-        telegram: document.getElementById('setting_telegram').value,
-        instagram: document.getElementById('setting_instagram').value,
-        linkedin: document.getElementById('setting_linkedin').value,
-        color_primary: document.getElementById('setting_color_primary').value,
-        color_secondary: document.getElementById('setting_color_secondary').value,
-        analytics: document.getElementById('setting_analytics').value
-    };
-    
-    localStorage.setItem('sophia_settings', JSON.stringify(settings));
-    applyColorSettings(settings);
-    
-    const status = document.getElementById('settingsStatus');
-    status.textContent = '✅ تنظیمات ذخیره شد!';
-    status.className = 'status-msg success';
-    setTimeout(() => {
-        status.textContent = '';
-        status.className = 'status-msg';
-    }, 3000);
-    showToast('✅ تنظیمات با موفقیت ذخیره شدند', 'success');
-}
-
-function loadColorSettings() {
-    const settings = JSON.parse(localStorage.getItem('sophia_settings')) || {};
-    if (settings.color_primary) {
-        document.getElementById('color_primary_hex').textContent = settings.color_primary;
-    }
-    if (settings.color_secondary) {
-        document.getElementById('color_secondary_hex').textContent = settings.color_secondary;
-    }
-}
-
-function applyColorSettings(settings) {
-    if (settings.color_primary) {
-        document.documentElement.style.setProperty('--primary', settings.color_primary);
-    }
-    if (settings.color_secondary) {
-        document.documentElement.style.setProperty('--secondary', settings.color_secondary);
-    }
-}
-
-// ===== تغییر رمز =====
-function showChangePassword() {
-    document.getElementById('changePasswordModal').classList.add('active');
-    document.getElementById('oldPassword').value = '';
-    document.getElementById('newPassword').value = '';
-    document.getElementById('confirmNewPassword').value = '';
-    document.getElementById('passwordChangeMessage').style.display = 'none';
-}
-
-function closeChangePasswordModal() {
-    document.getElementById('changePasswordModal').classList.remove('active');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // بستن مودال با کلیک روی پس‌زمینه
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-            }
+        // بستن مودال با کلیک روی پس‌زمینه
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
         });
-    });
-});
 
-function changePassword() {
-    const oldPass = document.getElementById('oldPassword').value.trim();
-    const newPass = document.getElementById('newPassword').value.trim();
-    const confirmPass = document.getElementById('confirmNewPassword').value.trim();
-    const messageDiv = document.getElementById('passwordChangeMessage');
-    
-    if (oldPass !== ADMIN_PASSWORD) {
-        messageDiv.textContent = '❌ رمز فعلی اشتباه است!';
-        messageDiv.style.color = 'var(--danger)';
-        messageDiv.style.display = 'block';
-        return;
-    }
-    
-    if (newPass.length < 4) {
-        messageDiv.textContent = '❌ رمز جدید باید حداقل ۴ کاراکتر باشد!';
-        messageDiv.style.color = 'var(--danger)';
-        messageDiv.style.display = 'block';
-        return;
-    }
-    
-    if (newPass !== confirmPass) {
-        messageDiv.textContent = '❌ رمز جدید و تکرار آن مطابقت ندارند!';
-        messageDiv.style.color = 'var(--danger)';
-        messageDiv.style.display = 'block';
-        return;
-    }
-    
-    // در اینجا رمز جدید را ذخیره کنید (تغییر ADMIN_PASSWORD)
-    // توجه: در دنیای واقعی باید به سرور ارسال شود
-    messageDiv.textContent = '✅ رمز با موفقیت تغییر کرد! (توجه: در نسخه فعلی، رمز در مرورگر ذخیره نمی‌شود)';
-    messageDiv.style.color = 'var(--success)';
-    messageDiv.style.display = 'block';
-    setTimeout(() => {
-        closeChangePasswordModal();
-    }, 2000);
-}
+        // =============================================
+        // ===== مقالات =====
+        // =============================================
+        function loadArticles() {
+            const container = document.getElementById('articlesList');
+            container.innerHTML = '<div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+            
+            fetch(`${API_BASE}/api/admin/articles`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-newspaper"></i>هیچ مقاله‌ای وجود ندارد</div>';
+                        return;
+                    }
+                    
+                    let html = `<div class="table-responsive"><table>
+                        <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                    data.forEach(article => {
+                        html += `
+                            <tr>
+                                <td>${article.title}</td>
+                                <td>${article.category}</td>
+                                <td>${article.author}</td>
+                                <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
+                                <td>${article.created_at}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteArticle(${article.id})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت مقالات</div>';
+                });
+        }
 
-// ===== مقداردهی اولیه =====
-// اگر رمز قبلاً ذخیره شده، از localStorage استفاده کن
-if (localStorage.getItem('sophia_admin_password')) {
-    // برای تغییر رمز در آینده
-}
-</script>
+        function showAddArticle() {
+            document.getElementById('articleEditId').value = '';
+            document.getElementById('articleTitle').value = '';
+            document.getElementById('articleCategory').value = '';
+            document.getElementById('articleAuthor').value = 'سوفیا AI';
+            document.getElementById('articleContent').value = '';
+            document.getElementById('articleStatus').value = 'published';
+            document.getElementById('articleModalTitle').textContent = '✍️ مقاله جدید';
+            document.getElementById('articleModal').classList.add('active');
+        }
+
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.remove('active');
+        }
+
+        function saveArticle() {
+            const title = document.getElementById('articleTitle').value.trim();
+            const category = document.getElementById('articleCategory').value.trim();
+            const author = document.getElementById('articleAuthor').value.trim();
+            const content = document.getElementById('articleContent').value.trim();
+            const status = document.getElementById('articleStatus').value;
+            
+            if (!title || !category || !content) {
+                showToast('❌ عنوان، دسته‌بندی و متن مقاله الزامی است.', 'error');
+                return;
+            }
+            
+            fetch(`${API_BASE}/api/admin/articles`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, category, content, author, status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    closeArticleModal();
+                    loadArticles();
+                    loadStats();
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => {
+                console.error('❌ خطا:', err);
+                showToast('❌ خطا در ذخیره مقاله', 'error');
+            });
+        }
+
+        function deleteArticle(id) {
+            if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadArticles();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف مقاله', 'error');
+                });
+        }
+
+        // =============================================
+        // ===== نظرات =====
+        // =============================================
+        function loadComments() {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = '<div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+            
+            fetch(`${API_BASE}/api/admin/comments`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-comment-dots"></i>هیچ نظری وجود ندارد</div>';
+                        return;
+                    }
+                    
+                    let html = `<div class="table-responsive"><table>
+                        <thead><tr><th>نام</th><th>ایمیل</th><th>متن</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                    data.forEach(comment => {
+                        html += `
+                            <tr>
+                                <td>${comment.name}</td>
+                                <td>${comment.email || '-'}</td>
+                                <td style="max-width:200px; word-break:break-word;">${comment.text}</td>
+                                <td><span class="badge ${comment.status === 'approved' ? 'badge-approved' : comment.status === 'rejected' ? 'badge-rejected' : 'badge-pending'}">${comment.status === 'approved' ? 'تایید شده' : comment.status === 'rejected' ? 'رد شده' : 'در انتظار'}</span></td>
+                                <td>${comment.created_at}</td>
+                                <td>
+                                    ${comment.status === 'pending' ? `
+                                        <button class="btn btn-success btn-sm" onclick="approveComment(${comment.id})"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-warning btn-sm" onclick="rejectComment(${comment.id})"><i class="fas fa-times"></i></button>
+                                    ` : ''}
+                                    <button class="btn btn-danger btn-sm" onclick="deleteComment(${comment.id})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت نظرات</div>';
+                });
+        }
+
+        function approveComment(id) {
+            fetch(`${API_BASE}/api/admin/comments/${id}/approve`, { method: 'PUT' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در تایید نظر', 'error');
+                });
+        }
+
+        function rejectComment(id) {
+            fetch(`${API_BASE}/api/admin/comments/${id}/reject`, { method: 'PUT' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در رد نظر', 'error');
+                });
+        }
+
+        function deleteComment(id) {
+            if (!confirm('آیا از حذف این نظر مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/admin/comments/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف نظر', 'error');
+                });
+        }
+
+        // =============================================
+        // ===== کاربران =====
+        // =============================================
+        function loadUsers() {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '<div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+            
+            fetch(`${API_BASE}/api/users`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-users"></i>هیچ کاربری وجود ندارد</div>';
+                        return;
+                    }
+                    
+                    let html = `<div class="table-responsive"><table>
+                        <thead><tr><th>نام</th><th>ایمیل</th><th>شماره تماس</th><th>تاریخ عضویت</th><th>عملیات</th></tr></thead><tbody>`;
+                    data.forEach(user => {
+                        html += `
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.phone || '-'}</td>
+                                <td>${user.created_at}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت کاربران</div>';
+                });
+        }
+
+        function deleteUser(id) {
+            if (!confirm('آیا از حذف این کاربر مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/users/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadUsers();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف کاربر', 'error');
+                });
+        }
+
+        // =============================================
+        // ===== سبد خرید =====
+        // =============================================
+        function loadCart() {
+            const container = document.getElementById('cartList');
+            container.innerHTML = '<div class="empty"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+            
+            fetch(`${API_BASE}/api/admin/cart`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-shopping-cart"></i>سبد خرید خالی است</div>';
+                        return;
+                    }
+                    
+                    let html = `<div class="table-responsive"><table>
+                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>خدمت</th><th>قیمت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                    data.forEach(item => {
+                        html += `
+                            <tr>
+                                <td>${item.user_name}</td>
+                                <td>${item.user_email}</td>
+                                <td>${item.item_name}</td>
+                                <td>${item.item_price || '-'}</td>
+                                <td>${item.created_at}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteCartItem(${item.id})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت سبد خرید</div>';
+                });
+        }
+
+        function deleteCartItem(id) {
+            if (!confirm('آیا از حذف این آیتم از سبد خرید مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/cart/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadCart();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف آیتم', 'error');
+                });
+        }
+
+        // =============================================
+        // ===== تنظیمات =====
+        // =============================================
+        function loadSettings() {
+            fetch(`${API_BASE}/api/admin/settings`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('setting_site_name').value = data.site_name || '';
+                    document.getElementById('setting_site_tagline').value = data.site_tagline || '';
+                    document.getElementById('setting_meta_description').value = data.meta_description || '';
+                    document.getElementById('setting_phone').value = data.phone || '';
+                    document.getElementById('setting_email').value = data.email || '';
+                    document.getElementById('setting_address').value = data.address || '';
+                    document.getElementById('setting_color_primary').value = data.color_primary || '#6C3CE1';
+                    document.getElementById('setting_color_secondary').value = data.color_secondary || '#FFB800';
+                    document.getElementById('setting_footer_text').value = data.footer_text || '';
+                    document.getElementById('setting_analytics').value = data.analytics || '';
+                })
+                .catch(err => {
+                    console.error('❌ خطا در دریافت تنظیمات:', err);
+                });
+        }
+
+        function saveSettings() {
+            const settings = {
+                site_name: document.getElementById('setting_site_name').value,
+                site_tagline: document.getElementById('setting_site_tagline').value,
+                meta_description: document.getElementById('setting_meta_description').value,
+                phone: document.getElementById('setting_phone').value,
+                email: document.getElementById('setting_email').value,
+                address: document.getElementById('setting_address').value,
+                color_primary: document.getElementById('setting_color_primary').value,
+                color_secondary: document.getElementById('setting_color_secondary').value,
+                footer_text: document.getElementById('setting_footer_text').value,
+                analytics: document.getElementById('setting_analytics').value
+            };
+            
+            fetch(`${API_BASE}/api/admin/settings`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    document.getElementById('settingsStatus').textContent = '✅ تنظیمات ذخیره شد!';
+                    document.getElementById('settingsStatus').style.color = '#28a745';
+                    setTimeout(() => {
+                        document.getElementById('settingsStatus').textContent = '';
+                    }, 3000);
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => {
+                console.error('❌ خطا:', err);
+                showToast('❌ خطا در ذخیره تنظیمات', 'error');
+            });
+        }
+    </script>
+</body>
+</html>
