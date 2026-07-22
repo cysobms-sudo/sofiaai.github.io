@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== استایل‌های کامل ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
@@ -24,7 +23,7 @@
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
         }
         .login-box { max-width: 500px; text-align: center; }
         .admin-box { display: none; }
@@ -54,7 +53,7 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.08);
         }
-        button {
+        .btn-login {
             width: 100%;
             margin-top: 20px;
             background: linear-gradient(145deg, #6C3CE1, #4A1F9E);
@@ -68,7 +67,7 @@
             transition: 0.3s;
             font-family: 'Vazirmatn', sans-serif;
         }
-        button:hover {
+        .btn-login:hover {
             transform: scale(1.02);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
         }
@@ -79,7 +78,7 @@
             display: none;
         }
 
-        /* ===== تب‌های مدیریت ===== */
+        /* ===== تب‌ها ===== */
         .tabs {
             display: flex;
             gap: 8px;
@@ -114,9 +113,17 @@
         }
         .tab-content.active {
             display: block;
+            animation: fadeUp 0.4s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== جدول‌ها ===== */
+        .table-responsive {
+            overflow-x: auto;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -124,7 +131,7 @@
             background: #fff;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }
         th {
             background: #6C3CE1;
@@ -142,28 +149,51 @@
         }
         tr:hover { background: #f8f6ff; }
         .loading { color: #7a7a9a; padding: 20px; text-align: center; }
-        .empty { color: #7a7a9a; padding: 20px; text-align: center; }
+        .empty { 
+            color: #7a7a9a; 
+            padding: 40px; 
+            text-align: center; 
+        }
+        .empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
 
         /* ===== دکمه‌ها ===== */
-        .delete-btn {
-            background: #e74c3c;
-            color: #fff;
+        .btn {
             border: none;
             padding: 6px 16px;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
             font-family: 'Vazirmatn', sans-serif;
             font-size: 0.8rem;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .delete-btn:hover {
-            background: #c0392b;
-            transform: scale(1.05);
+        .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-danger:hover { background: #c0392b; transform: scale(1.05); }
+        .btn-success { background: #28a745; color: #fff; }
+        .btn-success:hover { background: #218838; transform: scale(1.05); }
+        .btn-warning { background: #f39c12; color: #fff; }
+        .btn-warning:hover { background: #e08e0b; transform: scale(1.05); }
+
+        .badge {
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
         }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-approved { background: #d4edda; color: #155724; }
+        .badge-rejected { background: #f8d7da; color: #721c24; }
+
         .back-link {
             display: inline-block;
             margin-top: 20px;
@@ -179,6 +209,60 @@
             border-top: 1px solid #f0f0f0;
             padding-top: 16px;
             text-align: center;
+        }
+        .stats-summary {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            background: var(--bg-light, #f8f6ff);
+            border-radius: 12px;
+        }
+        .stats-summary .stat-item {
+            font-weight: 600;
+            color: #5A4A7A;
+        }
+        .stats-summary .stat-item span {
+            color: #6C3CE1;
+            font-size: 1.2rem;
+        }
+
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
+        }
+        .toast {
+            padding: 14px 24px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        .toast.success { background: #28a745; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
         }
 
         @media (max-width: 768px) {
@@ -197,7 +281,7 @@
         <h2>🔐 <span class="highlight">پنل مدیریت</span></h2>
         <p class="sub">برای ورود، رمز عبور را وارد کنید</p>
         <input type="password" id="passwordInput" placeholder="رمز عبور را وارد کنید..." />
-        <button onclick="checkPassword()">ورود</button>
+        <button class="btn-login" onclick="checkPassword()">ورود</button>
         <div id="errorMsg" class="error">❌ رمز عبور اشتباه است!</div>
     </div>
 
@@ -233,14 +317,18 @@
     </div>
 
     <script>
-        // ===== رمز عبور =====
-        const correctPassword = 'Ard$447100';
+        // ===== تنظیمات =====
+        const API_BASE = 'https://sofiaaisite.runflare.run';
+        const ADMIN_PASSWORD = '123456';
 
+        // =============================================
+        // ===== ورود =====
+        // =============================================
         function checkPassword() {
             const input = document.getElementById('passwordInput').value;
             const errorMsg = document.getElementById('errorMsg');
 
-            if (input === correctPassword) {
+            if (input === ADMIN_PASSWORD) {
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('adminBox').style.display = 'block';
                 loadAllTabs();
@@ -250,7 +338,36 @@
             }
         }
 
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // =============================================
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // =============================================
         // ===== مدیریت تب‌ها =====
+        // =============================================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -278,15 +395,22 @@
             const container = document.getElementById('usersList');
             container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
 
-            fetch('/api/users')
-                .then(response => response.json())
+            fetch(`${API_BASE}/api/users`)
+                .then(response => {
+                    if (!response.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return response.json();
+                })
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = '<div class="empty">❌ هنوز کاربری ثبت‌نام نکرده است.</div>';
+                        container.innerHTML = '<div class="empty"><i class="fas fa-users"></i>هنوز کاربری ثبت‌نام نکرده است.</div>';
                         return;
                     }
 
                     let html = `
+                        <div class="stats-summary">
+                            <span class="stat-item">👥 تعداد کل کاربران: <span>${data.length}</span></span>
+                        </div>
+                        <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
@@ -310,7 +434,7 @@
                                 <td>${user.phone || '-'}</td>
                                 <td>${user.created_at}</td>
                                 <td>
-                                    <button class="delete-btn" data-id="${user.id}" data-name="${user.name}">
+                                    <button class="btn btn-danger btn-sm" data-id="${user.id}" data-name="${user.name}">
                                         <i class="fas fa-trash-alt"></i> حذف
                                     </button>
                                 </td>
@@ -318,10 +442,10 @@
                         `;
                     });
 
-                    html += `</tbody></table><div style="text-align:center; margin-top:12px; color:#7a7a9a; font-size:0.85rem;">🔹 تعداد کل کاربران: ${data.length}</div>`;
+                    html += `</tbody></table></div>`;
                     container.innerHTML = html;
 
-                    document.querySelectorAll('#usersList .delete-btn').forEach(btn => {
+                    document.querySelectorAll('#usersList .btn-danger').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const userId = this.dataset.id;
                             const userName = this.dataset.name;
@@ -333,43 +457,50 @@
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات.</div>';
+                    container.innerHTML = `<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات: ${error.message}</div>`;
                 });
         }
 
         function deleteUser(userId) {
-            fetch(`/api/users/${userId}`, { method: 'DELETE' })
+            fetch(`${API_BASE}/api/users/${userId}`, { method: 'DELETE' })
                 .then(response => response.json())
                 .then(data => {
                     if (data.message) {
-                        alert('✅ ' + data.message);
+                        showToast('✅ ' + data.message, 'success');
                         loadUsers();
                     } else {
-                        alert('❌ ' + data.error);
+                        showToast('❌ ' + data.error, 'error');
                     }
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    alert('❌ خطا در حذف کاربر.');
+                    showToast('❌ خطا در حذف کاربر.', 'error');
                 });
         }
 
         // =============================================
-        // ===== ۲. بارگذاری درخواست‌های چت‌بات =====
+        // ===== ۲. بارگذاری درخواست‌ها =====
         // =============================================
         function loadRequests() {
             const container = document.getElementById('requestsList');
             container.innerHTML = '<div class="loading">⏳ در حال دریافت درخواست‌ها...</div>';
 
-            fetch('/api/chatbot-requests')
-                .then(response => response.json())
+            fetch(`${API_BASE}/api/chatbot-requests`)
+                .then(response => {
+                    if (!response.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return response.json();
+                })
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = '<div class="empty">❌ هیچ درخواستی ثبت نشده است.</div>';
+                        container.innerHTML = '<div class="empty"><i class="fas fa-clipboard-list"></i>هیچ درخواستی ثبت نشده است.</div>';
                         return;
                     }
 
                     let html = `
+                        <div class="stats-summary">
+                            <span class="stat-item">📝 تعداد کل درخواست‌ها: <span>${data.length}</span></span>
+                        </div>
+                        <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
@@ -395,7 +526,7 @@
                                 <td style="max-width:200px; word-break:break-word;">${req.description}</td>
                                 <td>${req.created_at}</td>
                                 <td>
-                                    <button class="delete-btn" data-id="${req.id}" data-name="${req.name}">
+                                    <button class="btn btn-danger btn-sm" data-id="${req.id}" data-name="${req.name}">
                                         <i class="fas fa-trash-alt"></i> حذف
                                     </button>
                                 </td>
@@ -403,10 +534,10 @@
                         `;
                     });
 
-                    html += `</tbody></table><div style="text-align:center; margin-top:12px; color:#7a7a9a; font-size:0.85rem;">🔹 تعداد کل درخواست‌ها: ${data.length}</div>`;
+                    html += `</tbody></table></div>`;
                     container.innerHTML = html;
 
-                    document.querySelectorAll('#requestsList .delete-btn').forEach(btn => {
+                    document.querySelectorAll('#requestsList .btn-danger').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const reqId = this.dataset.id;
                             const reqName = this.dataset.name;
@@ -418,48 +549,59 @@
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    container.innerHTML = '<div class="empty">❌ خطا در دریافت درخواست‌ها.</div>';
+                    container.innerHTML = `<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت درخواست‌ها.</div>`;
                 });
         }
 
         function deleteRequest(requestId) {
-            fetch(`/api/chatbot-requests/${requestId}`, { method: 'DELETE' })
+            fetch(`${API_BASE}/api/chatbot-requests/${requestId}`, { method: 'DELETE' })
                 .then(response => response.json())
                 .then(data => {
                     if (data.message) {
-                        alert('✅ ' + data.message);
+                        showToast('✅ ' + data.message, 'success');
                         loadRequests();
                     } else {
-                        alert('❌ ' + data.error);
+                        showToast('❌ ' + data.error, 'error');
                     }
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    alert('❌ خطا در حذف درخواست.');
+                    showToast('❌ خطا در حذف درخواست.', 'error');
                 });
         }
 
         // =============================================
-        // ===== ۳. بارگذاری سبد خرید همه کاربران =====
+        // ===== ۳. بارگذاری سبد خرید =====
         // =============================================
         function loadCartItems() {
             const container = document.getElementById('cartList');
             container.innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات سبد خرید...</div>';
 
-            fetch('/api/admin/cart')
+            fetch(`${API_BASE}/api/admin/cart`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در دریافت اطلاعات');
-                    }
+                    if (!response.ok) throw new Error('خطا در دریافت اطلاعات');
                     return response.json();
                 })
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = '<div class="empty">❌ هیچ آیتمی در سبد خرید کاربران وجود ندارد.</div>';
+                        container.innerHTML = '<div class="empty"><i class="fas fa-shopping-cart"></i>هیچ آیتمی در سبد خرید کاربران وجود ندارد.</div>';
                         return;
                     }
 
+                    // محاسبه مجموع
+                    let totalItems = data.length;
+                    let totalPrice = 0;
+                    data.forEach(item => {
+                        const price = parseFloat(item.item_price?.replace(/[^0-9.]/g, '') || 0);
+                        if (!isNaN(price)) totalPrice += price;
+                    });
+
                     let html = `
+                        <div class="stats-summary">
+                            <span class="stat-item">🛒 تعداد کل آیتم‌ها: <span>${totalItems}</span></span>
+                            <span class="stat-item">💰 مجموع مبلغ: <span>${totalPrice.toLocaleString()} تومان</span></span>
+                        </div>
+                        <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
@@ -484,10 +626,10 @@
                                 <td>${item.user_email}</td>
                                 <td>${item.user_phone || '-'}</td>
                                 <td>${item.item_name}</td>
-                                <td>${item.item_price}</td>
+                                <td>${item.item_price || '-'}</td>
                                 <td>${item.created_at}</td>
                                 <td>
-                                    <button class="delete-btn" data-id="${item.id}" data-name="${item.item_name}">
+                                    <button class="btn btn-danger btn-sm" data-id="${item.id}" data-name="${item.item_name}">
                                         <i class="fas fa-trash-alt"></i> حذف
                                     </button>
                                 </td>
@@ -495,10 +637,10 @@
                         `;
                     });
 
-                    html += `</tbody></table><div style="text-align:center; margin-top:12px; color:#7a7a9a; font-size:0.85rem;">🔹 تعداد کل آیتم‌ها: ${data.length}</div>`;
+                    html += `</tbody></table></div>`;
                     container.innerHTML = html;
 
-                    document.querySelectorAll('#cartList .delete-btn').forEach(btn => {
+                    document.querySelectorAll('#cartList .btn-danger').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const cartId = this.dataset.id;
                             const itemName = this.dataset.name;
@@ -510,31 +652,26 @@
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    container.innerHTML = '<div class="empty">❌ خطا در دریافت اطلاعات سبد خرید.</div>';
+                    container.innerHTML = `<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات سبد خرید.</div>`;
                 });
         }
 
         function deleteCartItem(cartId) {
-            fetch(`/api/cart/${cartId}`, { method: 'DELETE' })
+            fetch(`${API_BASE}/api/cart/${cartId}`, { method: 'DELETE' })
                 .then(response => response.json())
                 .then(data => {
                     if (data.message) {
-                        alert('✅ ' + data.message);
+                        showToast('✅ ' + data.message, 'success');
                         loadCartItems();
                     } else {
-                        alert('❌ ' + data.error);
+                        showToast('❌ ' + data.error, 'error');
                     }
                 })
                 .catch(error => {
                     console.error('❌ خطا:', error);
-                    alert('❌ خطا در حذف آیتم از سبد خرید.');
+                    showToast('❌ خطا در حذف آیتم از سبد خرید.', 'error');
                 });
         }
-
-        // ===== ورود با کلید Enter =====
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkPassword();
-        });
     </script>
 </body>
 </html>
