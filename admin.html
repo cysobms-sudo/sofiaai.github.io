@@ -184,13 +184,34 @@
         }
 
         /* ===== وضعیت پیام ===== */
-        .status-msg {
-            margin-right: 16px;
-            font-weight: 600;
-        }
+        .status-msg { margin-right: 16px; font-weight: 600; }
         .status-msg.success { color: var(--success); }
         .status-msg.error { color: var(--danger); }
         .status-msg.loading { color: var(--warning); }
+
+        /* ===== تصویر آپلود ===== */
+        .image-upload-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 10px;
+            background: #f8f9fc;
+        }
+        .file-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .file-input-wrapper input[type="file"] {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Vazirmatn', sans-serif;
+        }
 
         @media (max-width: 768px) {
             .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
@@ -233,6 +254,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> داشبورد</button>
                 <button class="tab-btn" data-tab="pages"><i class="fas fa-file-alt"></i> صفحات</button>
+                <button class="tab-btn" data-tab="gallery"><i class="fas fa-images"></i> گالری</button>
                 <button class="tab-btn" data-tab="articles"><i class="fas fa-newspaper"></i> مقالات</button>
                 <button class="tab-btn" data-tab="comments"><i class="fas fa-comment-dots"></i> نظرات</button>
                 <button class="tab-btn" data-tab="users"><i class="fas fa-users"></i> کاربران</button>
@@ -269,6 +291,10 @@
                         <span style="font-size:2.5rem; display:block; color:var(--danger);" id="statsCart">0</span>
                         <span style="font-weight:600;">🛒 سبد خرید</span>
                     </div>
+                    <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); text-align:center; border:1px solid var(--border-color);">
+                        <span style="font-size:2.5rem; display:block; color:var(--info);" id="statsGallery">0</span>
+                        <span style="font-weight:600;">🖼️ گالری</span>
+                    </div>
                 </div>
             </div>
 
@@ -276,12 +302,12 @@
             <div id="tab-pages" class="tab-content">
                 <h3><i class="fas fa-file-alt"></i> مدیریت صفحات</h3>
 
-                <!-- صفحه اصلی -->
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary);">🏠 صفحه اصلی (Hero)</h4>
                     <div class="form-group">
-                        <label>عنوان اصلی</label>
-                        <input type="text" id="page_hero_title" />
+                        <label>عنوان اصلی (سه رنگ: بنفش، زرد، مشکی)</label>
+                        <input type="text" id="page_hero_title" value="مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI" />
+                        <small style="color:var(--text-muted); font-size:0.8rem;">💡 متن عنوان به سه رنگ نمایش داده می‌شود</small>
                     </div>
                     <div class="form-group">
                         <label>زیر عنوان</label>
@@ -289,11 +315,10 @@
                     </div>
                     <div class="form-group">
                         <label>متن توصیفی</label>
-                        <textarea id="page_hero_text" rows="3"></textarea>
+                        <textarea id="page_hero_text" rows="2"></textarea>
                     </div>
                 </div>
 
-                <!-- درباره ما -->
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary);">📖 درباره ما</h4>
                     <div class="form-group">
@@ -302,11 +327,19 @@
                     </div>
                     <div class="form-group">
                         <label>متن درباره ما</label>
-                        <textarea id="page_about_text" rows="6"></textarea>
+                        <textarea id="page_about_text" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>تصویر درباره ما (آدرس)</label>
+                        <input type="text" id="page_about_image" placeholder="/images/about.jpg" />
+                        <small style="color:var(--text-muted); font-size:0.8rem;">💡 آدرس تصویر را وارد کنید یا از بخش گالری آدرس را کپی کنید</small>
+                    </div>
+                    <div class="form-group">
+                        <label>پیش‌نمایش تصویر</label>
+                        <img id="aboutImagePreview" class="image-upload-preview" src="" alt="پیش‌نمایش" style="display:none;" />
                     </div>
                 </div>
 
-                <!-- فوتر -->
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary);">📌 فوتر</h4>
                     <div class="form-group">
@@ -319,7 +352,6 @@
                     </div>
                 </div>
 
-                <!-- آمار -->
                 <div style="margin-bottom:24px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
                     <h4 style="color:var(--primary);">📊 آمار</h4>
                     <div class="form-row">
@@ -340,6 +372,37 @@
 
                 <button class="btn btn-primary" onclick="savePages()"><i class="fas fa-save"></i> ذخیره صفحات</button>
                 <span id="saveStatus" class="status-msg"></span>
+            </div>
+
+            <!-- ===== تب گالری ===== -->
+            <div id="tab-gallery" class="tab-content">
+                <h3><i class="fas fa-images"></i> مدیریت گالری</h3>
+
+                <div style="background:var(--bg-light); padding:20px; border-radius:var(--radius); margin-bottom:20px; border:1px solid var(--border-color);">
+                    <h4 style="color:var(--primary); margin-bottom:12px;">➕ افزودن تصویر جدید</h4>
+                    <div class="form-group">
+                        <label>عنوان</label>
+                        <input type="text" id="gallery_title" placeholder="عنوان تصویر" />
+                    </div>
+                    <div class="form-group">
+                        <label>توضیحات</label>
+                        <input type="text" id="gallery_description" placeholder="توضیحات کوتاه" />
+                    </div>
+                    <div class="form-group">
+                        <label>آدرس تصویر</label>
+                        <input type="text" id="gallery_image_url" placeholder="/images/gallery/sample.jpg" />
+                        <small style="color:var(--text-muted); font-size:0.8rem;">💡 آدرس تصویر را وارد کنید یا از آپلودر استفاده کنید</small>
+                    </div>
+                    <div class="form-group">
+                        <label>پیش‌نمایش</label>
+                        <img id="galleryImagePreview" class="image-upload-preview" src="" alt="پیش‌نمایش" style="display:none;" />
+                    </div>
+                    <button class="btn btn-success" onclick="addGalleryItem()"><i class="fas fa-plus"></i> افزودن به گالری</button>
+                    <span id="galleryStatus" class="status-msg"></span>
+                </div>
+
+                <h4 style="margin-bottom:12px;">📋 تصاویر موجود</h4>
+                <div id="galleryList"><div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div></div>
             </div>
 
             <!-- ===== تب مقالات ===== -->
@@ -421,6 +484,22 @@
                     <div class="form-group">
                         <label>لینکدین</label>
                         <input type="text" id="setting_linkedin" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>رنگ اصلی</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="setting_color_primary" value="#6C3CE1" />
+                            <span class="color-hex" id="color_primary_hex">#6C3CE1</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>رنگ ثانویه</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="setting_color_secondary" value="#FFB800" />
+                            <span class="color-hex" id="color_secondary_hex">#FFB800</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -517,6 +596,38 @@
         }
 
         // =============================================
+        // ===== پیش‌نمایش تصاویر =====
+        // =============================================
+        document.getElementById('page_about_image').addEventListener('input', function() {
+            const preview = document.getElementById('aboutImagePreview');
+            if (this.value) {
+                preview.src = this.value;
+                preview.style.display = 'block';
+                preview.onerror = function() { this.style.display = 'none'; };
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        document.getElementById('gallery_image_url').addEventListener('input', function() {
+            const preview = document.getElementById('galleryImagePreview');
+            if (this.value) {
+                preview.src = this.value;
+                preview.style.display = 'block';
+                preview.onerror = function() { this.style.display = 'none'; };
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        document.getElementById('setting_color_primary').addEventListener('input', function() {
+            document.getElementById('color_primary_hex').textContent = this.value;
+        });
+        document.getElementById('setting_color_secondary').addEventListener('input', function() {
+            document.getElementById('color_secondary_hex').textContent = this.value;
+        });
+
+        // =============================================
         // ===== ورود و خروج =====
         // =============================================
         function checkLogin() {
@@ -558,6 +669,7 @@
             switch(tab) {
                 case 'dashboard': loadDashboardStats(); break;
                 case 'pages': loadPages(); break;
+                case 'gallery': loadGalleryItems(); break;
                 case 'articles': loadArticles(); break;
                 case 'comments': loadComments(); break;
                 case 'users': loadUsers(); break;
@@ -570,6 +682,7 @@
         function loadAllTabs() {
             loadDashboardStats();
             loadPages();
+            loadGalleryItems();
             loadArticles();
             loadComments();
             loadUsers();
@@ -591,6 +704,7 @@
                     document.getElementById('statsUsers').textContent = data.users || 0;
                     document.getElementById('statsRequests').textContent = data.requests || 0;
                     document.getElementById('statsCart').textContent = data.cart || 0;
+                    document.getElementById('statsGallery').textContent = data.gallery || 0;
                 })
                 .catch(() => {});
         }
@@ -607,11 +721,22 @@
                     document.getElementById('page_hero_text').value = data.hero_text || '';
                     document.getElementById('page_about_title').value = data.about_title || '';
                     document.getElementById('page_about_text').value = data.about_text || '';
+                    document.getElementById('page_about_image').value = data.about_image || '';
                     document.getElementById('page_footer_text').value = data.footer_text || '';
                     document.getElementById('page_copyright_text').value = data.copyright_text || '';
                     document.getElementById('page_stat_years').value = data.stat_years || '';
                     document.getElementById('page_stat_projects').value = data.stat_projects || '';
                     document.getElementById('page_stat_privacy').value = data.stat_privacy || '';
+
+                    // به‌روزرسانی پیش‌نمایش تصویر درباره ما
+                    const preview = document.getElementById('aboutImagePreview');
+                    if (data.about_image) {
+                        preview.src = data.about_image;
+                        preview.style.display = 'block';
+                        preview.onerror = function() { this.style.display = 'none'; };
+                    } else {
+                        preview.style.display = 'none';
+                    }
                 })
                 .catch(() => {});
         }
@@ -627,6 +752,7 @@
                 hero_text: document.getElementById('page_hero_text').value || '',
                 about_title: document.getElementById('page_about_title').value || '',
                 about_text: document.getElementById('page_about_text').value || '',
+                about_image: document.getElementById('page_about_image').value || '',
                 footer_text: document.getElementById('page_footer_text').value || '',
                 copyright_text: document.getElementById('page_copyright_text').value || '',
                 stat_years: document.getElementById('page_stat_years').value || '',
@@ -652,7 +778,90 @@
         }
 
         // =============================================
-        // ===== ۳. مقالات =====
+        // ===== ۳. گالری =====
+        // =============================================
+        function loadGalleryItems() {
+            const container = document.getElementById('galleryList');
+            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری...</div>';
+
+            fetch(`${API_BASE}/api/gallery`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = '<div class="empty"><i class="fas fa-images"></i>هیچ تصویری در گالری وجود ندارد.</div>';
+                        return;
+                    }
+                    let html = `<div class="table-responsive"><table><thead><tr>
+                        <th>#</th><th>تصویر</th><th>عنوان</th><th>توضیحات</th><th>عملیات</th>
+                    </tr></thead><tbody>`;
+                    data.forEach((item, index) => {
+                        html += `<tr>
+                            <td>${index+1}</td>
+                            <td><img src="${item.image_url}" alt="${item.title}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;" onerror="this.style.display='none'" /></td>
+                            <td>${item.title}</td>
+                            <td>${item.description || '-'}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button>
+                            </td>
+                        </tr>`;
+                    });
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(() => { container.innerHTML = '<div class="empty"><i class="fas fa-exclamation-circle"></i>خطا در دریافت اطلاعات.</div>'; });
+        }
+
+        function addGalleryItem() {
+            const status = document.getElementById('galleryStatus');
+            const title = document.getElementById('gallery_title').value.trim();
+            const description = document.getElementById('gallery_description').value.trim();
+            const image_url = document.getElementById('gallery_image_url').value.trim();
+
+            if (!title || !image_url) {
+                status.textContent = '⚠️ عنوان و آدرس تصویر الزامی است.';
+                status.className = 'status-msg error';
+                return;
+            }
+
+            status.textContent = '⏳ در حال افزودن...';
+            status.className = 'status-msg loading';
+
+            fetch(`${API_BASE}/api/gallery`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, description, image_url })
+            })
+            .then(res => res.json())
+            .then(result => {
+                status.textContent = '✅ ' + (result.message || 'تصویر اضافه شد!');
+                status.className = 'status-msg success';
+                document.getElementById('gallery_title').value = '';
+                document.getElementById('gallery_description').value = '';
+                document.getElementById('gallery_image_url').value = '';
+                document.getElementById('galleryImagePreview').style.display = 'none';
+                loadGalleryItems();
+                loadDashboardStats();
+            })
+            .catch(() => {
+                status.textContent = '❌ خطا در افزودن تصویر';
+                status.className = 'status-msg error';
+            });
+        }
+
+        function deleteGalleryItem(id) {
+            if (!confirm('⚠️ آیا از حذف این تصویر اطمینان دارید؟')) return;
+            fetch(`${API_BASE}/api/gallery/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message || '✅ تصویر حذف شد!');
+                    loadGalleryItems();
+                    loadDashboardStats();
+                })
+                .catch(() => alert('❌ خطا در حذف تصویر'));
+        }
+
+        // =============================================
+        // ===== ۴. مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
@@ -758,7 +967,7 @@
         }
 
         // =============================================
-        // ===== ۴. نظرات =====
+        // ===== ۵. نظرات =====
         // =============================================
         function loadComments() {
             const container = document.getElementById('commentsList');
@@ -826,7 +1035,7 @@
         }
 
         // =============================================
-        // ===== ۵. کاربران =====
+        // ===== ۶. کاربران =====
         // =============================================
         function loadUsers() {
             const container = document.getElementById('usersList');
@@ -867,7 +1076,7 @@
         }
 
         // =============================================
-        // ===== ۶. درخواست‌ها =====
+        // ===== ۷. درخواست‌ها =====
         // =============================================
         function loadRequests() {
             const container = document.getElementById('requestsList');
@@ -909,7 +1118,7 @@
         }
 
         // =============================================
-        // ===== ۷. سبد خرید =====
+        // ===== ۸. سبد خرید =====
         // =============================================
         function loadCartItems() {
             const container = document.getElementById('cartList');
@@ -952,7 +1161,7 @@
         }
 
         // =============================================
-        // ===== ۸. تنظیمات =====
+        // ===== ۹. تنظیمات =====
         // =============================================
         function loadSettings() {
             fetch(`${API_BASE}/api/admin/settings`)
@@ -969,6 +1178,13 @@
                     document.getElementById('setting_instagram').value = data.instagram || '';
                     document.getElementById('setting_linkedin').value = data.linkedin || '';
                     document.getElementById('setting_analytics').value = data.analytics || '';
+                    
+                    const primaryColor = data.color_primary || '#6C3CE1';
+                    const secondaryColor = data.color_secondary || '#FFB800';
+                    document.getElementById('setting_color_primary').value = primaryColor;
+                    document.getElementById('color_primary_hex').textContent = primaryColor;
+                    document.getElementById('setting_color_secondary').value = secondaryColor;
+                    document.getElementById('color_secondary_hex').textContent = secondaryColor;
                 })
                 .catch(() => {});
         }
@@ -989,7 +1205,9 @@
                 telegram: document.getElementById('setting_telegram').value || '',
                 instagram: document.getElementById('setting_instagram').value || '',
                 linkedin: document.getElementById('setting_linkedin').value || '',
-                analytics: document.getElementById('setting_analytics').value || ''
+                analytics: document.getElementById('setting_analytics').value || '',
+                color_primary: document.getElementById('setting_color_primary').value || '#6C3CE1',
+                color_secondary: document.getElementById('setting_color_secondary').value || '#FFB800'
             };
 
             fetch(`${API_BASE}/api/admin/settings`, {
