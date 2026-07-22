@@ -233,11 +233,10 @@
                     container.innerHTML = `
                         <div class="article-header">
                             <span class="category-badge">${article.category || 'عمومی'}</span>
-                            <h1>${article.title}</h1>
+                            <h1>${article.title || 'بدون عنوان'}</h1>
                             <div class="meta">
                                 <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
                                 <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
-                                <span><i class="far fa-clock"></i> ${Math.ceil((article.content || '').split(' ').length / 200)} دقیقه مطالعه</span>
                             </div>
                         </div>
                         <div class="article-body">
