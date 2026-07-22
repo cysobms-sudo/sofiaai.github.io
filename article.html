@@ -232,16 +232,16 @@
 
                     container.innerHTML = `
                         <div class="article-header">
-                            <span class="category-badge">${article.category}</span>
+                            <span class="category-badge">${article.category || 'عمومی'}</span>
                             <h1>${article.title}</h1>
                             <div class="meta">
                                 <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
-                                <span><i class="far fa-calendar"></i> ${article.created_at}</span>
-                                <span><i class="far fa-clock"></i> ${Math.ceil(article.content.split(' ').length / 200)} دقیقه مطالعه</span>
+                                <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
+                                <span><i class="far fa-clock"></i> ${Math.ceil((article.content || '').split(' ').length / 200)} دقیقه مطالعه</span>
                             </div>
                         </div>
                         <div class="article-body">
-                            ${contentHtml}
+                            ${contentHtml || '<p>محتوای مقاله موجود نیست.</p>'}
                         </div>
                         <div class="share-section">
                             <span class="share-label">اشتراک‌گذاری:</span>
@@ -301,7 +301,6 @@
                     });
                     html += `</div>`;
                     
-                    // اضافه کردن به انتهای صفحه
                     container.innerHTML += html;
                 })
                 .catch(err => {
@@ -343,7 +342,6 @@
                     showToast('✅ لینک مقاله کپی شد!', 'success');
                 })
                 .catch(() => {
-                    // fallback
                     const input = document.createElement('input');
                     input.value = window.location.href;
                     document.body.appendChild(input);
