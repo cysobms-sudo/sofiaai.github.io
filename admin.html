@@ -45,6 +45,10 @@
             box-shadow: var(--shadow);
             animation: fadeUp 0.6s ease;
         }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .login-box h2 {
             text-align: center;
             color: var(--text-dark);
@@ -291,6 +295,10 @@
             display: flex;
             animation: fadeIn 0.3s ease;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         .modal {
             background: #fff;
             border-radius: 24px;
@@ -301,6 +309,10 @@
             padding: 32px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .modal h3 {
             font-size: 1.4rem;
@@ -359,18 +371,42 @@
             color: var(--border-color);
         }
 
-        /* ===== انیمیشن‌ها ===== */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .toast {
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        .toast.success { background: #28a745; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+        .toast.warning { background: #f39c12; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
         }
 
         /* ===== واکنش‌گرایی ===== */
@@ -411,6 +447,7 @@
         <!-- ===== تب‌ها ===== -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="dashboard">📊 داشبورد</button>
+            <button class="tab-btn" data-tab="pages">📄 صفحات</button>
             <button class="tab-btn" data-tab="gallery">🖼️ گالری</button>
             <button class="tab-btn" data-tab="articles">📝 مقالات</button>
             <button class="tab-btn" data-tab="comments">💬 نظرات</button>
@@ -430,6 +467,61 @@
                 <div class="stat-card"><div class="number" id="statsGallery">0</div><div class="label">🖼️ گالری</div></div>
             </div>
             <p style="color:var(--text-muted); text-align:center; font-size:0.85rem;">آخرین به‌روزرسانی: <span id="lastUpdate"></span></p>
+        </div>
+
+        <!-- ===== تب صفحات ===== -->
+        <div id="tab-pages" class="tab-content">
+            <h3 style="margin-bottom:16px;">📄 مدیریت صفحات</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div style="grid-column:1/-1;">
+                    <label>عنوان قهرمان (Hero Title)</label>
+                    <input type="text" id="page_hero_title" placeholder="عنوان اصلی صفحه" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>زیر عنوان قهرمان (Hero Subtitle)</label>
+                    <input type="text" id="page_hero_subtitle" placeholder="زیر عنوان" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>متن قهرمان (Hero Text)</label>
+                    <textarea id="page_hero_text" rows="2" placeholder="متن اصلی"></textarea>
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>عنوان درباره ما</label>
+                    <input type="text" id="page_about_title" placeholder="عنوان بخش درباره ما" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>متن درباره ما</label>
+                    <textarea id="page_about_text" rows="3" placeholder="متن درباره ما"></textarea>
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>آدرس تصویر درباره ما</label>
+                    <input type="text" id="page_about_image" placeholder="/images/about.jpg" />
+                </div>
+                <div>
+                    <label>آمار سال سابقه</label>
+                    <input type="text" id="page_stat_years" placeholder="۲۰+ سال سابقه" />
+                </div>
+                <div>
+                    <label>آمار پروژه‌ها</label>
+                    <input type="text" id="page_stat_projects" placeholder="۸۰+ پروژه موفق" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>آمار حریم خصوصی</label>
+                    <input type="text" id="page_stat_privacy" placeholder="۱۰۰% حریم خصوصی" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>متن فوتر</label>
+                    <input type="text" id="page_footer_text" placeholder="متن فوتر سایت" />
+                </div>
+                <div style="grid-column:1/-1;">
+                    <label>متن کپی‌رایت</label>
+                    <input type="text" id="page_copyright_text" placeholder="© ۲۰۲۶ تمامی حقوق محفوظ است" />
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="savePages()" style="margin-top:20px; padding:12px 36px;">
+                <i class="fas fa-save"></i> ذخیره صفحات
+            </button>
+            <div id="saveStatus" style="margin-top:12px;"></div>
         </div>
 
         <!-- ===== تب گالری ===== -->
@@ -575,8 +667,9 @@
     </div>
 
     <script>
+        // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
-        const ADMIN_PASSWORD = "123456";
+        const ADMIN_PASSWORD = '123456';
 
         // =============================================
         // ===== ورود =====
@@ -630,7 +723,7 @@
             toast.textContent = message;
             container.appendChild(toast);
             setTimeout(() => {
-                toast.style.animation = 'slideOutRight 0.5s ease';
+                toast.style.animation = 'slideUp 0.5s ease';
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
@@ -638,22 +731,8 @@
         function createToastContainer() {
             const container = document.createElement('div');
             container.id = 'toastContainer';
-            container.style.cssText = `
-                position: fixed; top: 20px; right: 20px; z-index: 9999;
-                display: flex; flex-direction: column; gap: 10px;
-                direction: rtl;
-            `;
+            container.className = 'toast-container';
             document.body.appendChild(container);
-            
-            // اضافه کردن استایل انیمیشن خروج
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideOutRight {
-                    from { opacity: 1; transform: translateX(0); }
-                    to { opacity: 0; transform: translateX(100px); }
-                }
-            `;
-            document.head.appendChild(style);
             return container;
         }
 
@@ -681,6 +760,7 @@
         function loadTabData(tabId) {
             switch(tabId) {
                 case 'dashboard': loadStats(); break;
+                case 'pages': loadPagesData(); break;
                 case 'gallery': loadGallery(); break;
                 case 'articles': loadArticles(); break;
                 case 'comments': loadComments(); break;
@@ -692,6 +772,7 @@
 
         function loadAllData() {
             loadStats();
+            loadPagesData();
             loadGallery();
             loadArticles();
             loadComments();
@@ -718,6 +799,69 @@
                 .catch(err => {
                     console.error('❌ خطا در دریافت آمار:', err);
                 });
+        }
+
+        // =============================================
+        // ===== صفحات =====
+        // =============================================
+        function loadPagesData() {
+            fetch(`${API_BASE}/api/admin/settings`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('page_hero_title').value = data.hero_title || '';
+                    document.getElementById('page_hero_subtitle').value = data.hero_subtitle || '';
+                    document.getElementById('page_hero_text').value = data.hero_text || '';
+                    document.getElementById('page_about_title').value = data.about_title || '';
+                    document.getElementById('page_about_text').value = data.about_text || '';
+                    document.getElementById('page_about_image').value = data.about_image || '';
+                    document.getElementById('page_stat_years').value = data.stat_years || '';
+                    document.getElementById('page_stat_projects').value = data.stat_projects || '';
+                    document.getElementById('page_stat_privacy').value = data.stat_privacy || '';
+                    document.getElementById('page_footer_text').value = data.footer_text || '';
+                    document.getElementById('page_copyright_text').value = data.copyright_text || '';
+                })
+                .catch(err => {
+                    console.error('❌ خطا در دریافت صفحات:', err);
+                });
+        }
+
+        function savePages() {
+            const pages = {
+                hero_title: document.getElementById('page_hero_title').value,
+                hero_subtitle: document.getElementById('page_hero_subtitle').value,
+                hero_text: document.getElementById('page_hero_text').value,
+                about_title: document.getElementById('page_about_title').value,
+                about_text: document.getElementById('page_about_text').value,
+                about_image: document.getElementById('page_about_image').value,
+                stat_years: document.getElementById('page_stat_years').value,
+                stat_projects: document.getElementById('page_stat_projects').value,
+                stat_privacy: document.getElementById('page_stat_privacy').value,
+                footer_text: document.getElementById('page_footer_text').value,
+                copyright_text: document.getElementById('page_copyright_text').value
+            };
+            
+            fetch(`${API_BASE}/api/admin/settings`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pages)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    document.getElementById('saveStatus').textContent = '✅ ذخیره شد!';
+                    document.getElementById('saveStatus').style.color = '#28a745';
+                    setTimeout(() => {
+                        document.getElementById('saveStatus').textContent = '';
+                    }, 3000);
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => {
+                console.error('❌ خطا:', err);
+                showToast('❌ خطا در ذخیره صفحات', 'error');
+            });
         }
 
         // =============================================
@@ -776,7 +920,6 @@
         }
 
         function saveGallery() {
-            const id = document.getElementById('galleryEditId').value;
             const title = document.getElementById('gallery_title').value.trim();
             const description = document.getElementById('gallery_description').value.trim();
             const imageUrl = document.getElementById('gallery_image_url').value.trim();
