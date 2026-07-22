@@ -26,14 +26,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== اطمینان از وجود پوشه‌های آپلود =====
+// ===== اطمینان از وجود پوشه‌های آپلود (با دسترسی کامل) =====
 const uploadDir = path.join(__dirname, 'public', 'images', 'gallery');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
     console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
 }
+// تنظیم دسترسی پوشه (اجازه نوشتن)
+try {
+    fs.chmodSync(uploadDir, 0o777);
+} catch(e) {}
 
-// ===== تنظیمات آپلود تصویر (با پشتیبانی از خطا) =====
+// ===== تنظیمات آپلود تصویر (با آپلود مستقیم) =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadDir);
@@ -45,18 +49,8 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
-    if (allowedTypes.includes(file.mimetype)) {
-        cb(null, true);
-    } else {
-        cb(new Error('فرمت فایل پشتیبانی نمی‌شود. فقط JPG, PNG, GIF, WEBP, SVG'), false);
-    }
-};
-
 const upload = multer({ 
     storage: storage,
-    fileFilter: fileFilter,
     limits: { fileSize: 10 * 1024 * 1024 } // 10MB
 });
 
@@ -145,15 +139,20 @@ app.get('/service-agent-automation.html', (req, res) => {
 });
 
 // ==================================================
-// ===== API آپلود تصویر =====
+// ===== API آپلود تصویر (ساده و تضمینی) =====
 // ==================================================
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
+        console.log('📤 درخواست آپلود دریافت شد');
+        
         if (!req.file) {
+            console.log('❌ فایلی ارسال نشده');
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
+        
         const imageUrl = '/images/gallery/' + req.file.filename;
         console.log('✅ تصویر با موفقیت آپلود شد:', imageUrl);
+        
         res.json({ 
             success: true,
             url: imageUrl,
