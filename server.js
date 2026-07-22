@@ -118,8 +118,10 @@ app.get('/article.html', (req, res) => {
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
         console.log('📤 درخواست آپلود دریافت شد');
+        console.log('📁 آدرس ذخیره:', uploadDir);
         
         if (!req.file) {
+            console.log('❌ فایلی ارسال نشده');
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
 
@@ -725,6 +727,58 @@ app.get('/api/admin/stats', (req, res) => {
                 res.json(results);
             }
         });
+    });
+});
+
+// ==================================================
+// ===== API درخواست‌های چت‌بات =====
+// ==================================================
+
+// دریافت لیست درخواست‌ها
+app.get('/api/chatbot-requests', (req, res) => {
+    db.query('SELECT id, name, phone, email, description, created_at FROM chatbot_requests ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت درخواست‌ها:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const requestsWithPersianDate = results.map(req => {
+            const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...req, created_at: persianDate };
+        });
+        res.json(requestsWithPersianDate);
+    });
+});
+
+// افزودن درخواست جدید
+app.post('/api/chatbot-requests', (req, res) => {
+    const { name, phone, email, description } = req.body;
+    
+    if (!name || !phone) {
+        return res.status(400).json({ error: 'نام و شماره تماس الزامی است.' });
+    }
+    
+    const query = 'INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, phone, email || null, description || null], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره درخواست:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+        }
+        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
+    });
+});
+
+// حذف درخواست
+app.delete('/api/chatbot-requests/:id', (req, res) => {
+    const requestId = req.params.id;
+    db.query('DELETE FROM chatbot_requests WHERE id = ?', [requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف درخواست:', err);
+            return res.status(500).json({ error: 'خطا در حذف درخواست' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ درخواست با موفقیت حذف شد!' });
     });
 });
 
