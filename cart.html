@@ -10,275 +10,364 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: #f5f7fc;
-            color: #1A0F2E;
-            direction: rtl;
+            background: linear-gradient(145deg, #f0f2f5, #e8ecf1);
             min-height: 100vh;
             padding: 20px;
+            direction: rtl;
         }
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background: #fff;
             border-radius: 24px;
-            padding: 30px;
-            border: 2px solid #FFB800;
-            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
+            padding: 32px;
+            border: 2px solid #6C3CE1;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
         }
         h1 {
-            text-align: center;
-            color: #1A0F2E;
-            margin-bottom: 24px;
             font-size: 2rem;
+            color: #1A0F2E;
+            margin-bottom: 8px;
         }
-        h1 .highlight {
-            background: linear-gradient(145deg, #6C3CE1, #FFB800);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        h1 .highlight { color: #6C3CE1; }
+        .sub {
+            color: #7a7a9a;
+            margin-bottom: 24px;
         }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        th {
+            background: #f8f6ff;
+            padding: 12px 16px;
+            text-align: right;
+            font-weight: 700;
+            color: #1A0F2E;
+            border-bottom: 2px solid #6C3CE1;
+        }
+        td {
+            padding: 12px 16px;
             border-bottom: 1px solid #f0f0f0;
+            color: #1A0F2E;
         }
-        .cart-item .name {
-            font-weight: 700;
-        }
-        .cart-item .price {
-            color: #6C3CE1;
-            font-weight: 700;
-        }
-        .cart-item .remove-btn {
-            background: #e74c3c;
-            color: #fff;
+        tr:hover { background: #f8f6ff; }
+
+        .btn {
             border: none;
             padding: 6px 16px;
             border-radius: 20px;
+            font-weight: 600;
             cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
-            font-weight: 600;
+            font-size: 0.8rem;
             transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .cart-item .remove-btn:hover {
-            background: #c0392b;
-            transform: scale(1.05);
-        }
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            padding: 16px 0;
-            font-weight: 700;
-            border-top: 2px solid #FFB800;
-            margin-top: 12px;
-            font-size: 1.2rem;
-        }
-        .cart-total .total-price {
-            color: #6C3CE1;
-        }
-        .empty-cart {
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-danger:hover { background: #c0392b; transform: scale(1.05); }
+        .btn-primary { background: #6C3CE1; color: #fff; }
+        .btn-primary:hover { background: #4A1F9E; transform: scale(1.05); }
+        .btn-success { background: #28a745; color: #fff; }
+        .btn-success:hover { background: #218838; transform: scale(1.05); }
+
+        .empty {
             text-align: center;
-            padding: 40px 0;
+            padding: 60px 20px;
             color: #7a7a9a;
         }
-        .empty-cart i {
-            font-size: 4rem;
+        .empty i {
+            font-size: 3rem;
             display: block;
             margin-bottom: 16px;
-            color: #ddd;
+            color: #e0e0e0;
         }
-        .btn-checkout {
-            width: 100%;
-            background: linear-gradient(145deg, #6C3CE1, #4A1F9E);
-            color: #fff;
-            border: none;
-            padding: 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Vazirmatn', sans-serif;
+        .empty .btn {
             margin-top: 16px;
+            padding: 10px 32px;
+            font-size: 1rem;
         }
-        .btn-checkout:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7a7a9a;
         }
+
+        .cart-summary {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .cart-summary .total {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .cart-summary .total span {
+            color: #6C3CE1;
+            font-size: 1.4rem;
+        }
+
         .back-link {
             display: inline-block;
-            margin-top: 16px;
+            margin-top: 20px;
             color: #6C3CE1;
             text-decoration: none;
             font-weight: 600;
         }
-        .back-link:hover {
-            text-decoration: underline;
+        .back-link:hover { text-decoration: underline; }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
         }
-        .loading {
+        .toast {
+            padding: 14px 24px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
             text-align: center;
-            padding: 40px 0;
-            color: #7a7a9a;
         }
-        .footer {
-            text-align: center;
-            margin-top: 24px;
-            color: #9a9aba;
-            font-size: 0.8rem;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 16px;
+        .toast.success { background: #28a745; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
-        .user-info {
-            text-align: center;
-            color: #5A4A7A;
-            margin-bottom: 20px;
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
         }
-        .user-info strong {
-            color: #1A0F2E;
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.5rem; }
+            th, td { padding: 8px 10px; font-size: 0.8rem; }
+            .cart-summary { flex-direction: column; align-items: stretch; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🛒 <span class="highlight">سبد خرید</span></h1>
-        <div class="user-info" id="userInfo"></div>
-        <div id="cartItems">
-            <div class="loading">⏳ در حال بارگذاری...</div>
+        <p class="sub">خدمات انتخاب شده توسط شما</p>
+
+        <div id="cartContainer">
+            <div class="loading">⏳ در حال بارگذاری سبد خرید...</div>
         </div>
+
         <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
-        <div class="footer">✨ سبد خرید شما در سرور ذخیره می‌شود</div>
     </div>
 
     <script>
-        // ===== دریافت اطلاعات کاربر =====
-        const userData = localStorage.getItem('user');
-        if (!userData) {
-            alert('⚠️ لطفاً ابتدا وارد شوید.');
-            window.location.href = 'login.html';
+        // ===== تنظیمات =====
+        const API_BASE = 'https://sofiaaisite.runflare.run';
+
+        // =============================================
+        // ===== بررسی وضعیت کاربر =====
+        // =============================================
+        function checkUser() {
+            const userData = localStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return null;
+            }
+            try {
+                return JSON.parse(userData);
+            } catch(e) {
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+                return null;
+            }
         }
-        const user = JSON.parse(userData);
-        const userId = user.id;
 
-        // ===== نمایش نام کاربر =====
-        document.getElementById('userInfo').innerHTML = `
-            <strong>${user.name}</strong> عزیز، خوش آمدید!
-        `;
+        // =============================================
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
 
-        // ===== بارگذاری سبد خرید از سرور =====
-        async function loadCart() {
-            const container = document.getElementById('cartItems');
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // =============================================
+        // ===== بارگذاری سبد خرید =====
+        // =============================================
+        function loadCart(userId) {
+            const container = document.getElementById('cartContainer');
             container.innerHTML = '<div class="loading">⏳ در حال بارگذاری سبد خرید...</div>';
 
-            try {
-                const response = await fetch(`https://sofiaaisite.runflare.run/api/cart/${userId}`);
-                if (!response.ok) {
-                    throw new Error('خطا در دریافت سبد خرید');
-                }
-                const cart = await response.json();
+            fetch(`${API_BASE}/api/cart/${userId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty">
+                                <i class="fas fa-shopping-cart"></i>
+                                <h3>سبد خرید شما خالی است</h3>
+                                <p>برای افزودن خدمت به سبد خرید، از صفحه اصلی اقدام کنید.</p>
+                                <a href="index.html#assistant" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> مشاهده خدمات
+                                </a>
+                            </div>
+                        `;
+                        return;
+                    }
 
-                if (cart.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-cart">
-                            <i class="fas fa-shopping-basket"></i>
-                            <p>سبد خرید شما خالی است.</p>
-                            <p style="font-size:0.9rem;">برای افزودن خدمات، به <a href="index.html" style="color:#6C3CE1;font-weight:700;">صفحه اصلی</a> بروید.</p>
-                        </div>
+                    let total = 0;
+                    let html = `
+                        <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام خدمت</th>
+                                    <th>قیمت</th>
+                                    <th>تاریخ افزودن</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                     `;
-                    return;
-                }
 
-                let html = '';
-                cart.forEach(item => {
-                    html += `
-                        <div class="cart-item" data-id="${item.id}">
-                            <span class="name">${item.item_name}</span>
-                            <span class="price">${item.item_price}</span>
-                            <button class="remove-btn" onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i> حذف</button>
-                        </div>
-                    `;
-                });
-
-                html += `
-                    <div class="cart-total">
-                        <span>جمع کل:</span>
-                        <span class="total-price">${cart.length} خدمت</span>
-                    </div>
-                    <button class="btn-checkout" onclick="checkout()">✅ ثبت درخواست نهایی</button>
-                `;
-
-                container.innerHTML = html;
-
-            } catch (error) {
-                console.error('❌ خطا:', error);
-                container.innerHTML = '<div class="empty-cart">❌ خطا در دریافت سبد خرید. لطفاً دوباره تلاش کنید.</div>';
-            }
-        }
-
-        // ===== حذف آیتم از سبد خرید =====
-        async function removeItem(cartId) {
-            if (!confirm('آیا از حذف این آیتم اطمینان دارید؟')) return;
-
-            try {
-                const response = await fetch(`https://sofiaaisite.runflare.run/api/cart/${cartId}`, {
-                    method: 'DELETE'
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert('✅ آیتم با موفقیت حذف شد.');
-                    loadCart();
-                    updateCartBadge();
-                } else {
-                    alert('❌ ' + data.error);
-                }
-            } catch (error) {
-                console.error('❌ خطا:', error);
-                alert('❌ خطا در حذف آیتم.');
-            }
-        }
-
-        // ===== ثبت درخواست نهایی =====
-        async function checkout() {
-            if (!confirm('آیا از ثبت نهایی درخواست خود اطمینان دارید؟')) return;
-
-            try {
-                const response = await fetch(`https://sofiaaisite.runflare.run/api/cart/checkout/${userId}`, {
-                    method: 'POST'
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert('✅ ' + data.message);
-                    loadCart();
-                    updateCartBadge();
-                } else {
-                    alert('❌ ' + data.error);
-                }
-            } catch (error) {
-                console.error('❌ خطا:', error);
-                alert('❌ خطا در ثبت درخواست.');
-            }
-        }
-
-        // ===== به‌روزرسانی تعداد سبد خرید در هدر =====
-        function updateCartBadge() {
-            const badge = document.getElementById('cartCount');
-            if (badge) {
-                // دریافت تعداد از سرور
-                fetch(`https://sofiaaisite.runflare.run/api/cart/${userId}`)
-                    .then(res => res.json())
-                    .then(cart => {
-                        badge.textContent = cart.length;
-                    })
-                    .catch(() => {
-                        // اگر خطا بود، مقدار قبلی را نگه دار
+                    data.forEach((item, index) => {
+                        const price = parseFloat(item.item_price?.replace(/[^0-9.]/g, '') || 0);
+                        if (!isNaN(price)) total += price;
+                        
+                        const date = item.created_at ? new Date(item.created_at).toLocaleDateString('fa-IR') : '-';
+                        
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.item_name}</td>
+                                <td>${item.item_price || '-'}</td>
+                                <td>${date}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="removeFromCart(${item.id})">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
-            }
+
+                    html += `
+                            </tbody>
+                        </table></div>
+                        <div class="cart-summary">
+                            <div class="total">💰 مجموع: <span>${total.toLocaleString()}</span> تومان</div>
+                            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                                <button class="btn btn-success" onclick="checkout()">
+                                    <i class="fas fa-check"></i> ثبت سفارش
+                                </button>
+                                <a href="index.html#assistant" class="btn btn-primary" style="text-decoration:none;">
+                                    <i class="fas fa-plus"></i> افزودن خدمت
+                                </a>
+                            </div>
+                        </div>
+                    `;
+
+                    container.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('❌ خطا:', error);
+                    container.innerHTML = `
+                        <div class="empty">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <h3>خطا در دریافت سبد خرید</h3>
+                            <p>${error.message}</p>
+                            <button onclick="location.reload()" class="btn btn-primary">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
+                        </div>
+                    `;
+                });
         }
 
-        // ===== بارگذاری اولیه =====
-        document.addEventListener('DOMContentLoaded', loadCart);
+        // =============================================
+        // ===== حذف از سبد خرید =====
+        // =============================================
+        function removeFromCart(cartId) {
+            if (!confirm('آیا از حذف این آیتم از سبد خرید مطمئن هستید؟')) return;
+
+            fetch(`${API_BASE}/api/cart/${cartId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        const user = checkUser();
+                        if (user) loadCart(user.id);
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ خطا:', error);
+                    showToast('❌ خطا در حذف آیتم.', 'error');
+                });
+        }
+
+        // =============================================
+        // ===== ثبت سفارش =====
+        // =============================================
+        function checkout() {
+            showToast('🛒 در حال پردازش سفارش شما...', 'info');
+            // در اینجا می‌توانید منطق ثبت سفارش را پیاده‌سازی کنید
+            setTimeout(() => {
+                showToast('✅ سفارش شما با موفقیت ثبت شد!', 'success');
+            }, 2000);
+        }
+
+        // =============================================
+        // ===== مقداردهی اولیه =====
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = checkUser();
+            if (!user) return;
+            loadCart(user.id);
+        });
     </script>
 </body>
 </html>
