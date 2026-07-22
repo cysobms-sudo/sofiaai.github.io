@@ -22,8 +22,8 @@ app.use((req, res, next) => {
 });
 
 // ===== تنظیمات Express =====
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // ===== مسیرهای استاتیک =====
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
@@ -50,7 +50,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('فایل باید تصویر باشد'), false);
+        }
+    }
 });
 
 // ===== اتصال به دیتابیس =====
@@ -59,7 +66,8 @@ const db = mysql.createConnection({
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'oJ2LXgVwDibBc79qnaPx',
     database: process.env.DB_NAME || 'sofiaaiskho_db',
-    port: process.env.DB_PORT || 32280
+    port: process.env.DB_PORT || 32280,
+    charset: 'utf8mb4'
 });
 
 db.connect((err) => {
@@ -111,16 +119,13 @@ app.get('/article.html', (req, res) => {
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
         console.log('📤 درخواست آپلود دریافت شد');
-        console.log('📁 آدرس ذخیره:', uploadDir);
         
         if (!req.file) {
-            console.log('❌ فایلی ارسال نشده');
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
 
         const imageUrl = '/images/gallery/' + req.file.filename;
         console.log('✅ تصویر با موفقیت ذخیره شد:', imageUrl);
-        console.log('📁 مسیر فیزیکی:', req.file.path);
         
         res.json({ 
             success: true,
@@ -130,9 +135,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
         });
     } catch (error) {
         console.error('❌ خطا در آپلود:', error);
-        res.status(500).json({ 
-            error: 'خطا در آپلود تصویر: ' + error.message 
-        });
+        res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
     }
 });
 
@@ -140,7 +143,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 // ===== APIهای گالری =====
 // ==================================================
 
-// ===== دریافت لیست گالری =====
+// دریافت لیست گالری
 app.get('/api/gallery', (req, res) => {
     db.query('SELECT id, title, description, image_url, created_at FROM gallery ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -151,7 +154,7 @@ app.get('/api/gallery', (req, res) => {
     });
 });
 
-// ===== افزودن تصویر به گالری =====
+// افزودن تصویر به گالری
 app.post('/api/gallery', (req, res) => {
     const { title, description, image_url } = req.body;
     
@@ -169,7 +172,7 @@ app.post('/api/gallery', (req, res) => {
     });
 });
 
-// ===== حذف تصویر از گالری =====
+// حذف تصویر از گالری
 app.delete('/api/gallery/:id', (req, res) => {
     const galleryId = req.params.id;
     
@@ -205,10 +208,197 @@ app.delete('/api/gallery/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== APIهای مدیریت کاربران =====
+// ===== APIهای مقالات =====
 // ==================================================
 
-// ===== دریافت لیست کاربران =====
+// دریافت لیست مقالات (فقط منتشر شده)
+app.get('/api/articles', (req, res) => {
+    db.query(
+        'SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC',
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت مقالات:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            const articlesWithPersianDate = results.map(article => {
+                const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
+                return { ...article, created_at: persianDate };
+            });
+            res.json(articlesWithPersianDate);
+        }
+    );
+});
+
+// دریافت یک مقاله با ID
+app.get('/api/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    db.query(
+        'SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ? AND status = "published"',
+        [articleId],
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت مقاله:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            if (results.length === 0) {
+                return res.status(404).json({ error: 'مقاله یافت نشد' });
+            }
+            const article = results[0];
+            article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
+            res.json(article);
+        }
+    );
+});
+
+// دریافت همه مقالات (برای مدیریت)
+app.get('/api/admin/articles', (req, res) => {
+    db.query('SELECT id, title, category, author, status, created_at FROM articles ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت مقالات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const articlesWithPersianDate = results.map(article => {
+            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...article, created_at: persianDate };
+        });
+        res.json(articlesWithPersianDate);
+    });
+});
+
+// افزودن مقاله جدید
+app.post('/api/admin/articles', (req, res) => {
+    const { title, category, content, author, status } = req.body;
+    if (!title || !category || !content) {
+        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
+    }
+    const query = 'INSERT INTO articles (title, category, content, author, status) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [title, category, content, author || 'سوفیا AI', status || 'published'], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره مقاله:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره مقاله' });
+        }
+        res.json({ message: '✅ مقاله با موفقیت ذخیره شد!', id: result.insertId });
+    });
+});
+
+// حذف مقاله
+app.delete('/api/admin/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف مقاله:', err);
+            return res.status(500).json({ error: 'خطا در حذف مقاله' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'مقاله یافت نشد' });
+        }
+        res.json({ message: '✅ مقاله با موفقیت حذف شد!' });
+    });
+});
+
+// ==================================================
+// ===== APIهای نظرات =====
+// ==================================================
+
+// دریافت نظرات تایید شده
+app.get('/api/comments/approved', (req, res) => {
+    db.query(
+        'SELECT id, name, email, text, status, created_at FROM comments WHERE status = "approved" ORDER BY id DESC LIMIT 20',
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت نظرات:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            const commentsWithPersianDate = results.map(comment => {
+                const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD HH:mm');
+                return { ...comment, created_at: persianDate };
+            });
+            res.json(commentsWithPersianDate);
+        }
+    );
+});
+
+// دریافت همه نظرات (برای مدیریت)
+app.get('/api/admin/comments', (req, res) => {
+    db.query('SELECT id, name, email, text, status, created_at FROM comments ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت نظرات:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const commentsWithPersianDate = results.map(comment => {
+            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...comment, created_at: persianDate };
+        });
+        res.json(commentsWithPersianDate);
+    });
+});
+
+// افزودن نظر جدید
+app.post('/api/comments', (req, res) => {
+    const { name, email, text } = req.body;
+    if (!name || !text) {
+        return res.status(400).json({ error: 'نام و متن نظر الزامی است.' });
+    }
+    const query = 'INSERT INTO comments (name, email, text, status) VALUES (?, ?, ?, "pending")';
+    db.query(query, [name, email || null, text], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره نظر:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره نظر' });
+        }
+        res.json({ message: '✅ نظر شما با موفقیت ثبت شد! پس از تایید نمایش داده می‌شود.' });
+    });
+});
+
+// تایید نظر
+app.put('/api/admin/comments/:id/approve', (req, res) => {
+    const commentId = req.params.id;
+    db.query('UPDATE comments SET status = "approved" WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در تایید نظر:', err);
+            return res.status(500).json({ error: 'خطا در تایید نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت تایید شد!' });
+    });
+});
+
+// رد نظر
+app.put('/api/admin/comments/:id/reject', (req, res) => {
+    const commentId = req.params.id;
+    db.query('UPDATE comments SET status = "rejected" WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در رد نظر:', err);
+            return res.status(500).json({ error: 'خطا در رد نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت رد شد!' });
+    });
+});
+
+// حذف نظر
+app.delete('/api/admin/comments/:id', (req, res) => {
+    const commentId = req.params.id;
+    db.query('DELETE FROM comments WHERE id = ?', [commentId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف نظر:', err);
+            return res.status(500).json({ error: 'خطا در حذف نظر' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'نظر یافت نشد' });
+        }
+        res.json({ message: '✅ نظر با موفقیت حذف شد!' });
+    });
+});
+
+// ==================================================
+// ===== APIهای کاربران =====
+// ==================================================
+
+// دریافت لیست کاربران
 app.get('/api/users', (req, res) => {
     db.query('SELECT id, name, email, phone, created_at FROM users ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -223,7 +413,7 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-// ===== حذف کاربر =====
+// حذف کاربر
 app.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
     
@@ -246,7 +436,7 @@ app.delete('/api/users/:id', (req, res) => {
     });
 });
 
-// ===== تغییر رمز عبور =====
+// تغییر رمز عبور
 app.put('/api/users/:id/password', async (req, res) => {
     const userId = req.params.id;
     const { currentPassword, newPassword } = req.body;
@@ -295,11 +485,9 @@ app.put('/api/users/:id/password', async (req, res) => {
     }
 });
 
-// ===== ثبت‌نام =====
+// ثبت‌نام
 app.post('/api/register', async (req, res) => {
     const { name, email, password, phone } = req.body;
-    
-    console.log('📝 دریافت درخواست ثبت‌نام:', { name, email, phone });
     
     if (!name || !email || !password) {
         return res.status(400).json({ error: 'نام، ایمیل و رمز عبور الزامی هستند.' });
@@ -326,10 +514,10 @@ app.post('/api/register', async (req, res) => {
                         console.error('❌ خطا در ذخیره کاربر:', err);
                         return res.status(500).json({ error: 'خطا در ثبت‌نام' });
                     }
-                    console.log('✅ کاربر با موفقیت ثبت شد:', result.insertId);
                     res.json({ 
                         message: '✅ ثبت‌نام با موفقیت انجام شد!',
-                        userId: result.insertId
+                        userId: result.insertId,
+                        user: { id: result.insertId, name, email, phone }
                     });
                 }
             );
@@ -340,11 +528,9 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-// ===== ورود کاربر (با تاریخ شمسی) =====
+// ورود کاربر
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
-    
-    console.log('📝 دریافت درخواست ورود:', { email });
     
     if (!email || !password) {
         return res.status(400).json({ error: 'ایمیل و رمز عبور الزامی هستند.' });
@@ -388,10 +574,26 @@ app.post('/api/login', async (req, res) => {
 });
 
 // ==================================================
-// ===== APIهای سبد خرید و سایر بخش‌ها =====
+// ===== APIهای سبد خرید =====
 // ==================================================
 
-// ===== دریافت سبد خرید همه کاربران (برای پنل مدیریت) =====
+// دریافت سبد خرید کاربر
+app.get('/api/cart/:userId', (req, res) => {
+    const userId = req.params.userId;
+    db.query(
+        'SELECT id, item_name, item_price, created_at FROM cart WHERE user_id = ? ORDER BY id DESC',
+        [userId],
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت سبد خرید:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            res.json(results);
+        }
+    );
+});
+
+// دریافت سبد خرید همه کاربران (برای مدیریت)
 app.get('/api/admin/cart', (req, res) => {
     const query = `
         SELECT 
@@ -420,150 +622,44 @@ app.get('/api/admin/cart', (req, res) => {
     });
 });
 
-// ===== آمار داشبورد =====
-app.get('/api/admin/stats', (req, res) => {
-    const queries = {
-        articles: 'SELECT COUNT(*) as count FROM articles',
-        comments: 'SELECT COUNT(*) as count FROM comments',
-        pending: "SELECT COUNT(*) as count FROM comments WHERE status = 'pending'",
-        users: 'SELECT COUNT(*) as count FROM users',
-        requests: 'SELECT COUNT(*) as count FROM chatbot_requests',
-        cart: 'SELECT COUNT(*) as count FROM cart',
-        gallery: 'SELECT COUNT(*) as count FROM gallery'
-    };
+// افزودن به سبد خرید
+app.post('/api/cart', (req, res) => {
+    const { user_id, item_name, item_price } = req.body;
     
-    let results = { articles: 0, comments: 0, pending: 0, users: 0, requests: 0, cart: 0, gallery: 0 };
-    let completed = 0;
-    const totalQueries = Object.keys(queries).length;
+    if (!user_id || !item_name) {
+        return res.status(400).json({ error: 'شناسه کاربر و نام خدمت الزامی است.' });
+    }
     
-    Object.keys(queries).forEach(key => {
-        db.query(queries[key], (err, result) => {
-            if (!err) results[key] = parseInt(result[0].count) || 0;
-            completed++;
-            if (completed === totalQueries) {
-                res.json(results);
-            }
-        });
-    });
-});
-
-// ===== مدیریت مقالات =====
-app.get('/api/admin/articles', (req, res) => {
-    db.query('SELECT id, title, category, author, status, created_at FROM articles ORDER BY id DESC', (err, results) => {
+    const query = 'INSERT INTO cart (user_id, item_name, item_price) VALUES (?, ?, ?)';
+    db.query(query, [user_id, item_name, item_price || null], (err, result) => {
         if (err) {
-            console.error('❌ خطا در دریافت مقالات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            console.error('❌ خطا در افزودن به سبد خرید:', err);
+            return res.status(500).json({ error: 'خطا در افزودن به سبد خرید' });
         }
-        const articlesWithPersianDate = results.map(article => {
-            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
-            return { ...article, created_at: persianDate };
-        });
-        res.json(articlesWithPersianDate);
+        res.json({ message: '✅ خدمت با موفقیت به سبد خرید اضافه شد!', id: result.insertId });
     });
 });
 
-app.post('/api/admin/articles', (req, res) => {
-    const { title, category, content, author, status } = req.body;
-    if (!title || !category || !content) {
-        return res.status(400).json({ error: 'عنوان، دسته‌بندی و متن مقاله الزامی است.' });
-    }
-    const query = 'INSERT INTO articles (title, category, content, author, status) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [title, category, content, author || 'سوفیا AI', status || 'published'], (err, result) => {
+// حذف از سبد خرید
+app.delete('/api/cart/:id', (req, res) => {
+    const cartId = req.params.id;
+    db.query('DELETE FROM cart WHERE id = ?', [cartId], (err, result) => {
         if (err) {
-            console.error('❌ خطا در ذخیره مقاله:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره مقاله' });
-        }
-        res.json({ message: '✅ مقاله با موفقیت ذخیره شد!', id: result.insertId });
-    });
-});
-
-app.delete('/api/admin/articles/:id', (req, res) => {
-    const articleId = req.params.id;
-    db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در حذف مقاله:', err);
-            return res.status(500).json({ error: 'خطا در حذف مقاله' });
+            console.error('❌ خطا در حذف از سبد خرید:', err);
+            return res.status(500).json({ error: 'خطا در حذف از سبد خرید' });
         }
         if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'مقاله یافت نشد' });
+            return res.status(404).json({ error: 'آیتم یافت نشد' });
         }
-        res.json({ message: '✅ مقاله با موفقیت حذف شد!' });
+        res.json({ message: '✅ آیتم با موفقیت از سبد خرید حذف شد!' });
     });
 });
 
-// ===== مدیریت نظرات =====
-app.get('/api/admin/comments', (req, res) => {
-    db.query('SELECT id, name, email, text, status, created_at FROM comments ORDER BY id DESC', (err, results) => {
-        if (err) {
-            console.error('❌ خطا در دریافت نظرات:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
-        }
-        const commentsWithPersianDate = results.map(comment => {
-            const persianDate = moment(comment.created_at).format('jYYYY/jMM/jDD HH:mm');
-            return { ...comment, created_at: persianDate };
-        });
-        res.json(commentsWithPersianDate);
-    });
-});
+// ==================================================
+// ===== APIهای تنظیمات =====
+// ==================================================
 
-app.post('/api/comments', (req, res) => {
-    const { name, email, text } = req.body;
-    if (!name || !text) {
-        return res.status(400).json({ error: 'نام و متن نظر الزامی است.' });
-    }
-    const query = 'INSERT INTO comments (name, email, text, status) VALUES (?, ?, ?, "pending")';
-    db.query(query, [name, email || null, text], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در ذخیره نظر:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره نظر' });
-        }
-        res.json({ message: '✅ نظر شما با موفقیت ثبت شد! پس از تایید نمایش داده می‌شود.' });
-    });
-});
-
-app.put('/api/admin/comments/:id/approve', (req, res) => {
-    const commentId = req.params.id;
-    db.query('UPDATE comments SET status = "approved" WHERE id = ?', [commentId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در تایید نظر:', err);
-            return res.status(500).json({ error: 'خطا در تایید نظر' });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'نظر یافت نشد' });
-        }
-        res.json({ message: '✅ نظر با موفقیت تایید شد!' });
-    });
-});
-
-app.put('/api/admin/comments/:id/reject', (req, res) => {
-    const commentId = req.params.id;
-    db.query('UPDATE comments SET status = "rejected" WHERE id = ?', [commentId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در رد نظر:', err);
-            return res.status(500).json({ error: 'خطا در رد نظر' });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'نظر یافت نشد' });
-        }
-        res.json({ message: '✅ نظر با موفقیت رد شد!' });
-    });
-});
-
-app.delete('/api/admin/comments/:id', (req, res) => {
-    const commentId = req.params.id;
-    db.query('DELETE FROM comments WHERE id = ?', [commentId], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در حذف نظر:', err);
-            return res.status(500).json({ error: 'خطا در حذف نظر' });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'نظر یافت نشد' });
-        }
-        res.json({ message: '✅ نظر با موفقیت حذف شد!' });
-    });
-});
-
-// ===== مدیریت تنظیمات =====
+// دریافت تنظیمات
 app.get('/api/admin/settings', (req, res) => {
     const query = 'SELECT setting_key, setting_value FROM site_settings';
     db.query(query, (err, results) => {
@@ -579,6 +675,7 @@ app.get('/api/admin/settings', (req, res) => {
     });
 });
 
+// ذخیره تنظیمات
 app.put('/api/admin/settings', (req, res) => {
     const settings = req.body;
     const queries = Object.keys(settings).map(key => {
@@ -599,6 +696,34 @@ app.put('/api/admin/settings', (req, res) => {
             console.error('❌ خطا در ذخیره تنظیمات:', err);
             res.status(500).json({ error: 'خطا در ذخیره تنظیمات' });
         });
+});
+
+// ==================================================
+// ===== API آمار داشبورد =====
+// ==================================================
+app.get('/api/admin/stats', (req, res) => {
+    const queries = {
+        articles: 'SELECT COUNT(*) as count FROM articles',
+        comments: 'SELECT COUNT(*) as count FROM comments',
+        pending: "SELECT COUNT(*) as count FROM comments WHERE status = 'pending'",
+        users: 'SELECT COUNT(*) as count FROM users',
+        cart: 'SELECT COUNT(*) as count FROM cart',
+        gallery: 'SELECT COUNT(*) as count FROM gallery'
+    };
+    
+    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0 };
+    let completed = 0;
+    const totalQueries = Object.keys(queries).length;
+    
+    Object.keys(queries).forEach(key => {
+        db.query(queries[key], (err, result) => {
+            if (!err) results[key] = parseInt(result[0].count) || 0;
+            completed++;
+            if (completed === totalQueries) {
+                res.json(results);
+            }
+        });
+    });
 });
 
 // ==================================================
