@@ -208,24 +208,53 @@
         const urlParams = new URLSearchParams(window.location.search);
         const articleId = urlParams.get('id');
 
+        console.log('🔍 ID مقاله از آدرس:', articleId);
+
         // =============================================
         // ===== بارگذاری مقاله =====
         // =============================================
         function loadArticle(id) {
             const container = document.getElementById('articleContainer');
+            
+            // اگر ID نداشت، خطا بده
+            if (!id) {
+                container.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>هیچ مقاله‌ای انتخاب نشده است.</h3>
+                        <p style="color:#7a7a9a; margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
+                        <div style="margin-top:16px;">
+                            <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری مقاله...</div>';
+
+            console.log('📖 بارگذاری مقاله با ID:', id);
+            console.log('📡 آدرس درخواست:', `${API_BASE}/api/articles/${id}`);
 
             fetch(`${API_BASE}/api/articles/${id}`)
                 .then(res => {
+                    console.log('📊 وضعیت پاسخ:', res.status);
                     if (!res.ok) {
                         if (res.status === 404) throw new Error('مقاله یافت نشد');
-                        throw new Error('خطا در دریافت مقاله');
+                        if (res.status === 500) throw new Error('خطای سرور');
+                        throw new Error('خطا در دریافت مقاله (کد ' + res.status + ')');
                     }
                     return res.json();
                 })
                 .then(article => {
-                    // ===== نمایش مقاله =====
-                    const contentHtml = article.content
+                    console.log('✅ مقاله دریافت شد:', article);
+                    
+                    // اگر مقاله محتوایی نداشت
+                    if (!article || !article.title) {
+                        throw new Error('مقاله نامعتبر است');
+                    }
+                    
+                    const contentHtml = (article.content || '')
                         .replace(/\n/g, '<br>')
                         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                         .replace(/\*(.*?)\*/g, '<em>$1</em>');
@@ -233,14 +262,14 @@
                     container.innerHTML = `
                         <div class="article-header">
                             <span class="category-badge">${article.category || 'عمومی'}</span>
-                            <h1>${article.title || 'بدون عنوان'}</h1>
+                            <h1>${article.title}</h1>
                             <div class="meta">
                                 <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
                                 <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
                             </div>
                         </div>
                         <div class="article-body">
-                            ${contentHtml || '<p>محتوای مقاله موجود نیست.</p>'}
+                            ${contentHtml}
                         </div>
                         <div class="share-section">
                             <span class="share-label">اشتراک‌گذاری:</span>
@@ -253,7 +282,7 @@
                         <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
                     `;
 
-                    // ===== بارگذاری مقالات مرتبط =====
+                    // بارگذاری مقالات مرتبط
                     loadRelatedArticles(article.category, id);
                 })
                 .catch(error => {
@@ -279,7 +308,10 @@
             const container = document.getElementById('articleContainer');
             
             fetch(`${API_BASE}/api/articles`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت مقالات مرتبط');
+                    return res.json();
+                })
                 .then(data => {
                     const related = data
                         .filter(a => a.id != currentId && a.category === category)
@@ -405,19 +437,9 @@
         // =============================================
         // ===== اجرا =====
         // =============================================
-        if (!articleId) {
-            document.getElementById('articleContainer').innerHTML = `
-                <div class="error">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <h3>هیچ مقاله‌ای انتخاب نشده است.</h3>
-                    <div style="margin-top:16px;">
-                        <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
-                    </div>
-                </div>
-            `;
-        } else {
-            loadArticle(articleId);
-        }
+        // اجرا با ID دریافت شده از آدرس
+        console.log('🚀 شروع بارگذاری مقاله...');
+        loadArticle(articleId);
     </script>
 </body>
 </html>
