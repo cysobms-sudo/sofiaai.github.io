@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== متغیرهای رنگی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -42,7 +41,6 @@
             line-height: 1.7;
         }
 
-        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -324,7 +322,7 @@
         .btn-secondary { background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color); }
         .btn-secondary:hover { background: var(--border-color); }
 
-        /* ===== گالری با نمایش صحیح عکس ===== */
+        /* ===== گالری ===== */
         .gallery-grid-view {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -568,7 +566,6 @@
         .admin-footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
         .admin-footer a:hover { text-decoration: underline; }
 
-        /* ===== اولویت‌ها ===== */
         .priority-high { color: var(--danger); font-weight: 700; }
         .priority-medium { color: var(--warning); font-weight: 700; }
         .priority-low { color: var(--success); font-weight: 700; }
@@ -1050,7 +1047,7 @@
         }
 
         // =============================================
-        // ===== گالری (اصلاح شده با نمایش صحیح عکس) =====
+        // ===== گالری =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryList');
@@ -1066,18 +1063,21 @@
                     
                     let html = `<div class="gallery-grid-view">`;
                     data.forEach(item => {
-                        // تصویر را با کیفیت مناسب نمایش بده
-                        const imageUrl = item.image_url || '/images/placeholder.jpg';
+                        let imageUrl = item.image_url || '/images/placeholder.jpg';
+                        if (!imageUrl.startsWith('/')) {
+                            imageUrl = '/' + imageUrl;
+                        }
+                        if (imageUrl.startsWith('//')) {
+                            imageUrl = imageUrl.substring(1);
+                        }
+                        
                         html += `
                             <div class="gallery-item-card">
                                 <div class="image-wrapper">
                                     <img src="${imageUrl}" 
                                          alt="${item.title || 'تصویر'}" 
                                          loading="lazy"
-                                         onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder-icon').style.display='block';" />
-                                    <div class="placeholder-icon" style="display:none;">
-                                        <i class="fas fa-image"></i>
-                                    </div>
+                                         onerror="this.onerror=null; this.src='/logo5.png';" />
                                 </div>
                                 <h4>${item.title || 'بدون عنوان'}</h4>
                                 <p>${item.description || ''}</p>
@@ -1093,7 +1093,7 @@
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا در دریافت گالری:', err);
+                    console.error('❌ خطا:', err);
                     container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت گالری</h4></div>`;
                 });
         }
@@ -1167,14 +1167,11 @@
                 fileInput.addEventListener('change', function(e) {
                     const file = this.files[0];
                     if (file) {
-                        // بررسی نوع فایل
                         if (!file.type.startsWith('image/')) {
                             showToast('❌ لطفاً فقط تصویر انتخاب کنید.', 'error');
                             this.value = '';
                             return;
                         }
-                        
-                        // بررسی حجم فایل (حداکثر 5 مگابایت)
                         if (file.size > 5 * 1024 * 1024) {
                             showToast('❌ حجم تصویر باید کمتر از 5 مگابایت باشد.', 'error');
                             this.value = '';
@@ -1227,15 +1224,20 @@
         });
 
         // =============================================
-        // ===== مقالات (با ویرایش) =====
+        // ===== مقالات (اصلاح شده) =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
             
             fetch(`${API_BASE}/api/admin/articles`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return res.json();
+                })
                 .then(data => {
+                    console.log('📚 مقالات دریافتی:', data);
+                    
                     if (data.length === 0) {
                         container.innerHTML = `<div class="empty-state"><i class="fas fa-newspaper"></i><h4>هیچ مقاله‌ای وجود ندارد</h4></div>`;
                         return;
@@ -1243,6 +1245,7 @@
                     
                     let html = `<div class="table-wrapper"><table>
                         <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                    
                     data.forEach(article => {
                         html += `
                             <tr>
@@ -1253,7 +1256,7 @@
                                 <td>${article.created_at}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit"></i> ویرایش
                                     </button>
                                     <button class="btn btn-danger btn-sm" onclick="deleteArticle(${article.id})">
                                         <i class="fas fa-trash"></i>
@@ -1262,11 +1265,12 @@
                             </tr>
                         `;
                     });
+                    
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در دریافت مقالات:', err);
                     container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت مقالات</h4></div>`;
                 });
         }
@@ -1283,25 +1287,40 @@
         }
 
         function editArticle(id) {
-            fetch(`${API_BASE}/api/admin/articles/${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (!data || data.error) {
-                        showToast('❌ مقاله یافت نشد', 'error');
-                        return;
+            console.log('✏️ شروع ویرایش مقاله با ID:', id);
+            
+            showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
+            
+            // دریافت لیست مقالات و پیدا کردن مقاله مورد نظر
+            fetch(`${API_BASE}/api/admin/articles`)
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت لیست مقالات');
+                    return res.json();
+                })
+                .then(articles => {
+                    const article = articles.find(a => a.id === id);
+                    
+                    if (!article) {
+                        throw new Error('مقاله یافت نشد');
                     }
-                    document.getElementById('articleEditId').value = id;
-                    document.getElementById('articleTitle').value = data.title || '';
-                    document.getElementById('articleCategory').value = data.category || '';
-                    document.getElementById('articleAuthor').value = data.author || '';
-                    document.getElementById('articleContent').value = data.content || '';
-                    document.getElementById('articleStatus').value = data.status || 'published';
+                    
+                    console.log('✅ مقاله پیدا شد:', article);
+                    
+                    document.getElementById('articleEditId').value = article.id;
+                    document.getElementById('articleTitle').value = article.title || '';
+                    document.getElementById('articleCategory').value = article.category || '';
+                    document.getElementById('articleAuthor').value = article.author || 'سوفیا AI';
+                    document.getElementById('articleContent').value = article.content || '';
+                    document.getElementById('articleStatus').value = article.status || 'published';
+                    
                     document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
                     document.getElementById('articleModal').classList.add('active');
+                    
+                    showToast('✅ مقاله برای ویرایش آماده شد', 'success');
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
-                    showToast('❌ خطا در دریافت اطلاعات مقاله', 'error');
+                    console.error('❌ خطا در ویرایش مقاله:', err);
+                    showToast('❌ ' + err.message, 'error');
                 });
         }
 
@@ -1317,6 +1336,8 @@
             const content = document.getElementById('articleContent').value.trim();
             const status = document.getElementById('articleStatus').value;
             
+            console.log('💾 ذخیره مقاله:', { id, title, category });
+            
             if (!title || !category || !content) {
                 showToast('❌ عنوان، دسته‌بندی و متن مقاله الزامی است.', 'error');
                 return;
@@ -1325,30 +1346,46 @@
             const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
             
+            console.log('📡 ارسال به:', url, 'با متد:', method);
+            
             fetch(url, {
                 method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, category, content, author, status })
             })
-            .then(res => res.json())
+            .then(res => {
+                console.log('📊 وضعیت پاسخ:', res.status);
+                if (!res.ok) {
+                    if (res.status === 404) throw new Error('مقاله یافت نشد');
+                    throw new Error('خطا در ذخیره مقاله (کد ' + res.status + ')');
+                }
+                return res.json();
+            })
             .then(data => {
+                console.log('✅ پاسخ:', data);
                 if (data.message) {
                     showToast('✅ ' + data.message, 'success');
                     closeArticleModal();
                     loadArticles();
                     loadStats();
                 } else {
-                    showToast('❌ ' + data.error, 'error');
+                    showToast('❌ ' + (data.error || 'خطا در ذخیره مقاله'), 'error');
                 }
             })
-            .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در ذخیره مقاله', 'error'); });
+            .catch(err => {
+                console.error('❌ خطا:', err);
+                showToast('❌ ' + err.message, 'error');
+            });
         }
 
         function deleteArticle(id) {
             if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
             
             fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در حذف مقاله');
+                    return res.json();
+                })
                 .then(data => {
                     if (data.message) {
                         showToast('✅ ' + data.message, 'success');
@@ -1358,7 +1395,10 @@
                         showToast('❌ ' + data.error, 'error');
                     }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف مقاله', 'error'); });
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ ' + err.message, 'error');
+                });
         }
 
         // =============================================
@@ -1511,17 +1551,7 @@
                     }
                     
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr>
-                            <th>کاربر</th>
-                            <th>ایمیل</th>
-                            <th>عنوان</th>
-                            <th>توضیحات</th>
-                            <th>دسته</th>
-                            <th>اولویت</th>
-                            <th>وضعیت</th>
-                            <th>تاریخ</th>
-                            <th>عملیات</th>
-                        </tr></thead><tbody>`;
+                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>توضیحات</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     
                     data.forEach(req => {
                         const priorityLabel = req.priority === 'urgent' ? 'فوری' :
@@ -1572,7 +1602,7 @@
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا در دریافت درخواست‌ها:', err);
+                    console.error('❌ خطا:', err);
                     container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
                 });
         }
