@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>توسعه‌دهنده هوش مصنوعی سوفیا | مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI</title>
-    <meta name="description" content="توسعه‌دهنده هوش مصنوعی سوفیا - مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI در ایران. خدمات تخصصی هوش مصنوعی، طراحی چت‌بات، سیستم RAG و اتوماسیون هوشمند." />
+    <title id="siteTitle">توسعه‌دهنده هوش مصنوعی سوفیا | مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI</title>
+    <meta name="description" id="metaDescription" content="توسعه‌دهنده هوش مصنوعی سوفیا - مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI در ایران. خدمات تخصصی هوش مصنوعی، طراحی چت‌بات، سیستم RAG و اتوماسیون هوشمند." />
+    <meta name="keywords" id="metaKeywords" content="هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -279,7 +280,7 @@
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.3);
         }
 
-        /* ===== درباره ما (داینامیک از تنظیمات) ===== */
+        /* ===== درباره ما ===== */
         .about-section {
             padding: 50px 0;
             background: #fff;
@@ -440,7 +441,7 @@
             font-weight: 700;
         }
 
-        /* ===== مقالات (داینامیک از دیتابیس) ===== */
+        /* ===== مقالات ===== */
         .articles-section {
             padding: 50px 0;
             background: var(--bg-light);
@@ -545,7 +546,7 @@
         .gallery-item .overlay h4 { font-size: 1rem; font-weight: 700; }
         .gallery-item .overlay p { font-size: 0.8rem; opacity: 0.8; }
 
-        /* ===== نظرات (داینامیک از دیتابیس) ===== */
+        /* ===== نظرات ===== */
         .comments-section {
             padding: 50px 0;
             background: #fff;
@@ -771,9 +772,9 @@
     <!-- ===== بخش قهرمان ===== -->
     <section class="hero fade-up">
         <div class="container">
-            <h1>مرجع تخصصی <span class="highlight">دستیارهای هوشمند</span> و <span class="highlight">ایجنت‌های AI</span></h1>
-            <p class="hero-title-sub">از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
-            <p>با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی</p>
+            <h1 id="heroTitle">مرجع تخصصی <span class="highlight">دستیارهای هوشمند</span> و <span class="highlight">ایجنت‌های AI</span></h1>
+            <p class="hero-title-sub" id="heroSubtitle">از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما</p>
+            <p id="heroText">با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی</p>
             <div class="search-box">
                 <input type="text" placeholder="جستجوی مقاله، ایجنت، یا دستیار هوشمند..." />
                 <button>جستجو</button>
@@ -786,15 +787,15 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-text">
-                    <h2>درباره <span class="highlight">سوفیا AI</span></h2>
+                    <h2 id="aboutTitle">درباره <span class="highlight">سوفیا AI</span></h2>
                     <p id="aboutText">
                         تیم سوفیا با بیش از <strong>۲۰ سال سابقه</strong> در حوزه مهندسی کامپیوتر و هوش مصنوعی، به کسب‌وکارها کمک می‌کند تا از قدرت دستیارهای هوشمند و ایجنت‌های AI برای رشد و بهره‌وری استفاده کنند. 
                         ما از طراحی معماری RAG و بینایی ماشین تا پیاده‌سازی ایجنت‌های هوشمند و اتوماسیون، تمام مسیر را با شما همراهیم.
                     </p>
                     <div class="about-stats">
-                        <div class="stat"><span>۲۰+</span> سال سابقه</div>
-                        <div class="stat"><span>۸۰+</span> پروژه موفق</div>
-                        <div class="stat"><span>۱۰۰%</span> حریم خصوصی</div>
+                        <div class="stat" id="statYears"><span>۲۰+</span> سال سابقه</div>
+                        <div class="stat" id="statProjects"><span>۸۰+</span> پروژه موفق</div>
+                        <div class="stat" id="statPrivacy"><span>۱۰۰%</span> حریم خصوصی</div>
                     </div>
                 </div>
                 <div class="about-image"><i class="fas fa-robot"></i></div>
@@ -878,7 +879,7 @@
         </div>
     </section>
 
-    <!-- ===== مقالات (داینامیک از دیتابیس) ===== -->
+    <!-- ===== مقالات ===== -->
     <section class="articles-section fade-up" id="articles">
         <div class="container">
             <div class="section-header">
@@ -922,7 +923,7 @@
         </div>
     </section>
 
-    <!-- ===== نظرات (داینامیک از دیتابیس) ===== -->
+    <!-- ===== نظرات ===== -->
     <section class="comments-section fade-up" id="comments">
         <div class="container">
             <div class="section-header">
@@ -1033,7 +1034,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری مقالات از دیتابیس =====
+        // ===== بارگذاری مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesContainer');
@@ -1079,7 +1080,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری نظرات تایید شده =====
+        // ===== بارگذاری نظرات =====
         // =============================================
         function loadComments() {
             const container = document.getElementById('commentsContainer');
@@ -1123,7 +1124,7 @@
         }
 
         // =============================================
-        // ===== ارسال نظر جدید =====
+        // ===== ارسال نظر =====
         // =============================================
         document.getElementById('commentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1149,7 +1150,7 @@
                 if (response.ok) {
                     alert('✅ ' + data.message);
                     this.reset();
-                    loadComments(); // بارگذاری مجدد نظرات
+                    loadComments();
                 } else {
                     alert('❌ ' + data.error);
                 }
@@ -1163,29 +1164,90 @@
         });
 
         // =============================================
-        // ===== جستجو =====
-        // =============================================
-        document.querySelector('.search-box button').addEventListener('click', function() {
-            const query = document.querySelector('.search-box input').value.trim();
-            if (query) {
-                alert('🔍 جستجو برای: "' + query + '"\n(این یک نمونه نمایشی است)');
-            } else {
-                alert('لطفاً عبارت جستجو را وارد کنید.');
-            }
-        });
-
-        // =============================================
         // ===== بارگذاری تنظیمات سایت =====
         // =============================================
         function loadSettings() {
             fetch(`${API_BASE}/api/admin/settings`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data.about_text) {
-                        document.getElementById('aboutText').innerHTML = data.about_text;
+                    console.log('📥 تنظیمات دریافت شد:', data);
+                    
+                    // ===== به‌روزرسانی صفحه اصلی (Hero) =====
+                    const heroTitle = document.getElementById('heroTitle');
+                    if (heroTitle && data.hero_title) {
+                        heroTitle.innerHTML = data.hero_title.replace(/\n/g, '<br>');
                     }
-                    if (data.footer_text) {
-                        document.getElementById('footerText').innerHTML = data.footer_text;
+                    
+                    const heroSubtitle = document.getElementById('heroSubtitle');
+                    if (heroSubtitle && data.hero_subtitle) {
+                        heroSubtitle.textContent = data.hero_subtitle;
+                    }
+                    
+                    const heroText = document.getElementById('heroText');
+                    if (heroText && data.hero_text) {
+                        heroText.textContent = data.hero_text;
+                    }
+                    
+                    // ===== به‌روزرسانی درباره ما =====
+                    const aboutTitle = document.getElementById('aboutTitle');
+                    if (aboutTitle && data.about_title) {
+                        aboutTitle.innerHTML = data.about_title;
+                    }
+                    
+                    const aboutText = document.getElementById('aboutText');
+                    if (aboutText && data.about_text) {
+                        aboutText.innerHTML = data.about_text.replace(/\n/g, '<br>');
+                    }
+                    
+                    // ===== به‌روزرسانی آمار =====
+                    const statYears = document.getElementById('statYears');
+                    if (statYears && data.stat_years) {
+                        statYears.innerHTML = `<span>${data.stat_years}</span> سال سابقه`;
+                    }
+                    
+                    const statProjects = document.getElementById('statProjects');
+                    if (statProjects && data.stat_projects) {
+                        statProjects.innerHTML = `<span>${data.stat_projects}</span> پروژه موفق`;
+                    }
+                    
+                    const statPrivacy = document.getElementById('statPrivacy');
+                    if (statPrivacy && data.stat_privacy) {
+                        statPrivacy.innerHTML = `<span>${data.stat_privacy}</span> حریم خصوصی`;
+                    }
+                    
+                    // ===== به‌روزرسانی فوتر =====
+                    const footerText = document.getElementById('footerText');
+                    if (footerText && data.footer_text) {
+                        footerText.innerHTML = data.footer_text;
+                    }
+                    
+                    // ===== به‌روزرسانی عنوان سایت =====
+                    if (data.site_name) {
+                        document.title = data.site_name + ' | توسعه‌دهنده هوش مصنوعی';
+                    }
+                    
+                    // ===== به‌روزرسانی تگ‌های متا =====
+                    if (data.meta_description) {
+                        const metaDesc = document.querySelector('meta[name="description"]');
+                        if (metaDesc) metaDesc.content = data.meta_description;
+                    }
+                    
+                    if (data.meta_keywords) {
+                        const metaKeywords = document.querySelector('meta[name="keywords"]');
+                        if (metaKeywords) metaKeywords.content = data.meta_keywords;
+                    }
+                    
+                    // ===== به‌روزرسانی رنگ‌ها =====
+                    if (data.color_primary) {
+                        document.documentElement.style.setProperty('--primary', data.color_primary);
+                    }
+                    if (data.color_secondary) {
+                        document.documentElement.style.setProperty('--secondary', data.color_secondary);
+                    }
+                    
+                    // ===== به‌روزرسانی فونت =====
+                    if (data.font) {
+                        document.body.style.fontFamily = data.font + ', sans-serif';
                     }
                 })
                 .catch(error => {
