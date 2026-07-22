@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
+        /* ===== متغیرهای رنگی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -643,6 +644,11 @@
             transform: scale(1.02);
             box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
         }
+        .comments-form .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
         .comments-list {
             background: var(--bg-light);
             padding: 32px;
@@ -890,28 +896,28 @@
         <div class="container">
             <div class="section-header">
                 <div><h2>🧠 دستیارهای هوشمند</h2><span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span></div>
-                <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+                <a href="#services" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="assistant-grid">
-                <a href="#" class="assistant-card">
+                <a href="#contact" class="assistant-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">🤖</span>
                     <h4>دستیار مکالمه‌ای</h4>
                     <p>پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="assistant-card">
+                <a href="#contact" class="assistant-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">🧠</span>
                     <h4>سیستم RAG</h4>
                     <p>پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="assistant-card">
+                <a href="#contact" class="assistant-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">⚙️</span>
                     <h4>اتوماسیون هوشمند</h4>
                     <p>طراحی workflowهای خودکار برای افزایش بهره‌وری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="assistant-card">
+                <a href="#contact" class="assistant-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">📊</span>
                     <h4>تحلیل داده و پیش‌بینی</h4>
                     <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
@@ -926,31 +932,31 @@
         <div class="container">
             <div class="section-header">
                 <div><h2>🤖 ایجنت‌های هوش مصنوعی</h2><span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span></div>
-                <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+                <a href="#services" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="agents-grid">
-                <a href="#" class="agent-card">
+                <a href="#contact" class="agent-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">🧠</span>
                     <h4>ایجنت تحلیلگر داده</h4>
                     <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
                     <div class="tags"><span>تحلیل داده</span><span>هوش تجاری</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="agent-card">
+                <a href="#contact" class="agent-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">🤝</span>
                     <h4>ایجنت پشتیبانی مشتری</h4>
                     <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
                     <div class="tags"><span>پشتیبانی</span><span>چت‌بات</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="agent-card">
+                <a href="#contact" class="agent-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">📝</span>
                     <h4>ایجنت تولید محتوا</h4>
                     <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
                     <div class="tags"><span>تولید محتوا</span><span>بازاریابی</span></div>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#" class="agent-card">
+                <a href="#contact" class="agent-card" onclick="showToast('برای مشاوره با ما تماس بگیرید', 'info')">
                     <span class="icon">⚙️</span>
                     <h4>ایجنت اتوماسیون</h4>
                     <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
@@ -1443,6 +1449,9 @@
             loadArticles();
             loadComments();
             loadSettings();
+            
+            // به‌روزرسانی دوره‌ای سبد خرید
+            setInterval(updateCartBadge, 30000);
         });
     </script>
 
