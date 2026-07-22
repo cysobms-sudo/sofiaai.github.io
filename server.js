@@ -26,13 +26,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== اطمینان از وجود پوشه آپلود =====
+// ===== اطمینان از وجود پوشه‌های آپلود =====
 const uploadDir = path.join(__dirname, 'public', 'images', 'gallery');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
+    console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
 }
 
-// ===== تنظیمات آپلود تصویر =====
+// ===== تنظیمات آپلود تصویر (با پشتیبانی از خطا) =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadDir);
@@ -56,7 +57,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
     storage: storage,
     fileFilter: fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
 });
 
 // ===== اتصال به دیتابیس =====
@@ -149,14 +150,21 @@ app.get('/service-agent-automation.html', (req, res) => {
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
         if (!req.file) {
-            return res.status(400).json({ error: 'هیچ تصویری آپلود نشد' });
+            return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
         const imageUrl = '/images/gallery/' + req.file.filename;
-        console.log('✅ تصویر آپلود شد:', imageUrl);
-        res.json({ url: imageUrl, filename: req.file.filename });
+        console.log('✅ تصویر با موفقیت آپلود شد:', imageUrl);
+        res.json({ 
+            success: true,
+            url: imageUrl,
+            filename: req.file.filename,
+            message: '✅ تصویر با موفقیت آپلود شد!'
+        });
     } catch (error) {
         console.error('❌ خطا در آپلود:', error);
-        res.status(500).json({ error: 'خطا در آپلود تصویر' });
+        res.status(500).json({ 
+            error: 'خطا در آپلود تصویر: ' + error.message 
+        });
     }
 });
 
@@ -197,7 +205,6 @@ app.post('/api/gallery', (req, res) => {
 app.delete('/api/gallery/:id', (req, res) => {
     const galleryId = req.params.id;
     
-    // ابتدا آدرس تصویر را دریافت می‌کنیم
     db.query('SELECT image_url FROM gallery WHERE id = ?', [galleryId], (err, results) => {
         if (err) {
             console.error('❌ خطا در دریافت تصویر:', err);
@@ -210,12 +217,15 @@ app.delete('/api/gallery/:id', (req, res) => {
         const imageUrl = results[0].image_url;
         const imagePath = path.join(__dirname, 'public', imageUrl);
         
-        // حذف فایل از سرور
         if (fs.existsSync(imagePath)) {
-            fs.unlinkSync(imagePath);
+            try {
+                fs.unlinkSync(imagePath);
+                console.log('🗑️ فایل تصویر حذف شد:', imagePath);
+            } catch (err) {
+                console.error('⚠️ خطا در حذف فایل:', err);
+            }
         }
         
-        // حذف از دیتابیس
         db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
             if (err) {
                 console.error('❌ خطا در حذف تصویر:', err);
