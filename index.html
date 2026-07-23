@@ -568,11 +568,12 @@
             border: 2px solid var(--border-color);
             transition: var(--transition);
             position: relative;
-            aspect-ratio: 1/1;
             background: var(--bg-light);
             display: flex;
             align-items: center;
             justify-content: center;
+            aspect-ratio: 1/1;
+            width: 100%;
         }
         .gallery-item img {
             width: 100%;
@@ -947,9 +948,6 @@
             .contact-item {
                 font-size: 0.85rem;
             }
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -959,9 +957,6 @@
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
             .about-text .about-stats { gap: 16px; }
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
