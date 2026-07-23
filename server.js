@@ -76,7 +76,7 @@ db.connect((err) => {
 });
 
 // ==================================================
-// ===== ایجاد جدول‌ها در صورت عدم وجود =====
+// ===== ایجاد جدول‌ها =====
 // ==================================================
 const createTables = () => {
     // جدول کاربران
@@ -175,7 +175,7 @@ const createTables = () => {
                 ['hero_subtitle', 'از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما'],
                 ['hero_text', 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی'],
                 ['about_title', 'درباره <span class="highlight">سوفیا AI</span>'],
-                ['about_text', 'سوفیا AI، همراه هوشمند شما در مسیر تحول دیجیتال. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم. از طراحی دستیارهای مکالمه‌ای و سیستم‌های هوشمند تا اتوماسیون فرآیندها، همه‌چیز برای رشد و موفقیت شما.'],
+                ['about_text', '🚀 سوفیا AI؛ همراه هوشمند تحول دیجیتال شما\n\nدر دنیایی که هر روز پیچیده‌تر می‌شود، سوفیا AI پلی است میان شما و قدرت بی‌نهایت هوش مصنوعی. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم.\n\nاز استارتاپ‌های نوپا تا سازمان‌های بزرگ، ما راه‌حل‌های هوشمندی طراحی می‌کنیم که واقعاً کار می‌کنند.'],
                 ['about_image', '/AIpic1.webp'],
                 ['stat_years', '۲۰+'],
                 ['stat_projects', '۸۰+'],
@@ -183,8 +183,9 @@ const createTables = () => {
                 ['footer_text', '© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران'],
                 ['copyright_text', 'تمامی حقوق محفوظ است'],
                 ['phone', '۰۲۱-۱۲۳۴۵۶۷۸'],
-                ['email', 'info@sofiaai.ir'],
-                ['address', 'تهران، خیابان ولیعصر'],
+                ['mobile', '۰۹۱۳۰۷۷۱۱۲۸'],
+                ['email', 'cysobms@gmail.com'],
+                ['address', 'تهران، خیابان ولیعصر، پلاک ۱۲۳'],
                 ['color_primary', '#6C3CE1'],
                 ['color_secondary', '#FFB800'],
                 ['analytics', '']
@@ -202,7 +203,7 @@ const createTables = () => {
         }
     });
 
-    // جدول درخواست‌های کاربران (یکپارچه برای همه سرویس‌ها)
+    // جدول درخواست‌های کاربران
     db.query(`
         CREATE TABLE IF NOT EXISTS user_requests (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -236,7 +237,6 @@ const createTables = () => {
     });
 };
 
-// اجرای ایجاد جدول‌ها
 createTables();
 
 // ==================================================
@@ -245,57 +245,20 @@ createTables();
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/admin.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
 app.get('/register.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
-});
-app.get('/users.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
 app.get('/login.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 app.get('/dashboard.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-});
-app.get('/cart.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'cart.html'));
-});
-app.get('/admin.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
-});
-app.get('/article.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'article.html'));
-});
-
-// سرویس‌های دستیارهای هوشمند
-app.get('/service-chatbot.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
-});
-app.get('/service-rag.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-rag.html'));
-});
-app.get('/service-automation.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-automation.html'));
-});
-app.get('/service-data.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-data.html'));
-});
-app.get('/service-webdesign.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-webdesign.html'));
-});
-
-// سرویس‌های ایجنت‌ها
-app.get('/service-agent-data.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-agent-data.html'));
-});
-app.get('/service-agent-support.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-agent-support.html'));
-});
-app.get('/service-agent-content.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-agent-content.html'));
-});
-app.get('/service-agent-automation.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'service-agent-automation.html'));
 });
 
 // ==================================================
@@ -307,8 +270,15 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
         const imageUrl = '/images/gallery/' + req.file.filename;
-        res.json({ success: true, url: imageUrl, filename: req.file.filename, message: '✅ تصویر با موفقیت آپلود شد!' });
+        console.log('✅ تصویر آپلود شد:', imageUrl);
+        res.json({ 
+            success: true, 
+            url: imageUrl, 
+            filename: req.file.filename, 
+            message: '✅ تصویر با موفقیت آپلود شد!' 
+        });
     } catch (error) {
+        console.error('❌ خطا در آپلود تصویر:', error);
         res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
     }
 });
@@ -345,12 +315,26 @@ app.post('/api/gallery', (req, res) => {
 
 app.delete('/api/gallery/:id', (req, res) => {
     const galleryId = req.params.id;
-    db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
+    db.query('SELECT image_url FROM gallery WHERE id = ?', [galleryId], (err, results) => {
         if (err) {
-            console.error('❌ خطا در حذف تصویر:', err);
+            console.error('❌ خطا در دریافت تصویر:', err);
             return res.status(500).json({ error: 'خطا در حذف تصویر' });
         }
-        res.json({ message: '✅ تصویر با موفقیت حذف شد!' });
+        if (results.length > 0) {
+            const imagePath = path.join(__dirname, 'public', results[0].image_url);
+            fs.unlink(imagePath, (unlinkErr) => {
+                if (unlinkErr) {
+                    console.log('⚠️ فایل تصویر پیدا نشد:', unlinkErr.message);
+                }
+            });
+        }
+        db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
+            if (err) {
+                console.error('❌ خطا در حذف تصویر:', err);
+                return res.status(500).json({ error: 'خطا در حذف تصویر' });
+            }
+            res.json({ message: '✅ تصویر با موفقیت حذف شد!' });
+        });
     });
 });
 
@@ -369,25 +353,6 @@ app.get('/api/articles', (req, res) => {
                 return { ...article, created_at: persianDate };
             });
             res.json(articlesWithPersianDate);
-        }
-    );
-});
-
-app.get('/api/articles/:id', (req, res) => {
-    const articleId = req.params.id;
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?',
-        [articleId],
-        (err, results) => {
-            if (err) {
-                console.error('❌ خطا در دریافت مقاله:', err);
-                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
-            }
-            if (results.length === 0) {
-                return res.status(404).json({ error: 'مقاله یافت نشد' });
-            }
-            const article = results[0];
-            article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
-            res.json(article);
         }
     );
 });
@@ -786,10 +751,8 @@ app.get('/api/admin/stats', (req, res) => {
 });
 
 // ==================================================
-// ===== API درخواست‌های کاربران (یکپارچه برای همه سرویس‌ها) =====
+// ===== API درخواست‌های کاربران =====
 // ==================================================
-
-// دریافت لیست درخواست‌های کاربر
 app.get('/api/user-requests/:userId', (req, res) => {
     const userId = req.params.userId;
     db.query(
@@ -809,7 +772,6 @@ app.get('/api/user-requests/:userId', (req, res) => {
     );
 });
 
-// دریافت همه درخواست‌ها (برای مدیریت)
 app.get('/api/admin/user-requests', (req, res) => {
     const query = `
         SELECT ur.id, ur.user_id, ur.title, ur.description, ur.priority, ur.category, ur.status, ur.created_at,
@@ -831,37 +793,30 @@ app.get('/api/admin/user-requests', (req, res) => {
     });
 });
 
-// افزودن درخواست جدید (برای همه سرویس‌ها)
 app.post('/api/user-requests', (req, res) => {
     const { user_id, title, description, priority, category } = req.body;
-
-    console.log('📝 دریافت درخواست جدید:', { user_id, title, priority, category });
-
     if (!title) {
         return res.status(400).json({ error: 'عنوان درخواست الزامی است.' });
     }
-
     const userId = user_id || 0;
-    const query = 'INSERT INTO user_requests (user_id, title, description, priority, category, status) VALUES (?, ?, ?, ?, ?, "pending")';
-    db.query(query, [userId, title, description || null, priority || 'medium', category || 'general'], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در ذخیره درخواست:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+    db.query('INSERT INTO user_requests (user_id, title, description, priority, category, status) VALUES (?, ?, ?, ?, ?, "pending")',
+        [userId, title, description || null, priority || 'medium', category || 'general'],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره درخواست:', err);
+                return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+            }
+            res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
         }
-        console.log('✅ درخواست ثبت شد، ID:', result.insertId);
-        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
-    });
+    );
 });
 
-// تغییر وضعیت درخواست
 app.put('/api/admin/user-requests/:id/status', (req, res) => {
     const requestId = req.params.id;
     const { status } = req.body;
-
     if (!status) {
         return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
     }
-
     db.query('UPDATE user_requests SET status = ? WHERE id = ?', [status, requestId], (err, result) => {
         if (err) {
             console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
@@ -874,7 +829,6 @@ app.put('/api/admin/user-requests/:id/status', (req, res) => {
     });
 });
 
-// حذف درخواست
 app.delete('/api/user-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM user_requests WHERE id = ?', [requestId], (err, result) => {
@@ -892,8 +846,6 @@ app.delete('/api/user-requests/:id', (req, res) => {
 // ==================================================
 // ===== API درخواست‌های چت‌بات =====
 // ==================================================
-
-// دریافت لیست درخواست‌های چت‌بات
 app.get('/api/chatbot-requests', (req, res) => {
     db.query('SELECT id, name, phone, email, description, created_at FROM chatbot_requests ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -908,28 +860,23 @@ app.get('/api/chatbot-requests', (req, res) => {
     });
 });
 
-// افزودن درخواست چت‌بات جدید
 app.post('/api/chatbot-requests', (req, res) => {
     const { name, phone, email, description } = req.body;
-
-    console.log('📝 دریافت درخواست چت‌بات:', { name, phone, email });
-
     if (!name || !phone) {
         return res.status(400).json({ error: 'نام و شماره تماس الزامی است.' });
     }
-
-    const query = 'INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)';
-    db.query(query, [name, phone, email || null, description || null], (err, result) => {
-        if (err) {
-            console.error('❌ خطا در ذخیره درخواست:', err);
-            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+    db.query('INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)',
+        [name, phone, email || null, description || null],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره درخواست:', err);
+                return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
+            }
+            res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
         }
-        console.log('✅ درخواست چت‌بات ثبت شد، ID:', result.insertId);
-        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
-    });
+    );
 });
 
-// حذف درخواست چت‌بات
 app.delete('/api/chatbot-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM chatbot_requests WHERE id = ?', [requestId], (err, result) => {
@@ -951,9 +898,9 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
     console.log(`📁 پوشه آپلود: ${uploadDir}`);
     console.log(`✅ API گالری: /api/gallery`);
+    console.log(`✅ API آپلود: /api/upload`);
     console.log(`✅ API مقالات: /api/articles`);
     console.log(`✅ API درخواست‌ها: /api/user-requests`);
     console.log(`✅ API چت‌بات: /api/chatbot-requests`);
     console.log(`✅ API سبد خرید: /api/cart`);
-    console.log(`✅ API تنظیمات: /api/admin/settings`);
 });
