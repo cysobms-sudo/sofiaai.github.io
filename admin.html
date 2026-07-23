@@ -732,7 +732,7 @@
             </div>
         </div>
 
-        <!-- ===== تب مقالات ===== -->
+        <!-- ===== تب مقالات (اصلاح شده) ===== -->
         <div id="tab-articles" class="tab-content">
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
                 <button class="btn btn-primary" onclick="showAddArticle()">
@@ -1301,7 +1301,6 @@
                             return;
                         }
 
-                        // ===== پیش‌نمایش تصویر قبل از آپلود =====
                         const reader = new FileReader();
                         reader.onload = function(e) {
                             document.getElementById('galleryPreviewImg').src = e.target.result;
@@ -1309,7 +1308,6 @@
                         };
                         reader.readAsDataURL(file);
 
-                        // ===== آپلود تصویر به سرور =====
                         const formData = new FormData();
                         formData.append('image', file);
 
@@ -1323,7 +1321,6 @@
                             .then(data => {
                                 if (data.success) {
                                     document.getElementById('gallery_image_url').value = data.url;
-                                    // به‌روزرسانی پیش‌نمایش با URL نهایی
                                     document.getElementById('galleryPreviewImg').src = data.url + '?t=' + new Date()
                                         .getTime();
                                     showToast('✅ ' + data.message, 'success');
@@ -1347,7 +1344,6 @@
             document.getElementById('galleryImagePreview').classList.remove('show');
         }
 
-        // ===== بستن مودال با کلیک روی پس‌زمینه =====
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -1357,16 +1353,22 @@
         });
 
         // =============================================
-        // ===== مقالات =====
+        // ===== مقالات (اصلاح شده کامل) =====
         // =============================================
+        
+        // تابع بارگذاری مقالات - مسیر اصلاح شده
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
 
-            fetch(`${API_BASE}/api/admin/articles`)
-                .then(res => res.json())
+            // استفاده از مسیر /api/articles به جای /api/admin/articles
+            fetch(`${API_BASE}/api/articles`)
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت مقالات (کد ' + res.status + ')');
+                    return res.json();
+                })
                 .then(data => {
-                    if (data.length === 0) {
+                    if (!data || data.length === 0) {
                         container.innerHTML = `
                             <div class="empty-state">
                                 <i class="fas fa-newspaper"></i>
@@ -1381,13 +1383,16 @@
                             <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
 
                     data.forEach(article => {
+                        const statusClass = article.status === 'published' ? 'badge-published' : 'badge-draft';
+                        const statusText = article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس';
+                        
                         html += `
                             <tr>
-                                <td><strong>${article.title}</strong></td>
-                                <td>${article.category}</td>
-                                <td>${article.author}</td>
-                                <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
-                                <td>${article.created_at}</td>
+                                <td><strong>${article.title || 'بدون عنوان'}</strong></td>
+                                <td>${article.category || 'عمومی'}</td>
+                                <td>${article.author || 'سوفیا AI'}</td>
+                                <td><span class="badge ${statusClass}">${statusText}</span></td>
+                                <td>${article.created_at || ''}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})">
                                         <i class="fas fa-edit"></i>
@@ -1404,11 +1409,12 @@
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در بارگذاری مقالات:', err);
                     container.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
                             <h4>خطا در دریافت مقالات</h4>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">${err.message}</p>
                             <button class="btn btn-primary" onclick="loadArticles()" style="margin-top:12px;">
                                 <i class="fas fa-redo"></i> تلاش مجدد
                             </button>
@@ -1417,6 +1423,7 @@
                 });
         }
 
+        // نمایش مودال افزودن مقاله جدید
         function showAddArticle() {
             document.getElementById('articleEditId').value = '';
             document.getElementById('articleTitle').value = '';
@@ -1428,12 +1435,17 @@
             document.getElementById('articleModal').classList.add('active');
         }
 
+        // ویرایش مقاله - مسیر اصلاح شده
         function editArticle(id) {
             showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
 
-            fetch(`${API_BASE}/api/admin/articles/${id}`)
+            // استفاده از مسیر /api/articles به جای /api/admin/articles
+            fetch(`${API_BASE}/api/articles/${id}`)
                 .then(res => {
-                    if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
+                    if (!res.ok) {
+                        if (res.status === 404) throw new Error('مقاله یافت نشد');
+                        throw new Error('خطا در دریافت اطلاعات (کد ' + res.status + ')');
+                    }
                     return res.json();
                 })
                 .then(data => {
@@ -1448,30 +1460,47 @@
                     showToast('✅ مقاله برای ویرایش آماده شد', 'success');
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در ویرایش مقاله:', err);
                     showToast('❌ ' + err.message, 'error');
                 });
         }
 
+        // بستن مودال مقاله
         function closeArticleModal() {
             document.getElementById('articleModal').classList.remove('active');
         }
 
+        // ذخیره مقاله (ایجاد یا ویرایش) - مسیر اصلاح شده
         function saveArticle() {
             const id = document.getElementById('articleEditId').value;
             const title = document.getElementById('articleTitle').value.trim();
             const category = document.getElementById('articleCategory').value.trim();
-            const author = document.getElementById('articleAuthor').value.trim();
+            const author = document.getElementById('articleAuthor').value.trim() || 'سوفیا AI';
             const content = document.getElementById('articleContent').value.trim();
             const status = document.getElementById('articleStatus').value;
 
-            if (!title || !category || !content) {
-                showToast('❌ عنوان، دسته‌بندی و متن مقاله الزامی است.', 'error');
+            // اعتبارسنجی
+            if (!title) {
+                showToast('❌ عنوان مقاله الزامی است.', 'error');
+                document.getElementById('articleTitle').focus();
+                return;
+            }
+            if (!category) {
+                showToast('❌ دسته‌بندی مقاله الزامی است.', 'error');
+                document.getElementById('articleCategory').focus();
+                return;
+            }
+            if (!content) {
+                showToast('❌ متن مقاله الزامی است.', 'error');
+                document.getElementById('articleContent').focus();
                 return;
             }
 
-            const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
+            // تعیین مسیر و متد
+            const url = id ? `${API_BASE}/api/articles/${id}` : `${API_BASE}/api/articles`;
             const method = id ? 'PUT' : 'POST';
+
+            showToast('⏳ در حال ذخیره مقاله...', 'info');
 
             fetch(url, {
                     method: method,
@@ -1489,34 +1518,46 @@
                     if (data.message) {
                         showToast('✅ ' + data.message, 'success');
                         closeArticleModal();
+                        loadArticles(); // بازخوانی لیست مقالات
+                        loadStats(); // به‌روزرسانی آمار
+                    } else if (data.error) {
+                        showToast('❌ ' + data.error, 'error');
+                    } else {
+                        showToast('✅ مقاله با موفقیت ذخیره شد', 'success');
+                        closeArticleModal();
                         loadArticles();
                         loadStats();
-                    } else {
-                        showToast('❌ ' + (data.error || 'خطا در ذخیره مقاله'), 'error');
                     }
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در ذخیره مقاله:', err);
                     showToast('❌ ' + err.message, 'error');
                 });
         }
 
+        // حذف مقاله - مسیر اصلاح شده
         function deleteArticle(id) {
-            if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
+            if (!confirm('آیا از حذف این مقاله مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
 
-            fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
+            fetch(`${API_BASE}/api/articles/${id}`, { method: 'DELETE' })
+                .then(res => {
+                    if (!res.ok) {
+                        if (res.status === 404) throw new Error('مقاله یافت نشد');
+                        throw new Error('خطا در حذف مقاله (کد ' + res.status + ')');
+                    }
+                    return res.json();
+                })
                 .then(data => {
                     if (data.message) {
                         showToast('✅ ' + data.message, 'success');
                         loadArticles();
                         loadStats();
                     } else {
-                        showToast('❌ ' + data.error, 'error');
+                        showToast('❌ ' + (data.error || 'خطا در حذف مقاله'), 'error');
                     }
                 })
                 .catch(err => {
-                    console.error('❌ خطا:', err);
+                    console.error('❌ خطا در حذف مقاله:', err);
                     showToast('❌ ' + err.message, 'error');
                 });
         }
@@ -1545,12 +1586,17 @@
                             <thead><tr><th>نام</th><th>ایمیل</th><th>متن</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     data.forEach(comment => {
                         const shortText = comment.text.length > 50 ? comment.text.substring(0, 50) + '...' : comment.text;
+                        const statusClass = comment.status === 'approved' ? 'badge-approved' : 
+                                           comment.status === 'rejected' ? 'badge-rejected' : 'badge-pending';
+                        const statusText = comment.status === 'approved' ? 'تایید شده' : 
+                                          comment.status === 'rejected' ? 'رد شده' : 'در انتظار';
+                        
                         html += `
                             <tr>
                                 <td><strong>${comment.name}</strong></td>
                                 <td>${comment.email || '-'}</td>
                                 <td style="max-width:200px; word-break:break-word;" title="${comment.text}">${shortText}</td>
-                                <td><span class="badge ${comment.status === 'approved' ? 'badge-approved' : comment.status === 'rejected' ? 'badge-rejected' : 'badge-pending'}">${comment.status === 'approved' ? 'تایید شده' : comment.status === 'rejected' ? 'رد شده' : 'در انتظار'}</span></td>
+                                <td><span class="badge ${statusClass}">${statusText}</span></td>
                                 <td>${comment.created_at}</td>
                                 <td>
                                     ${comment.status === 'pending' ? `
