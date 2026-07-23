@@ -1188,6 +1188,16 @@
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
         // =============================================
+        // ===== مقادیر پیش‌فرض جدید =====
+        // =============================================
+        const DEFAULT_CONTACTS = {
+            phone: '۰۲۱-۱۲۳۴۵۶۷۸',
+            mobile: '۰۹۱۳۰۷۷۱۱۲۸',
+            email: 'cysobms@gmail.com',
+            address: 'تهران، خیابان ولیعصر، پلاک ۱۲۳'
+        };
+
+        // =============================================
         // ===== Toast =====
         // =============================================
         function showToast(message, type = 'info') {
@@ -1221,20 +1231,16 @@
             const fullText = document.getElementById('aboutTextFull');
             const readMoreText = document.getElementById('readMoreText');
             const readMoreIcon = document.getElementById('readMoreIcon');
-            const btn = document.getElementById('aboutReadMoreBtn');
             
             if (fullText.style.display === 'none' || fullText.style.display === '') {
-                // نمایش متن کامل
                 fullText.style.display = 'block';
                 shortText.style.display = 'none';
                 readMoreText.textContent = 'کمتر بخوانید';
                 readMoreIcon.classList.add('rotate');
                 
-                // اسکرول به ابتدای متن
                 const container = document.getElementById('aboutTextContainer');
                 container.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
-                // نمایش متن خلاصه
                 fullText.style.display = 'none';
                 shortText.style.display = 'block';
                 readMoreText.textContent = 'بیشتر بخوانید';
@@ -1538,7 +1544,7 @@
                 .then(data => {
                     console.log('📥 تنظیمات دریافت شد:', data);
                     
-                    // به‌روزرسانی صفحه اصلی (Hero)
+                    // ====== به‌روزرسانی صفحه اصلی (Hero) ======
                     const heroSubtitle = document.getElementById('heroSubtitle');
                     if (heroSubtitle && data.hero_subtitle) {
                         heroSubtitle.textContent = data.hero_subtitle;
@@ -1549,31 +1555,25 @@
                         heroText.textContent = data.hero_text;
                     }
                     
-                    // به‌روزرسانی عنوان درباره ما
+                    // ====== به‌روزرسانی عنوان درباره ما ======
                     const aboutTitle = document.getElementById('aboutTitle');
                     if (aboutTitle && data.about_title) {
                         aboutTitle.innerHTML = data.about_title;
                     }
                     
-                    // دریافت متن کامل درباره ما
+                    // ====== دریافت متن کامل درباره ما ======
                     let fullAboutText = data.about_text || 'سوفیا AI، همراه هوشمند شما در مسیر تحول دیجیتال. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم. از طراحی دستیارهای مکالمه‌ای و سیستم‌های هوشمند تا اتوماسیون فرآیندها، همه‌چیز برای رشد و موفقیت شما.';
                     
-                    // ====== تقسیم متن به خلاصه و کامل ======
                     let shortText = '';
                     let fullText = fullAboutText;
                     
-                    // حذف تگ‌های HTML برای محاسبه بهتر
                     const plainText = fullAboutText.replace(/<[^>]*>/g, '');
                     
-                    // اگر متن بیش از 200 کاراکتر باشد، خلاصه‌سازی می‌شود
                     if (plainText.length > 200) {
-                        // روش 1: بر اساس نقطه (جمله)
                         let sentences = fullAboutText.split(/[\.\n]\s*/).filter(s => s.trim() !== '');
                         
                         if (sentences.length >= 2) {
-                            // دو جمله اول را به عنوان خلاصه انتخاب کن
                             let shortSentences = sentences.slice(0, 2);
-                            // نقطه‌ها را به انتهای جملات اضافه کن (اگر ندارند)
                             shortSentences = shortSentences.map(s => {
                                 if (!s.endsWith('.') && !s.endsWith('؟') && !s.endsWith('!')) {
                                     return s + '.';
@@ -1582,18 +1582,14 @@
                             });
                             shortText = shortSentences.join(' ');
                         } else {
-                            // اگر جمله‌ها کمتر از 2 تا هستند، 200 کاراکتر اول را بگیر
                             shortText = fullAboutText.substring(0, 200) + '...';
                         }
                         
-                        // اگر خلاصه هنوز خیلی طولانی است، کوتاه‌ترش کن
                         if (shortText.length > 220) {
                             shortText = fullAboutText.substring(0, 200) + '...';
                         }
                         
-                        // اطمینان از اینکه خلاصه با ... تمام می‌شود
                         if (!shortText.endsWith('...') && shortText.length < fullAboutText.length) {
-                            // اگر با نقطه تمام می‌شود، نقطه را با ... جایگزین کن
                             if (shortText.endsWith('.')) {
                                 shortText = shortText.slice(0, -1) + '...';
                             } else {
@@ -1601,20 +1597,16 @@
                             }
                         }
                         
-                        // نمایش دکمه
                         document.getElementById('aboutReadMoreBtn').style.display = 'inline-flex';
                         
                     } else {
-                        // اگر متن کوتاه است، همه را نمایش بده و دکمه را مخفی کن
                         shortText = fullAboutText;
                         document.getElementById('aboutReadMoreBtn').style.display = 'none';
                     }
                     
-                    // تنظیم متن‌ها
                     document.getElementById('aboutTextShort').innerHTML = shortText;
                     document.getElementById('aboutTextFull').innerHTML = fullText;
                     
-                    // اگر متن کامل با خلاصه تفاوتی نداشت، دکمه را مخفی کن
                     if (shortText === fullText) {
                         document.getElementById('aboutReadMoreBtn').style.display = 'none';
                     } else {
@@ -1622,20 +1614,26 @@
                     }
                     
                     // ====== به‌روزرسانی اطلاعات تماس ======
-                    if (data.phone) {
-                        document.getElementById('contactPhone').textContent = data.phone;
+                    // استفاده از اطلاعات دیتابیس، در صورت عدم وجود، مقادیر پیش‌فرض جدید
+                    const phoneElement = document.getElementById('contactPhone');
+                    const mobileElement = document.getElementById('contactMobile');
+                    const emailElement = document.getElementById('contactEmail');
+                    const addressElement = document.getElementById('contactAddress');
+                    
+                    if (phoneElement) {
+                        phoneElement.textContent = data.phone || DEFAULT_CONTACTS.phone;
                     }
-                    if (data.mobile) {
-                        document.getElementById('contactMobile').textContent = data.mobile;
+                    if (mobileElement) {
+                        mobileElement.textContent = data.mobile || DEFAULT_CONTACTS.mobile;
                     }
-                    if (data.email) {
-                        document.getElementById('contactEmail').textContent = data.email;
+                    if (emailElement) {
+                        emailElement.textContent = data.email || DEFAULT_CONTACTS.email;
                     }
-                    if (data.address) {
-                        document.getElementById('contactAddress').textContent = data.address;
+                    if (addressElement) {
+                        addressElement.textContent = data.address || DEFAULT_CONTACTS.address;
                     }
                     
-                    // به‌روزرسانی تصویر درباره ما
+                    // ====== به‌روزرسانی تصویر درباره ما ======
                     if (data.about_image) {
                         const img = document.getElementById('aboutImage');
                         const placeholder = document.getElementById('aboutPlaceholder');
@@ -1645,7 +1643,7 @@
                         placeholder.style.display = 'none';
                     }
                     
-                    // به‌روزرسانی آمار
+                    // ====== به‌روزرسانی آمار ======
                     const statYears = document.getElementById('statYears');
                     if (statYears && data.stat_years) {
                         statYears.innerHTML = `<span>${data.stat_years}</span> سال سابقه`;
@@ -1661,18 +1659,18 @@
                         statPrivacy.innerHTML = `<span>${data.stat_privacy}</span> حریم خصوصی`;
                     }
                     
-                    // به‌روزرسانی فوتر
+                    // ====== به‌روزرسانی فوتر ======
                     const footerText = document.getElementById('footerText');
                     if (footerText && data.footer_text) {
                         footerText.innerHTML = data.footer_text;
                     }
                     
-                    // به‌روزرسانی عنوان سایت
+                    // ====== به‌روزرسانی عنوان سایت ======
                     if (data.site_name) {
                         document.title = data.site_name;
                     }
                     
-                    // به‌روزرسانی تگ‌های متا
+                    // ====== به‌روزرسانی تگ‌های متا ======
                     if (data.meta_description) {
                         const metaDesc = document.querySelector('meta[name="description"]');
                         if (metaDesc) metaDesc.content = data.meta_description;
@@ -1683,7 +1681,7 @@
                         if (metaKeywords) metaKeywords.content = data.meta_keywords;
                     }
                     
-                    // به‌روزرسانی رنگ‌ها
+                    // ====== به‌روزرسانی رنگ‌ها ======
                     if (data.color_primary) {
                         document.documentElement.style.setProperty('--primary', data.color_primary);
                     }
@@ -1693,6 +1691,11 @@
                 })
                 .catch(error => {
                     console.error('❌ خطا در دریافت تنظیمات:', error);
+                    // در صورت خطا، از مقادیر پیش‌فرض استفاده کن
+                    document.getElementById('contactPhone').textContent = DEFAULT_CONTACTS.phone;
+                    document.getElementById('contactMobile').textContent = DEFAULT_CONTACTS.mobile;
+                    document.getElementById('contactEmail').textContent = DEFAULT_CONTACTS.email;
+                    document.getElementById('contactAddress').textContent = DEFAULT_CONTACTS.address;
                 });
         }
 
@@ -1707,7 +1710,6 @@
             loadComments();
             loadSettings();
             
-            // به‌روزرسانی دوره‌ای سبد خرید
             setInterval(updateCartBadge, 30000);
         });
     </script>
