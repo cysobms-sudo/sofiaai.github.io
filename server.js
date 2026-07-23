@@ -10,7 +10,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// CORS
+// ===== تنظیمات CORS =====
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// ===== تنظیمات Express =====
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
@@ -45,21 +46,16 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('فایل باید تصویر باشد'), false);
-    }
-};
-
 const upload = multer({
     storage: storage,
-    limits: { 
-        fileSize: 10 * 1024 * 1024,
-        files: 1
-    },
-    fileFilter: fileFilter
+    limits: { fileSize: 10 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('فایل باید تصویر باشد'), false);
+        }
+    }
 });
 
 // ===== دیتابیس =====
@@ -106,29 +102,21 @@ app.get('/admin.html', (req, res) => {
 app.get('/article.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'article.html'));
 });
+app.get('/service-chatbot.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
+});
 
 // ==================================================
 // ===== API آپلود =====
 // ==================================================
 app.post('/api/upload', upload.single('image'), (req, res) => {
     try {
-        console.log('📤 درخواست آپلود دریافت شد');
-        
         if (!req.file) {
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
         }
-
         const imageUrl = '/images/gallery/' + req.file.filename;
-        console.log('✅ تصویر ذخیره شد:', imageUrl);
-        
-        res.json({ 
-            success: true,
-            url: imageUrl,
-            filename: req.file.filename,
-            message: '✅ تصویر با موفقیت آپلود شد!'
-        });
+        res.json({ success: true, url: imageUrl, filename: req.file.filename, message: '✅ تصویر با موفقیت آپلود شد!' });
     } catch (error) {
-        console.error('❌ خطا در آپلود:', error);
         res.status(500).json({ error: 'خطا در آپلود تصویر: ' + error.message });
     }
 });
@@ -142,7 +130,6 @@ app.get('/api/gallery', (req, res) => {
             console.error('❌ خطا در دریافت گالری:', err);
             return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
         }
-        console.log('📸 تعداد تصاویر گالری:', results.length);
         res.json(results);
     });
 });
@@ -166,25 +153,12 @@ app.post('/api/gallery', (req, res) => {
 
 app.delete('/api/gallery/:id', (req, res) => {
     const galleryId = req.params.id;
-    db.query('SELECT image_url FROM gallery WHERE id = ?', [galleryId], (err, results) => {
+    db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
         if (err) {
-            console.error('❌ خطا در دریافت تصویر:', err);
-            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            console.error('❌ خطا در حذف تصویر:', err);
+            return res.status(500).json({ error: 'خطا در حذف تصویر' });
         }
-        if (results.length === 0) {
-            return res.status(404).json({ error: 'تصویر یافت نشد' });
-        }
-        const imagePath = path.join(__dirname, 'public', results[0].image_url);
-        if (fs.existsSync(imagePath)) {
-            try { fs.unlinkSync(imagePath); } catch(e) {}
-        }
-        db.query('DELETE FROM gallery WHERE id = ?', [galleryId], (err, result) => {
-            if (err) {
-                console.error('❌ خطا در حذف تصویر:', err);
-                return res.status(500).json({ error: 'خطا در حذف تصویر' });
-            }
-            res.json({ message: '✅ تصویر با موفقیت حذف شد!' });
-        });
+        res.json({ message: '✅ تصویر با موفقیت حذف شد!' });
     });
 });
 
@@ -192,13 +166,12 @@ app.delete('/api/gallery/:id', (req, res) => {
 // ===== API مقالات =====
 // ==================================================
 app.get('/api/articles', (req, res) => {
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles ORDER BY id DESC', 
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC', 
         (err, results) => {
             if (err) {
                 console.error('❌ خطا در دریافت مقالات:', err);
                 return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
             }
-            console.log('📚 تعداد مقالات:', results.length);
             const articlesWithPersianDate = results.map(article => {
                 const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD');
                 return { ...article, created_at: persianDate };
@@ -210,8 +183,6 @@ app.get('/api/articles', (req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
     const articleId = req.params.id;
-    console.log('📖 دریافت مقاله با ID:', articleId);
-    
     db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?',
         [articleId],
         (err, results) => {
@@ -220,12 +191,10 @@ app.get('/api/articles/:id', (req, res) => {
                 return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
             }
             if (results.length === 0) {
-                console.log('❌ مقاله با ID', articleId, 'پیدا نشد');
                 return res.status(404).json({ error: 'مقاله یافت نشد' });
             }
             const article = results[0];
             article.created_at = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
-            console.log('✅ مقاله پیدا شد:', article.title);
             res.json(article);
         }
     );
@@ -408,21 +377,12 @@ app.get('/api/users', (req, res) => {
 
 app.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
-    db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
+    db.query('DELETE FROM users WHERE id = ?', [userId], (err, result) => {
         if (err) {
-            console.error('❌ خطا در بررسی کاربر:', err);
-            return res.status(500).json({ error: 'خطا در دیتابیس' });
+            console.error('❌ خطا در حذف کاربر:', err);
+            return res.status(500).json({ error: 'خطا در حذف کاربر' });
         }
-        if (results.length === 0) {
-            return res.status(404).json({ error: 'کاربر پیدا نشد.' });
-        }
-        db.query('DELETE FROM users WHERE id = ?', [userId], (err, result) => {
-            if (err) {
-                console.error('❌ خطا در حذف کاربر:', err);
-                return res.status(500).json({ error: 'خطا در حذف کاربر' });
-            }
-            res.json({ message: '✅ کاربر با موفقیت حذف شد!' });
-        });
+        res.json({ message: '✅ کاربر با موفقیت حذف شد!' });
     });
 });
 
@@ -598,10 +558,7 @@ app.put('/api/admin/settings', (req, res) => {
         });
     });
     Promise.all(queries)
-        .then(() => {
-            console.log('✅ تنظیمات ذخیره شد');
-            res.json({ message: '✅ تنظیمات با موفقیت ذخیره شد!' });
-        })
+        .then(() => res.json({ message: '✅ تنظیمات با موفقیت ذخیره شد!' }))
         .catch(err => {
             console.error('❌ خطا در ذخیره تنظیمات:', err);
             res.status(500).json({ error: 'خطا در ذخیره تنظیمات' });
@@ -744,16 +701,14 @@ app.post('/api/chatbot-requests', (req, res) => {
     if (!name || !phone) {
         return res.status(400).json({ error: 'نام و شماره تماس الزامی است.' });
     }
-    db.query('INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)',
-        [name, phone, email || null, description || null],
-        (err, result) => {
-            if (err) {
-                console.error('❌ خطا در ذخیره درخواست:', err);
-                return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
-            }
-            res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
+    const query = 'INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, phone, email || null, description || null], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در ذخیره درخواست:', err);
+            return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
         }
-    );
+        res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
+    });
 });
 
 app.delete('/api/chatbot-requests/:id', (req, res) => {
