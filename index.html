@@ -1379,7 +1379,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری =====
+        // ===== بارگذاری گالری (اصلاح شده) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1394,7 +1394,10 @@
             const timestamp = new Date().getTime();
             
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت گالری (کد ' + res.status + ')');
+                    return res.json();
+                })
                 .then(data => {
                     const validData = data.filter(item => item.image_url && item.image_url.trim() !== '');
                     
@@ -1417,13 +1420,20 @@
                         let imageUrl = item.image_url || '/logo5.png';
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         
+                        // اصلاح مسیر تصویر - اگر با /images/ شروع شده باشد
                         if (imageUrl.startsWith('/images/')) {
-                            imageUrl = 'https://sofiaaisite.runflare.run' + imageUrl;
-                        } else if (!imageUrl.startsWith('http')) {
-                            imageUrl = 'https://sofiaaisite.runflare.run/' + imageUrl;
+                            // مسیر نسبی است، به همان صورت باقی می‌ماند
+                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                        } else if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                            // آدرس کامل است
+                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                        } else {
+                            // آدرس نسبی است
+                            if (!imageUrl.startsWith('/')) {
+                                imageUrl = '/' + imageUrl;
+                            }
+                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         }
-                        
-                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         
                         html += `
                             <div class="gallery-item">
@@ -1455,7 +1465,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری مقالات (اصلاح شده) =====
+        // ===== بارگذاری مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesContainer');
@@ -1537,8 +1547,19 @@
         function loadComments() {
             const container = document.getElementById('commentsContainer');
             
+            container.innerHTML = `
+                <h3>📋 نظرات اخیر</h3>
+                <div style="text-align:center; padding:20px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                    <p>در حال بارگذاری نظرات...</p>
+                </div>
+            `;
+            
             fetch(`${API_BASE}/api/comments/approved`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت نظرات');
+                    return res.json();
+                })
                 .then(data => {
                     if (data.length === 0) {
                         container.innerHTML = `
@@ -1570,6 +1591,9 @@
                         <div style="text-align:center; padding:20px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:1.5rem; display:block; margin-bottom:8px;"></i>
                             <p>خطا در دریافت نظرات.</p>
+                            <button onclick="loadComments()" style="margin-top:8px; padding:6px 20px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:'Vazirmatn',sans-serif;">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
                         </div>
                     `;
                 });
@@ -1604,7 +1628,7 @@
                     this.reset();
                     loadComments();
                 } else {
-                    showToast('❌ ' + data.error, 'error');
+                    showToast('❌ ' + (data.error || 'خطا در ارسال نظر'), 'error');
                 }
             } catch (error) {
                 console.error('❌ خطا:', error);
@@ -1646,7 +1670,10 @@
         // =============================================
         function loadSettings() {
             fetch(`${API_BASE}/api/admin/settings`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت تنظیمات');
+                    return res.json();
+                })
                 .then(data => {
                     console.log('📥 تنظیمات دریافت شد:', data);
                     
