@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
+        /* ===== استایل‌ها ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -906,7 +907,7 @@
                 title: title,
                 description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\n\n${description}`,
                 priority: 'high',
-                category: 'webdesign'
+                category: 'webdesign'  // این مقدار باید در دیتابیس پذیرفته شود
             };
             
             console.log('📤 ارسال درخواست:', requestBody);
