@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>دستیار مکالمه‌ای | توسعه‌دهنده هوش مصنوعی سوفیا</title>
+    <title>دستیار مکالمه‌ای | سوفیا AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
+        /* استایل‌های مشابه سرویس اتوماسیون */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -190,7 +191,7 @@
             display: inline-block;
         }
 
-        /* ===== بخش اصلی صفحه ===== */
+        /* ===== بخش اصلی ===== */
         .service-hero {
             padding: 60px 0 40px;
             background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
@@ -226,7 +227,6 @@
             box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2);
         }
 
-        /* ===== ویژگی‌ها ===== */
         .features-section {
             padding: 50px 0;
             background: #fff;
@@ -265,96 +265,6 @@
             font-size: 0.95rem;
         }
 
-        /* ===== نمونه‌کارها ===== */
-        .samples-section {
-            padding: 50px 0;
-            background: var(--bg-light);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .samples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-        .sample-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 28px;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-        .sample-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--secondary);
-            box-shadow: var(--shadow-hover);
-        }
-        .sample-card .sample-image {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(145deg, #eef2ff, #e0e7ff);
-            border-radius: 16px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--primary-light);
-        }
-        .sample-card h4 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .sample-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.9;
-        }
-        .sample-card .result {
-            display: inline-block;
-            background: rgba(108, 60, 225, 0.06);
-            color: var(--primary);
-            padding: 4px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-top: 12px;
-        }
-        .sample-card .demo-link {
-            display: inline-block;
-            margin-top: 12px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .sample-card .demo-link i {
-            margin-right: 6px;
-            transition: transform 0.3s;
-        }
-        .sample-card:hover .demo-link i {
-            transform: translateX(-4px);
-        }
-        .add-to-cart-sample {
-            display: inline-block;
-            margin-top: 12px;
-            background: var(--secondary);
-            color: var(--text-dark);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .add-to-cart-sample:hover {
-            transform: scale(1.04);
-            background: var(--secondary-light);
-            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2);
-        }
-
-        /* ===== فرم درخواست ساخت چت‌بات ===== */
         .request-section {
             padding: 50px 0;
             background: #fff;
@@ -462,7 +372,6 @@
             border: 1px solid #bee5eb;
         }
 
-        /* ===== CTA خرید ===== */
         .cta-section {
             padding: 50px 0;
             text-align: center;
@@ -517,7 +426,6 @@
             opacity: 1;
         }
 
-        /* ===== Toast ===== */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -555,7 +463,6 @@
             to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
         }
 
-        /* ===== فوتر ===== */
         footer {
             padding: 40px 0 24px;
             border-top: 2px solid var(--secondary);
@@ -563,9 +470,7 @@
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-        footer strong {
-            color: var(--text-dark);
-        }
+        footer strong { color: var(--text-dark); }
         footer .footer-links {
             display: flex;
             justify-content: center;
@@ -582,13 +487,10 @@
         @media (max-width: 768px) {
             .service-hero h1 { font-size: 2.2rem; }
             .service-hero p { font-size: 1rem; }
-            .samples-grid { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr 1fr; }
             .navbar .container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; width: 100%; }
             .logo-image { height: 70px; max-width: 240px; }
             .request-box { padding: 24px 18px; }
-            footer .footer-links { gap: 12px; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
@@ -603,7 +505,6 @@
 </head>
 <body>
 
-    <!-- ===== نوار ناوبری ===== -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo-wrapper">
@@ -631,151 +532,59 @@
         </div>
     </nav>
 
-    <!-- ===== بخش اصلی ===== -->
     <section class="service-hero fade-up">
         <div class="container">
-            <h1>🤖 <span class="highlight">دستیار مکالمه‌ای</span> (چت‌بات هوشمند)</h1>
+            <h1>💬 <span class="highlight">دستیار مکالمه‌ای</span> (چت‌بات هوشمند)</h1>
             <p>
-                یک دستیار هوشمند ۲۴/۷ که به سوالات مشتریان پاسخ می‌دهد، فروش را افزایش می‌دهد و تجربه‌ی کاربری را متحول می‌کند.
+                با استفاده از هوش مصنوعی، یک چت‌بات حرفه‌ای برای پشتیبانی، فروش و تعامل با مشتریان خود طراحی کنید.
             </p>
-            <span class="price-tag">💰 از ۵ میلیون تومان</span>
+            <span class="price-tag">💰 از ۴ میلیون تومان</span>
         </div>
     </section>
 
-    <!-- ===== ویژگی‌ها ===== -->
     <section class="features-section fade-up">
         <div class="container">
-            <h2 style="text-align:center; font-size:2rem; margin-bottom:30px;">✨ ویژگی‌های دستیار مکالمه‌ای</h2>
+            <h2 style="text-align:center; font-size:2rem; margin-bottom:30px;">✨ ویژگی‌های چت‌بات هوشمند</h2>
             <div class="features-grid">
                 <div class="feature-box">
-                    <span class="icon">🤖</span>
-                    <h4>پاسخ‌دهی هوشمند</h4>
-                    <p>با استفاده از مدل‌های زبانی پیشرفته، به سوالات مشتریان پاسخ دقیق می‌دهد.</p>
+                    <span class="icon">🧠</span>
+                    <h4>هوش مصنوعی پیشرفته</h4>
+                    <p>پاسخ‌های طبیعی و دقیق با استفاده از مدل‌های زبانی بزرگ.</p>
                 </div>
                 <div class="feature-box">
-                    <span class="icon">🕒</span>
-                    <h4>پشتیبانی ۲۴/۷</h4>
-                    <p>بدون نیاز به نیروی انسانی، همیشه در دسترس است.</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">📈</span>
-                    <h4>افزایش فروش</h4>
-                    <p>با پیشنهاد محصولات مناسب، نرخ تبدیل را افزایش می‌دهد.</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">🔒</span>
-                    <h4>حریم خصوصی</h4>
-                    <p>داده‌های شما در سرورهای خصوصی ذخیره می‌شود.</p>
+                    <span class="icon">🎯</span>
+                    <h4>شخصی‌سازی</h4>
+                    <p>تنظیم لحن، سبک و شخصیت چت‌بات بر اساس برند شما.</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🔌</span>
-                    <h4>اتصال به API</h4>
-                    <p>قابلیت اتصال به سیستم‌های شما از طریق API.</p>
+                    <h4>اتصال به سیستم‌ها</h4>
+                    <p>اتصال به CRM، دیتابیس و APIهای سازمانی.</p>
                 </div>
                 <div class="feature-box">
-                    <span class="icon">🎨</span>
-                    <h4>شخصی‌سازی کامل</h4>
-                    <p>ظاهر و رفتار چت‌بات مطابق با برند شما تنظیم می‌شود.</p>
+                    <span class="icon">📊</span>
+                    <h4>تحلیل مکالمات</h4>
+                    <p>گزارش‌های تحلیلی از مکالمات و رضایت مشتریان.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="icon">🌐</span>
+                    <h4>چندزبانه</h4>
+                    <p>پشتیبانی از زبان فارسی، انگلیسی و سایر زبان‌ها.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="icon">🔒</span>
+                    <h4>امنیت بالا</h4>
+                    <p>رمزنگاری و حفظ حریم خصوصی مکالمات.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== نمونه‌کارها ===== -->
-    <section class="samples-section fade-up">
-        <div class="container">
-            <h2 style="text-align:center; font-size:2rem; margin-bottom:30px;">📌 نمونه‌های ساخته‌شده</h2>
-            <div class="samples-grid">
-                <div class="sample-card">
-                    <div class="sample-image">🤖</div>
-                    <h4>چت‌بات رستوران ساندویچی</h4>
-                    <p>چت‌بات سفارش‌دهی آنلاین با افزایش ۳۰٪ سفارشات.</p>
-                    <span class="result">📈 افزایش ۳۰٪ فروش</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('چت‌بات رستوران ساندویچی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">🛒</div>
-                    <h4>دستیار فروشگاهی</h4>
-                    <p>راهنمای خرید هوشمند برای محصولات فروشگاهی.</p>
-                    <span class="result">⭐ تجربه کاربری عالی</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار فروشگاهی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">💬</div>
-                    <h4>دستیار پشتیبانی سازمانی</h4>
-                    <p>پاسخ‌دهی خودکار به سوالات متداول کارکنان.</p>
-                    <span class="result">⚡ کاهش ۷۰٪ تیکت‌ها</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار پشتیبانی سازمانی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">🏥</div>
-                    <h4>دستیار پزشکی</h4>
-                    <p>راهنمای بیماران و پاسخ به سوالات پزشکی عمومی.</p>
-                    <span class="result">🩺 خدمات درمانی هوشمند</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار پزشکی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">📚</div>
-                    <h4>دستیار آموزشی</h4>
-                    <p>آموزش زبان و مفاهیم علمی با روش‌های تعاملی.</p>
-                    <span class="result">🎓 یادگیری هوشمند</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار آموزشی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">🏨</div>
-                    <h4>دستیار هتلداری</h4>
-                    <p>رزرو اتاق، پاسخ به سوالات مهمانان و خدمات هتل.</p>
-                    <span class="result">⭐ افزایش رضایت مهمانان</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار هتلداری', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">📞</div>
-                    <h4>دستیار مرکز تماس</h4>
-                    <p>مدیریت تماس‌ها و پاسخ‌دهی خودکار به مشتریان.</p>
-                    <span class="result">📊 افزایش بهره‌وری</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار مرکز تماس', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-                <div class="sample-card">
-                    <div class="sample-image">📋</div>
-                    <h4>دستیار فرم‌های آنلاین</h4>
-                    <p>راهنمای پر کردن فرم‌ها و جمع‌آوری اطلاعات.</p>
-                    <span class="result">📈 افزایش نرخ تکمیل فرم</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('دستیار فرم‌های آنلاین', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== فرم درخواست ساخت چت‌بات سفارشی ===== -->
     <section class="request-section fade-up" id="request">
         <div class="container">
             <div class="request-box">
-                <h2>✍️ درخواست ساخت چت‌بات سفارشی</h2>
-                <p class="sub">نیاز خود را توضیح دهید تا بر اساس آن، چت‌بات اختصاصی شما طراحی شود.</p>
+                <h2>✍️ درخواست طراحی چت‌بات</h2>
+                <p class="sub">نیاز خود را توضیح دهید تا چت‌بات اختصاصی شما طراحی شود.</p>
                 <form id="requestForm">
                     <label>نام و نام خانوادگی <span class="required">*</span></label>
                     <input type="text" id="requestName" placeholder="نام خود را وارد کنید" required />
@@ -787,7 +596,7 @@
                     <input type="email" id="requestEmail" placeholder="ایمیل خود را وارد کنید" />
                     
                     <label>توضیحات نیاز شما <span class="required">*</span></label>
-                    <textarea id="requestDescription" placeholder="لطفاً توضیح دهید که چه نوع چت‌باتی نیاز دارید..." required></textarea>
+                    <textarea id="requestDescription" placeholder="لطفاً توضیح دهید چت‌بات شما چه کاربردی دارد؟ برای چه صنعتی؟ چه قابلیت‌هایی باید داشته باشد؟" required></textarea>
                     
                     <button type="submit" class="btn-submit" id="submitBtn">📩 ارسال درخواست</button>
                 </form>
@@ -796,13 +605,12 @@
         </div>
     </section>
 
-    <!-- ===== CTA خرید ===== -->
     <section class="cta-section fade-up">
         <div class="container">
             <div class="cta-box">
-                <h2>🚀 آماده‌اید دستیار مکالمه‌ای خود را داشته باشید؟</h2>
+                <h2>🚀 آماده‌اید یک چت‌بات هوشمند برای کسب‌وکار خود داشته باشید؟</h2>
                 <p>همین حالا آن را به سبد خرید اضافه کنید و از مشاوره رایگان تیم سوفیا بهره‌مند شوید.</p>
-                <button class="btn-add-cart" onclick="addToCart('دستیار مکالمه‌ای', 'رایگان')">
+                <button class="btn-add-cart" onclick="addToCart('دستیار مکالمه‌ای (چت‌بات)', 'رایگان')">
                     <i class="fas fa-plus"></i> افزودن به سبد خرید
                 </button>
                 <br>
@@ -811,7 +619,6 @@
         </div>
     </section>
 
-    <!-- ===== فوتر ===== -->
     <footer>
         <div class="container">
             <div class="footer-links">
@@ -829,12 +636,8 @@
     </footer>
 
     <script>
-        // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
-        // =============================================
-        // ===== نمایش نام کاربر =====
-        // =============================================
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
@@ -876,9 +679,6 @@
             }
         }
 
-        // =============================================
-        // ===== به‌روزرسانی تعداد سبد خرید =====
-        // =============================================
         function updateCartBadge() {
             const userData = localStorage.getItem('user');
             const badge = document.getElementById('cartCount');
@@ -905,9 +705,6 @@
             }
         }
 
-        // =============================================
-        // ===== Toast =====
-        // =============================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer') || createToastContainer();
             const toast = document.createElement('div');
@@ -931,50 +728,38 @@
             return newContainer;
         }
 
-        // =============================================
-        // ===== افزودن به سبد خرید =====
-        // =============================================
         async function addToCart(itemName, itemPrice) {
             const userData = localStorage.getItem('user');
             if (!userData) {
-                showToast('⚠️ لطفاً ابتدا وارد شوید.', 'warning');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1500);
+                showToast('⚠️ لطفاً ابتدا وارد حساب کاربری خود شوید.', 'warning');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
                 return;
             }
-
-            const user = JSON.parse(userData);
-            const userId = user.id;
-
+            
             try {
+                const user = JSON.parse(userData);
+                const userId = user.id;
+                
                 const response = await fetch(`${API_BASE}/api/cart`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        item_name: itemName,
-                        item_price: itemPrice || 'رایگان'
-                    })
+                    body: JSON.stringify({ user_id: userId, item_name: itemName, item_price: itemPrice })
                 });
-
+                
                 const data = await response.json();
-
+                
                 if (response.ok) {
                     showToast('✅ ' + data.message, 'success');
                     updateCartBadge();
                 } else {
-                    showToast('❌ ' + (data.error || 'خطا در افزودن به سبد خرید'), 'error');
+                    showToast('❌ ' + data.error, 'error');
                 }
             } catch (error) {
                 console.error('❌ خطا:', error);
-                showToast('❌ خطا در ارتباط با سرور.', 'error');
+                showToast('❌ خطا در افزودن به سبد خرید', 'error');
             }
         }
 
-        // =============================================
-        // ===== ارسال فرم درخواست چت‌بات =====
-        // =============================================
         document.getElementById('requestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -983,79 +768,82 @@
             const email = document.getElementById('requestEmail').value.trim();
             const description = document.getElementById('requestDescription').value.trim();
             
-            const messageDiv = document.getElementById('requestMessage');
+            if (!name || !phone || !description) {
+                showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
+                return;
+            }
+            
             const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.textContent;
+            const messageDiv = document.getElementById('requestMessage');
             
-            // ===== اعتبارسنجی =====
-            if (!name) {
-                messageDiv.className = 'message error';
-                messageDiv.style.display = 'block';
-                messageDiv.textContent = '❌ لطفاً نام خود را وارد کنید.';
-                return;
-            }
-            
-            if (!phone) {
-                messageDiv.className = 'message error';
-                messageDiv.style.display = 'block';
-                messageDiv.textContent = '❌ لطفاً شماره تماس خود را وارد کنید.';
-                return;
-            }
-            
-            if (!description || description.length < 5) {
-                messageDiv.className = 'message error';
-                messageDiv.style.display = 'block';
-                messageDiv.textContent = '❌ لطفاً توضیحات نیاز خود را وارد کنید.';
-                return;
-            }
-            
-            // ===== غیرفعال کردن دکمه =====
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ در حال ارسال...';
+            messageDiv.className = 'message';
+            messageDiv.style.display = 'none';
             
-            messageDiv.className = 'message info';
-            messageDiv.style.display = 'block';
-            messageDiv.textContent = '⏳ در حال ارسال درخواست...';
+            const userData = localStorage.getItem('user');
+            let userId = 0;
+            let userEmail = email;
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    userId = user.id || 0;
+                    userEmail = user.email || email;
+                } catch(e) {
+                    console.error('خطا در خواندن اطلاعات کاربر:', e);
+                }
+            }
+            
+            const title = `درخواست چت‌بات هوشمند - ${name}`;
+            
+            const requestBody = {
+                user_id: userId,
+                title: title,
+                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\n\n${description}`,
+                priority: 'high',
+                category: 'chatbot'
+            };
+            
+            console.log('📤 ارسال درخواست:', requestBody);
             
             try {
-                const response = await fetch(`${API_BASE}/api/chatbot-requests`, {
+                const response = await fetch(`${API_BASE}/api/user-requests`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ name, phone, email, description })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
                 });
                 
                 const data = await response.json();
+                console.log('📥 پاسخ سرور:', data);
                 
                 if (response.ok) {
+                    messageDiv.textContent = '✅ ' + data.message + ' تیم سوفیا به زودی با شما تماس خواهد گرفت.';
                     messageDiv.className = 'message success';
-                    messageDiv.textContent = '✅ ' + data.message;
+                    messageDiv.style.display = 'block';
                     this.reset();
-                    showToast('✅ درخواست شما ثبت شد!', 'success');
+                    showToast('✅ درخواست شما با موفقیت ثبت شد!', 'success');
                 } else {
+                    messageDiv.textContent = '❌ ' + (data.error || 'خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.');
                     messageDiv.className = 'message error';
-                    messageDiv.textContent = '❌ ' + (data.error || 'خطا در ارسال درخواست');
+                    messageDiv.style.display = 'block';
+                    showToast('❌ ' + (data.error || 'خطا در ثبت درخواست'), 'error');
                 }
             } catch (error) {
-                console.error('❌ خطا:', error);
-                messageDiv.className = 'message error';
+                console.error('❌ خطا در ارسال درخواست:', error);
                 messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
                 showToast('❌ خطا در ارتباط با سرور', 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                submitBtn.textContent = '📩 ارسال درخواست';
             }
         });
 
-        // =============================================
-        // ===== مقداردهی اولیه =====
-        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
             updateUserDisplay();
             updateCartBadge();
-            
             setInterval(updateCartBadge, 30000);
         });
     </script>
