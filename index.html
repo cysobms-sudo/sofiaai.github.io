@@ -559,8 +559,8 @@
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
         .gallery-item {
             border-radius: 16px;
@@ -785,6 +785,58 @@
             box-shadow: 0 8px 30px rgba(255, 184, 0, 0.3);
         }
 
+        /* ===== دکمه درخواست همکاری ===== */
+        .cooperation-section {
+            padding: 40px 0;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .cooperation-section .cooperation-box {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            border: 2px solid var(--secondary);
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cooperation-section h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+        .cooperation-section h2 .highlight {
+            color: var(--primary);
+        }
+        .cooperation-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 24px;
+        }
+        .btn-cooperation {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.25);
+            text-decoration: none;
+        }
+        .btn-cooperation:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.35);
+        }
+
         /* ===== فوتر ===== */
         footer {
             padding: 40px 0 24px;
@@ -895,6 +947,9 @@
             .contact-item {
                 font-size: 0.85rem;
             }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -904,6 +959,9 @@
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
             .about-text .about-stats { gap: 16px; }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -926,6 +984,7 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
+                <a href="#cooperation">درخواست همکاری</a>
                 <a href="admin.html" class="admin-link"><i class="fas fa-cog"></i> مدیریت</a>
                 <span id="userNameDisplay" class="user-name-display"></span>
                 <a href="register.html" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
@@ -985,19 +1044,19 @@
                         <div class="contact-items">
                             <span class="contact-item">
                                 <i class="fas fa-phone"></i>
-                                <span id="contactPhone">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                                <span id="contactPhone">در حال بارگذاری...</span>
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-mobile-alt"></i>
-                                <span id="contactMobile">۰۹۱۳۰۷۷۱۱۲۸</span>
+                                <span id="contactMobile">در حال بارگذاری...</span>
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-envelope"></i>
-                                <span id="contactEmail">cysobms@gmail.com</span>
+                                <span id="contactEmail">در حال بارگذاری...</span>
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span id="contactAddress">تهران، خیابان ولیعصر، پلاک ۱۲۳</span>
+                                <span id="contactAddress">در حال بارگذاری...</span>
                             </span>
                         </div>
                     </div>
@@ -1096,7 +1155,7 @@
     <section class="gallery-section fade-up" id="gallery">
         <div class="container">
             <div class="section-header">
-                <div><h2>🖼️ گالری نمونه‌کارها</h2><span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span></div>
+                <div><h2>🖼️ گالری نمونه‌کارها</h2></div>
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="gallery-grid" id="galleryContainer">
@@ -1155,6 +1214,20 @@
         </div>
     </section>
 
+    <!-- ===== بخش درخواست همکاری ===== -->
+    <section class="cooperation-section fade-up" id="cooperation">
+        <div class="container">
+            <div class="cooperation-box">
+                <h2>🤝 درخواست <span class="highlight">همکاری</span></h2>
+                <p>اگر به دنبال همکاری در زمینه هوش مصنوعی، توسعه نرم‌افزار یا مشاوره هستید، با ما در ارتباط باشید.</p>
+                <a href="#" class="btn-cooperation" id="cooperationBtn">
+                    <i class="fas fa-handshake"></i>
+                    درخواست همکاری
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== CTA ===== -->
     <section class="cta-section fade-up">
         <div class="container">
@@ -1174,6 +1247,7 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
+                <a href="#cooperation">درخواست همکاری</a>
                 <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
                 <a href="login.html" class="btn-login-footer">ورود</a>
             </div>
@@ -1184,14 +1258,6 @@
     <script>
         // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
-
-        // ===== مقادیر پیش‌فرض =====
-        const DEFAULT_CONTACTS = {
-            phone: '۰۲۱-۱۲۳۴۵۶۷۸',
-            mobile: '۰۹۱۳۰۷۷۱۱۲۸',
-            email: 'cysobms@gmail.com',
-            address: 'تهران، خیابان ولیعصر، پلاک ۱۲۳'
-        };
 
         // =============================================
         // ===== Toast =====
@@ -1318,7 +1384,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (با آدرس دهی صحیح) =====
+        // ===== بارگذاری گالری =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1356,17 +1422,12 @@
                         let imageUrl = item.image_url || '/logo5.png';
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         
-                        // ===== اصلاح آدرس تصویر =====
-                        // اگر آدرس با /images/ شروع می‌شود، آدرس کامل از سرور اصلی بساز
                         if (imageUrl.startsWith('/images/')) {
                             imageUrl = 'https://sofiaaisite.runflare.run' + imageUrl;
-                        } 
-                        // اگر با http شروع نمی‌شود، آدرس کامل بساز
-                        else if (!imageUrl.startsWith('http')) {
+                        } else if (!imageUrl.startsWith('http')) {
                             imageUrl = 'https://sofiaaisite.runflare.run/' + imageUrl;
                         }
                         
-                        // اضافه کردن تایم‌استمپ برای جلوگیری از کش
                         imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         
                         html += `
@@ -1547,6 +1608,14 @@
         });
 
         // =============================================
+        // ===== دکمه درخواست همکاری =====
+        // =============================================
+        document.getElementById('cooperationBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast('🔜 صفحه درخواست همکاری به زودی ایجاد می‌شود.', 'info');
+        });
+
+        // =============================================
         // ===== بارگذاری تنظیمات سایت =====
         // =============================================
         function loadSettings() {
@@ -1624,23 +1693,23 @@
                         document.getElementById('aboutReadMoreBtn').style.display = 'inline-flex';
                     }
                     
-                    // ====== به‌روزرسانی اطلاعات تماس ======
+                    // ====== به‌روزرسانی اطلاعات تماس از دیتابیس ======
                     const phoneElement = document.getElementById('contactPhone');
                     const mobileElement = document.getElementById('contactMobile');
                     const emailElement = document.getElementById('contactEmail');
                     const addressElement = document.getElementById('contactAddress');
                     
                     if (phoneElement) {
-                        phoneElement.textContent = data.phone || DEFAULT_CONTACTS.phone;
+                        phoneElement.textContent = data.phone || '۰۲۱-۱۲۳۴۵۶۷۸';
                     }
                     if (mobileElement) {
-                        mobileElement.textContent = data.mobile || DEFAULT_CONTACTS.mobile;
+                        mobileElement.textContent = data.mobile || '۰۹۱۳۰۷۷۱۱۲۸';
                     }
                     if (emailElement) {
-                        emailElement.textContent = data.email || DEFAULT_CONTACTS.email;
+                        emailElement.textContent = data.email || 'cysobms@gmail.com';
                     }
                     if (addressElement) {
-                        addressElement.textContent = data.address || DEFAULT_CONTACTS.address;
+                        addressElement.textContent = data.address || 'تهران، خیابان ولیعصر، پلاک ۱۲۳';
                     }
                     
                     // به‌روزرسانی تصویر درباره ما
@@ -1701,11 +1770,6 @@
                 })
                 .catch(error => {
                     console.error('❌ خطا در دریافت تنظیمات:', error);
-                    // در صورت خطا، از مقادیر پیش‌فرض استفاده کن
-                    document.getElementById('contactPhone').textContent = DEFAULT_CONTACTS.phone;
-                    document.getElementById('contactMobile').textContent = DEFAULT_CONTACTS.mobile;
-                    document.getElementById('contactEmail').textContent = DEFAULT_CONTACTS.email;
-                    document.getElementById('contactAddress').textContent = DEFAULT_CONTACTS.address;
                 });
         }
 
