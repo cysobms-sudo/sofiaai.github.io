@@ -58,7 +58,7 @@ const upload = multer({
     }
 });
 
-// ===== دیتابیس =====
+// ===== اتصال به دیتابیس =====
 const db = mysql.createConnection({
     host: process.env.DB_HOST || '188.40.16.3',
     user: process.env.DB_USER || 'root',
@@ -105,6 +105,27 @@ app.get('/article.html', (req, res) => {
 app.get('/service-chatbot.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
 });
+app.get('/service-rag.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-rag.html'));
+});
+app.get('/service-automation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-automation.html'));
+});
+app.get('/service-data.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-data.html'));
+});
+app.get('/service-agent-data.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-data.html'));
+});
+app.get('/service-agent-support.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-support.html'));
+});
+app.get('/service-agent-content.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-content.html'));
+});
+app.get('/service-agent-automation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-agent-automation.html'));
+});
 
 // ==================================================
 // ===== API آپلود =====
@@ -139,8 +160,8 @@ app.post('/api/gallery', (req, res) => {
     if (!title || !image_url) {
         return res.status(400).json({ error: 'عنوان و آدرس تصویر الزامی است.' });
     }
-    db.query('INSERT INTO gallery (title, description, image_url) VALUES (?, ?, ?)', 
-        [title, description || '', image_url], 
+    db.query('INSERT INTO gallery (title, description, image_url) VALUES (?, ?, ?)',
+        [title, description || '', image_url],
         (err, result) => {
             if (err) {
                 console.error('❌ خطا در افزودن به گالری:', err);
@@ -166,7 +187,7 @@ app.delete('/api/gallery/:id', (req, res) => {
 // ===== API مقالات =====
 // ==================================================
 app.get('/api/articles', (req, res) => {
-    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC', 
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC',
         (err, results) => {
             if (err) {
                 console.error('❌ خطا در دریافت مقالات:', err);
@@ -408,7 +429,7 @@ app.post('/api/register', async (req, res) => {
                         console.error('❌ خطا در ذخیره کاربر:', err);
                         return res.status(500).json({ error: 'خطا در ثبت‌نام' });
                     }
-                    res.json({ 
+                    res.json({
                         message: '✅ ثبت‌نام با موفقیت انجام شد!',
                         userId: result.insertId,
                         user: { id: result.insertId, name, email, phone }
@@ -442,13 +463,13 @@ app.post('/api/login', async (req, res) => {
                 return res.status(400).json({ error: 'ایمیل یا رمز عبور اشتباه است.' });
             }
             const persianCreatedAt = moment(user.created_at).format('jYYYY/jMM/jDD HH:mm');
-            res.json({ 
+            res.json({
                 message: '✅ ورود با موفقیت انجام شد!',
-                user: { 
-                    id: user.id, 
-                    name: user.name, 
-                    email: user.email, 
-                    phone: user.phone, 
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
                     created_at: persianCreatedAt
                 }
             });
@@ -478,7 +499,7 @@ app.get('/api/cart/:userId', (req, res) => {
 
 app.get('/api/admin/cart', (req, res) => {
     const query = `
-        SELECT cart.id, cart.user_id, cart.item_name, cart.item_price, cart.created_at, 
+        SELECT cart.id, cart.user_id, cart.item_name, cart.item_price, cart.created_at,
                users.name as user_name, users.email as user_email, users.phone as user_phone
         FROM cart JOIN users ON cart.user_id = users.id ORDER BY cart.created_at DESC
     `;
@@ -575,9 +596,11 @@ app.get('/api/admin/stats', (req, res) => {
         pending: "SELECT COUNT(*) as count FROM comments WHERE status = 'pending'",
         users: 'SELECT COUNT(*) as count FROM users',
         cart: 'SELECT COUNT(*) as count FROM cart',
-        gallery: 'SELECT COUNT(*) as count FROM gallery'
+        gallery: 'SELECT COUNT(*) as count FROM gallery',
+        user_requests: 'SELECT COUNT(*) as count FROM user_requests',
+        chatbot_requests: 'SELECT COUNT(*) as count FROM chatbot_requests'
     };
-    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0 };
+    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0, user_requests: 0, chatbot_requests: 0 };
     let completed = 0;
     const totalQueries = Object.keys(queries).length;
     Object.keys(queries).forEach(key => {
@@ -592,8 +615,10 @@ app.get('/api/admin/stats', (req, res) => {
 });
 
 // ==================================================
-// ===== API درخواست‌های کاربران =====
+// ===== API درخواست‌های کاربران (یکپارچه برای همه سرویس‌ها) =====
 // ==================================================
+
+// دریافت لیست درخواست‌های کاربر
 app.get('/api/user-requests/:userId', (req, res) => {
     const userId = req.params.userId;
     db.query(
@@ -613,11 +638,14 @@ app.get('/api/user-requests/:userId', (req, res) => {
     );
 });
 
+// دریافت همه درخواست‌ها (برای مدیریت)
 app.get('/api/admin/user-requests', (req, res) => {
     const query = `
         SELECT ur.id, ur.user_id, ur.title, ur.description, ur.priority, ur.category, ur.status, ur.created_at,
                u.name as user_name, u.email as user_email, u.phone as user_phone
-        FROM user_requests ur JOIN users u ON ur.user_id = u.id ORDER BY ur.id DESC
+        FROM user_requests ur
+        LEFT JOIN users u ON ur.user_id = u.id
+        ORDER BY ur.id DESC
     `;
     db.query(query, (err, results) => {
         if (err) {
@@ -632,27 +660,37 @@ app.get('/api/admin/user-requests', (req, res) => {
     });
 });
 
+// افزودن درخواست جدید (برای همه سرویس‌ها)
 app.post('/api/user-requests', (req, res) => {
     const { user_id, title, description, priority, category } = req.body;
-    if (!user_id || !title) {
-        return res.status(400).json({ error: 'شناسه کاربر و عنوان درخواست الزامی است.' });
+
+    console.log('📝 دریافت درخواست جدید:', { user_id, title, priority, category });
+
+    if (!title) {
+        return res.status(400).json({ error: 'عنوان درخواست الزامی است.' });
     }
+
+    const userId = user_id || 0;
     const query = 'INSERT INTO user_requests (user_id, title, description, priority, category, status) VALUES (?, ?, ?, ?, ?, "pending")';
-    db.query(query, [user_id, title, description || null, priority || 'medium', category || 'general'], (err, result) => {
+    db.query(query, [userId, title, description || null, priority || 'medium', category || 'general'], (err, result) => {
         if (err) {
             console.error('❌ خطا در ذخیره درخواست:', err);
             return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
         }
+        console.log('✅ درخواست ثبت شد، ID:', result.insertId);
         res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
     });
 });
 
+// تغییر وضعیت درخواست
 app.put('/api/admin/user-requests/:id/status', (req, res) => {
     const requestId = req.params.id;
     const { status } = req.body;
+
     if (!status) {
         return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
     }
+
     db.query('UPDATE user_requests SET status = ? WHERE id = ?', [status, requestId], (err, result) => {
         if (err) {
             console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
@@ -665,6 +703,7 @@ app.put('/api/admin/user-requests/:id/status', (req, res) => {
     });
 });
 
+// حذف درخواست
 app.delete('/api/user-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM user_requests WHERE id = ?', [requestId], (err, result) => {
@@ -682,6 +721,8 @@ app.delete('/api/user-requests/:id', (req, res) => {
 // ==================================================
 // ===== API درخواست‌های چت‌بات =====
 // ==================================================
+
+// دریافت لیست درخواست‌های چت‌بات
 app.get('/api/chatbot-requests', (req, res) => {
     db.query('SELECT id, name, phone, email, description, created_at FROM chatbot_requests ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -696,21 +737,28 @@ app.get('/api/chatbot-requests', (req, res) => {
     });
 });
 
+// افزودن درخواست چت‌بات جدید
 app.post('/api/chatbot-requests', (req, res) => {
     const { name, phone, email, description } = req.body;
+
+    console.log('📝 دریافت درخواست چت‌بات:', { name, phone, email });
+
     if (!name || !phone) {
         return res.status(400).json({ error: 'نام و شماره تماس الزامی است.' });
     }
+
     const query = 'INSERT INTO chatbot_requests (name, phone, email, description) VALUES (?, ?, ?, ?)';
     db.query(query, [name, phone, email || null, description || null], (err, result) => {
         if (err) {
             console.error('❌ خطا در ذخیره درخواست:', err);
             return res.status(500).json({ error: 'خطا در ذخیره درخواست' });
         }
+        console.log('✅ درخواست چت‌بات ثبت شد، ID:', result.insertId);
         res.json({ message: '✅ درخواست شما با موفقیت ثبت شد!', id: result.insertId });
     });
 });
 
+// حذف درخواست چت‌بات
 app.delete('/api/chatbot-requests/:id', (req, res) => {
     const requestId = req.params.id;
     db.query('DELETE FROM chatbot_requests WHERE id = ?', [requestId], (err, result) => {
@@ -731,4 +779,9 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
     console.log(`📁 پوشه آپلود: ${uploadDir}`);
+    console.log(`✅ API گالری: /api/gallery`);
+    console.log(`✅ API مقالات: /api/articles`);
+    console.log(`✅ API درخواست‌ها: /api/user-requests`);
+    console.log(`✅ API چت‌بات: /api/chatbot-requests`);
+    console.log(`✅ API سبد خرید: /api/cart`);
 });
