@@ -24,6 +24,8 @@ app.use((req, res, next) => {
 // ===== تنظیمات Express =====
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// ===== سرویس فایل‌های استاتیک - اصلاح شده =====
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -260,6 +262,9 @@ app.get('/login.html', (req, res) => {
 app.get('/dashboard.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
+app.get('/article.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'article.html'));
+});
 
 // ==================================================
 // ===== API آپلود =====
@@ -339,8 +344,10 @@ app.delete('/api/gallery/:id', (req, res) => {
 });
 
 // ==================================================
-// ===== API مقالات =====
+// ===== API مقالات (اصلاح شده با مسیرهای یکسان) =====
 // ==================================================
+
+// دریافت مقالات برای صفحه اصلی (فقط منتشر شده)
 app.get('/api/articles', (req, res) => {
     db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE status = "published" ORDER BY id DESC',
         (err, results) => {
@@ -357,6 +364,28 @@ app.get('/api/articles', (req, res) => {
     );
 });
 
+// دریافت یک مقاله خاص با ID (برای صفحه article.html)
+app.get('/api/articles/:id', (req, res) => {
+    const articleId = req.params.id;
+    db.query('SELECT id, title, category, content, author, status, created_at FROM articles WHERE id = ?',
+        [articleId],
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت مقاله:', err);
+                return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+            }
+            if (results.length === 0) {
+                return res.status(404).json({ error: 'مقاله یافت نشد' });
+            }
+            const article = results[0];
+            const persianDate = moment(article.created_at).format('jYYYY/jMM/jDD HH:mm');
+            article.created_at = persianDate;
+            res.json(article);
+        }
+    );
+});
+
+// دریافت همه مقالات برای پنل مدیریت
 app.get('/api/admin/articles', (req, res) => {
     db.query('SELECT id, title, category, author, status, created_at FROM articles ORDER BY id DESC', (err, results) => {
         if (err) {
@@ -371,6 +400,7 @@ app.get('/api/admin/articles', (req, res) => {
     });
 });
 
+// ایجاد مقاله جدید (از پنل مدیریت)
 app.post('/api/admin/articles', (req, res) => {
     const { title, category, content, author, status } = req.body;
     if (!title || !category || !content) {
@@ -388,6 +418,7 @@ app.post('/api/admin/articles', (req, res) => {
     );
 });
 
+// ویرایش مقاله (از پنل مدیریت)
 app.put('/api/admin/articles/:id', (req, res) => {
     const articleId = req.params.id;
     const { title, category, content, author, status } = req.body;
@@ -409,6 +440,7 @@ app.put('/api/admin/articles/:id', (req, res) => {
     );
 });
 
+// حذف مقاله (از پنل مدیریت)
 app.delete('/api/admin/articles/:id', (req, res) => {
     const articleId = req.params.id;
     db.query('DELETE FROM articles WHERE id = ?', [articleId], (err, result) => {
@@ -900,6 +932,7 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`✅ API گالری: /api/gallery`);
     console.log(`✅ API آپلود: /api/upload`);
     console.log(`✅ API مقالات: /api/articles`);
+    console.log(`✅ API مدیریت مقالات: /api/admin/articles`);
     console.log(`✅ API درخواست‌ها: /api/user-requests`);
     console.log(`✅ API چت‌بات: /api/chatbot-requests`);
     console.log(`✅ API سبد خرید: /api/cart`);
