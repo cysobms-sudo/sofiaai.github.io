@@ -1455,19 +1455,32 @@
         }
 
         // =============================================
-        // ===== بارگذاری مقالات =====
+        // ===== بارگذاری مقالات (اصلاح شده) =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesContainer');
             
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
+                    <p>در حال بارگذاری مقالات...</p>
+                </div>
+            `;
+            
             fetch(`${API_BASE}/api/articles`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت مقالات (کد ' + res.status + ')');
+                    return res.json();
+                })
                 .then(data => {
-                    if (data.length === 0) {
+                    if (!data || data.length === 0) {
                         container.innerHTML = `
                             <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
                                 <i class="fas fa-inbox" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                                 <p>هنوز مقاله‌ای منتشر نشده است.</p>
+                                <p style="font-size:0.85rem; margin-top:8px; color:var(--text-light);">
+                                    برای افزودن مقاله به <a href="admin.html" style="color:var(--primary); font-weight:600;">پنل مدیریت</a> مراجعه کنید.
+                                </p>
                             </div>
                         `;
                         return;
@@ -1475,19 +1488,34 @@
                     
                     let html = '';
                     data.forEach(article => {
+                        // فقط مقالات منتشر شده را نمایش بده
+                        if (article.status !== 'published') return;
+                        
+                        const contentPreview = article.content ? article.content.substring(0, 120) + '...' : '';
+                        
                         html += `
                             <a href="article.html?id=${article.id}" class="article-card">
-                                <span class="tag">${article.category}</span>
-                                <h3>${article.title}</h3>
-                                <p>${article.content ? article.content.substring(0, 120) + '...' : ''}</p>
+                                <span class="tag">${article.category || 'عمومی'}</span>
+                                <h3>${article.title || 'بدون عنوان'}</h3>
+                                <p>${contentPreview}</p>
                                 <div class="meta">
-                                    <span><i class="far fa-calendar"></i> ${article.created_at}</span>
-                                    <span><i class="far fa-user"></i> ${article.author}</span>
+                                    <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
+                                    <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
                                 </div>
                             </a>
                         `;
                     });
-                    container.innerHTML = html;
+                    
+                    if (html === '') {
+                        container.innerHTML = `
+                            <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
+                                <i class="fas fa-inbox" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
+                                <p>هیچ مقاله منتشر شده‌ای وجود ندارد.</p>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = html;
+                    }
                 })
                 .catch(error => {
                     console.error('❌ خطا در دریافت مقالات:', error);
@@ -1495,6 +1523,9 @@
                         <div style="grid-column:1/-1; text-align:center; padding:40px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
                             <p>خطا در دریافت مقالات. لطفاً دوباره تلاش کنید.</p>
+                            <button onclick="loadArticles()" style="margin-top:8px; padding:6px 20px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:'Vazirmatn',sans-serif;">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
                         </div>
                     `;
                 });
