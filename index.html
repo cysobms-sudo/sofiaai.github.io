@@ -1379,7 +1379,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (اصلاح شده) =====
+        // ===== بارگذاری گالری (اصلاح شده با API_BASE) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1399,6 +1399,8 @@
                     return res.json();
                 })
                 .then(data => {
+                    console.log('📸 داده‌های گالری:', data);
+                    
                     const validData = data.filter(item => item.image_url && item.image_url.trim() !== '');
                     
                     if (!validData || validData.length === 0) {
@@ -1418,22 +1420,22 @@
                     let html = '';
                     validData.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
-                        const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         
-                        // اصلاح مسیر تصویر - اگر با /images/ شروع شده باشد
-                        if (imageUrl.startsWith('/images/')) {
-                            // مسیر نسبی است، به همان صورت باقی می‌ماند
-                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
-                        } else if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-                            // آدرس کامل است
-                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                        // ===== ساخت آدرس کامل با API_BASE =====
+                        if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                            // آدرس کامل - تغییری نمی‌دهیم
+                        } else if (imageUrl.startsWith('/images/')) {
+                            imageUrl = API_BASE + imageUrl;
+                        } else if (imageUrl.startsWith('/')) {
+                            imageUrl = API_BASE + imageUrl;
                         } else {
-                            // آدرس نسبی است
-                            if (!imageUrl.startsWith('/')) {
-                                imageUrl = '/' + imageUrl;
-                            }
-                            imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                            imageUrl = API_BASE + '/images/gallery/' + imageUrl;
                         }
+                        
+                        // اضافه کردن timestamp برای جلوگیری از کش
+                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + timestamp + '_' + index;
+                        
+                        console.log(`🖼️ تصویر ${index+1} آدرس:`, imageUrl);
                         
                         html += `
                             <div class="gallery-item">
@@ -1455,7 +1457,7 @@
                     container.innerHTML = `
                         <div style="grid-column:1/-1; text-align:center; padding:30px; color:#e74c3c;">
                             <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:8px;"></i>
-                            <p>خطا در دریافت گالری. لطفاً دوباره تلاش کنید.</p>
+                            <p>خطا در دریافت گالری: ${error.message}</p>
                             <button onclick="loadGallery()" style="margin-top:8px; padding:6px 20px; background:var(--primary); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:'Vazirmatn',sans-serif;">
                                 <i class="fas fa-redo"></i> تلاش مجدد
                             </button>
