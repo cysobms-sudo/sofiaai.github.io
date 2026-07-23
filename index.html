@@ -969,8 +969,8 @@
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="gallery-grid" id="galleryContainer">
-                <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
-                    <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
+                <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
                     <p>در حال بارگذاری گالری...</p>
                 </div>
             </div>
@@ -1151,7 +1151,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (اصلاح شده) =====
+        // ===== بارگذاری گالری (اصلاح شده با تایم‌استمپ) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1163,7 +1163,9 @@
                 </div>
             `;
             
-            fetch(`${API_BASE}/api/gallery`)
+            const timestamp = new Date().getTime();
+            
+            fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
                 .then(res => res.json())
                 .then(data => {
                     if (!data || data.length === 0) {
@@ -1177,17 +1179,21 @@
                     }
                     
                     let html = '';
-                    data.forEach(item => {
+                    data.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
+                        // اضافه کردن شناسه یکتا برای هر تصویر (برای جلوگیری از کش)
+                        const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
                         }
+                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                        
                         html += `
                             <div class="gallery-item">
                                 <img src="${imageUrl}" 
                                      alt="${item.title || 'تصویر'}" 
                                      loading="lazy"
-                                     onerror="this.onerror=null; this.src='/logo5.png';" />
+                                     onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#f0f0f0;font-size:3rem;color:#ccc;\\'><i class=\\'fas fa-image\\'></i></div>';" />
                                 <div class="overlay">
                                     <h4>${item.title || 'بدون عنوان'}</h4>
                                     <p>${item.description || ''}</p>
@@ -1368,6 +1374,7 @@
                 .then(data => {
                     console.log('📥 تنظیمات دریافت شد:', data);
                     
+                    // به‌روزرسانی صفحه اصلی (Hero)
                     const heroSubtitle = document.getElementById('heroSubtitle');
                     if (heroSubtitle && data.hero_subtitle) {
                         heroSubtitle.textContent = data.hero_subtitle;
@@ -1378,6 +1385,7 @@
                         heroText.textContent = data.hero_text;
                     }
                     
+                    // به‌روزرسانی درباره ما
                     const aboutTitle = document.getElementById('aboutTitle');
                     if (aboutTitle && data.about_title) {
                         aboutTitle.innerHTML = data.about_title;
@@ -1388,14 +1396,17 @@
                         aboutText.innerHTML = data.about_text.replace(/\n/g, '<br>');
                     }
                     
+                    // به‌روزرسانی تصویر درباره ما (با تایم‌استمپ برای جلوگیری از کش)
                     if (data.about_image) {
                         const img = document.getElementById('aboutImage');
                         const placeholder = document.getElementById('aboutPlaceholder');
-                        img.src = data.about_image;
+                        const timestamp = new Date().getTime();
+                        img.src = data.about_image + '?t=' + timestamp;
                         img.style.display = 'block';
                         placeholder.style.display = 'none';
                     }
                     
+                    // به‌روزرسانی آمار
                     const statYears = document.getElementById('statYears');
                     if (statYears && data.stat_years) {
                         statYears.innerHTML = `<span>${data.stat_years}</span> سال سابقه`;
@@ -1411,15 +1422,18 @@
                         statPrivacy.innerHTML = `<span>${data.stat_privacy}</span> حریم خصوصی`;
                     }
                     
+                    // به‌روزرسانی فوتر
                     const footerText = document.getElementById('footerText');
                     if (footerText && data.footer_text) {
                         footerText.innerHTML = data.footer_text;
                     }
                     
+                    // به‌روزرسانی عنوان سایت
                     if (data.site_name) {
                         document.title = data.site_name + ' | توسعه‌دهنده هوش مصنوعی';
                     }
                     
+                    // به‌روزرسانی تگ‌های متا
                     if (data.meta_description) {
                         const metaDesc = document.querySelector('meta[name="description"]');
                         if (metaDesc) metaDesc.content = data.meta_description;
@@ -1430,6 +1444,7 @@
                         if (metaKeywords) metaKeywords.content = data.meta_keywords;
                     }
                     
+                    // به‌روزرسانی رنگ‌ها
                     if (data.color_primary) {
                         document.documentElement.style.setProperty('--primary', data.color_primary);
                     }
@@ -1453,6 +1468,7 @@
             loadComments();
             loadSettings();
             
+            // به‌روزرسانی دوره‌ای سبد خرید
             setInterval(updateCartBadge, 30000);
         });
     </script>
