@@ -55,7 +55,6 @@
         }
         .fade-in { animation: fadeIn 0.5s ease forwards; }
 
-        /* ===== صفحه ورود ===== */
         .login-box {
             background: var(--bg-card);
             padding: 48px 40px;
@@ -141,7 +140,6 @@
             border-radius: var(--radius-sm);
         }
 
-        /* ===== پنل مدیریت ===== */
         .admin-box {
             background: var(--bg-card);
             padding: 32px;
@@ -155,7 +153,6 @@
             animation: fadeIn 0.6s ease;
         }
 
-        /* ===== هدر ===== */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -190,7 +187,6 @@
             box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
         }
 
-        /* ===== تب‌ها ===== */
         .tabs {
             display: flex;
             gap: 4px;
@@ -221,7 +217,6 @@
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
 
-        /* ===== کارت‌های آمار ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -241,7 +236,6 @@
         .stat-card .number { font-size: 2.2rem; font-weight: 900; color: var(--primary); line-height: 1.2; }
         .stat-card .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 2px; }
 
-        /* ===== صفحات ===== */
         .pages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .pages-grid .full-width { grid-column: 1/-1; }
         .pages-grid label { display: block; font-weight: 600; color: var(--text-dark); font-size: 0.9rem; margin-bottom: 4px; }
@@ -264,7 +258,6 @@
         }
         .pages-grid textarea { resize: vertical; min-height: 60px; }
 
-        /* ===== جدول‌ها ===== */
         .table-wrapper { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         th {
@@ -280,7 +273,6 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: rgba(108, 60, 225, 0.03); }
 
-        /* ===== بج‌ها ===== */
         .badge {
             padding: 4px 14px;
             border-radius: 50px;
@@ -295,7 +287,6 @@
         .badge-rejected { background: #f8d7da; color: #721c24; }
         .badge-processing { background: #cce5ff; color: #004085; }
 
-        /* ===== دکمه‌ها ===== */
         .btn {
             border: none;
             padding: 8px 18px;
@@ -322,16 +313,15 @@
         .btn-secondary { background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color); }
         .btn-secondary:hover { background: var(--border-color); }
 
-        /* ===== گالری ===== */
         .gallery-grid-view {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
         }
         .gallery-item-card {
             background: var(--bg-card);
             border-radius: var(--radius-sm);
-            padding: 10px;
+            padding: 12px;
             border: 1px solid var(--border-color);
             transition: var(--transition);
             overflow: hidden;
@@ -343,7 +333,7 @@
         }
         .gallery-item-card .image-wrapper {
             width: 100%;
-            height: 160px;
+            height: 180px;
             overflow: hidden;
             border-radius: var(--radius-sm);
             background: var(--bg-body);
@@ -354,36 +344,31 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
-        }
-        .gallery-item-card .image-wrapper img:hover {
-            transform: scale(1.05);
         }
         .gallery-item-card h4 {
-            margin: 8px 0 2px;
-            font-size: 0.9rem;
+            margin: 10px 0 4px;
+            font-size: 0.95rem;
             font-weight: 700;
             color: var(--text-dark);
         }
         .gallery-item-card p {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            height: 35px;
+            height: 38px;
         }
         .gallery-item-card .actions {
-            margin-top: 8px;
+            margin-top: 10px;
             display: flex;
-            gap: 6px;
+            gap: 8px;
             justify-content: flex-end;
             border-top: 1px solid var(--border-color);
-            padding-top: 8px;
+            padding-top: 10px;
         }
 
-        /* ===== مودال ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -491,12 +476,10 @@
         .modal .modal-actions { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
         .modal .modal-actions .btn { padding: 10px 28px; font-size: 0.95rem; }
 
-        /* ===== خالی ===== */
         .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
         .empty-state i { font-size: 3rem; color: var(--border-color); display: block; margin-bottom: 12px; }
         .empty-state h4 { color: var(--text-dark); margin-bottom: 4px; }
 
-        /* ===== تنظیمات ===== */
         .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 800px; }
         .settings-grid .full-width { grid-column: 1/-1; }
         .settings-grid label { display: block; font-weight: 600; color: var(--text-dark); font-size: 0.9rem; margin-bottom: 4px; }
@@ -519,7 +502,6 @@
         }
         .settings-grid input[type="color"] { height: 45px; padding: 4px; cursor: pointer; }
 
-        /* ===== Toast ===== */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -549,7 +531,6 @@
         .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
 
-        /* ===== وضعیت ذخیره ===== */
         .status-msg { margin-top: 12px; padding: 10px 16px; border-radius: var(--radius-sm); font-weight: 600; display: none; }
         .status-msg.success { display: block; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .status-msg.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
@@ -623,7 +604,8 @@
             <button class="tab-btn" data-tab="articles"><i class="fas fa-newspaper"></i> مقالات</button>
             <button class="tab-btn" data-tab="comments"><i class="fas fa-comments"></i> نظرات</button>
             <button class="tab-btn" data-tab="users"><i class="fas fa-users"></i> کاربران</button>
-            <button class="tab-btn" data-tab="requests"><i class="fas fa-clipboard-list"></i> درخواست‌ها</button>
+            <button class="tab-btn" data-tab="requests"><i class="fas fa-clipboard-list"></i> درخواست‌های کاربران</button>
+            <button class="tab-btn" data-tab="chatbot"><i class="fas fa-robot"></i> درخواست‌های چت‌بات</button>
             <button class="tab-btn" data-tab="cart"><i class="fas fa-shopping-cart"></i> سبد خرید</button>
             <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> تنظیمات</button>
         </div>
@@ -636,6 +618,7 @@
                 <div class="stat-card"><div class="stat-icon">⏳</div><div class="number" id="statsPending">0</div><div class="label">در انتظار</div></div>
                 <div class="stat-card"><div class="stat-icon">👥</div><div class="number" id="statsUsers">0</div><div class="label">کاربران</div></div>
                 <div class="stat-card"><div class="stat-icon">📝</div><div class="number" id="statsRequests">0</div><div class="label">درخواست‌ها</div></div>
+                <div class="stat-card"><div class="stat-icon">🤖</div><div class="number" id="statsChatbot">0</div><div class="label">درخواست چت‌بات</div></div>
                 <div class="stat-card"><div class="stat-icon">🛒</div><div class="number" id="statsCart">0</div><div class="label">سبد خرید</div></div>
                 <div class="stat-card"><div class="stat-icon">🖼️</div><div class="number" id="statsGallery">0</div><div class="label">گالری</div></div>
             </div>
@@ -648,50 +631,17 @@
         <div id="tab-pages" class="tab-content">
             <h3 style="margin-bottom:16px; font-weight:800;">📄 مدیریت صفحات</h3>
             <div class="pages-grid">
-                <div class="full-width">
-                    <label>عنوان قهرمان (Hero Title)</label>
-                    <input type="text" id="page_hero_title" placeholder="عنوان اصلی صفحه" />
-                </div>
-                <div class="full-width">
-                    <label>زیر عنوان قهرمان (Hero Subtitle)</label>
-                    <input type="text" id="page_hero_subtitle" placeholder="زیر عنوان" />
-                </div>
-                <div class="full-width">
-                    <label>متن قهرمان (Hero Text)</label>
-                    <textarea id="page_hero_text" rows="2" placeholder="متن اصلی"></textarea>
-                </div>
-                <div class="full-width">
-                    <label>عنوان درباره ما</label>
-                    <input type="text" id="page_about_title" placeholder="عنوان بخش درباره ما" />
-                </div>
-                <div class="full-width">
-                    <label>متن درباره ما</label>
-                    <textarea id="page_about_text" rows="3" placeholder="متن درباره ما"></textarea>
-                </div>
-                <div class="full-width">
-                    <label>آدرس تصویر درباره ما</label>
-                    <input type="text" id="page_about_image" placeholder="/AIpic1.webp" />
-                </div>
-                <div>
-                    <label>آمار سال سابقه</label>
-                    <input type="text" id="page_stat_years" placeholder="۲۰+ سال سابقه" />
-                </div>
-                <div>
-                    <label>آمار پروژه‌ها</label>
-                    <input type="text" id="page_stat_projects" placeholder="۸۰+ پروژه موفق" />
-                </div>
-                <div class="full-width">
-                    <label>آمار حریم خصوصی</label>
-                    <input type="text" id="page_stat_privacy" placeholder="۱۰۰% حریم خصوصی" />
-                </div>
-                <div class="full-width">
-                    <label>متن فوتر</label>
-                    <input type="text" id="page_footer_text" placeholder="متن فوتر سایت" />
-                </div>
-                <div class="full-width">
-                    <label>متن کپی‌رایت</label>
-                    <input type="text" id="page_copyright_text" placeholder="© ۲۰۲۶ تمامی حقوق محفوظ است" />
-                </div>
+                <div class="full-width"><label>عنوان قهرمان (Hero Title)</label><input type="text" id="page_hero_title" placeholder="عنوان اصلی صفحه" /></div>
+                <div class="full-width"><label>زیر عنوان قهرمان (Hero Subtitle)</label><input type="text" id="page_hero_subtitle" placeholder="زیر عنوان" /></div>
+                <div class="full-width"><label>متن قهرمان (Hero Text)</label><textarea id="page_hero_text" rows="2" placeholder="متن اصلی"></textarea></div>
+                <div class="full-width"><label>عنوان درباره ما</label><input type="text" id="page_about_title" placeholder="عنوان بخش درباره ما" /></div>
+                <div class="full-width"><label>متن درباره ما</label><textarea id="page_about_text" rows="3" placeholder="متن درباره ما"></textarea></div>
+                <div class="full-width"><label>آدرس تصویر درباره ما</label><input type="text" id="page_about_image" placeholder="/AIpic1.webp" /></div>
+                <div><label>آمار سال سابقه</label><input type="text" id="page_stat_years" placeholder="۲۰+ سال سابقه" /></div>
+                <div><label>آمار پروژه‌ها</label><input type="text" id="page_stat_projects" placeholder="۸۰+ پروژه موفق" /></div>
+                <div class="full-width"><label>آمار حریم خصوصی</label><input type="text" id="page_stat_privacy" placeholder="۱۰۰% حریم خصوصی" /></div>
+                <div class="full-width"><label>متن فوتر</label><input type="text" id="page_footer_text" placeholder="متن فوتر سایت" /></div>
+                <div class="full-width"><label>متن کپی‌رایت</label><input type="text" id="page_copyright_text" placeholder="© ۲۰۲۶ تمامی حقوق محفوظ است" /></div>
             </div>
             <button class="btn btn-primary" onclick="savePages()" style="margin-top:20px; padding:12px 36px;">
                 <i class="fas fa-save"></i> ذخیره صفحات
@@ -737,9 +687,16 @@
             </div>
         </div>
 
-        <!-- ===== تب درخواست‌ها ===== -->
+        <!-- ===== تب درخواست‌های کاربران ===== -->
         <div id="tab-requests" class="tab-content">
             <div id="requestsList">
+                <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>
+            </div>
+        </div>
+
+        <!-- ===== تب درخواست‌های چت‌بات ===== -->
+        <div id="tab-chatbot" class="tab-content">
+            <div id="chatbotRequestsList">
                 <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>
             </div>
         </div>
@@ -790,7 +747,7 @@
             <label>توضیحات</label>
             <textarea id="gallery_description" placeholder="توضیحات تصویر" rows="2"></textarea>
             <label>آدرس تصویر</label>
-            <input type="text" id="gallery_image_url" placeholder="https://example.com/image.jpg" />
+            <input type="text" id="gallery_image_url" placeholder="/images/gallery/your-image.jpg" />
             
             <label style="margin-top:16px;">یا آپلود تصویر</label>
             <div class="file-upload-area" onclick="document.getElementById('galleryFileInput').click()">
@@ -939,6 +896,7 @@
                 case 'comments': loadComments(); break;
                 case 'users': loadUsers(); break;
                 case 'requests': loadUserRequests(); break;
+                case 'chatbot': loadChatbotRequests(); break;
                 case 'cart': loadCart(); break;
                 case 'settings': loadSettings(); break;
             }
@@ -952,6 +910,7 @@
             loadComments();
             loadUsers();
             loadUserRequests();
+            loadChatbotRequests();
             loadCart();
             loadSettings();
             document.getElementById('lastUpdate').textContent = new Date().toLocaleString('fa-IR');
@@ -973,12 +932,19 @@
                 })
                 .catch(err => console.error('❌ خطا در دریافت آمار:', err));
             
-            fetch(`${API_BASE}/api/admin/user-requests`)
+            fetch(`${API_BASE}/api/user-requests`)
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById('statsRequests').textContent = data.length || 0;
                 })
                 .catch(err => console.error('❌ خطا در دریافت درخواست‌ها:', err));
+            
+            fetch(`${API_BASE}/api/chatbot-requests`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('statsChatbot').textContent = data.length || 0;
+                })
+                .catch(err => console.error('❌ خطا در دریافت درخواست‌های چت‌بات:', err));
         }
 
         // =============================================
@@ -1039,13 +1005,12 @@
         }
 
         // =============================================
-        // ===== گالری (اصلاح شده با تایم‌استمپ) =====
+        // ===== گالری =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
             
-            // اضافه کردن تایم‌استمپ برای جلوگیری از کش
             const timestamp = new Date().getTime();
             
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
@@ -1057,14 +1022,12 @@
                     }
                     
                     let html = `<div class="gallery-grid-view">`;
-                    data.forEach((item, index) => {
+                    data.forEach(item => {
                         let imageUrl = item.image_url || '/logo5.png';
-                        // اضافه کردن شناسه یکتا برای هر تصویر
-                        const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
                         }
-                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
+                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 't=' + timestamp;
                         
                         html += `
                             <div class="gallery-item-card">
@@ -1072,8 +1035,7 @@
                                     <img src="${imageUrl}" 
                                          alt="${item.title || 'تصویر'}" 
                                          loading="lazy"
-                                         data-original="${item.image_url}"
-                                         onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#f0f0f0;font-size:2rem;color:#ccc;\\'><i class=\\'fas fa-image\\'></i></div>';" />
+                                         onerror="this.onerror=null; this.src='/logo5.png';" />
                                 </div>
                                 <h4>${item.title || 'بدون عنوان'}</h4>
                                 <p>${item.description || ''}</p>
@@ -1113,11 +1075,15 @@
         function saveGallery() {
             const title = document.getElementById('gallery_title').value.trim();
             const description = document.getElementById('gallery_description').value.trim();
-            const imageUrl = document.getElementById('gallery_image_url').value.trim();
+            let imageUrl = document.getElementById('gallery_image_url').value.trim();
             
             if (!title || !imageUrl) {
                 showToast('❌ عنوان و آدرس تصویر الزامی است.', 'error');
                 return;
+            }
+            
+            if (!imageUrl.startsWith('/images/') && !imageUrl.startsWith('http')) {
+                imageUrl = '/images/gallery/' + imageUrl;
             }
             
             fetch(`${API_BASE}/api/gallery`, {
@@ -1220,7 +1186,7 @@
         });
 
         // =============================================
-        // ===== مقالات (اصلاح شده) =====
+        // ===== مقالات =====
         // =============================================
         function loadArticles() {
             const container = document.getElementById('articlesList');
@@ -1266,7 +1232,7 @@
                     container.innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('❌ خطا در دریافت مقالات:', err);
+                    console.error('❌ خطا:', err);
                     container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت مقالات</h4></div>`;
                 });
         }
@@ -1287,27 +1253,20 @@
             
             showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
             
-            // دریافت لیست مقالات و پیدا کردن مقاله مورد نظر
-            fetch(`${API_BASE}/api/admin/articles`)
+            fetch(`${API_BASE}/api/admin/articles/${id}`)
                 .then(res => {
-                    if (!res.ok) throw new Error('خطا در دریافت لیست مقالات');
+                    if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
                     return res.json();
                 })
-                .then(articles => {
-                    const article = articles.find(a => a.id === id);
+                .then(data => {
+                    console.log('✅ مقاله پیدا شد:', data);
                     
-                    if (!article) {
-                        throw new Error('مقاله یافت نشد');
-                    }
-                    
-                    console.log('✅ مقاله پیدا شد:', article);
-                    
-                    document.getElementById('articleEditId').value = article.id;
-                    document.getElementById('articleTitle').value = article.title || '';
-                    document.getElementById('articleCategory').value = article.category || '';
-                    document.getElementById('articleAuthor').value = article.author || 'سوفیا AI';
-                    document.getElementById('articleContent').value = article.content || '';
-                    document.getElementById('articleStatus').value = article.status || 'published';
+                    document.getElementById('articleEditId').value = data.id;
+                    document.getElementById('articleTitle').value = data.title || '';
+                    document.getElementById('articleCategory').value = data.category || '';
+                    document.getElementById('articleAuthor').value = data.author || 'سوفیا AI';
+                    document.getElementById('articleContent').value = data.content || '';
+                    document.getElementById('articleStatus').value = data.status || 'published';
                     
                     document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
                     document.getElementById('articleModal').classList.add('active');
@@ -1315,7 +1274,7 @@
                     showToast('✅ مقاله برای ویرایش آماده شد', 'success');
                 })
                 .catch(err => {
-                    console.error('❌ خطا در ویرایش مقاله:', err);
+                    console.error('❌ خطا:', err);
                     showToast('❌ ' + err.message, 'error');
                 });
         }
@@ -1342,15 +1301,12 @@
             const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
             
-            console.log('📡 ارسال به:', url, 'با متد:', method);
-            
             fetch(url, {
                 method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, category, content, author, status })
             })
             .then(res => {
-                console.log('📊 وضعیت پاسخ:', res.status);
                 if (!res.ok) {
                     if (res.status === 404) throw new Error('مقاله یافت نشد');
                     throw new Error('خطا در ذخیره مقاله (کد ' + res.status + ')');
@@ -1358,7 +1314,6 @@
                 return res.json();
             })
             .then(data => {
-                console.log('✅ پاسخ:', data);
                 if (data.message) {
                     showToast('✅ ' + data.message, 'success');
                     closeArticleModal();
@@ -1378,10 +1333,7 @@
             if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
             
             fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
-                .then(res => {
-                    if (!res.ok) throw new Error('خطا در حذف مقاله');
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(data => {
                     if (data.message) {
                         showToast('✅ ' + data.message, 'success');
@@ -1539,7 +1491,7 @@
                     return res.json();
                 })
                 .then(data => {
-                    console.log('📋 درخواست‌های دریافتی:', data);
+                    console.log('📋 درخواست‌های کاربران:', data);
                     
                     if (data.length === 0) {
                         container.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
@@ -1547,7 +1499,7 @@
                     }
                     
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>توضیحات</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     
                     data.forEach(req => {
                         const priorityLabel = req.priority === 'urgent' ? 'فوری' :
@@ -1575,18 +1527,14 @@
                                 <td><strong>${req.user_name}</strong></td>
                                 <td>${req.user_email}</td>
                                 <td>${req.title}</td>
-                                <td style="max-width:200px; word-break:break-word;">${req.description || '-'}</td>
                                 <td>${categoryLabel}</td>
                                 <td><span class="${priorityClass}">${priorityLabel}</span></td>
                                 <td><span class="badge ${statusClass}">${statusLabel}</span></td>
                                 <td>${req.created_at}</td>
                                 <td>
                                     ${req.status === 'pending' ? `
-                                        <button class="btn btn-success btn-sm" onclick="updateRequestStatus(${req.id}, 'approved')"><i class="fas fa-check"></i></button>
-                                        <button class="btn btn-danger btn-sm" onclick="updateRequestStatus(${req.id}, 'rejected')"><i class="fas fa-times"></i></button>
-                                    ` : ''}
-                                    ${req.status === 'approved' ? `
-                                        <button class="btn btn-warning btn-sm" onclick="updateRequestStatus(${req.id}, 'processing')"><i class="fas fa-spinner"></i></button>
+                                        <button class="btn btn-success btn-sm" onclick="updateUserRequestStatus(${req.id}, 'approved')"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-danger btn-sm" onclick="updateUserRequestStatus(${req.id}, 'rejected')"><i class="fas fa-times"></i></button>
                                     ` : ''}
                                     <button class="btn btn-danger btn-sm" onclick="deleteUserRequest(${req.id})"><i class="fas fa-trash"></i></button>
                                 </td>
@@ -1603,7 +1551,7 @@
                 });
         }
 
-        function updateRequestStatus(id, status) {
+        function updateUserRequestStatus(id, status) {
             fetch(`${API_BASE}/api/admin/user-requests/${id}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -1637,6 +1585,82 @@
                     }
                 })
                 .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف درخواست', 'error'); });
+        }
+
+        // =============================================
+        // ===== درخواست‌های چت‌بات =====
+        // =============================================
+        function loadChatbotRequests() {
+            const container = document.getElementById('chatbotRequestsList');
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
+            
+            fetch(`${API_BASE}/api/chatbot-requests`)
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
+                    return res.json();
+                })
+                .then(data => {
+                    console.log('📋 درخواست‌های چت‌بات:', data);
+                    
+                    if (data.length === 0) {
+                        container.innerHTML = `<div class="empty-state"><i class="fas fa-robot"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
+                        return;
+                    }
+                    
+                    let html = `<div class="table-wrapper"><table>
+                        <thead><tr>
+                            <th>نام</th>
+                            <th>شماره تماس</th>
+                            <th>ایمیل</th>
+                            <th>توضیحات</th>
+                            <th>تاریخ</th>
+                            <th>عملیات</th>
+                        </tr></thead><tbody>`;
+                    
+                    data.forEach(req => {
+                        html += `
+                            <tr>
+                                <td><strong>${req.name}</strong></td>
+                                <td>${req.phone}</td>
+                                <td>${req.email || '-'}</td>
+                                <td style="max-width:250px; word-break:break-word;">${req.description || '-'}</td>
+                                <td>${req.created_at}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteChatbotRequest(${req.id})">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
+                });
+        }
+
+        function deleteChatbotRequest(id) {
+            if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
+            
+            fetch(`${API_BASE}/api/chatbot-requests/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadChatbotRequests();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف درخواست', 'error');
+                });
         }
 
         // =============================================
