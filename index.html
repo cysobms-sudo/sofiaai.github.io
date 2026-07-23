@@ -1101,10 +1101,7 @@
                 <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
             </div>
             <div class="gallery-grid" id="galleryContainer">
-                <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">
-                    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
-                    <p>در حال بارگذاری گالری...</p>
-                </div>
+                <!-- محتوای گالری توسط جاوااسکریپت بارگذاری می‌شود -->
             </div>
         </div>
     </section>
@@ -1319,11 +1316,12 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (با تایم‌استمپ) =====
+        // ===== بارگذاری گالری (با تایم‌استمپ برای جلوگیری از کش) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
             
+            // نمایش وضعیت بارگذاری
             container.innerHTML = `
                 <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">
                     <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
@@ -1331,11 +1329,13 @@
                 </div>
             `;
             
+            // تایم‌استمپ برای جلوگیری از کش مرورگر
             const timestamp = new Date().getTime();
             
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
                 .then(res => res.json())
                 .then(data => {
+                    // فیلتر کردن رکوردهای بدون تصویر
                     const validData = data.filter(item => item.image_url && item.image_url.trim() !== '');
                     
                     if (!validData || validData.length === 0) {
@@ -1355,7 +1355,11 @@
                     let html = '';
                     validData.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
+                        
+                        // اضافه کردن شناسه یکتا برای هر تصویر (جلوگیری از کش)
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
+                        
+                        // اصلاح مسیر تصویر
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
                         }
@@ -1715,7 +1719,11 @@
             loadComments();
             loadSettings();
             
+            // به‌روزرسانی دوره‌ای سبد خرید
             setInterval(updateCartBadge, 30000);
+            
+            // به‌روزرسانی گالری هر 30 ثانیه (برای نمایش تصاویر جدید)
+            setInterval(loadGallery, 30000);
         });
     </script>
 
