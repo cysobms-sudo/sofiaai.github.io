@@ -1318,7 +1318,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (از سرور اصلی) =====
+        // ===== بارگذاری گالری (با آدرس دهی صحیح) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1356,10 +1356,17 @@
                         let imageUrl = item.image_url || '/logo5.png';
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         
-                        // اگر آدرس کامل نیست، آن را کامل کنید
-                        if (!imageUrl.startsWith('http')) {
-                            imageUrl = API_BASE + imageUrl;
+                        // ===== اصلاح آدرس تصویر =====
+                        // اگر آدرس با /images/ شروع می‌شود، آدرس کامل از سرور اصلی بساز
+                        if (imageUrl.startsWith('/images/')) {
+                            imageUrl = 'https://sofiaaisite.runflare.run' + imageUrl;
+                        } 
+                        // اگر با http شروع نمی‌شود، آدرس کامل بساز
+                        else if (!imageUrl.startsWith('http')) {
+                            imageUrl = 'https://sofiaaisite.runflare.run/' + imageUrl;
                         }
+                        
+                        // اضافه کردن تایم‌استمپ برای جلوگیری از کش
                         imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         
                         html += `
@@ -1715,7 +1722,7 @@
             
             // به‌روزرسانی دوره‌ای
             setInterval(updateCartBadge, 30000);
-            setInterval(loadGallery, 60000); // هر ۱ دقیقه گالری را به‌روزرسانی کن
+            setInterval(loadGallery, 60000);
         });
     </script>
 
