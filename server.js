@@ -76,6 +76,170 @@ db.connect((err) => {
 });
 
 // ==================================================
+// ===== ایجاد جدول‌ها در صورت عدم وجود =====
+// ==================================================
+const createTables = () => {
+    // جدول کاربران
+    db.query(`
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            phone VARCHAR(20),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول users:', err);
+        else console.log('✅ جدول users آماده است');
+    });
+
+    // جدول مقالات
+    db.query(`
+        CREATE TABLE IF NOT EXISTS articles (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            category VARCHAR(100),
+            content TEXT,
+            author VARCHAR(255) DEFAULT 'سوفیا AI',
+            status VARCHAR(20) DEFAULT 'published',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول articles:', err);
+        else console.log('✅ جدول articles آماده است');
+    });
+
+    // جدول نظرات
+    db.query(`
+        CREATE TABLE IF NOT EXISTS comments (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255),
+            text TEXT NOT NULL,
+            status VARCHAR(20) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول comments:', err);
+        else console.log('✅ جدول comments آماده است');
+    });
+
+    // جدول گالری
+    db.query(`
+        CREATE TABLE IF NOT EXISTS gallery (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255),
+            description TEXT,
+            image_url VARCHAR(500) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول gallery:', err);
+        else console.log('✅ جدول gallery آماده است');
+    });
+
+    // جدول سبد خرید
+    db.query(`
+        CREATE TABLE IF NOT EXISTS cart (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            item_name VARCHAR(255) NOT NULL,
+            item_price VARCHAR(50),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول cart:', err);
+        else console.log('✅ جدول cart آماده است');
+    });
+
+    // جدول تنظیمات سایت
+    db.query(`
+        CREATE TABLE IF NOT EXISTS site_settings (
+            setting_key VARCHAR(100) PRIMARY KEY,
+            setting_value TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول site_settings:', err);
+        else {
+            console.log('✅ جدول site_settings آماده است');
+            // تنظیمات پیش‌فرض
+            const defaultSettings = [
+                ['site_name', 'توسعه‌دهنده هوش مصنوعی سوفیا'],
+                ['site_tagline', 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI'],
+                ['meta_description', 'توسعه‌دهنده هوش مصنوعی سوفیا - مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI در ایران'],
+                ['meta_keywords', 'هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون، طراحی سایت'],
+                ['hero_title', 'مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI'],
+                ['hero_subtitle', 'از مقاله‌های تخصصی تا پیاده‌سازی عملی ایجنت‌ها و دستیارهای هوشمند — همه‌چیز برای کسب‌وکار شما'],
+                ['hero_text', 'با بیش از ۲۰ سال سابقه در مهندسی کامپیوتر و هوش مصنوعی'],
+                ['about_title', 'درباره <span class="highlight">سوفیا AI</span>'],
+                ['about_text', 'سوفیا AI، همراه هوشمند شما در مسیر تحول دیجیتال. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم. از طراحی دستیارهای مکالمه‌ای و سیستم‌های هوشمند تا اتوماسیون فرآیندها، همه‌چیز برای رشد و موفقیت شما.'],
+                ['about_image', '/AIpic1.webp'],
+                ['stat_years', '۲۰+'],
+                ['stat_projects', '۸۰+'],
+                ['stat_privacy', '۱۰۰%'],
+                ['footer_text', '© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران'],
+                ['copyright_text', 'تمامی حقوق محفوظ است'],
+                ['phone', '۰۲۱-۱۲۳۴۵۶۷۸'],
+                ['email', 'info@sofiaai.ir'],
+                ['address', 'تهران، خیابان ولیعصر'],
+                ['color_primary', '#6C3CE1'],
+                ['color_secondary', '#FFB800'],
+                ['analytics', '']
+            ];
+            
+            defaultSettings.forEach(([key, value]) => {
+                db.query(
+                    'INSERT IGNORE INTO site_settings (setting_key, setting_value) VALUES (?, ?)',
+                    [key, value],
+                    (err) => {
+                        if (err) console.error(`❌ خطا در تنظیم ${key}:`, err);
+                    }
+                );
+            });
+        }
+    });
+
+    // جدول درخواست‌های کاربران (یکپارچه برای همه سرویس‌ها)
+    db.query(`
+        CREATE TABLE IF NOT EXISTS user_requests (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            priority VARCHAR(20) DEFAULT 'medium',
+            category VARCHAR(50) DEFAULT 'general',
+            status VARCHAR(20) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول user_requests:', err);
+        else console.log('✅ جدول user_requests آماده است');
+    });
+
+    // جدول درخواست‌های چت‌بات
+    db.query(`
+        CREATE TABLE IF NOT EXISTS chatbot_requests (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            phone VARCHAR(20) NOT NULL,
+            email VARCHAR(255),
+            description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول chatbot_requests:', err);
+        else console.log('✅ جدول chatbot_requests آماده است');
+    });
+};
+
+// اجرای ایجاد جدول‌ها
+createTables();
+
+// ==================================================
 // ===== صفحات HTML =====
 // ==================================================
 app.get('/', (req, res) => {
@@ -102,6 +266,8 @@ app.get('/admin.html', (req, res) => {
 app.get('/article.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'article.html'));
 });
+
+// سرویس‌های دستیارهای هوشمند
 app.get('/service-chatbot.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-chatbot.html'));
 });
@@ -114,6 +280,11 @@ app.get('/service-automation.html', (req, res) => {
 app.get('/service-data.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-data.html'));
 });
+app.get('/service-webdesign.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'service-webdesign.html'));
+});
+
+// سرویس‌های ایجنت‌ها
 app.get('/service-agent-data.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'service-agent-data.html'));
 });
@@ -784,4 +955,5 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`✅ API درخواست‌ها: /api/user-requests`);
     console.log(`✅ API چت‌بات: /api/chatbot-requests`);
     console.log(`✅ API سبد خرید: /api/cart`);
+    console.log(`✅ API تنظیمات: /api/admin/settings`);
 });
