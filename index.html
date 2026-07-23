@@ -1319,7 +1319,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (اصلاح شده) =====
+        // ===== بارگذاری گالری (با تایم‌استمپ) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1336,7 +1336,6 @@
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
                 .then(res => res.json())
                 .then(data => {
-                    // فیلتر کردن رکوردهای بدون تصویر
                     const validData = data.filter(item => item.image_url && item.image_url.trim() !== '');
                     
                     if (!validData || validData.length === 0) {
@@ -1357,8 +1356,6 @@
                     validData.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
-                        
-                        // اصلاح مسیر تصویر
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
                         }
