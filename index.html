@@ -322,11 +322,16 @@
         }
         .about-text h2 .highlight { color: var(--primary); }
         
+        /* استایل‌های بخش بیشتر بخوانید */
         .about-text-short {
             color: var(--text-muted);
             font-size: 1.05rem;
             line-height: 2.1;
             text-align: justify;
+        }
+        .about-text-short .read-more-dots {
+            color: var(--primary);
+            font-weight: 700;
         }
         .about-text-full {
             color: var(--text-muted);
@@ -356,9 +361,14 @@
         }
         .read-more-btn i {
             transition: transform 0.3s ease;
+            font-size: 0.8rem;
         }
         .read-more-btn .rotate {
             transform: rotate(180deg);
+        }
+        
+        #aboutTextFull {
+            display: none;
         }
         
         .about-contact {
@@ -960,8 +970,8 @@
                     
                     <div id="aboutTextContainer">
                         <div id="aboutTextShort" class="about-text-short"></div>
-                        <div id="aboutTextFull" class="about-text-full" style="display:none;"></div>
-                        <button id="aboutReadMoreBtn" class="read-more-btn" onclick="toggleAboutText()">
+                        <div id="aboutTextFull" class="about-text-full"></div>
+                        <button id="aboutReadMoreBtn" class="read-more-btn" onclick="toggleAboutText()" style="display:none;">
                             <span id="readMoreText">بیشتر بخوانید</span>
                             <i class="fas fa-chevron-down" id="readMoreIcon"></i>
                         </button>
@@ -1002,8 +1012,176 @@
         </div>
     </section>
 
-    <!-- ===== ادامه بخش‌های دیگر (دستیارها، ایجنت‌ها، گالری، مقالات، نظرات، CTA، فوتر) ===== -->
-    <!-- ... کدهای قبلی که تغییری نکرده‌اند ... -->
+    <!-- ===== دستیارهای هوشمند ===== -->
+    <section class="assistant-section fade-up" id="assistant">
+        <div class="container">
+            <div class="section-header">
+                <div><h2>🧠 دستیارهای هوشمند</h2><span class="sub">راه‌حل‌های هوشمند برای کسب‌وکار شما</span></div>
+                <a href="#services" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+            </div>
+            <div class="assistant-grid">
+                <a href="service-chatbot.html" class="assistant-card">
+                    <span class="icon">🤖</span>
+                    <h4>دستیار مکالمه‌ای</h4>
+                    <p>پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-rag.html" class="assistant-card">
+                    <span class="icon">🧠</span>
+                    <h4>سیستم RAG</h4>
+                    <p>پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-automation.html" class="assistant-card">
+                    <span class="icon">⚙️</span>
+                    <h4>اتوماسیون هوشمند</h4>
+                    <p>طراحی workflowهای خودکار برای افزایش بهره‌وری</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-data.html" class="assistant-card">
+                    <span class="icon">📊</span>
+                    <h4>تحلیل داده و پیش‌بینی</h4>
+                    <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-webdesign.html" class="assistant-card">
+                    <span class="icon">🌐</span>
+                    <h4>طراحی سایت هوشمند</h4>
+                    <p>طراحی سایت‌های حرفه‌ای، مدرن و بهینه‌شده برای SEO</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ایجنت‌ها ===== -->
+    <section class="agents-section fade-up" id="agents">
+        <div class="container">
+            <div class="section-header">
+                <div><h2>🤖 ایجنت‌های هوش مصنوعی</h2><span class="sub">عامل‌های هوشمندی که کارها را برای شما انجام می‌دهند</span></div>
+                <a href="#services" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+            </div>
+            <div class="agents-grid">
+                <a href="service-agent-data.html" class="agent-card">
+                    <span class="icon">🧠</span>
+                    <h4>ایجنت تحلیلگر داده</h4>
+                    <p>به‌طور خودکار داده‌های شما را تحلیل کرده و گزارش‌های هوشمند تهیه می‌کند.</p>
+                    <div class="tags"><span>تحلیل داده</span><span>هوش تجاری</span></div>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-agent-support.html" class="agent-card">
+                    <span class="icon">🤝</span>
+                    <h4>ایجنت پشتیبانی مشتری</h4>
+                    <p>به سوالات مشتریان پاسخ می‌دهد، تیکت‌ها را مدیریت و مشکلات را دسته‌بندی می‌کند.</p>
+                    <div class="tags"><span>پشتیبانی</span><span>چت‌بات</span></div>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-agent-content.html" class="agent-card">
+                    <span class="icon">📝</span>
+                    <h4>ایجنت تولید محتوا</h4>
+                    <p>متن‌های بازاریابی، مقاله‌های وبلاگ و ایمیل‌های حرفه‌ای را به‌صورت خودکار می‌نویسد.</p>
+                    <div class="tags"><span>تولید محتوا</span><span>بازاریابی</span></div>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+                <a href="service-agent-automation.html" class="agent-card">
+                    <span class="icon">⚙️</span>
+                    <h4>ایجنت اتوماسیون</h4>
+                    <p>فرآیندهای تکراری را شناسایی و خودکار می‌کند تا تیم شما روی کارهای استراتژیک تمرکز کند.</p>
+                    <div class="tags"><span>اتوماسیون</span><span>بهبود بهره‌وری</span></div>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== گالری ===== -->
+    <section class="gallery-section fade-up" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <div><h2>🖼️ گالری نمونه‌کارها</h2><span class="sub">برخی از پروژه‌های موفق تیم سوفیا</span></div>
+                <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+            </div>
+            <div class="gallery-grid" id="galleryContainer">
+                <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                    <p>در حال بارگذاری گالری...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== مقالات ===== -->
+    <section class="articles-section fade-up" id="articles">
+        <div class="container">
+            <div class="section-header">
+                <h2>📚 جدیدترین مقالات</h2>
+                <a href="#" style="color: var(--primary); font-weight: 600;">مشاهده همه →</a>
+            </div>
+            <div class="articles-grid" id="articlesContainer">
+                <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
+                    <p>در حال بارگذاری مقالات...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== نظرات ===== -->
+    <section class="comments-section fade-up" id="comments">
+        <div class="container">
+            <div class="section-header">
+                <h2>💬 نظرات کاربران</h2>
+                <span class="sub">تجربه‌ی خود را با ما به اشتراک بگذارید</span>
+            </div>
+            <div class="comments-grid">
+                <div class="comments-form">
+                    <h3>✍️ ارسال نظر</h3>
+                    <form id="commentForm">
+                        <label>نام و نام خانوادگی</label>
+                        <input type="text" id="commentName" placeholder="نام خود را وارد کنید" required />
+                        <label>ایمیل (اختیاری)</label>
+                        <input type="email" id="commentEmail" placeholder="ایمیل خود را وارد کنید" />
+                        <label>نظر شما</label>
+                        <textarea id="commentText" placeholder="نظر خود را بنویسید..." required></textarea>
+                        <button type="submit" class="btn-submit">ارسال نظر</button>
+                    </form>
+                </div>
+                <div class="comments-list" id="commentsContainer">
+                    <h3>📋 نظرات اخیر</h3>
+                    <div style="text-align:center; padding:20px; color:var(--text-muted);">
+                        <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                        <p>در حال بارگذاری نظرات...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section fade-up">
+        <div class="container">
+            <h2>آماده‌اید با ایجنت‌ها و دستیارهای هوشمند، کسب‌وکار خود را متحول کنید؟</h2>
+            <p>همین حالا ثبت‌نام کنید و از مشاوره‌ی رایگان تیم سوفیا بهره‌مند شوید.</p>
+            <a href="register.html" class="btn-primary">ثبت‌نام در سایت</a>
+        </div>
+    </section>
+
+    <!-- ===== فوتر ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">خانه</a>
+                <a href="#assistant">دستیارهای هوشمند</a>
+                <a href="#agents">ایجنت‌ها</a>
+                <a href="#articles">مقالات</a>
+                <a href="#gallery">گالری</a>
+                <a href="#about">درباره ما</a>
+                <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
+                <a href="login.html" class="btn-login-footer">ورود</a>
+            </div>
+            <p id="footerText">© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
+        </div>
+    </footer>
 
     <script>
         // ===== تنظیمات =====
@@ -1043,13 +1221,20 @@
             const fullText = document.getElementById('aboutTextFull');
             const readMoreText = document.getElementById('readMoreText');
             const readMoreIcon = document.getElementById('readMoreIcon');
+            const btn = document.getElementById('aboutReadMoreBtn');
             
-            if (fullText.style.display === 'none') {
+            if (fullText.style.display === 'none' || fullText.style.display === '') {
+                // نمایش متن کامل
                 fullText.style.display = 'block';
                 shortText.style.display = 'none';
                 readMoreText.textContent = 'کمتر بخوانید';
                 readMoreIcon.classList.add('rotate');
+                
+                // اسکرول به ابتدای متن
+                const container = document.getElementById('aboutTextContainer');
+                container.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
+                // نمایش متن خلاصه
                 fullText.style.display = 'none';
                 shortText.style.display = 'block';
                 readMoreText.textContent = 'بیشتر بخوانید';
@@ -1364,7 +1549,7 @@
                         heroText.textContent = data.hero_text;
                     }
                     
-                    // به‌روزرسانی درباره ما با قابلیت بیشتر بخوانید
+                    // به‌روزرسانی عنوان درباره ما
                     const aboutTitle = document.getElementById('aboutTitle');
                     if (aboutTitle && data.about_title) {
                         aboutTitle.innerHTML = data.about_title;
@@ -1373,23 +1558,52 @@
                     // دریافت متن کامل درباره ما
                     let fullAboutText = data.about_text || 'سوفیا AI، همراه هوشمند شما در مسیر تحول دیجیتال. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم. از طراحی دستیارهای مکالمه‌ای و سیستم‌های هوشمند تا اتوماسیون فرآیندها، همه‌چیز برای رشد و موفقیت شما.';
                     
-                    // جدا کردن متن به دو بخش: خلاصه و کامل
+                    // ====== تقسیم متن به خلاصه و کامل ======
                     let shortText = '';
                     let fullText = fullAboutText;
                     
-                    // اگر متن بیش از ۱۵۰ کاراکتر باشد، خلاصه‌سازی می‌شود
-                    if (fullAboutText.length > 150) {
-                        // تلاش برای جدا کردن بر اساس نقطه یا خط جدید
-                        const sentences = fullAboutText.split(/[\.\n]/).filter(s => s.trim() !== '');
-                        if (sentences.length > 2) {
-                            shortText = sentences.slice(0, 2).join('.') + '.';
-                            // اطمینان از اینکه خلاصه کامل باشد
-                            if (shortText.length < 50) {
-                                shortText = fullAboutText.substring(0, 150) + '...';
-                            }
+                    // حذف تگ‌های HTML برای محاسبه بهتر
+                    const plainText = fullAboutText.replace(/<[^>]*>/g, '');
+                    
+                    // اگر متن بیش از 200 کاراکتر باشد، خلاصه‌سازی می‌شود
+                    if (plainText.length > 200) {
+                        // روش 1: بر اساس نقطه (جمله)
+                        let sentences = fullAboutText.split(/[\.\n]\s*/).filter(s => s.trim() !== '');
+                        
+                        if (sentences.length >= 2) {
+                            // دو جمله اول را به عنوان خلاصه انتخاب کن
+                            let shortSentences = sentences.slice(0, 2);
+                            // نقطه‌ها را به انتهای جملات اضافه کن (اگر ندارند)
+                            shortSentences = shortSentences.map(s => {
+                                if (!s.endsWith('.') && !s.endsWith('؟') && !s.endsWith('!')) {
+                                    return s + '.';
+                                }
+                                return s;
+                            });
+                            shortText = shortSentences.join(' ');
                         } else {
-                            shortText = fullAboutText.substring(0, 150) + '...';
+                            // اگر جمله‌ها کمتر از 2 تا هستند، 200 کاراکتر اول را بگیر
+                            shortText = fullAboutText.substring(0, 200) + '...';
                         }
+                        
+                        // اگر خلاصه هنوز خیلی طولانی است، کوتاه‌ترش کن
+                        if (shortText.length > 220) {
+                            shortText = fullAboutText.substring(0, 200) + '...';
+                        }
+                        
+                        // اطمینان از اینکه خلاصه با ... تمام می‌شود
+                        if (!shortText.endsWith('...') && shortText.length < fullAboutText.length) {
+                            // اگر با نقطه تمام می‌شود، نقطه را با ... جایگزین کن
+                            if (shortText.endsWith('.')) {
+                                shortText = shortText.slice(0, -1) + '...';
+                            } else {
+                                shortText = shortText + '...';
+                            }
+                        }
+                        
+                        // نمایش دکمه
+                        document.getElementById('aboutReadMoreBtn').style.display = 'inline-flex';
+                        
                     } else {
                         // اگر متن کوتاه است، همه را نمایش بده و دکمه را مخفی کن
                         shortText = fullAboutText;
@@ -1407,7 +1621,7 @@
                         document.getElementById('aboutReadMoreBtn').style.display = 'inline-flex';
                     }
                     
-                    // به‌روزرسانی اطلاعات تماس
+                    // ====== به‌روزرسانی اطلاعات تماس ======
                     if (data.phone) {
                         document.getElementById('contactPhone').textContent = data.phone;
                     }
