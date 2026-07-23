@@ -1039,7 +1039,7 @@
         }
 
         // =============================================
-        // ===== گالری (با تابع جدید برای حذف کش) =====
+        // ===== گالری (اصلاح شده با تایم‌استمپ) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryList');
@@ -1057,16 +1057,14 @@
                     }
                     
                     let html = `<div class="gallery-grid-view">`;
-                    data.forEach(item => {
+                    data.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
-                        // اضافه کردن تایم‌استمپ به آدرس تصویر برای جلوگیری از کش
-                        if (imageUrl.startsWith('/')) {
-                            imageUrl = imageUrl + '?t=' + timestamp;
-                        } else if (!imageUrl.startsWith('http')) {
-                            imageUrl = '/' + imageUrl + '?t=' + timestamp;
-                        } else {
-                            imageUrl = imageUrl + '?t=' + timestamp;
+                        // اضافه کردن شناسه یکتا برای هر تصویر
+                        const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
+                        if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
+                            imageUrl = '/' + imageUrl;
                         }
+                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         
                         html += `
                             <div class="gallery-item-card">
@@ -1074,7 +1072,8 @@
                                     <img src="${imageUrl}" 
                                          alt="${item.title || 'تصویر'}" 
                                          loading="lazy"
-                                         onerror="this.onerror=null; this.src='/logo5.png';" />
+                                         data-original="${item.image_url}"
+                                         onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#f0f0f0;font-size:2rem;color:#ccc;\\'><i class=\\'fas fa-image\\'></i></div>';" />
                                 </div>
                                 <h4>${item.title || 'بدون عنوان'}</h4>
                                 <p>${item.description || ''}</p>
@@ -1188,7 +1187,7 @@
                         .then(data => {
                             if (data.success) {
                                 document.getElementById('gallery_image_url').value = data.url;
-                                document.getElementById('galleryPreviewImg').src = data.url;
+                                document.getElementById('galleryPreviewImg').src = data.url + '?t=' + new Date().getTime();
                                 document.getElementById('galleryImagePreview').classList.add('show');
                                 showToast('✅ ' + data.message, 'success');
                             } else {
