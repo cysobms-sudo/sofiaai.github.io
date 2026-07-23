@@ -322,7 +322,6 @@
         }
         .about-text h2 .highlight { color: var(--primary); }
         
-        /* استایل‌های بخش بیشتر بخوانید */
         .about-text-short {
             color: var(--text-muted);
             font-size: 1.05rem;
@@ -991,11 +990,11 @@
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-mobile-alt"></i>
-                                <span id="contactMobile">۰۹۱۲-۳۴۵-۶۷۸۹</span>
+                                <span id="contactMobile">۰۹۱۳۰۷۷۱۱۲۸</span>
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-envelope"></i>
-                                <span id="contactEmail">info@sofiaai.ir</span>
+                                <span id="contactEmail">cysobms@gmail.com</span>
                             </span>
                             <span class="contact-item">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -1187,14 +1186,12 @@
         // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
-        // =============================================
-        // ===== مقادیر پیش‌فرض جدید =====
-        // =============================================
+        // ===== مقادیر پیش‌فرض =====
         const DEFAULT_CONTACTS = {
-            phone: '۰۹۱۳۰۷۷۱۱۲۸',
+            phone: '۰۲۱-۱۲۳۴۵۶۷۸',
             mobile: '۰۹۱۳۰۷۷۱۱۲۸',
             email: 'cysobms@gmail.com',
-            address: ''
+            address: 'تهران، خیابان ولیعصر، پلاک ۱۲۳'
         };
 
         // =============================================
@@ -1224,7 +1221,7 @@
         }
 
         // =============================================
-        // ===== مدیریت دکمه "بیشتر بخوانید" درباره ما =====
+        // ===== مدیریت دکمه "بیشتر بخوانید" =====
         // =============================================
         function toggleAboutText() {
             const shortText = document.getElementById('aboutTextShort');
@@ -1322,7 +1319,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری =====
+        // ===== بارگذاری گالری (اصلاح شده) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1339,22 +1336,34 @@
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (!data || data.length === 0) {
+                    // فیلتر کردن رکوردهای بدون تصویر
+                    const validData = data.filter(item => item.image_url && item.image_url.trim() !== '');
+                    
+                    if (!validData || validData.length === 0) {
                         container.innerHTML = `
-                            <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">
-                                <i class="fas fa-images" style="font-size:2rem; display:block; margin-bottom:8px;"></i>
-                                <p>هیچ تصویری در گالری وجود ندارد.</p>
+                            <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--text-muted);">
+                                <i class="fas fa-images" style="font-size:3rem; display:block; margin-bottom:12px; color:var(--border-color);"></i>
+                                <h4 style="font-size:1.1rem; color:var(--text-dark);">گالری تصاویر</h4>
+                                <p style="font-size:0.95rem;">هیچ تصویری در گالری وجود ندارد.</p>
+                                <p style="font-size:0.85rem; margin-top:8px; color:var(--text-light);">
+                                    برای افزودن تصویر به <a href="admin.html" style="color:var(--primary); font-weight:600;">پنل مدیریت</a> مراجعه کنید.
+                                </p>
                             </div>
                         `;
                         return;
                     }
                     
                     let html = '';
-                    data.forEach((item, index) => {
+                    validData.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
+                        
+                        // اصلاح مسیر تصویر
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
+                        }
+                        if (!imageUrl.startsWith('/images/') && !imageUrl.startsWith('http')) {
+                            imageUrl = '/images/' + imageUrl;
                         }
                         imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + uniqueId;
                         
@@ -1544,7 +1553,7 @@
                 .then(data => {
                     console.log('📥 تنظیمات دریافت شد:', data);
                     
-                    // ====== به‌روزرسانی صفحه اصلی (Hero) ======
+                    // به‌روزرسانی صفحه اصلی (Hero)
                     const heroSubtitle = document.getElementById('heroSubtitle');
                     if (heroSubtitle && data.hero_subtitle) {
                         heroSubtitle.textContent = data.hero_subtitle;
@@ -1555,13 +1564,13 @@
                         heroText.textContent = data.hero_text;
                     }
                     
-                    // ====== به‌روزرسانی عنوان درباره ما ======
+                    // به‌روزرسانی عنوان درباره ما
                     const aboutTitle = document.getElementById('aboutTitle');
                     if (aboutTitle && data.about_title) {
                         aboutTitle.innerHTML = data.about_title;
                     }
                     
-                    // ====== دریافت متن کامل درباره ما ======
+                    // دریافت متن کامل درباره ما
                     let fullAboutText = data.about_text || 'سوفیا AI، همراه هوشمند شما در مسیر تحول دیجیتال. ما با تکیه بر تخصص و دانش روز، هوش مصنوعی را به زبانی ساده و کاربردی برای کسب‌وکارها تبدیل می‌کنیم. از طراحی دستیارهای مکالمه‌ای و سیستم‌های هوشمند تا اتوماسیون فرآیندها، همه‌چیز برای رشد و موفقیت شما.';
                     
                     let shortText = '';
@@ -1614,7 +1623,6 @@
                     }
                     
                     // ====== به‌روزرسانی اطلاعات تماس ======
-                    // استفاده از اطلاعات دیتابیس، در صورت عدم وجود، مقادیر پیش‌فرض جدید
                     const phoneElement = document.getElementById('contactPhone');
                     const mobileElement = document.getElementById('contactMobile');
                     const emailElement = document.getElementById('contactEmail');
@@ -1633,7 +1641,7 @@
                         addressElement.textContent = data.address || DEFAULT_CONTACTS.address;
                     }
                     
-                    // ====== به‌روزرسانی تصویر درباره ما ======
+                    // به‌روزرسانی تصویر درباره ما
                     if (data.about_image) {
                         const img = document.getElementById('aboutImage');
                         const placeholder = document.getElementById('aboutPlaceholder');
@@ -1643,7 +1651,7 @@
                         placeholder.style.display = 'none';
                     }
                     
-                    // ====== به‌روزرسانی آمار ======
+                    // به‌روزرسانی آمار
                     const statYears = document.getElementById('statYears');
                     if (statYears && data.stat_years) {
                         statYears.innerHTML = `<span>${data.stat_years}</span> سال سابقه`;
@@ -1659,18 +1667,18 @@
                         statPrivacy.innerHTML = `<span>${data.stat_privacy}</span> حریم خصوصی`;
                     }
                     
-                    // ====== به‌روزرسانی فوتر ======
+                    // به‌روزرسانی فوتر
                     const footerText = document.getElementById('footerText');
                     if (footerText && data.footer_text) {
                         footerText.innerHTML = data.footer_text;
                     }
                     
-                    // ====== به‌روزرسانی عنوان سایت ======
+                    // به‌روزرسانی عنوان سایت
                     if (data.site_name) {
                         document.title = data.site_name;
                     }
                     
-                    // ====== به‌روزرسانی تگ‌های متا ======
+                    // به‌روزرسانی تگ‌های متا
                     if (data.meta_description) {
                         const metaDesc = document.querySelector('meta[name="description"]');
                         if (metaDesc) metaDesc.content = data.meta_description;
@@ -1681,7 +1689,7 @@
                         if (metaKeywords) metaKeywords.content = data.meta_keywords;
                     }
                     
-                    // ====== به‌روزرسانی رنگ‌ها ======
+                    // به‌روزرسانی رنگ‌ها
                     if (data.color_primary) {
                         document.documentElement.style.setProperty('--primary', data.color_primary);
                     }
