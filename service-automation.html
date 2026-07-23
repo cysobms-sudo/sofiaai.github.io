@@ -867,4 +867,130 @@
         async function addToCart(itemName, itemPrice) {
             const userData = localStorage.getItem('user');
             if (!userData) {
-                showToast('⚠️ لطفاً ابتدا وارد
+                showToast('⚠️ لطفاً ابتدا وارد حساب کاربری خود شوید.', 'warning');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+                return;
+            }
+            
+            try {
+                const user = JSON.parse(userData);
+                const userId = user.id;
+                
+                const response = await fetch(`${API_BASE}/api/cart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, item_name: itemName, item_price: itemPrice })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showToast('✅ ' + data.message, 'success');
+                    updateCartBadge();
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                showToast('❌ خطا در افزودن به سبد خرید', 'error');
+            }
+        }
+
+        // ===== ارسال فرم درخواست (اصلاح شده با API صحیح) =====
+        document.getElementById('requestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('requestName').value.trim();
+            const phone = document.getElementById('requestPhone').value.trim();
+            const email = document.getElementById('requestEmail').value.trim();
+            const description = document.getElementById('requestDescription').value.trim();
+            
+            // اعتبارسنجی
+            if (!name || !phone || !description) {
+                showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('requestMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ در حال ارسال...';
+            messageDiv.className = 'message';
+            messageDiv.style.display = 'none';
+            
+            // دریافت اطلاعات کاربر از localStorage
+            const userData = localStorage.getItem('user');
+            let userId = 0;
+            let userEmail = email;
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    userId = user.id || 0;
+                    userEmail = user.email || email;
+                } catch(e) {
+                    console.error('خطا در خواندن اطلاعات کاربر:', e);
+                }
+            }
+            
+            // ساخت عنوان درخواست
+            const title = `درخواست اتوماسیون هوشمند - ${name}`;
+            
+            // ارسال به API صحیح (/api/user-requests)
+            const requestBody = {
+                user_id: userId,
+                title: title,
+                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\n\n${description}`,
+                priority: 'high',
+                category: 'automation'
+            };
+            
+            console.log('📤 ارسال درخواست:', requestBody);
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/user-requests`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await response.json();
+                console.log('📥 پاسخ سرور:', data);
+                
+                if (response.ok) {
+                    messageDiv.textContent = '✅ ' + data.message + ' تیم سوفیا به زودی با شما تماس خواهد گرفت.';
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    this.reset();
+                    showToast('✅ درخواست شما با موفقیت ثبت شد!', 'success');
+                } else {
+                    messageDiv.textContent = '❌ ' + (data.error || 'خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.');
+                    messageDiv.className = 'message error';
+                    messageDiv.style.display = 'block';
+                    showToast('❌ ' + (data.error || 'خطا در ثبت درخواست'), 'error');
+                }
+            } catch (error) {
+                console.error('❌ خطا در ارسال درخواست:', error);
+                messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                showToast('❌ خطا در ارتباط با سرور', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📩 ارسال درخواست';
+            }
+        });
+
+        // ===== مقداردهی اولیه =====
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserDisplay();
+            updateCartBadge();
+            
+            // به‌روزرسانی دوره‌ای سبد خرید
+            setInterval(updateCartBadge, 30000);
+        });
+    </script>
+
+</body>
+</html>
