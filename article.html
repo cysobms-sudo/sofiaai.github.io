@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مطالعه مقاله | توسعه‌دهنده هوش مصنوعی سوفیا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Vazirmatn', sans-serif;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
             background: #f8f9fc;
             color: #1A0F2E;
             direction: rtl;
@@ -29,6 +29,15 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+        }
+
         .article-header {
             border-bottom: 2px solid #FFB800;
             padding-bottom: 16px;
@@ -76,6 +85,24 @@
             margin: 16px 0;
             color: #5A4A7A;
             font-style: italic;
+        }
+        .article-body pre {
+            background: #f0f0f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 16px 0;
+        }
+        .article-body code {
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
         }
         .back-link {
             display: inline-block;
@@ -187,11 +214,41 @@
             padding-right: 8px;
         }
 
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
+        }
+        .toast {
+            padding: 14px 28px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: slideDown 0.5s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+        .toast.success { background: #27ae60; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+        .toast.warning { background: #f39c12; }
+
         @media (max-width: 768px) {
             .container { padding: 20px; }
             .article-header h1 { font-size: 1.5rem; }
             .article-body { font-size: 0.95rem; line-height: 2rem; }
             .share-section { flex-direction: column; align-items: stretch; }
+            .share-section .share-btn { text-align: center; }
         }
     </style>
 </head>
@@ -209,6 +266,29 @@
         const articleId = urlParams.get('id');
 
         console.log('🔍 ID مقاله از آدرس:', articleId);
+
+        // =============================================
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+            return container;
+        }
 
         // =============================================
         // ===== بارگذاری مقاله =====
@@ -254,10 +334,25 @@
                         throw new Error('مقاله نامعتبر است');
                     }
                     
-                    const contentHtml = (article.content || '')
-                        .replace(/\n/g, '<br>')
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\*(.*?)\*/g, '<em>$1</em>');
+                    // تبدیل محتوا به HTML با حفظ فرمت
+                    let contentHtml = article.content || '';
+                    
+                    // تبدیل خطوط جدید به <br>
+                    contentHtml = contentHtml.replace(/\n/g, '<br>');
+                    
+                    // تبدیل **متن** به <strong>متن</strong>
+                    contentHtml = contentHtml.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    
+                    // تبدیل *متن* به <em>متن</em>
+                    contentHtml = contentHtml.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                    
+                    // تبدیل `متن` به <code>متن</code>
+                    contentHtml = contentHtml.replace(/`(.*?)`/g, '<code>$1</code>');
+                    
+                    // تشخیص و تبدیل کدهای چندخطی
+                    contentHtml = contentHtml.replace(/```([\s\S]*?)```/g, function(match, code) {
+                        return '<pre><code>' + code.trim() + '</code></pre>';
+                    });
 
                     container.innerHTML = `
                         <div class="article-header">
@@ -266,6 +361,7 @@
                             <div class="meta">
                                 <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
                                 <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
+                                ${article.status ? `<span><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></span>` : ''}
                             </div>
                         </div>
                         <div class="article-body">
@@ -286,13 +382,15 @@
                     loadRelatedArticles(article.category, id);
                 })
                 .catch(error => {
-                    console.error('❌ خطا:', error);
+                    console.error('❌ خطا در بارگذاری مقاله:', error);
                     container.innerHTML = `
                         <div class="error">
                             <i class="fas fa-exclamation-circle"></i>
                             <h3>${error.message}</h3>
                             <p style="color:#7a7a9a; margin-top:8px;">متأسفانه مقاله مورد نظر یافت نشد.</p>
-                            <button class="retry-btn" onclick="loadArticle('${id}')">تلاش مجدد</button>
+                            <button class="retry-btn" onclick="loadArticle('${id}')">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
                             <div style="margin-top:16px;">
                                 <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
                             </div>
@@ -313,8 +411,9 @@
                     return res.json();
                 })
                 .then(data => {
+                    // فیلتر مقالات مرتبط: همان دسته و غیر از مقاله فعلی
                     const related = data
-                        .filter(a => a.id != currentId && a.category === category)
+                        .filter(a => a.id != currentId && a.category === category && a.status === 'published')
                         .slice(0, 3);
                     
                     if (related.length === 0) return;
@@ -332,6 +431,7 @@
                     });
                     html += `</div>`;
                     
+                    // اضافه کردن به انتهای container
                     container.innerHTML += html;
                 })
                 .catch(err => {
@@ -368,78 +468,86 @@
         }
 
         function copyLink() {
-            navigator.clipboard.writeText(window.location.href)
-                .then(() => {
-                    showToast('✅ لینک مقاله کپی شد!', 'success');
-                })
-                .catch(() => {
-                    const input = document.createElement('input');
-                    input.value = window.location.href;
-                    document.body.appendChild(input);
-                    input.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(input);
-                    showToast('✅ لینک مقاله کپی شد!', 'success');
-                });
-        }
-
-        // =============================================
-        // ===== Toast =====
-        // =============================================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer') || createToastContainer();
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                padding: 14px 24px;
-                border-radius: 12px;
-                color: #fff;
-                font-weight: 600;
-                font-family: 'Vazirmatn', sans-serif;
-                box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-                animation: slideDown 0.5s ease;
-                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#e74c3c' : '#3498db'};
-                min-width: 200px;
-                text-align: center;
-            `;
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideUp 0.5s ease';
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        function createToastContainer() {
-            const container = document.createElement('div');
-            container.id = 'toastContainer';
-            container.style.cssText = `
-                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-                z-index: 9999; display: flex; flex-direction: column; gap: 10px;
-                align-items: center; direction: rtl;
-            `;
-            document.body.appendChild(container);
+            const url = window.location.href;
             
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideDown {
-                    from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-                }
-                @keyframes slideUp {
-                    from { opacity: 1; transform: translateX(-50%) translateY(0); }
-                    to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-                }
-            `;
-            document.head.appendChild(style);
-            return container;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        showToast('✅ لینک مقاله کپی شد!', 'success');
+                    })
+                    .catch(() => {
+                        fallbackCopy(url);
+                    });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            try {
+                document.execCommand('copy');
+                showToast('✅ لینک مقاله کپی شد!', 'success');
+            } catch (e) {
+                showToast('❌ خطا در کپی لینک', 'error');
+            }
+            document.body.removeChild(input);
         }
 
         // =============================================
-        // ===== اجرا =====
+        // ===== بارگذاری اولیه =====
         // =============================================
         // اجرا با ID دریافت شده از آدرس
         console.log('🚀 شروع بارگذاری مقاله...');
-        loadArticle(articleId);
+        
+        // اگر مقاله‌ای در URL وجود نداشت، سعی کنیم از localStorage بگیریم
+        let finalId = articleId;
+        
+        if (!finalId) {
+            // بررسی localStorage برای آخرین مقاله بازدید شده
+            const lastArticle = localStorage.getItem('lastArticleId');
+            if (lastArticle) {
+                finalId = lastArticle;
+                console.log('📌 استفاده از آخرین مقاله بازدید شده:', finalId);
+            }
+        }
+        
+        if (finalId) {
+            // ذخیره در localStorage برای استفاده بعدی
+            localStorage.setItem('lastArticleId', finalId);
+            loadArticle(finalId);
+        } else {
+            // اگر هیچ ID وجود نداشت، خطا نمایش بده
+            const container = document.getElementById('articleContainer');
+            container.innerHTML = `
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>هیچ مقاله‌ای انتخاب نشده است.</h3>
+                    <p style="color:#7a7a9a; margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
+                    <div style="margin-top:16px;">
+                        <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // =============================================
+        // ===== مدیریت بازگشت با دکمه مرورگر =====
+        // =============================================
+        window.addEventListener('popstate', function(e) {
+            // اگر کاربر با دکمه بازگشت به صفحه مقاله برگشت، ID را چک کن
+            const currentId = new URLSearchParams(window.location.search).get('id');
+            if (currentId && currentId !== finalId) {
+                loadArticle(currentId);
+            }
+        });
+
+        console.log('✅ article.html بارگذاری شد');
+        console.log('📌 API_BASE:', API_BASE);
     </script>
+
 </body>
 </html>
