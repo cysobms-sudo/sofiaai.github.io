@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="siteTitle">توسعه‌دهنده هوش مصنوعی سوفیا | مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI</title>
     <meta name="description" id="metaDescription" content="توسعه‌دهنده هوش مصنوعی سوفیا - مرجع تخصصی دستیارهای هوشمند و ایجنت‌های AI در ایران. خدمات تخصصی هوش مصنوعی، طراحی چت‌بات، سیستم RAG و اتوماسیون هوشمند." />
-    <meta name="keywords" id="metaKeywords" content="هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون" />
+    <meta name="keywords" id="metaKeywords" content="هوش مصنوعی، دستیار هوشمند، چت‌بات، RAG، اتوماسیون، طراحی سایت" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -28,6 +28,8 @@
             --transition: 0.3s ease;
             --max-width: 1200px;
             --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -360,7 +362,7 @@
             padding: 40px;
         }
 
-        /* ===== بخش‌های خدمات با لینک‌های اختصاصی ===== */
+        /* ===== بخش‌های خدمات ===== */
         .assistant-section, .agents-section {
             padding: 60px 0;
             background: var(--bg-light);
@@ -471,7 +473,7 @@
             font-weight: 700;
         }
 
-        /* ===== گالری با سایز کوچک ===== */
+        /* ===== گالری ===== */
         .gallery-section {
             padding: 60px 0;
             background: #fff;
@@ -726,6 +728,24 @@
             transition: var(--transition);
         }
         footer .footer-links a:hover { color: var(--primary); }
+        footer .footer-links .btn-register-footer {
+            background: var(--secondary);
+            color: var(--text-dark) !important;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+        footer .footer-links .btn-login-footer {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
 
         /* ===== Toast ===== */
         .toast-container {
@@ -797,13 +817,13 @@
             .logo-image { height: 70px; max-width: 240px; }
             .about-image { min-height: 150px; }
             .about-image .placeholder-icon { font-size: 4rem; padding: 30px; }
+            .section-header { flex-direction: column; align-items: flex-start; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .assistant-grid { grid-template-columns: 1fr; }
             .agents-grid { grid-template-columns: 1fr; }
             .gallery-grid { grid-template-columns: 1fr; }
-            .section-header { flex-direction: column; align-items: flex-start; }
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
             .about-text .about-stats { gap: 16px; }
@@ -885,7 +905,7 @@
         </div>
     </section>
 
-    <!-- ===== دستیارهای هوشمند با لینک‌های اختصاصی ===== -->
+    <!-- ===== دستیارهای هوشمند ===== -->
     <section class="assistant-section fade-up" id="assistant">
         <div class="container">
             <div class="section-header">
@@ -917,11 +937,17 @@
                     <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار مشتری</p>
                     <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
                 </a>
+                <a href="service-webdesign.html" class="assistant-card">
+                    <span class="icon">🌐</span>
+                    <h4>طراحی سایت هوشمند</h4>
+                    <p>طراحی سایت‌های حرفه‌ای، مدرن و بهینه‌شده برای SEO</p>
+                    <span class="link-hint">مشاهده و سفارش <i class="fas fa-arrow-left"></i></span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- ===== ایجنت‌ها با لینک‌های اختصاصی ===== -->
+    <!-- ===== ایجنت‌ها ===== -->
     <section class="agents-section fade-up" id="agents">
         <div class="container">
             <div class="section-header">
@@ -1043,8 +1069,8 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <a href="register.html" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
-                <a href="login.html" style="background: var(--primary); color: #fff; padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ورود</a>
+                <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
+                <a href="login.html" class="btn-login-footer">ورود</a>
             </div>
             <p id="footerText">© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
@@ -1070,11 +1096,14 @@
         }
 
         function createToastContainer() {
-            const container = document.createElement('div');
-            container.id = 'toastContainer';
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-            return container;
+            const container = document.getElementById('toastContainer');
+            if (container) return container;
+            
+            const newContainer = document.createElement('div');
+            newContainer.id = 'toastContainer';
+            newContainer.className = 'toast-container';
+            document.body.appendChild(newContainer);
+            return newContainer;
         }
 
         // =============================================
@@ -1151,7 +1180,7 @@
         }
 
         // =============================================
-        // ===== بارگذاری گالری (اصلاح شده با تایم‌استمپ) =====
+        // ===== بارگذاری گالری =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryContainer');
@@ -1181,7 +1210,6 @@
                     let html = '';
                     data.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
-                        // اضافه کردن شناسه یکتا برای هر تصویر (برای جلوگیری از کش)
                         const uniqueId = timestamp + '_' + index + '_' + (item.id || Math.random());
                         if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
                             imageUrl = '/' + imageUrl;
@@ -1396,7 +1424,7 @@
                         aboutText.innerHTML = data.about_text.replace(/\n/g, '<br>');
                     }
                     
-                    // به‌روزرسانی تصویر درباره ما (با تایم‌استمپ برای جلوگیری از کش)
+                    // به‌روزرسانی تصویر درباره ما
                     if (data.about_image) {
                         const img = document.getElementById('aboutImage');
                         const placeholder = document.getElementById('aboutPlaceholder');
@@ -1430,7 +1458,7 @@
                     
                     // به‌روزرسانی عنوان سایت
                     if (data.site_name) {
-                        document.title = data.site_name + ' | توسعه‌دهنده هوش مصنوعی';
+                        document.title = data.site_name;
                     }
                     
                     // به‌روزرسانی تگ‌های متا
