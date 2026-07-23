@@ -1356,13 +1356,13 @@
         // ===== مقالات (اصلاح شده کامل) =====
         // =============================================
         
-        // تابع بارگذاری مقالات - مسیر اصلاح شده
+        // تابع بارگذاری مقالات - استفاده از مسیر مدیریت
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
 
-            // استفاده از مسیر /api/articles به جای /api/admin/articles
-            fetch(`${API_BASE}/api/articles`)
+            // استفاده از مسیر /api/admin/articles برای دریافت همه مقالات (مدیریت)
+            fetch(`${API_BASE}/api/admin/articles`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت مقالات (کد ' + res.status + ')');
                     return res.json();
@@ -1435,12 +1435,12 @@
             document.getElementById('articleModal').classList.add('active');
         }
 
-        // ویرایش مقاله - مسیر اصلاح شده
+        // ویرایش مقاله - استفاده از مسیر مدیریت
         function editArticle(id) {
             showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
 
-            // استفاده از مسیر /api/articles به جای /api/admin/articles
-            fetch(`${API_BASE}/api/articles/${id}`)
+            // استفاده از مسیر /api/admin/articles برای دریافت یک مقاله خاص
+            fetch(`${API_BASE}/api/admin/articles/${id}`)
                 .then(res => {
                     if (!res.ok) {
                         if (res.status === 404) throw new Error('مقاله یافت نشد');
@@ -1470,7 +1470,7 @@
             document.getElementById('articleModal').classList.remove('active');
         }
 
-        // ذخیره مقاله (ایجاد یا ویرایش) - مسیر اصلاح شده
+        // ذخیره مقاله (ایجاد یا ویرایش) - استفاده از مسیر مدیریت
         function saveArticle() {
             const id = document.getElementById('articleEditId').value;
             const title = document.getElementById('articleTitle').value.trim();
@@ -1496,8 +1496,8 @@
                 return;
             }
 
-            // تعیین مسیر و متد
-            const url = id ? `${API_BASE}/api/articles/${id}` : `${API_BASE}/api/articles`;
+            // تعیین مسیر و متد - استفاده از مسیر مدیریت
+            const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
 
             showToast('⏳ در حال ذخیره مقاله...', 'info');
@@ -1535,11 +1535,11 @@
                 });
         }
 
-        // حذف مقاله - مسیر اصلاح شده
+        // حذف مقاله - استفاده از مسیر مدیریت
         function deleteArticle(id) {
             if (!confirm('آیا از حذف این مقاله مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
 
-            fetch(`${API_BASE}/api/articles/${id}`, { method: 'DELETE' })
+            fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
                 .then(res => {
                     if (!res.ok) {
                         if (res.status === 404) throw new Error('مقاله یافت نشد');
