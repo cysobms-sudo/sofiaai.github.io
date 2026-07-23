@@ -312,6 +312,8 @@
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(108,60,225,0.3); }
         .btn-secondary { background: var(--bg-body); color: var(--text-dark); border: 1px solid var(--border-color); }
         .btn-secondary:hover { background: var(--border-color); }
+        .btn-info { background: var(--info); color: #fff; }
+        .btn-info:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52,152,219,0.3); }
 
         .gallery-grid-view {
             display: grid;
@@ -384,6 +386,7 @@
             padding: 20px;
         }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-overlay.show { display: flex; }
         .modal {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -808,7 +811,7 @@
             const passwordInput = document.getElementById('adminPassword');
             const errorDiv = document.getElementById('loginError');
             const password = passwordInput.value.trim();
-            
+
             if (password === ADMIN_PASSWORD) {
                 errorDiv.style.display = 'none';
                 document.getElementById('loginPage').style.display = 'none';
@@ -875,11 +878,11 @@
                 tab.addEventListener('click', function() {
                     tabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    
+
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
-                    
+
                     const tabId = this.dataset.tab;
                     document.getElementById(`tab-${tabId}`).classList.add('active');
                     loadTabData(tabId);
@@ -888,17 +891,37 @@
         }
 
         function loadTabData(tabId) {
-            switch(tabId) {
-                case 'dashboard': loadStats(); break;
-                case 'pages': loadPagesData(); break;
-                case 'gallery': loadGallery(); break;
-                case 'articles': loadArticles(); break;
-                case 'comments': loadComments(); break;
-                case 'users': loadUsers(); break;
-                case 'requests': loadUserRequests(); break;
-                case 'chatbot': loadChatbotRequests(); break;
-                case 'cart': loadCart(); break;
-                case 'settings': loadSettings(); break;
+            switch (tabId) {
+                case 'dashboard':
+                    loadStats();
+                    break;
+                case 'pages':
+                    loadPagesData();
+                    break;
+                case 'gallery':
+                    loadGallery();
+                    break;
+                case 'articles':
+                    loadArticles();
+                    break;
+                case 'comments':
+                    loadComments();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'requests':
+                    loadUserRequests();
+                    break;
+                case 'chatbot':
+                    loadChatbotRequests();
+                    break;
+                case 'cart':
+                    loadCart();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
             }
         }
 
@@ -929,22 +952,10 @@
                     document.getElementById('statsUsers').textContent = data.users || 0;
                     document.getElementById('statsCart').textContent = data.cart || 0;
                     document.getElementById('statsGallery').textContent = data.gallery || 0;
+                    document.getElementById('statsRequests').textContent = data.user_requests || 0;
+                    document.getElementById('statsChatbot').textContent = data.chatbot_requests || 0;
                 })
                 .catch(err => console.error('❌ خطا در دریافت آمار:', err));
-            
-            fetch(`${API_BASE}/api/user-requests`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('statsRequests').textContent = data.length || 0;
-                })
-                .catch(err => console.error('❌ خطا در دریافت درخواست‌ها:', err));
-            
-            fetch(`${API_BASE}/api/chatbot-requests`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('statsChatbot').textContent = data.length || 0;
-                })
-                .catch(err => console.error('❌ خطا در دریافت درخواست‌های چت‌بات:', err));
         }
 
         // =============================================
@@ -983,25 +994,27 @@
                 footer_text: document.getElementById('page_footer_text').value,
                 copyright_text: document.getElementById('page_copyright_text').value
             };
-            
+
             fetch(`${API_BASE}/api/admin/settings`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(pages)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.message) {
-                    showToast('✅ ' + data.message, 'success');
-                    const status = document.getElementById('saveStatus');
-                    status.textContent = '✅ ذخیره شد!';
-                    status.className = 'status-msg success';
-                    setTimeout(() => { status.textContent = ''; status.className = 'status-msg'; }, 3000);
-                } else {
-                    showToast('❌ ' + data.error, 'error');
-                }
-            })
-            .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در ذخیره صفحات', 'error'); });
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pages)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        const status = document.getElementById('saveStatus');
+                        status.textContent = '✅ ذخیره شد!';
+                        status.className = 'status-msg success';
+                        setTimeout(() => { status.textContent = '';
+                            status.className = 'status-msg'; }, 3000);
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در ذخیره صفحات', 'error'); });
         }
 
         // =============================================
@@ -1010,9 +1023,9 @@
         function loadGallery() {
             const container = document.getElementById('galleryList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+
             const timestamp = new Date().getTime();
-            
+
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
                 .then(res => res.json())
                 .then(data => {
@@ -1020,7 +1033,7 @@
                         container.innerHTML = `<div class="empty-state"><i class="fas fa-images"></i><h4>هیچ تصویری در گالری وجود ندارد</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="gallery-grid-view">`;
                     data.forEach(item => {
                         let imageUrl = item.image_url || '/logo5.png';
@@ -1028,31 +1041,32 @@
                             imageUrl = '/' + imageUrl;
                         }
                         imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 't=' + timestamp;
-                        
+
                         html += `
-                            <div class="gallery-item-card">
-                                <div class="image-wrapper">
-                                    <img src="${imageUrl}" 
-                                         alt="${item.title || 'تصویر'}" 
-                                         loading="lazy"
-                                         onerror="this.onerror=null; this.src='/logo5.png';" />
+                                <div class="gallery-item-card">
+                                    <div class="image-wrapper">
+                                        <img src="${imageUrl}" 
+                                             alt="${item.title || 'تصویر'}" 
+                                             loading="lazy"
+                                             onerror="this.onerror=null; this.src='/logo5.png';" />
+                                    </div>
+                                    <h4>${item.title || 'بدون عنوان'}</h4>
+                                    <p>${item.description || ''}</p>
+                                    <div class="actions">
+                                        <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${item.id})">
+                                            <i class="fas fa-trash"></i> حذف
+                                        </button>
+                                    </div>
                                 </div>
-                                <h4>${item.title || 'بدون عنوان'}</h4>
-                                <p>${item.description || ''}</p>
-                                <div class="actions">
-                                    <button class="btn btn-danger btn-sm" onclick="deleteGalleryItem(${item.id})">
-                                        <i class="fas fa-trash"></i> حذف
-                                    </button>
-                                </div>
-                            </div>
-                        `;
+                            `;
                     });
                     html += `</div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت گالری</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت گالری</h4></div>`;
                 });
         }
 
@@ -1076,38 +1090,39 @@
             const title = document.getElementById('gallery_title').value.trim();
             const description = document.getElementById('gallery_description').value.trim();
             let imageUrl = document.getElementById('gallery_image_url').value.trim();
-            
+
             if (!title || !imageUrl) {
                 showToast('❌ عنوان و آدرس تصویر الزامی است.', 'error');
                 return;
             }
-            
+
             if (!imageUrl.startsWith('/images/') && !imageUrl.startsWith('http')) {
                 imageUrl = '/images/gallery/' + imageUrl;
             }
-            
+
             fetch(`${API_BASE}/api/gallery`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, description, image_url: imageUrl })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.message) {
-                    showToast('✅ ' + data.message, 'success');
-                    closeGalleryModal();
-                    loadGallery();
-                    loadStats();
-                } else {
-                    showToast('❌ ' + data.error, 'error');
-                }
-            })
-            .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در ذخیره تصویر', 'error'); });
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, description, image_url: imageUrl })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        closeGalleryModal();
+                        loadGallery();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در ذخیره تصویر', 'error'); });
         }
 
         function deleteGalleryItem(id) {
             if (!confirm('آیا از حذف این تصویر مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/gallery/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
@@ -1119,7 +1134,8 @@
                         showToast('❌ ' + data.error, 'error');
                     }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف تصویر', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف تصویر', 'error'); });
         }
 
         // ===== آپلود تصویر گالری =====
@@ -1139,31 +1155,32 @@
                             this.value = '';
                             return;
                         }
-                        
+
                         const formData = new FormData();
                         formData.append('image', file);
-                        
+
                         showToast('⏳ در حال آپلود...', 'info');
-                        
+
                         fetch(`${API_BASE}/api/upload`, {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById('gallery_image_url').value = data.url;
-                                document.getElementById('galleryPreviewImg').src = data.url + '?t=' + new Date().getTime();
-                                document.getElementById('galleryImagePreview').classList.add('show');
-                                showToast('✅ ' + data.message, 'success');
-                            } else {
-                                showToast('❌ ' + data.error, 'error');
-                            }
-                        })
-                        .catch(err => {
-                            console.error('❌ خطا:', err);
-                            showToast('❌ خطا در آپلود تصویر', 'error');
-                        });
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    document.getElementById('gallery_image_url').value = data.url;
+                                    document.getElementById('galleryPreviewImg').src = data.url + '?t=' + new Date()
+                                        .getTime();
+                                    document.getElementById('galleryImagePreview').classList.add('show');
+                                    showToast('✅ ' + data.message, 'success');
+                                } else {
+                                    showToast('❌ ' + data.error, 'error');
+                                }
+                            })
+                            .catch(err => {
+                                console.error('❌ خطا:', err);
+                                showToast('❌ خطا در آپلود تصویر', 'error');
+                            });
                     }
                 });
             }
@@ -1191,7 +1208,7 @@
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+
             fetch(`${API_BASE}/api/admin/articles`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
@@ -1199,41 +1216,43 @@
                 })
                 .then(data => {
                     console.log('📚 مقالات دریافتی:', data);
-                    
+
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-newspaper"></i><h4>هیچ مقاله‌ای وجود ندارد</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-newspaper"></i><h4>هیچ مقاله‌ای وجود ندارد</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
-                    
+                            <thead><tr><th>عنوان</th><th>دسته‌بندی</th><th>نویسنده</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+
                     data.forEach(article => {
                         html += `
-                            <tr>
-                                <td><strong>${article.title}</strong></td>
-                                <td>${article.category}</td>
-                                <td>${article.author}</td>
-                                <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
-                                <td>${article.created_at}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})">
-                                        <i class="fas fa-edit"></i> ویرایش
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteArticle(${article.id})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${article.title}</strong></td>
+                                    <td>${article.category}</td>
+                                    <td>${article.author}</td>
+                                    <td><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></td>
+                                    <td>${article.created_at}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})">
+                                            <i class="fas fa-edit"></i> ویرایش
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteArticle(${article.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                     });
-                    
+
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت مقالات</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت مقالات</h4></div>`;
                 });
         }
 
@@ -1250,9 +1269,9 @@
 
         function editArticle(id) {
             console.log('✏️ شروع ویرایش مقاله با ID:', id);
-            
+
             showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
-            
+
             fetch(`${API_BASE}/api/admin/articles/${id}`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
@@ -1260,17 +1279,17 @@
                 })
                 .then(data => {
                     console.log('✅ مقاله پیدا شد:', data);
-                    
+
                     document.getElementById('articleEditId').value = data.id;
                     document.getElementById('articleTitle').value = data.title || '';
                     document.getElementById('articleCategory').value = data.category || '';
                     document.getElementById('articleAuthor').value = data.author || 'سوفیا AI';
                     document.getElementById('articleContent').value = data.content || '';
                     document.getElementById('articleStatus').value = data.status || 'published';
-                    
+
                     document.getElementById('articleModalTitle').textContent = '✏️ ویرایش مقاله';
                     document.getElementById('articleModal').classList.add('active');
-                    
+
                     showToast('✅ مقاله برای ویرایش آماده شد', 'success');
                 })
                 .catch(err => {
@@ -1290,48 +1309,48 @@
             const author = document.getElementById('articleAuthor').value.trim();
             const content = document.getElementById('articleContent').value.trim();
             const status = document.getElementById('articleStatus').value;
-            
+
             console.log('💾 ذخیره مقاله:', { id, title, category });
-            
+
             if (!title || !category || !content) {
                 showToast('❌ عنوان، دسته‌بندی و متن مقاله الزامی است.', 'error');
                 return;
             }
-            
+
             const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
-            
+
             fetch(url, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, category, content, author, status })
-            })
-            .then(res => {
-                if (!res.ok) {
-                    if (res.status === 404) throw new Error('مقاله یافت نشد');
-                    throw new Error('خطا در ذخیره مقاله (کد ' + res.status + ')');
-                }
-                return res.json();
-            })
-            .then(data => {
-                if (data.message) {
-                    showToast('✅ ' + data.message, 'success');
-                    closeArticleModal();
-                    loadArticles();
-                    loadStats();
-                } else {
-                    showToast('❌ ' + (data.error || 'خطا در ذخیره مقاله'), 'error');
-                }
-            })
-            .catch(err => {
-                console.error('❌ خطا:', err);
-                showToast('❌ ' + err.message, 'error');
-            });
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, category, content, author, status })
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        if (res.status === 404) throw new Error('مقاله یافت نشد');
+                        throw new Error('خطا در ذخیره مقاله (کد ' + res.status + ')');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        closeArticleModal();
+                        loadArticles();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + (data.error || 'خطا در ذخیره مقاله'), 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ ' + err.message, 'error');
+                });
         }
 
         function deleteArticle(id) {
             if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/admin/articles/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
@@ -1355,41 +1374,43 @@
         function loadComments() {
             const container = document.getElementById('commentsList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+
             fetch(`${API_BASE}/api/admin/comments`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-comment-dots"></i><h4>هیچ نظری وجود ندارد</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-comment-dots"></i><h4>هیچ نظری وجود ندارد</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>نام</th><th>ایمیل</th><th>متن</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                            <thead><tr><th>نام</th><th>ایمیل</th><th>متن</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     data.forEach(comment => {
                         html += `
-                            <tr>
-                                <td><strong>${comment.name}</strong></td>
-                                <td>${comment.email || '-'}</td>
-                                <td style="max-width:200px; word-break:break-word;">${comment.text}</td>
-                                <td><span class="badge ${comment.status === 'approved' ? 'badge-approved' : comment.status === 'rejected' ? 'badge-rejected' : 'badge-pending'}">${comment.status === 'approved' ? 'تایید شده' : comment.status === 'rejected' ? 'رد شده' : 'در انتظار'}</span></td>
-                                <td>${comment.created_at}</td>
-                                <td>
-                                    ${comment.status === 'pending' ? `
-                                        <button class="btn btn-success btn-sm" onclick="approveComment(${comment.id})"><i class="fas fa-check"></i></button>
-                                        <button class="btn btn-warning btn-sm" onclick="rejectComment(${comment.id})"><i class="fas fa-times"></i></button>
-                                    ` : ''}
-                                    <button class="btn btn-danger btn-sm" onclick="deleteComment(${comment.id})"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${comment.name}</strong></td>
+                                    <td>${comment.email || '-'}</td>
+                                    <td style="max-width:200px; word-break:break-word;">${comment.text}</td>
+                                    <td><span class="badge ${comment.status === 'approved' ? 'badge-approved' : comment.status === 'rejected' ? 'badge-rejected' : 'badge-pending'}">${comment.status === 'approved' ? 'تایید شده' : comment.status === 'rejected' ? 'رد شده' : 'در انتظار'}</span></td>
+                                    <td>${comment.created_at}</td>
+                                    <td>
+                                        ${comment.status === 'pending' ? `
+                                            <button class="btn btn-success btn-sm" onclick="approveComment(${comment.id})"><i class="fas fa-check"></i></button>
+                                            <button class="btn btn-warning btn-sm" onclick="rejectComment(${comment.id})"><i class="fas fa-times"></i></button>
+                                        ` : ''}
+                                        <button class="btn btn-danger btn-sm" onclick="deleteComment(${comment.id})"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `;
                     });
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت نظرات</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت نظرات</h4></div>`;
                 });
         }
 
@@ -1397,32 +1418,38 @@
             fetch(`${API_BASE}/api/admin/comments/${id}/approve`, { method: 'PUT' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.message) { showToast('✅ ' + data.message, 'success'); loadComments(); loadStats(); }
-                    else { showToast('❌ ' + data.error, 'error'); }
+                    if (data.message) { showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats(); } else { showToast('❌ ' + data.error, 'error'); }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در تایید نظر', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در تایید نظر', 'error'); });
         }
 
         function rejectComment(id) {
             fetch(`${API_BASE}/api/admin/comments/${id}/reject`, { method: 'PUT' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.message) { showToast('✅ ' + data.message, 'success'); loadComments(); loadStats(); }
-                    else { showToast('❌ ' + data.error, 'error'); }
+                    if (data.message) { showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats(); } else { showToast('❌ ' + data.error, 'error'); }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در رد نظر', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در رد نظر', 'error'); });
         }
 
         function deleteComment(id) {
             if (!confirm('آیا از حذف این نظر مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/admin/comments/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.message) { showToast('✅ ' + data.message, 'success'); loadComments(); loadStats(); }
-                    else { showToast('❌ ' + data.error, 'error'); }
+                    if (data.message) { showToast('✅ ' + data.message, 'success');
+                        loadComments();
+                        loadStats(); } else { showToast('❌ ' + data.error, 'error'); }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف نظر', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف نظر', 'error'); });
         }
 
         // =============================================
@@ -1431,60 +1458,65 @@
         function loadUsers() {
             const container = document.getElementById('usersList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+
             fetch(`${API_BASE}/api/users`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-users"></i><h4>هیچ کاربری وجود ندارد</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-users"></i><h4>هیچ کاربری وجود ندارد</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>نام</th><th>ایمیل</th><th>شماره تماس</th><th>تاریخ عضویت</th><th>عملیات</th></tr></thead><tbody>`;
+                            <thead><tr><th>نام</th><th>ایمیل</th><th>شماره تماس</th><th>تاریخ عضویت</th><th>عملیات</th></tr></thead><tbody>`;
                     data.forEach(user => {
                         html += `
-                            <tr>
-                                <td><strong>${user.name}</strong></td>
-                                <td>${user.email}</td>
-                                <td>${user.phone || '-'}</td>
-                                <td>${user.created_at}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${user.name}</strong></td>
+                                    <td>${user.email}</td>
+                                    <td>${user.phone || '-'}</td>
+                                    <td>${user.created_at}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                     });
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت کاربران</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت کاربران</h4></div>`;
                 });
         }
 
         function deleteUser(id) {
             if (!confirm('آیا از حذف این کاربر مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/users/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.message) { showToast('✅ ' + data.message, 'success'); loadUsers(); loadStats(); }
-                    else { showToast('❌ ' + data.error, 'error'); }
+                    if (data.message) { showToast('✅ ' + data.message, 'success');
+                        loadUsers();
+                        loadStats(); } else { showToast('❌ ' + data.error, 'error'); }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف کاربر', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف کاربر', 'error'); });
         }
 
         // =============================================
-        // ===== درخواست‌های کاربران =====
+        // ===== درخواست‌های کاربران (با نمایش کامل) =====
         // =============================================
         function loadUserRequests() {
             const container = document.getElementById('requestsList');
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+            container.innerHTML =
+            '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
+
             fetch(`${API_BASE}/api/admin/user-requests`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
@@ -1492,87 +1524,176 @@
                 })
                 .then(data => {
                     console.log('📋 درخواست‌های کاربران:', data);
-                    
+
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-clipboard-list"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>عنوان</th><th>دسته</th><th>اولویت</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
-                    
+                            <thead><tr>
+                                <th>کاربر</th>
+                                <th>ایمیل</th>
+                                <th>عنوان</th>
+                                <th>دسته</th>
+                                <th>اولویت</th>
+                                <th>وضعیت</th>
+                                <th>تاریخ</th>
+                                <th>عملیات</th>
+                            </tr></thead><tbody>`;
+
                     data.forEach(req => {
                         const priorityLabel = req.priority === 'urgent' ? 'فوری' :
-                                             req.priority === 'high' ? 'بالا' :
-                                             req.priority === 'medium' ? 'متوسط' : 'کم';
-                        const priorityClass = req.priority === 'urgent' || req.priority === 'high' ? 'priority-high' :
-                                             req.priority === 'medium' ? 'priority-medium' : 'priority-low';
-                        
+                            req.priority === 'high' ? 'بالا' :
+                            req.priority === 'medium' ? 'متوسط' : 'کم';
+                        const priorityClass = req.priority === 'urgent' || req.priority === 'high' ?
+                            'priority-high' :
+                            req.priority === 'medium' ? 'priority-medium' : 'priority-low';
+
                         const statusLabel = req.status === 'pending' ? 'در انتظار' :
-                                           req.status === 'approved' ? 'تایید شده' :
-                                           req.status === 'rejected' ? 'رد شده' : 'در حال بررسی';
+                            req.status === 'approved' ? 'تایید شده' :
+                            req.status === 'rejected' ? 'رد شده' : 'در حال بررسی';
                         const statusClass = req.status === 'pending' ? 'badge-pending' :
-                                           req.status === 'approved' ? 'badge-approved' :
-                                           req.status === 'rejected' ? 'badge-rejected' : 'badge-processing';
-                        
+                            req.status === 'approved' ? 'badge-approved' :
+                            req.status === 'rejected' ? 'badge-rejected' : 'badge-processing';
+
                         const categoryLabels = {
-                            'general': 'عمومی', 'chatbot': 'چت‌بات', 'rag': 'سیستم RAG',
-                            'automation': 'اتوماسیون', 'analysis': 'تحلیل داده',
-                            'agent': 'ایجنت هوشمند', 'other': 'سایر'
+                            'general': 'عمومی',
+                            'chatbot': 'چت‌بات',
+                            'rag': 'سیستم RAG',
+                            'automation': 'اتوماسیون',
+                            'analysis': 'تحلیل داده',
+                            'agent': 'ایجنت هوشمند',
+                            'other': 'سایر'
                         };
                         const categoryLabel = categoryLabels[req.category] || req.category;
-                        
+
+                        const userName = req.user_name || 'کاربر مهمان';
+                        const userEmail = req.user_email || 'ثبت نشده';
+
                         html += `
-                            <tr>
-                                <td><strong>${req.user_name}</strong></td>
-                                <td>${req.user_email}</td>
-                                <td>${req.title}</td>
-                                <td>${categoryLabel}</td>
-                                <td><span class="${priorityClass}">${priorityLabel}</span></td>
-                                <td><span class="badge ${statusClass}">${statusLabel}</span></td>
-                                <td>${req.created_at}</td>
-                                <td>
-                                    ${req.status === 'pending' ? `
-                                        <button class="btn btn-success btn-sm" onclick="updateUserRequestStatus(${req.id}, 'approved')"><i class="fas fa-check"></i></button>
-                                        <button class="btn btn-danger btn-sm" onclick="updateUserRequestStatus(${req.id}, 'rejected')"><i class="fas fa-times"></i></button>
-                                    ` : ''}
-                                    <button class="btn btn-danger btn-sm" onclick="deleteUserRequest(${req.id})"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${userName}</strong></td>
+                                    <td>${userEmail}</td>
+                                    <td><strong>${req.title}</strong></td>
+                                    <td>${categoryLabel}</td>
+                                    <td><span class="${priorityClass}">${priorityLabel}</span></td>
+                                    <td><span class="badge ${statusClass}">${statusLabel}</span></td>
+                                    <td>${req.created_at}</td>
+                                    <td>
+                                        ${req.status === 'pending' ? `
+                                            <button class="btn btn-success btn-sm" onclick="updateUserRequestStatus(${req.id}, 'approved')"><i class="fas fa-check"></i></button>
+                                            <button class="btn btn-danger btn-sm" onclick="updateUserRequestStatus(${req.id}, 'rejected')"><i class="fas fa-times"></i></button>
+                                        ` : ''}
+                                        <button class="btn btn-info btn-sm" onclick="showRequestDetail(${req.id})" title="مشاهده توضیحات">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteUserRequest(${req.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                     });
-                    
+
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
+                });
+        }
+
+        // ===== نمایش توضیحات کامل درخواست کاربر =====
+        function showRequestDetail(id) {
+            fetch(`${API_BASE}/api/admin/user-requests`)
+                .then(res => res.json())
+                .then(data => {
+                    const req = data.find(r => r.id === id);
+                    if (!req) {
+                        showToast('❌ درخواست یافت نشد', 'error');
+                        return;
+                    }
+
+                    const userName = req.user_name || 'کاربر مهمان';
+                    const userEmail = req.user_email || 'ثبت نشده';
+
+                    const modal = document.createElement('div');
+                    modal.className = 'modal-overlay show';
+                    modal.innerHTML = `
+                            <div class="modal" style="max-width:600px;">
+                                <div class="modal-header">
+                                    <h3>📄 توضیحات درخواست</h3>
+                                    <button class="close-modal" onclick="this.closest('.modal-overlay').remove()">&times;</button>
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>عنوان:</strong> ${req.title}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>کاربر:</strong> ${userName} (${userEmail})
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>دسته‌بندی:</strong> ${categoryLabels[req.category] || 'عمومی'}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>اولویت:</strong> ${priorityLabels[req.priority] || 'متوسط'}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>وضعیت:</strong> ${statusLabels[req.status] || 'در انتظار'}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>تاریخ:</strong> ${req.created_at}
+                                </div>
+                                <hr style="margin:12px 0; border-color:var(--border-color);">
+                                <div style="background:var(--bg-body); padding:16px; border-radius:var(--radius-sm); white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto;">
+                                    <strong>📝 توضیحات کامل:</strong><br><br>
+                                    ${req.description || 'توضیحاتی وارد نشده است.'}
+                                </div>
+                                <div class="modal-actions">
+                                    <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">بستن</button>
+                                </div>
+                            </div>
+                        `;
+                    document.body.appendChild(modal);
+
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.remove();
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در دریافت توضیحات', 'error');
                 });
         }
 
         function updateUserRequestStatus(id, status) {
             fetch(`${API_BASE}/api/admin/user-requests/${id}/status`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.message) {
-                    showToast('✅ ' + data.message, 'success');
-                    loadUserRequests();
-                    loadStats();
-                } else {
-                    showToast('❌ ' + data.error, 'error');
-                }
-            })
-            .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در تغییر وضعیت', 'error'); });
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadUserRequests();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در تغییر وضعیت', 'error'); });
         }
 
         function deleteUserRequest(id) {
             if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/user-requests/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
@@ -1584,7 +1705,8 @@
                         showToast('❌ ' + data.error, 'error');
                     }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف درخواست', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف درخواست', 'error'); });
         }
 
         // =============================================
@@ -1592,8 +1714,9 @@
         // =============================================
         function loadChatbotRequests() {
             const container = document.getElementById('chatbotRequestsList');
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+            container.innerHTML =
+            '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
+
             fetch(`${API_BASE}/api/chatbot-requests`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
@@ -1601,51 +1724,117 @@
                 })
                 .then(data => {
                     console.log('📋 درخواست‌های چت‌بات:', data);
-                    
+
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-robot"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-robot"></i><h4>هیچ درخواستی ثبت نشده است</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr>
-                            <th>نام</th>
-                            <th>شماره تماس</th>
-                            <th>ایمیل</th>
-                            <th>توضیحات</th>
-                            <th>تاریخ</th>
-                            <th>عملیات</th>
-                        </tr></thead><tbody>`;
-                    
+                            <thead><tr>
+                                <th>نام</th>
+                                <th>شماره تماس</th>
+                                <th>ایمیل</th>
+                                <th>توضیحات</th>
+                                <th>تاریخ</th>
+                                <th>عملیات</th>
+                            </tr></thead><tbody>`;
+
                     data.forEach(req => {
+                        const desc = req.description || '';
+                        const shortDesc = desc.length > 50 ? desc.substring(0, 50) + '...' : desc;
+
                         html += `
-                            <tr>
-                                <td><strong>${req.name}</strong></td>
-                                <td>${req.phone}</td>
-                                <td>${req.email || '-'}</td>
-                                <td style="max-width:250px; word-break:break-word;">${req.description || '-'}</td>
-                                <td>${req.created_at}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteChatbotRequest(${req.id})">
-                                        <i class="fas fa-trash"></i> حذف
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${req.name}</strong></td>
+                                    <td>${req.phone}</td>
+                                    <td>${req.email || '-'}</td>
+                                    <td style="max-width:200px; word-break:break-word;">
+                                        ${shortDesc}
+                                        ${desc.length > 50 ? `<br><button class="btn btn-info btn-sm" onclick="showChatbotDetail(${req.id})" style="margin-top:4px;"><i class="fas fa-eye"></i> مشاهده کامل</button>` : ''}
+                                    </td>
+                                    <td>${req.created_at}</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" onclick="showChatbotDetail(${req.id})" title="مشاهده توضیحات">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteChatbotRequest(${req.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                     });
-                    
+
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت درخواست‌ها</h4></div>`;
+                });
+        }
+
+        // ===== نمایش توضیحات کامل درخواست چت‌بات =====
+        function showChatbotDetail(id) {
+            fetch(`${API_BASE}/api/chatbot-requests`)
+                .then(res => res.json())
+                .then(data => {
+                    const req = data.find(r => r.id === id);
+                    if (!req) {
+                        showToast('❌ درخواست یافت نشد', 'error');
+                        return;
+                    }
+
+                    const modal = document.createElement('div');
+                    modal.className = 'modal-overlay show';
+                    modal.innerHTML = `
+                            <div class="modal" style="max-width:600px;">
+                                <div class="modal-header">
+                                    <h3>🤖 توضیحات درخواست چت‌بات</h3>
+                                    <button class="close-modal" onclick="this.closest('.modal-overlay').remove()">&times;</button>
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>نام:</strong> ${req.name}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>شماره تماس:</strong> ${req.phone}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>ایمیل:</strong> ${req.email || 'ثبت نشده'}
+                                </div>
+                                <div style="margin-bottom:12px;">
+                                    <strong>تاریخ:</strong> ${req.created_at}
+                                </div>
+                                <hr style="margin:12px 0; border-color:var(--border-color);">
+                                <div style="background:var(--bg-body); padding:16px; border-radius:var(--radius-sm); white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto;">
+                                    <strong>📝 توضیحات کامل:</strong><br><br>
+                                    ${req.description || 'توضیحاتی وارد نشده است.'}
+                                </div>
+                                <div class="modal-actions">
+                                    <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">بستن</button>
+                                </div>
+                            </div>
+                        `;
+                    document.body.appendChild(modal);
+
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.remove();
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در دریافت توضیحات', 'error');
                 });
         }
 
         function deleteChatbotRequest(id) {
             if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/chatbot-requests/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
@@ -1669,45 +1858,47 @@
         function loadCart() {
             const container = document.getElementById('cartList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
-            
+
             fetch(`${API_BASE}/api/admin/cart`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.length === 0) {
-                        container.innerHTML = `<div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>سبد خرید خالی است</h4></div>`;
+                        container.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>سبد خرید خالی است</h4></div>`;
                         return;
                     }
-                    
+
                     let html = `<div class="table-wrapper"><table>
-                        <thead><tr><th>کاربر</th><th>ایمیل</th><th>خدمت</th><th>قیمت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
+                            <thead><tr><th>کاربر</th><th>ایمیل</th><th>خدمت</th><th>قیمت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>`;
                     data.forEach(item => {
                         html += `
-                            <tr>
-                                <td><strong>${item.user_name}</strong></td>
-                                <td>${item.user_email}</td>
-                                <td>${item.item_name}</td>
-                                <td>${item.item_price || '-'}</td>
-                                <td>${item.created_at}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteCartItem(${item.id})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr>
+                                    <td><strong>${item.user_name}</strong></td>
+                                    <td>${item.user_email}</td>
+                                    <td>${item.item_name}</td>
+                                    <td>${item.item_price || '-'}</td>
+                                    <td>${item.created_at}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteCartItem(${item.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                     });
                     html += `</tbody></table></div>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
                     console.error('❌ خطا:', err);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت سبد خرید</h4></div>`;
+                    container.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i><h4>خطا در دریافت سبد خرید</h4></div>`;
                 });
         }
 
         function deleteCartItem(id) {
             if (!confirm('آیا از حذف این آیتم از سبد خرید مطمئن هستید؟')) return;
-            
+
             fetch(`${API_BASE}/api/cart/${id}`, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => {
@@ -1719,7 +1910,8 @@
                         showToast('❌ ' + data.error, 'error');
                     }
                 })
-                .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در حذف آیتم', 'error'); });
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف آیتم', 'error'); });
         }
 
         // =============================================
@@ -1756,26 +1948,53 @@
                 footer_text: document.getElementById('setting_footer_text').value,
                 analytics: document.getElementById('setting_analytics').value
             };
-            
+
             fetch(`${API_BASE}/api/admin/settings`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(settings)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.message) {
-                    showToast('✅ ' + data.message, 'success');
-                    const status = document.getElementById('settingsStatus');
-                    status.textContent = '✅ تنظیمات ذخیره شد!';
-                    status.className = 'status-msg success';
-                    setTimeout(() => { status.textContent = ''; status.className = 'status-msg'; }, 3000);
-                } else {
-                    showToast('❌ ' + data.error, 'error');
-                }
-            })
-            .catch(err => { console.error('❌ خطا:', err); showToast('❌ خطا در ذخیره تنظیمات', 'error'); });
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        const status = document.getElementById('settingsStatus');
+                        status.textContent = '✅ تنظیمات ذخیره شد!';
+                        status.className = 'status-msg success';
+                        setTimeout(() => { status.textContent = '';
+                            status.className = 'status-msg'; }, 3000);
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در ذخیره تنظیمات', 'error'); });
         }
+
+        // ===== متغیرهای کمکی برای نمایش =====
+        const categoryLabels = {
+            'general': 'عمومی',
+            'chatbot': 'چت‌بات',
+            'rag': 'سیستم RAG',
+            'automation': 'اتوماسیون',
+            'analysis': 'تحلیل داده',
+            'agent': 'ایجنت هوشمند',
+            'other': 'سایر'
+        };
+
+        const priorityLabels = {
+            'low': 'کم',
+            'medium': 'متوسط',
+            'high': 'بالا',
+            'urgent': 'فوری'
+        };
+
+        const statusLabels = {
+            'pending': 'در انتظار',
+            'approved': 'تایید شده',
+            'rejected': 'رد شده',
+            'processing': 'در حال بررسی'
+        };
     </script>
 </body>
 </html>
