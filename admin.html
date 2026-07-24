@@ -717,7 +717,7 @@
             <div id="saveStatus" class="status-msg"></div>
         </div>
 
-        <!-- ===== تب گالری ===== -->
+        <!-- ===== تب گالری (اصلاح شده) ===== -->
         <div id="tab-gallery" class="tab-content">
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
                 <button class="btn btn-primary" onclick="showAddGallery()">
@@ -732,7 +732,7 @@
             </div>
         </div>
 
-        <!-- ===== تب مقالات (اصلاح شده) ===== -->
+        <!-- ===== تب مقالات ===== -->
         <div id="tab-articles" class="tab-content">
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
                 <button class="btn btn-primary" onclick="showAddArticle()">
@@ -1142,7 +1142,7 @@
         }
 
         // =============================================
-        // ===== گالری (با آپلود و پیش‌نمایش) =====
+        // ===== گالری (اصلاح شده با API_BASE) =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryList');
@@ -1151,8 +1151,13 @@
             const timestamp = new Date().getTime();
 
             fetch(`${API_BASE}/api/gallery?t=${timestamp}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('خطا در دریافت گالری (کد ' + res.status + ')');
+                    return res.json();
+                })
                 .then(data => {
+                    console.log('📸 داده‌های گالری (مدیریت):', data);
+                    
                     if (data.length === 0) {
                         container.innerHTML = `
                             <div class="empty-state">
@@ -1165,15 +1170,24 @@
                     }
 
                     let html = `<div class="gallery-grid-view">`;
-                    data.forEach(item => {
+                    data.forEach((item, index) => {
                         let imageUrl = item.image_url || '/logo5.png';
-                        if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/')) {
-                            imageUrl = '/' + imageUrl;
+                        
+                        // ===== ساخت آدرس کامل با API_BASE =====
+                        if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                            // آدرس کامل - تغییری نمی‌دهیم
+                        } else if (imageUrl.startsWith('/images/')) {
+                            imageUrl = API_BASE + imageUrl;
+                        } else if (imageUrl.startsWith('/')) {
+                            imageUrl = API_BASE + imageUrl;
+                        } else {
+                            imageUrl = API_BASE + '/images/gallery/' + imageUrl;
                         }
-                        if (!imageUrl.startsWith('/images/') && !imageUrl.startsWith('http')) {
-                            imageUrl = '/images/' + imageUrl;
-                        }
-                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 't=' + timestamp;
+                        
+                        // اضافه کردن timestamp برای جلوگیری از کش
+                        imageUrl = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 'v=' + timestamp + '_' + index;
+                        
+                        console.log(`🖼️ تصویر ${index+1} آدرس:`, imageUrl);
 
                         html += `
                             <div class="gallery-item-card">
@@ -1202,6 +1216,7 @@
                         <div class="empty-state">
                             <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
                             <h4>خطا در دریافت گالری</h4>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">${err.message}</p>
                             <button class="btn btn-primary" onclick="loadGallery()" style="margin-top:12px;">
                                 <i class="fas fa-redo"></i> تلاش مجدد
                             </button>
@@ -1353,15 +1368,13 @@
         });
 
         // =============================================
-        // ===== مقالات (اصلاح شده کامل) =====
+        // ===== مقالات =====
         // =============================================
         
-        // تابع بارگذاری مقالات - استفاده از مسیر مدیریت
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
 
-            // استفاده از مسیر /api/admin/articles برای دریافت همه مقالات (مدیریت)
             fetch(`${API_BASE}/api/admin/articles`)
                 .then(res => {
                     if (!res.ok) throw new Error('خطا در دریافت مقالات (کد ' + res.status + ')');
@@ -1423,7 +1436,6 @@
                 });
         }
 
-        // نمایش مودال افزودن مقاله جدید
         function showAddArticle() {
             document.getElementById('articleEditId').value = '';
             document.getElementById('articleTitle').value = '';
@@ -1435,11 +1447,14 @@
             document.getElementById('articleModal').classList.add('active');
         }
 
-        // ویرایش مقاله - استفاده از مسیر مدیریت
         function editArticle(id) {
+            if (!id) {
+                showToast('❌ شناسه مقاله نامعتبر است', 'error');
+                return;
+            }
+            
             showToast('⏳ در حال دریافت اطلاعات مقاله...', 'info');
 
-            // استفاده از مسیر /api/admin/articles برای دریافت یک مقاله خاص
             fetch(`${API_BASE}/api/admin/articles/${id}`)
                 .then(res => {
                     if (!res.ok) {
@@ -1465,12 +1480,10 @@
                 });
         }
 
-        // بستن مودال مقاله
         function closeArticleModal() {
             document.getElementById('articleModal').classList.remove('active');
         }
 
-        // ذخیره مقاله (ایجاد یا ویرایش) - استفاده از مسیر مدیریت
         function saveArticle() {
             const id = document.getElementById('articleEditId').value;
             const title = document.getElementById('articleTitle').value.trim();
@@ -1479,7 +1492,6 @@
             const content = document.getElementById('articleContent').value.trim();
             const status = document.getElementById('articleStatus').value;
 
-            // اعتبارسنجی
             if (!title) {
                 showToast('❌ عنوان مقاله الزامی است.', 'error');
                 document.getElementById('articleTitle').focus();
@@ -1496,7 +1508,6 @@
                 return;
             }
 
-            // تعیین مسیر و متد - استفاده از مسیر مدیریت
             const url = id ? `${API_BASE}/api/admin/articles/${id}` : `${API_BASE}/api/admin/articles`;
             const method = id ? 'PUT' : 'POST';
 
@@ -1518,8 +1529,8 @@
                     if (data.message) {
                         showToast('✅ ' + data.message, 'success');
                         closeArticleModal();
-                        loadArticles(); // بازخوانی لیست مقالات
-                        loadStats(); // به‌روزرسانی آمار
+                        loadArticles();
+                        loadStats();
                     } else if (data.error) {
                         showToast('❌ ' + data.error, 'error');
                     } else {
@@ -1535,7 +1546,6 @@
                 });
         }
 
-        // حذف مقاله - استفاده از مسیر مدیریت
         function deleteArticle(id) {
             if (!confirm('آیا از حذف این مقاله مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
 
