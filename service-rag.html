@@ -333,7 +333,7 @@
             font-size: 0.9rem;
         }
 
-        /* ===== RAG چیست ===== */
+        /* ===== RAG چیست (با فلش‌های افقی) ===== */
         .what-is-rag {
             padding: 60px 0;
             background: #fff;
@@ -368,35 +368,58 @@
             flex-direction: column;
             gap: 12px;
         }
-        .rag-flow {
+
+        /* ===== فلش‌های افقی ===== */
+        .rag-flow-horizontal {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             background: var(--bg-light);
-            padding: 24px 20px;
+            padding: 20px 24px;
             border-radius: var(--radius);
             border: 2px solid var(--border-color);
+            direction: ltr;
         }
-        .rag-flow .step {
+        .rag-flow-horizontal .step {
             background: #fff;
-            padding: 12px 18px;
+            padding: 12px 20px;
             border-radius: var(--radius-sm);
             border: 2px solid var(--primary-light);
             text-align: center;
             font-weight: 700;
-            font-size: 0.9rem;
-            min-width: 80px;
+            font-size: 0.95rem;
+            min-width: 90px;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
         }
-        .rag-flow .step .icon {
+        .rag-flow-horizontal .step .icon {
             font-size: 1.8rem;
             display: block;
             margin-bottom: 4px;
         }
-        .rag-flow .arrow {
-            font-size: 1.5rem;
+        .rag-flow-horizontal .arrow {
+            font-size: 1.8rem;
             color: var(--primary-light);
+            font-weight: 900;
+            padding: 0 4px;
+        }
+
+        @media (max-width: 768px) {
+            .rag-flow-horizontal {
+                flex-direction: column;
+                padding: 16px;
+            }
+            .rag-flow-horizontal .arrow {
+                transform: rotate(90deg);
+                padding: 2px 0;
+            }
+            .rag-flow-horizontal .step {
+                min-width: 70px;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
         }
 
         /* ===== ویژگی‌ها ===== */
@@ -945,8 +968,6 @@
             .cta-box h2 { font-size: 1.6rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .service-hero .floating-icon { display: none; }
-            .rag-flow { flex-direction: column; }
-            .rag-flow .arrow { transform: rotate(90deg); }
             .process-timeline { grid-template-columns: 1fr 1fr; }
             .portfolio-grid { grid-template-columns: 1fr; }
         }
@@ -1041,7 +1062,7 @@
         </div>
     </section>
 
-    <!-- ===== RAG چیست (با فلش‌های اصلاح شده) ===== -->
+    <!-- ===== RAG چیست (با فلش‌های افقی) ===== -->
     <section class="what-is-rag fade-up">
         <div class="container">
             <div class="rag-explanation">
@@ -1058,22 +1079,22 @@
                     </p>
                 </div>
                 <div class="visual">
-                    <div class="rag-flow">
+                    <div class="rag-flow-horizontal">
                         <div class="step">
                             <span class="icon">📄</span>
                             اسناد شما
                         </div>
-                        <span class="arrow">➜</span>
+                        <span class="arrow">→</span>
                         <div class="step">
                             <span class="icon">🔍</span>
                             بازیابی
                         </div>
-                        <span class="arrow">➜</span>
+                        <span class="arrow">→</span>
                         <div class="step">
                             <span class="icon">🧠</span>
                             تقویت
                         </div>
-                        <span class="arrow">➜</span>
+                        <span class="arrow">→</span>
                         <div class="step">
                             <span class="icon">💬</span>
                             پاسخ دقیق
@@ -1200,161 +1221,95 @@
                 <p>برخی از پروژه‌های موفق سیستم RAG در صنایع مختلف</p>
             </div>
             <div class="portfolio-grid">
-
+                <!-- کارت‌های نمونه (همانند قبل) -->
                 <div class="portfolio-card">
                     <span class="card-icon">⚖️</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>سیستم RAG حقوقی سازمان قضایی</h4>
                     <span class="industry-tag">🏛️ حقوقی و قضایی</span>
-                    <p>سیستم پرسش و پاسخ هوشمند برای قضات و وکلا با استفاده از ۵۰,۰۰۰+ سند حقوقی شامل قوانین، مقررات و آرای قضایی</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>Word</span>
-                        <span>Elasticsearch</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم پرسش و پاسخ هوشمند با استفاده از ۵۰,۰۰۰+ سند حقوقی</p>
+                    <div class="tech-tags"><span>PDF</span><span>Elasticsearch</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🏥</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>دستیار پزشکی مرکز درمانی</h4>
                     <span class="industry-tag">🏥 پزشکی و سلامت</span>
-                    <p>سیستم RAG برای پاسخگویی به سوالات پزشکان و بیماران با استفاده از ۱۰,۰۰۰+ مقاله و پرونده درمانی</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>MySQL</span>
-                        <span>LangChain</span>
-                        <span>OpenAI</span>
-                    </div>
+                    <p>سیستم RAG با استفاده از ۱۰,۰۰۰+ مقاله و پرونده درمانی</p>
+                    <div class="tech-tags"><span>PDF</span><span>LangChain</span><span>OpenAI</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🏛️</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>سامانه پاسخگویی سازمان شهرداری</h4>
                     <span class="industry-tag">🏛️ دولتی و سازمانی</span>
-                    <p>سیستم پاسخ‌گویی هوشمند به سوالات شهروندان با استفاده از ۵,۰۰۰+ سند سازمانی شامل قوانین شهری و دستورالعمل‌ها</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>PostgreSQL</span>
-                        <span>Haystack</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم پاسخگویی به سوالات شهروندان با ۵,۰۰۰+ سند سازمانی</p>
+                    <div class="tech-tags"><span>PDF</span><span>Haystack</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🎓</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>دستیار پژوهشی مرکز علمی</h4>
                     <span class="industry-tag">🎓 آموزشی و پژوهشی</span>
-                    <p>سیستم RAG برای محققان و دانشجویان با استفاده از ۲۰,۰۰۰+ مقاله علمی و منابع پژوهشی</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>Elasticsearch</span>
-                        <span>LangChain</span>
-                        <span>GPT-4</span>
-                    </div>
+                    <p>سیستم RAG با استفاده از ۲۰,۰۰۰+ مقاله علمی و منابع پژوهشی</p>
+                    <div class="tech-tags"><span>PDF</span><span>LangChain</span><span>GPT-4</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">💼</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>دستیار داخلی سازمان</h4>
                     <span class="industry-tag">💼 شرکتی و کسب‌وکار</span>
-                    <p>سیستم پاسخ‌گویی هوشمند به سوالات کارمندان با استفاده از ۳,۰۰۰+ سند داخلی، راهنماها و سیاست‌های سازمان</p>
-                    <div class="tech-tags">
-                        <span>Word</span>
-                        <span>SQLite</span>
-                        <span>RAG</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم پاسخگویی با استفاده از ۳,۰۰۰+ سند داخلی</p>
+                    <div class="tech-tags"><span>Word</span><span>RAG</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">📱</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>پشتیبانی فنی اپراتور ارتباطی</h4>
                     <span class="industry-tag">📱 فناوری و نرم‌افزار</span>
-                    <p>سیستم RAG برای پاسخگویی به سوالات فنی کاربران با استفاده از ۲,۰۰۰+ مستندات فنی و دانش‌نامه سازمانی</p>
-                    <div class="tech-tags">
-                        <span>HTML</span>
-                        <span>MongoDB</span>
-                        <span>Haystack</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم RAG با استفاده از ۲,۰۰۰+ مستندات فنی</p>
+                    <div class="tech-tags"><span>HTML</span><span>Haystack</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🏦</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>دستیار خدمات بانکی</h4>
                     <span class="industry-tag">🏦 مالی و بانکی</span>
-                    <p>سیستم پاسخگویی به سوالات مشتریان درباره قوانین بانکی، تسهیلات و خدمات مالی با ۸,۰۰۰+ سند</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>Oracle</span>
-                        <span>LangChain</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم پاسخگویی با استفاده از ۸,۰۰۰+ سند بانکی</p>
+                    <div class="tech-tags"><span>PDF</span><span>LangChain</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🏭</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>پشتیبانی فنی کارخانه تولیدی</h4>
                     <span class="industry-tag">🏭 صنعتی و تولیدی</span>
-                    <p>سیستم RAG برای کارکنان خط تولید با استفاده از ۱,۵۰۰+ دفترچه راهنما و مستندات فنی</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>PostgreSQL</span>
-                        <span>RAG</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم RAG با استفاده از ۱,۵۰۰+ دفترچه راهنما</p>
+                    <div class="tech-tags"><span>PDF</span><span>RAG</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">🌐</span>
                     <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار گردشگری سازمان میراث فرهنگی</h4>
-                    <span class="industry-tag">🌐 گردشگری و میراث فرهنگی</span>
-                    <p>سیستم پاسخگویی به سوالات گردشگران با استفاده از ۵,۰۰۰+ سند تاریخی و راهنمای گردشگری</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>Elasticsearch</span>
-                        <span>Haystack</span>
-                        <span>LLM</span>
-                    </div>
+                    <h4>دستیار گردشگری میراث فرهنگی</h4>
+                    <span class="industry-tag">🌐 گردشگری</span>
+                    <p>سیستم پاسخگویی با استفاده از ۵,۰۰۰+ سند تاریخی</p>
+                    <div class="tech-tags"><span>PDF</span><span>Haystack</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">📊</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>تحلیل داده‌های سازمان برنامه</h4>
                     <span class="industry-tag">📊 دولتی و اقتصادی</span>
-                    <p>سیستم RAG برای تحلیل و پاسخگویی به سوالات از ۱۵,۰۰۰+ سند بودجه‌ای و اقتصادی</p>
-                    <div class="tech-tags">
-                        <span>Excel</span>
-                        <span>PostgreSQL</span>
-                        <span>LangChain</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم RAG با استفاده از ۱۵,۰۰۰+ سند بودجه‌ای</p>
+                    <div class="tech-tags"><span>Excel</span><span>LangChain</span><span>LLM</span></div>
                 </div>
-
                 <div class="portfolio-card">
                     <span class="card-icon">⚡</span>
                     <span class="badge-status">✅ انجام شده</span>
                     <h4>دستیار انرژی و نفت</h4>
                     <span class="industry-tag">⚡ انرژی و نفت</span>
-                    <p>سیستم پاسخگویی به سوالات کارشناسان با استفاده از ۲,۰۰۰+ مستندات فنی و ایمنی صنعت نفت</p>
-                    <div class="tech-tags">
-                        <span>PDF</span>
-                        <span>MongoDB</span>
-                        <span>RAG</span>
-                        <span>LLM</span>
-                    </div>
+                    <p>سیستم پاسخگویی با استفاده از ۲,۰۰۰+ مستندات فنی</p>
+                    <div class="tech-tags"><span>PDF</span><span>RAG</span><span>LLM</span></div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -1409,17 +1364,14 @@
                         <label>نام و نام خانوادگی <span class="required">*</span></label>
                         <input type="text" id="requestName" placeholder="مثال: علی محمدی" required />
                     </div>
-                    
                     <div class="form-group">
                         <label>شماره تماس <span class="required">*</span></label>
                         <input type="tel" id="requestPhone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" required />
                     </div>
-                    
                     <div class="form-group">
                         <label>ایمیل</label>
                         <input type="email" id="requestEmail" placeholder="example@email.com" />
                     </div>
-
                     <div class="form-group">
                         <label>صنعت / حوزه فعالیت <span class="required">*</span></label>
                         <select id="industryType" required>
@@ -1437,7 +1389,6 @@
                             <option value="custom">سایر</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>نوع اسناد و داده‌ها <span class="required">*</span></label>
                         <select id="documentType" required>
@@ -1450,7 +1401,6 @@
                             <option value="other">سایر</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>تعداد تقریبی اسناد <span class="required">*</span></label>
                         <select id="documentCount" required>
@@ -1462,12 +1412,10 @@
                             <option value="10000plus">بیش از ۱۰,۰۰۰ سند</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
                         <label>توضیحات نیاز شما <span class="required">*</span></label>
                         <textarea id="requestDescription" placeholder="لطفاً توضیح دهید سیستم RAG شما چه کاربردی دارد؟ چه نوع اسنادی دارید؟ چه سوالاتی باید پاسخ داده شود؟" required></textarea>
                     </div>
-                    
                     <button type="submit" class="btn-submit" id="submitBtn">
                         <i class="fas fa-paper-plane"></i>
                         ارسال درخواست
@@ -1514,7 +1462,6 @@
     <script>
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
-        // ===== ثبت نام کاربر =====
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
