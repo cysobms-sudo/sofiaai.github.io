@@ -445,6 +445,26 @@
             background: #fff;
             border-bottom: 1px solid var(--border-color);
         }
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .section-header h2 .highlight {
+            background: linear-gradient(145deg, var(--rag-gradient-1), var(--rag-gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
         .use-cases-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -477,6 +497,16 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             line-height: 1.8;
+        }
+        .use-case-card .badge-case {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.06);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
         /* ===== فرآیند کار ===== */
@@ -527,6 +557,92 @@
             color: var(--text-muted);
             font-size: 0.85rem;
             line-height: 1.7;
+        }
+
+        /* ===== نمونه کارها (اضافه شده) ===== */
+        .portfolio-section {
+            padding: 60px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .portfolio-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rag-gradient-1), var(--rag-gradient-2));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+        .portfolio-card .card-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .portfolio-card .badge-status {
+            display: inline-block;
+            background: var(--success);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .portfolio-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+        .portfolio-card .industry-tag {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .portfolio-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .portfolio-card .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .portfolio-card .tech-tags span {
+            background: rgba(108, 60, 225, 0.06);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
         }
 
         /* ===== فرم درخواست ===== */
@@ -832,6 +948,7 @@
             .rag-flow { flex-direction: column; }
             .rag-flow .arrow { transform: rotate(90deg); }
             .process-timeline { grid-template-columns: 1fr 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
@@ -886,7 +1003,7 @@
             <h1>
                 <span class="emoji">🧠</span>
                 <span class="highlight">سیستم RAG</span>
-                <span style="-webkit-text-fill-color:initial;">(تولید تقویتشده با بازیابی)</span>
+                <span style="-webkit-text-fill-color:initial;">(تولید تقویت شده با بازیابی)</span>
             </h1>
             <p class="subtitle">
                 پرسش و پاسخ هوشمند از اسناد سازمانی با حفظ حریم خصوصی و دقت بالا. با استفاده از پیشرفته‌ترین تکنولوژی‌های Retrieval-Augmented Generation، به داده‌های خود هوش بدهید.
@@ -917,7 +1034,7 @@
                     <span class="label">حفظ حریم خصوصی</span>
                 </div>
                 <div class="stat-item">
-                    <span class="number">۱۰+</span>
+                    <span class="number">۱۲+</span>
                     <span class="label">صنعت فعال</span>
                 </div>
             </div>
@@ -931,7 +1048,7 @@
                 <div class="text">
                     <h2>🔍 سیستم RAG چیست؟</h2>
                     <p>
-                        <strong class="rag-gradient-text">RAG (Retrieval-Augmented Generation)</strong> یا <strong>تولید تقویتشده با بازیابی</strong>، یک معماری پیشرفته در هوش مصنوعی است که ترکیبی از <strong>جستجوی اطلاعات</strong> و <strong>تولید متن</strong> را ارائه می‌دهد.
+                        <strong class="rag-gradient-text">RAG (Retrieval-Augmented Generation)</strong> یا <strong>تولید تقویت شده با بازیابی</strong>، یک معماری پیشرفته در هوش مصنوعی است که ترکیبی از <strong>جستجوی اطلاعات</strong> و <strong>تولید متن</strong> را ارائه می‌دهد.
                     </p>
                     <p>
                         در این سیستم، ابتدا اطلاعات مرتبط از اسناد و دیتابیس شما <strong>بازیابی</strong> می‌شود و سپس مدل زبانی با استفاده از آن اطلاعات، پاسخ‌های <strong>دقیق، به‌روز و مبتنی بر داده‌های شما</strong> تولید می‌کند.
@@ -976,9 +1093,9 @@
     <!-- ===== ویژگی‌ها ===== -->
     <section class="features-section fade-up">
         <div class="container">
-            <div class="section-header" style="text-align:center; margin-bottom:40px;">
-                <h2>✨ ویژگی‌های <span class="rag-gradient-text">سیستم RAG</span></h2>
-                <p style="color:var(--text-muted); font-size:1.05rem;">با قابلیت‌های پیشرفته‌ای که داده‌های شما را هوشمند می‌کند</p>
+            <div class="section-header">
+                <h2>✨ ویژگی‌های <span class="highlight">سیستم RAG</span></h2>
+                <p>با قابلیت‌های پیشرفته‌ای که داده‌های شما را هوشمند می‌کند</p>
             </div>
             <div class="features-grid">
                 <div class="feature-box">
@@ -1018,41 +1135,226 @@
     <!-- ===== موارد استفاده ===== -->
     <section class="use-cases-section fade-up">
         <div class="container">
-            <div class="section-header" style="text-align:center; margin-bottom:40px;">
-                <h2>🏢 <span class="rag-gradient-text">موارد استفاده</span> سیستم RAG</h2>
-                <p style="color:var(--text-muted); font-size:1.05rem;">در چه صنایعی می‌توان از سیستم RAG استفاده کرد؟</p>
+            <div class="section-header">
+                <h2>🏢 <span class="highlight">موارد استفاده</span> سیستم RAG</h2>
+                <p>در چه صنایعی می‌توان از سیستم RAG استفاده کرد؟</p>
             </div>
             <div class="use-cases-grid">
                 <div class="use-case-card">
                     <span class="icon">⚖️</span>
                     <h4>حقوقی و قضایی</h4>
                     <p>جستجوی هوشمند در قوانین، مقررات، آرای قضایی و اسناد حقوقی برای پاسخ به سوالات تخصصی</p>
+                    <span class="badge-case">📄 اسناد حقوقی</span>
                 </div>
                 <div class="use-case-card">
                     <span class="icon">🏥</span>
                     <h4>پزشکی و سلامت</h4>
                     <p>دستیار هوشمند برای پزشکان و بیماران با استفاده از مقالات پزشکی و پرونده‌های درمانی</p>
+                    <span class="badge-case">📋 پرونده‌های پزشکی</span>
                 </div>
                 <div class="use-case-card">
                     <span class="icon">🏛️</span>
                     <h4>دولتی و سازمانی</h4>
                     <p>سیستم پاسخ‌گویی هوشمند به استعلامات و سوالات شهروندان با استفاده از اسناد سازمانی</p>
+                    <span class="badge-case">📁 اسناد سازمانی</span>
                 </div>
                 <div class="use-case-card">
                     <span class="icon">🎓</span>
                     <h4>آموزشی و پژوهشی</h4>
                     <p>دستیار پژوهشی برای محققان و دانشجویان برای جستجو در مقالات و منابع علمی</p>
+                    <span class="badge-case">📖 مقالات علمی</span>
                 </div>
                 <div class="use-case-card">
                     <span class="icon">💼</span>
                     <h4>شرکتی و کسب‌وکار</h4>
                     <p>پاسخ‌گویی هوشمند به سوالات کارمندان از اسناد داخلی، راهنماها و سیاست‌های شرکت</p>
+                    <span class="badge-case">📋 مستندات داخلی</span>
                 </div>
                 <div class="use-case-card">
                     <span class="icon">📱</span>
                     <h4>فناوری و نرم‌افزار</h4>
                     <p>سیستم پشتیبانی فنی هوشمند با استفاده از مستندات فنی و دانش‌نامه سازمانی</p>
+                    <span class="badge-case">💻 مستندات فنی</span>
                 </div>
+                <div class="use-case-card">
+                    <span class="icon">🏦</span>
+                    <h4>مالی و بانکی</h4>
+                    <p>پاسخگویی به سوالات مشتریان درباره قوانین بانکی، تسهیلات و خدمات مالی</p>
+                    <span class="badge-case">💰 اسناد مالی</span>
+                </div>
+                <div class="use-case-card">
+                    <span class="icon">🏭</span>
+                    <h4>صنعتی و تولیدی</h4>
+                    <p>سیستم پشتیبانی فنی برای کارکنان با استفاده از دفترچه‌های راهنما و مستندات فنی</p>
+                    <span class="badge-case">🔧 مستندات فنی</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== نمونه کارها (افزایش یافته) ===== -->
+    <section class="portfolio-section fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2>🏆 <span class="highlight">نمونه کارهای</span> RAG</h2>
+                <p>برخی از پروژه‌های موفق سیستم RAG در صنایع مختلف</p>
+            </div>
+            <div class="portfolio-grid">
+
+                <div class="portfolio-card">
+                    <span class="card-icon">⚖️</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سیستم RAG حقوقی قوه قضاییه</h4>
+                    <span class="industry-tag">🏛️ حقوقی و قضایی</span>
+                    <p>سیستم پرسش و پاسخ هوشمند برای قضات و وکلا با استفاده از ۵۰,۰۰۰+ سند حقوقی شامل قوانین، مقررات و آرای قضایی</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>Word</span>
+                        <span>Elasticsearch</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🏥</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار پزشکی بیمارستان قلب</h4>
+                    <span class="industry-tag">🏥 پزشکی و سلامت</span>
+                    <p>سیستم RAG برای پاسخگویی به سوالات پزشکان و بیماران با استفاده از ۱۰,۰۰۰+ مقاله و پرونده درمانی</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>MySQL</span>
+                        <span>LangChain</span>
+                        <span>OpenAI</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🏛️</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سامانه پاسخگویی شهرداری</h4>
+                    <span class="industry-tag">🏛️ دولتی و سازمانی</span>
+                    <p>سیستم پاسخ‌گویی هوشمند به سوالات شهروندان با استفاده از ۵,۰۰۰+ سند سازمانی شامل قوانین شهری و دستورالعمل‌ها</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>PostgreSQL</span>
+                        <span>Haystack</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🎓</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار پژوهشی دانشگاه تهران</h4>
+                    <span class="industry-tag">🎓 آموزشی و پژوهشی</span>
+                    <p>سیستم RAG برای محققان و دانشجویان با استفاده از ۲۰,۰۰۰+ مقاله علمی و منابع پژوهشی</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>Elasticsearch</span>
+                        <span>LangChain</span>
+                        <span>GPT-4</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">💼</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار داخلی شرکت ساپکو</h4>
+                    <span class="industry-tag">💼 شرکتی و کسب‌وکار</span>
+                    <p>سیستم پاسخ‌گویی هوشمند به سوالات کارمندان با استفاده از ۳,۰۰۰+ سند داخلی، راهنماها و سیاست‌های شرکت</p>
+                    <div class="tech-tags">
+                        <span>Word</span>
+                        <span>SQLite</span>
+                        <span>RAG</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">📱</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>پشتیبانی فنی همراه اول</h4>
+                    <span class="industry-tag">📱 فناوری و نرم‌افزار</span>
+                    <p>سیستم RAG برای پاسخگویی به سوالات فنی کاربران با استفاده از ۲,۰۰۰+ مستندات فنی و دانش‌نامه سازمانی</p>
+                    <div class="tech-tags">
+                        <span>HTML</span>
+                        <span>MongoDB</span>
+                        <span>Haystack</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🏦</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار بانک ملت</h4>
+                    <span class="industry-tag">🏦 مالی و بانکی</span>
+                    <p>سیستم پاسخگویی به سوالات مشتریان درباره قوانین بانکی، تسهیلات و خدمات مالی با ۸,۰۰۰+ سند</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>Oracle</span>
+                        <span>LangChain</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🏭</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>پشتیبانی فنی ایران خودرو</h4>
+                    <span class="industry-tag">🏭 صنعتی و تولیدی</span>
+                    <p>سیستم RAG برای کارکنان خط تولید با استفاده از ۱,۵۰۰+ دفترچه راهنما و مستندات فنی</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>PostgreSQL</span>
+                        <span>RAG</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">🌐</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار گردشگری سازمان میراث فرهنگی</h4>
+                    <span class="industry-tag">🌐 گردشگری و میراث فرهنگی</span>
+                    <p>سیستم پاسخگویی به سوالات گردشگران با استفاده از ۵,۰۰۰+ سند تاریخی و راهنمای گردشگری</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>Elasticsearch</span>
+                        <span>Haystack</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">📊</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>تحلیل داده‌های سازمان برنامه و بودجه</h4>
+                    <span class="industry-tag">📊 دولتی و اقتصادی</span>
+                    <p>سیستم RAG برای تحلیل و پاسخگویی به سوالات از ۱۵,۰۰۰+ سند بودجه‌ای و اقتصادی</p>
+                    <div class="tech-tags">
+                        <span>Excel</span>
+                        <span>PostgreSQL</span>
+                        <span>LangChain</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <span class="card-icon">⚡</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>دستیار انرژی و نفت</h4>
+                    <span class="industry-tag">⚡ انرژی و نفت</span>
+                    <p>سیستم پاسخگویی به سوالات کارشناسان با استفاده از ۲,۰۰۰+ مستندات فنی و ایمنی صنعت نفت</p>
+                    <div class="tech-tags">
+                        <span>PDF</span>
+                        <span>MongoDB</span>
+                        <span>RAG</span>
+                        <span>LLM</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1060,9 +1362,9 @@
     <!-- ===== فرآیند کار ===== -->
     <section class="process-section fade-up">
         <div class="container">
-            <div class="section-header" style="text-align:center; margin-bottom:40px;">
-                <h2>🔄 <span class="rag-gradient-text">فرآیند</span> پیاده‌سازی</h2>
-                <p style="color:var(--text-muted); font-size:1.05rem;">چگونه سیستم RAG را برای سازمان شما پیاده‌سازی می‌کنیم</p>
+            <div class="section-header">
+                <h2>🔄 <span class="highlight">فرآیند</span> پیاده‌سازی</h2>
+                <p>چگونه سیستم RAG را برای سازمان شما پیاده‌سازی می‌کنیم</p>
             </div>
             <div class="process-timeline">
                 <div class="process-step">
@@ -1129,6 +1431,9 @@
                             <option value="tech">فناوری و نرم‌افزار</option>
                             <option value="government">دولتی و سازمانی</option>
                             <option value="finance">مالی و بانکی</option>
+                            <option value="industry">صنعتی و تولیدی</option>
+                            <option value="tourism">گردشگری و میراث فرهنگی</option>
+                            <option value="energy">انرژی و نفت</option>
                             <option value="custom">سایر</option>
                         </select>
                     </div>
@@ -1145,10 +1450,22 @@
                             <option value="other">سایر</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label>تعداد تقریبی اسناد <span class="required">*</span></label>
+                        <select id="documentCount" required>
+                            <option value="">انتخاب کنید...</option>
+                            <option value="less100">کمتر از ۱۰۰ سند</option>
+                            <option value="100-500">۱۰۰ تا ۵۰۰ سند</option>
+                            <option value="500-2000">۵۰۰ تا ۲,۰۰۰ سند</option>
+                            <option value="2000-10000">۲,۰۰۰ تا ۱۰,۰۰۰ سند</option>
+                            <option value="10000plus">بیش از ۱۰,۰۰۰ سند</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label>توضیحات نیاز شما <span class="required">*</span></label>
-                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید سیستم RAG شما چه کاربردی دارد؟ چه نوع اسنادی دارید؟ چه تعداد سند؟ چه سوالاتی باید پاسخ داده شود؟" required></textarea>
+                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید سیستم RAG شما چه کاربردی دارد؟ چه نوع اسنادی دارید؟ چه سوالاتی باید پاسخ داده شود؟" required></textarea>
                     </div>
                     
                     <button type="submit" class="btn-submit" id="submitBtn">
@@ -1328,9 +1645,10 @@
             const email = document.getElementById('requestEmail').value.trim();
             const industryType = document.getElementById('industryType').value;
             const documentType = document.getElementById('documentType').value;
+            const documentCount = document.getElementById('documentCount').value;
             const description = document.getElementById('requestDescription').value.trim();
             
-            if (!name || !phone || !industryType || !documentType || !description) {
+            if (!name || !phone || !industryType || !documentType || !documentCount || !description) {
                 showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
                 return;
             }
@@ -1365,6 +1683,9 @@
                 'tech': 'فناوری و نرم‌افزار',
                 'government': 'دولتی و سازمانی',
                 'finance': 'مالی و بانکی',
+                'industry': 'صنعتی و تولیدی',
+                'tourism': 'گردشگری و میراث فرهنگی',
+                'energy': 'انرژی و نفت',
                 'custom': 'سایر'
             };
             
@@ -1377,12 +1698,20 @@
                 'other': 'سایر'
             };
             
+            const countLabels = {
+                'less100': 'کمتر از ۱۰۰ سند',
+                '100-500': '۱۰۰ تا ۵۰۰ سند',
+                '500-2000': '۵۰۰ تا ۲,۰۰۰ سند',
+                '2000-10000': '۲,۰۰۰ تا ۱۰,۰۰۰ سند',
+                '10000plus': 'بیش از ۱۰,۰۰۰ سند'
+            };
+            
             const title = `درخواست پیاده‌سازی سیستم RAG - ${industryLabels[industryType] || 'سایر'}`;
             
             const requestBody = {
                 user_id: userId,
                 title: title,
-                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\nصنعت: ${industryLabels[industryType] || 'سایر'}\nنوع اسناد: ${documentLabels[documentType] || 'سایر'}\n\n${description}`,
+                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\nصنعت: ${industryLabels[industryType] || 'سایر'}\nنوع اسناد: ${documentLabels[documentType] || 'سایر'}\nتعداد اسناد: ${countLabels[documentCount] || 'نامشخص'}\n\n${description}`,
                 priority: 'high',
                 category: 'rag'
             };
