@@ -3,221 +3,440 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مطالعه مقاله | توسعه‌دهنده هوش مصنوعی سوفیا</title>
+    <title>مطالعه مقاله | سوفیا AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            background: #f8f9fc;
-            color: #1A0F2E;
-            direction: rtl;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            animation: fadeUp 0.6s ease;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes slideUp {
-            from { opacity: 1; transform: translateX(-50%) translateY(0); }
-            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
+        
+        :root {
+            --primary: #6C3CE1;
+            --primary-dark: #4A1F9E;
+            --primary-light: #8B6CE0;
+            --secondary: #FFB800;
+            --secondary-light: #FFD64A;
+            --text-dark: #1A0F2E;
+            --text-muted: #5A4A7A;
+            --text-light: #9A8AB5;
+            --bg-light: #FBF8FF;
+            --card-shadow: 0 4px 24px rgba(108, 60, 225, 0.08);
+            --card-shadow-hover: 0 8px 40px rgba(108, 60, 225, 0.14);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .article-header {
-            border-bottom: 2px solid #FFB800;
-            padding-bottom: 16px;
-            margin-bottom: 24px;
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: linear-gradient(180deg, #FBF8FF 0%, #F5F0FF 100%);
+            color: var(--text-dark);
+            direction: rtl;
+            padding: 30px 20px;
+            min-height: 100vh;
         }
-        .article-header h1 {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #1A0F2E;
-            margin-bottom: 8px;
-            line-height: 1.4;
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 48px 52px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            animation: fadeUp 0.8s ease;
+            position: relative;
+            border: 1px solid rgba(108, 60, 225, 0.06);
         }
-        .article-header .meta {
-            display: flex;
-            gap: 16px;
-            color: #7a7a9a;
-            font-size: 0.9rem;
-            flex-wrap: wrap;
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+            border-radius: var(--radius) var(--radius) 0 0;
         }
-        .article-header .meta i { margin-left: 4px; }
-        .article-body {
-            font-size: 1.05rem;
-            line-height: 2.2rem;
-            color: #2d2d3f;
-            text-align: justify;
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .article-body p { margin-bottom: 16px; }
-        .article-body h2, .article-body h3 {
-            margin-top: 24px;
-            margin-bottom: 12px;
-            color: #1A0F2E;
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
         }
-        .article-body ul, .article-body ol {
-            padding-right: 24px;
-            margin-bottom: 16px;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
-        .article-body img {
-            max-width: 100%;
-            border-radius: 12px;
-            margin: 16px 0;
-        }
-        .article-body blockquote {
-            border-right: 4px solid #6C3CE1;
-            padding-right: 16px;
-            margin: 16px 0;
-            color: #5A4A7A;
-            font-style: italic;
-        }
-        .article-body pre {
-            background: #f0f0f0;
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            direction: ltr;
-            text-align: left;
-            font-family: monospace;
-            font-size: 0.9rem;
-            margin: 16px 0;
-        }
-        .article-body code {
-            background: #f0f0f0;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 24px;
-            color: #6C3CE1;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-            transform: translateX(-4px);
-        }
+
         .loading {
             text-align: center;
-            padding: 60px 0;
-            color: #7a7a9a;
+            padding: 80px 0;
+            color: var(--text-muted);
         }
         .loading i {
-            font-size: 2rem;
+            font-size: 3rem;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            color: var(--primary);
+            animation: pulse 1.2s ease-in-out infinite;
         }
+        .loading p {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
         .error {
             text-align: center;
-            padding: 60px 0;
+            padding: 60px 20px;
             color: #e74c3c;
         }
         .error i {
-            font-size: 2rem;
+            font-size: 3.5rem;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            background: rgba(231, 76, 60, 0.08);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .error h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--text-dark);
         }
         .error .retry-btn {
-            margin-top: 16px;
-            padding: 10px 32px;
-            background: #6C3CE1;
+            margin-top: 20px;
+            padding: 12px 40px;
+            background: var(--primary);
             color: #fff;
             border: none;
             border-radius: 30px;
             font-size: 1rem;
             font-family: 'Vazirmatn', sans-serif;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
         .error .retry-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(108, 60, 225, 0.3);
         }
+
+        /* ===== هدر مقاله ===== */
+        .article-header {
+            border-bottom: 2px solid rgba(255, 184, 0, 0.25);
+            padding-bottom: 20px;
+            margin-bottom: 28px;
+        }
+
+        .article-header .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
         .category-badge {
-            display: inline-block;
-            background: rgba(108, 60, 225, 0.06);
-            color: #6C3CE1;
-            padding: 4px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(108, 60, 225, 0.08);
+            color: var(--primary);
+            padding: 4px 16px 4px 18px;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            border: 1px solid rgba(108, 60, 225, 0.1);
         }
+        .category-badge i {
+            font-size: 0.7rem;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 50px;
+        }
+        .status-badge.published {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-badge.draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .article-header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin: 12px 0 10px;
+        }
+
+        .article-header .meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .article-header .meta i {
+            margin-left: 6px;
+            color: var(--primary-light);
+        }
+        .article-header .meta .author-name {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* ===== بدنه مقاله ===== */
+        .article-body {
+            font-size: 1.05rem;
+            line-height: 2.2rem;
+            color: #2d2d3f;
+            text-align: justify;
+        }
+        .article-body p {
+            margin-bottom: 18px;
+        }
+        .article-body p:first-of-type {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .article-body h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin: 32px 0 14px;
+            color: var(--text-dark);
+            border-right: 4px solid var(--secondary);
+            padding-right: 16px;
+        }
+        .article-body h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 24px 0 10px;
+            color: var(--text-dark);
+        }
+        .article-body ul, .article-body ol {
+            padding-right: 24px;
+            margin-bottom: 18px;
+        }
+        .article-body ul li, .article-body ol li {
+            margin-bottom: 6px;
+        }
+        .article-body img {
+            max-width: 100%;
+            border-radius: var(--radius-sm);
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        .article-body blockquote {
+            border-right: 4px solid var(--primary);
+            padding: 16px 24px;
+            margin: 20px 0;
+            background: var(--bg-light);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 1.05rem;
+        }
+        .article-body blockquote::before {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary-light);
+            line-height: 0;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+        .article-body blockquote::after {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary-light);
+            line-height: 0;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .article-body pre {
+            background: #1A0F2E;
+            padding: 20px 24px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            color: #e0d4f5;
+            position: relative;
+        }
+        .article-body pre::before {
+            content: '💻 کد';
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.3);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .article-body pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+        }
+        .article-body code {
+            background: rgba(108, 60, 225, 0.06);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+        }
+        .article-body .highlight-box {
+            background: linear-gradient(135deg, var(--bg-light), #FFF9E6);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 184, 0, 0.15);
+        }
+        .article-body .highlight-box strong {
+            color: var(--primary-dark);
+        }
+
+        /* ===== دکمه بازگشت ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            background: rgba(108, 60, 225, 0.04);
+            border: 1px solid rgba(108, 60, 225, 0.08);
+        }
+        .back-link:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateX(-4px);
+            border-color: var(--primary);
+        }
+        .back-link i {
+            transition: transform 0.3s;
+        }
+        .back-link:hover i {
+            transform: translateX(-4px);
+        }
+
+        /* ===== اشتراک‌گذاری ===== */
         .share-section {
-            margin-top: 32px;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 2px solid rgba(108, 60, 225, 0.06);
             display: flex;
             gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
         .share-section .share-label {
-            color: #7a7a9a;
+            color: var(--text-light);
             font-size: 0.9rem;
+            font-weight: 600;
         }
         .share-section .share-btn {
-            padding: 6px 16px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 50px;
             border: none;
             font-family: 'Vazirmatn', sans-serif;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .share-section .share-btn:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px) scale(1.02);
         }
         .share-btn.telegram { background: #0088cc; color: #fff; }
+        .share-btn.whatsapp { background: #25D366; color: #fff; }
         .share-btn.twitter { background: #1DA1F2; color: #fff; }
         .share-btn.linkedin { background: #0077b5; color: #fff; }
-        .share-btn.whatsapp { background: #25D366; color: #fff; }
-        .share-btn.copy { background: #6C3CE1; color: #fff; }
+        .share-btn.copy { background: var(--primary); color: #fff; }
+        .share-btn.copy:hover { background: var(--primary-dark); }
 
+        /* ===== مقالات مرتبط ===== */
         .related-articles {
-            margin-top: 32px;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 2px solid rgba(108, 60, 225, 0.06);
+        }
+        .related-articles .related-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
         .related-articles h4 {
-            margin-bottom: 12px;
-            color: #1A0F2E;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .related-articles h4 i {
+            color: var(--secondary);
+            margin-left: 8px;
         }
         .related-articles .related-item {
             display: block;
-            padding: 8px 0;
-            color: #6C3CE1;
+            padding: 12px 16px;
+            color: var(--text-dark);
             text-decoration: none;
-            transition: 0.3s;
+            transition: var(--transition);
+            border-radius: var(--radius-sm);
+            background: var(--bg-light);
+            margin-bottom: 8px;
+            border: 1px solid transparent;
         }
         .related-articles .related-item:hover {
-            padding-right: 8px;
+            background: #fff;
+            border-color: var(--primary);
+            padding-right: 24px;
+            box-shadow: 0 4px 16px rgba(108, 60, 225, 0.06);
+        }
+        .related-articles .related-item i {
+            color: var(--primary);
+            margin-left: 8px;
+            font-size: 0.8rem;
+        }
+        .related-articles .related-item .related-meta {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-right: 24px;
         }
 
         /* ===== Toast ===== */
         .toast-container {
             position: fixed;
-            top: 20px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
@@ -228,33 +447,83 @@
             direction: rtl;
         }
         .toast {
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
             color: #fff;
             font-weight: 600;
             font-family: 'Vazirmatn', sans-serif;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
             animation: slideDown 0.5s ease;
-            min-width: 200px;
+            min-width: 220px;
             text-align: center;
+            font-size: 0.95rem;
         }
         .toast.success { background: #27ae60; }
         .toast.error { background: #e74c3c; }
         .toast.info { background: #3498db; }
         .toast.warning { background: #f39c12; }
 
+        /* ===== Table of Contents ===== */
+        .toc {
+            background: var(--bg-light);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            margin: 24px 0;
+            border: 1px solid rgba(108, 60, 225, 0.06);
+        }
+        .toc h4 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .toc ul {
+            list-style: none;
+            padding-right: 0;
+            margin-bottom: 0;
+        }
+        .toc ul li {
+            padding: 4px 0;
+        }
+        .toc ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .toc ul li a:hover {
+            color: var(--primary);
+            padding-right: 4px;
+        }
+
+        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
-            .container { padding: 20px; }
-            .article-header h1 { font-size: 1.5rem; }
+            body { padding: 16px; }
+            .container { padding: 24px 20px; }
+            .article-header h1 { font-size: 1.6rem; }
             .article-body { font-size: 0.95rem; line-height: 2rem; }
+            .article-body h2 { font-size: 1.3rem; }
             .share-section { flex-direction: column; align-items: stretch; }
-            .share-section .share-btn { text-align: center; }
+            .share-section .share-btn { justify-content: center; }
+            .article-header .top-row { flex-direction: column; align-items: flex-start; }
+            .related-articles .related-item .related-meta { display: block; margin-right: 0; margin-top: 4px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 16px; border-radius: 16px; }
+            .article-header h1 { font-size: 1.3rem; }
+            .article-header .meta { font-size: 0.8rem; gap: 12px; flex-direction: column; }
+            .article-body { font-size: 0.9rem; line-height: 1.9rem; }
+            .error i { width: 60px; height: 60px; line-height: 60px; font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
+
     <div class="container" id="articleContainer">
-        <div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری مقاله...</div>
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>در حال بارگذاری مقاله...</p>
+        </div>
     </div>
 
     <script>
@@ -296,22 +565,28 @@
         function loadArticle(id) {
             const container = document.getElementById('articleContainer');
             
-            // اگر ID نداشت، خطا بده
             if (!id) {
                 container.innerHTML = `
                     <div class="error">
                         <i class="fas fa-exclamation-circle"></i>
-                        <h3>هیچ مقاله‌ای انتخاب نشده است.</h3>
-                        <p style="color:#7a7a9a; margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
-                        <div style="margin-top:16px;">
-                            <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                        <h3>هیچ مقاله‌ای انتخاب نشده است</h3>
+                        <p style="color:var(--text-muted); margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
+                        <div style="margin-top:20px;">
+                            <a href="index.html#articles" class="back-link">
+                                <i class="fas fa-arrow-left"></i> بازگشت به لیست مقالات
+                            </a>
                         </div>
                     </div>
                 `;
                 return;
             }
             
-            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i>در حال بارگذاری مقاله...</div>';
+            container.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>در حال بارگذاری مقاله...</p>
+                </div>
+            `;
 
             console.log('📖 بارگذاری مقاله با ID:', id);
             console.log('📡 آدرس درخواست:', `${API_BASE}/api/articles/${id}`);
@@ -320,7 +595,7 @@
                 .then(res => {
                     console.log('📊 وضعیت پاسخ:', res.status);
                     if (!res.ok) {
-                        if (res.status === 404) throw new Error('مقاله یافت نشد');
+                        if (res.status === 404) throw new Error('مقاله مورد نظر یافت نشد');
                         if (res.status === 500) throw new Error('خطای سرور');
                         throw new Error('خطا در دریافت مقاله (کد ' + res.status + ')');
                     }
@@ -329,7 +604,6 @@
                 .then(article => {
                     console.log('✅ مقاله دریافت شد:', article);
                     
-                    // اگر مقاله محتوایی نداشت
                     if (!article || !article.title) {
                         throw new Error('مقاله نامعتبر است');
                     }
@@ -354,31 +628,69 @@
                         return '<pre><code>' + code.trim() + '</code></pre>';
                     });
 
+                    // تشخیص هدرها برای فهرست مطالب
+                    const headings = [];
+                    const headingRegex = /<h2>(.*?)<\/h2>/g;
+                    let match;
+                    while ((match = headingRegex.exec(contentHtml)) !== null) {
+                        headings.push(match[1]);
+                    }
+
+                    let tocHtml = '';
+                    if (headings.length > 0) {
+                        tocHtml = `
+                            <div class="toc">
+                                <h4>📑 آنچه در این مقاله می‌خوانید</h4>
+                                <ul>
+                                    ${headings.map((h, i) => `<li><a href="#heading-${i}">${h}</a></li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                        // اضافه کردن id به هدرها
+                        headings.forEach((h, i) => {
+                            contentHtml = contentHtml.replace(
+                                `<h2>${h}</h2>`,
+                                `<h2 id="heading-${i}">${h}</h2>`
+                            );
+                        });
+                    }
+
+                    const statusClass = article.status === 'published' ? 'published' : 'draft';
+                    const statusText = article.status === 'published' ? '✓ منتشر شده' : '✎ پیش‌نویس';
+
                     container.innerHTML = `
                         <div class="article-header">
-                            <span class="category-badge">${article.category || 'عمومی'}</span>
+                            <div class="top-row">
+                                <span class="category-badge">
+                                    <i class="fas fa-tag"></i>
+                                    ${article.category || 'عمومی'}
+                                </span>
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                            </div>
                             <h1>${article.title}</h1>
                             <div class="meta">
-                                <span><i class="far fa-user"></i> ${article.author || 'سوفیا AI'}</span>
-                                <span><i class="far fa-calendar"></i> ${article.created_at || ''}</span>
-                                ${article.status ? `<span><span class="badge ${article.status === 'published' ? 'badge-published' : 'badge-draft'}">${article.status === 'published' ? 'منتشر شده' : 'پیش‌نویس'}</span></span>` : ''}
+                                <span><i class="far fa-user"></i> <span class="author-name">${article.author || 'سوفیا AI'}</span></span>
+                                <span><i class="far fa-calendar-alt"></i> ${article.created_at || ''}</span>
+                                <span><i class="far fa-clock"></i> ${Math.ceil((article.content || '').length / 1000)} دقیقه مطالعه</span>
                             </div>
                         </div>
                         <div class="article-body">
+                            ${tocHtml}
                             ${contentHtml}
                         </div>
                         <div class="share-section">
-                            <span class="share-label">اشتراک‌گذاری:</span>
+                            <span class="share-label"><i class="fas fa-share-alt"></i> اشتراک‌گذاری:</span>
                             <button class="share-btn telegram" onclick="shareArticle('telegram')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
                             <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')"><i class="fab fa-whatsapp"></i> واتساپ</button>
                             <button class="share-btn twitter" onclick="shareArticle('twitter')"><i class="fab fa-twitter"></i> توییتر</button>
                             <button class="share-btn linkedin" onclick="shareArticle('linkedin')"><i class="fab fa-linkedin-in"></i> لینکدین</button>
                             <button class="share-btn copy" onclick="copyLink()"><i class="fas fa-copy"></i> کپی لینک</button>
                         </div>
-                        <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                        <a href="index.html#articles" class="back-link">
+                            <i class="fas fa-arrow-left"></i> بازگشت به لیست مقالات
+                        </a>
                     `;
 
-                    // بارگذاری مقالات مرتبط
                     loadRelatedArticles(article.category, id);
                 })
                 .catch(error => {
@@ -387,12 +699,14 @@
                         <div class="error">
                             <i class="fas fa-exclamation-circle"></i>
                             <h3>${error.message}</h3>
-                            <p style="color:#7a7a9a; margin-top:8px;">متأسفانه مقاله مورد نظر یافت نشد.</p>
+                            <p style="color:var(--text-muted); margin-top:8px;">متأسفانه مقاله مورد نظر یافت نشد.</p>
                             <button class="retry-btn" onclick="loadArticle('${id}')">
                                 <i class="fas fa-redo"></i> تلاش مجدد
                             </button>
                             <div style="margin-top:16px;">
-                                <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                                <a href="index.html#articles" class="back-link">
+                                    <i class="fas fa-arrow-left"></i> بازگشت به لیست مقالات
+                                </a>
                             </div>
                         </div>
                     `;
@@ -411,27 +725,52 @@
                     return res.json();
                 })
                 .then(data => {
-                    // فیلتر مقالات مرتبط: همان دسته و غیر از مقاله فعلی
                     const related = data
                         .filter(a => a.id != currentId && a.category === category && a.status === 'published')
-                        .slice(0, 3);
+                        .slice(0, 4);
                     
-                    if (related.length === 0) return;
+                    if (related.length === 0) {
+                        // اگر مقاله‌ای در همان دسته نبود، مقالات دیگر را پیشنهاد بده
+                        const otherArticles = data
+                            .filter(a => a.id != currentId && a.status === 'published')
+                            .slice(0, 3);
+                        if (otherArticles.length === 0) return;
+                        
+                        let html = `
+                            <div class="related-articles">
+                                <div class="related-header">
+                                    <h4><i class="fas fa-book-open"></i> مقالات پیشنهادی</h4>
+                                </div>
+                        `;
+                        otherArticles.forEach(article => {
+                            html += `
+                                <a href="article.html?id=${article.id}" class="related-item">
+                                    <i class="fas fa-arrow-left"></i> ${article.title}
+                                    <span class="related-meta">${article.category || 'عمومی'} • ${article.created_at || ''}</span>
+                                </a>
+                            `;
+                        });
+                        html += `</div>`;
+                        container.innerHTML += html;
+                        return;
+                    }
 
                     let html = `
                         <div class="related-articles">
-                            <h4>📚 مقالات مشابه</h4>
+                            <div class="related-header">
+                                <h4><i class="fas fa-book-open"></i> مقالات مشابه در ${category}</h4>
+                            </div>
                     `;
                     related.forEach(article => {
                         html += `
                             <a href="article.html?id=${article.id}" class="related-item">
                                 <i class="fas fa-arrow-left"></i> ${article.title}
+                                <span class="related-meta">${article.created_at || ''}</span>
                             </a>
                         `;
                     });
                     html += `</div>`;
                     
-                    // اضافه کردن به انتهای container
                     container.innerHTML += html;
                 })
                 .catch(err => {
@@ -500,14 +839,11 @@
         // =============================================
         // ===== بارگذاری اولیه =====
         // =============================================
-        // اجرا با ID دریافت شده از آدرس
         console.log('🚀 شروع بارگذاری مقاله...');
         
-        // اگر مقاله‌ای در URL وجود نداشت، سعی کنیم از localStorage بگیریم
         let finalId = articleId;
         
         if (!finalId) {
-            // بررسی localStorage برای آخرین مقاله بازدید شده
             const lastArticle = localStorage.getItem('lastArticleId');
             if (lastArticle) {
                 finalId = lastArticle;
@@ -516,29 +852,25 @@
         }
         
         if (finalId) {
-            // ذخیره در localStorage برای استفاده بعدی
             localStorage.setItem('lastArticleId', finalId);
             loadArticle(finalId);
         } else {
-            // اگر هیچ ID وجود نداشت، خطا نمایش بده
             const container = document.getElementById('articleContainer');
             container.innerHTML = `
                 <div class="error">
                     <i class="fas fa-exclamation-circle"></i>
-                    <h3>هیچ مقاله‌ای انتخاب نشده است.</h3>
-                    <p style="color:#7a7a9a; margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
-                    <div style="margin-top:16px;">
-                        <a href="index.html#articles" class="back-link">← بازگشت به لیست مقالات</a>
+                    <h3>هیچ مقاله‌ای انتخاب نشده است</h3>
+                    <p style="color:var(--text-muted); margin-top:8px;">لطفاً از طریق صفحه اصلی یک مقاله را انتخاب کنید.</p>
+                    <div style="margin-top:20px;">
+                        <a href="index.html#articles" class="back-link">
+                            <i class="fas fa-arrow-left"></i> بازگشت به لیست مقالات
+                        </a>
                     </div>
                 </div>
             `;
         }
 
-        // =============================================
-        // ===== مدیریت بازگشت با دکمه مرورگر =====
-        // =============================================
         window.addEventListener('popstate', function(e) {
-            // اگر کاربر با دکمه بازگشت به صفحه مقاله برگشت، ID را چک کن
             const currentId = new URLSearchParams(window.location.search).get('id');
             if (currentId && currentId !== finalId) {
                 loadArticle(currentId);
