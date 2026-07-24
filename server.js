@@ -26,7 +26,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // ==================================================
-// ===== سرویس فایل‌های استاتیک (اصلاح شده) =====
+// ===== سرویس فایل‌های استاتیک =====
 // ==================================================
 
 // مسیر عمومی برای همه فایل‌های استاتیک
@@ -43,7 +43,7 @@ app.use('/images', (req, res, next) => {
     next();
 }, express.static(path.join(__dirname, 'public', 'images')));
 
-// مسیر مستقیم گالری (برای اطمینان)
+// مسیر مستقیم گالری
 app.use('/images/gallery', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
@@ -52,31 +52,36 @@ app.use('/images/gallery', (req, res, next) => {
     next();
 }, express.static(path.join(__dirname, 'public', 'images', 'gallery')));
 
+// مسیر فایل‌های آپلود شده (رزومه و ...)
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
 // ==================================================
-// ===== اطمینان از وجود پوشه‌ها =====
+// ===== ایجاد پوشه‌های مورد نیاز =====
 // ==================================================
 
 const publicDir = path.join(__dirname, 'public');
 const imagesDir = path.join(publicDir, 'images');
 const galleryDir = path.join(imagesDir, 'gallery');
+const uploadsDir = path.join(publicDir, 'uploads');
+const resumesDir = path.join(uploadsDir, 'resumes');
 
-if (!fs.existsSync(publicDir)) {
-    fs.mkdirSync(publicDir, { recursive: true });
-    console.log('📁 پوشه public ایجاد شد:', publicDir);
-}
-if (!fs.existsSync(imagesDir)) {
-    fs.mkdirSync(imagesDir, { recursive: true });
-    console.log('📁 پوشه images ایجاد شد:', imagesDir);
-}
-if (!fs.existsSync(galleryDir)) {
-    fs.mkdirSync(galleryDir, { recursive: true });
-    console.log('📁 پوشه گالری ایجاد شد:', galleryDir);
-}
+const directories = [publicDir, imagesDir, galleryDir, uploadsDir, resumesDir];
+
+directories.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+        console.log(`📁 پوشه ایجاد شد: ${dir}`);
+    }
+});
 
 console.log('📁 مسیر گالری:', galleryDir);
+console.log('📁 مسیر آپلود رزومه:', resumesDir);
 
-// ===== تنظیمات Multer برای آپلود =====
-const storage = multer.diskStorage({
+// ==================================================
+// ===== تنظیمات Multer برای گالری =====
+// ==================================================
+
+const galleryStorage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, galleryDir);
     },
@@ -87,14 +92,43 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({
-    storage: storage,
+const galleryUpload = multer({
+    storage: galleryStorage,
     limits: { fileSize: 10 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         if (file.mimetype.startsWith('image/')) {
             cb(null, true);
         } else {
             cb(new Error('فایل باید تصویر باشد'), false);
+        }
+    }
+});
+
+// ==================================================
+// ===== تنظیمات Multer برای رزومه =====
+// ==================================================
+
+const resumeStorage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, resumesDir);
+    },
+    filename: function(req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'resume-' + uniqueSuffix + ext);
+    }
+});
+
+const resumeUpload = multer({
+    storage: resumeStorage,
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg'];
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (allowedTypes.includes(ext)) {
+            cb(null, true);
+        } else {
+            cb(new Error('فرمت فایل مجاز نیست. فقط PDF، DOC، DOCX، PNG، JPG مجاز هستند.'), false);
         }
     }
 });
@@ -276,6 +310,90 @@ const createTables = () => {
         if (err) console.error('❌ خطا در ایجاد جدول chatbot_requests:', err);
         else console.log('✅ جدول chatbot_requests آماده است');
     });
+
+    // ===== جدول جدید: درخواست‌های همکاری =====
+    db.query(`
+        CREATE TABLE IF NOT EXISTS cooperation_requests (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            full_name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            phone VARCHAR(20) NOT NULL,
+            subject VARCHAR(100) NOT NULL,
+            experience VARCHAR(50),
+            cooperation_type VARCHAR(50) NOT NULL,
+            portfolio VARCHAR(500),
+            description TEXT NOT NULL,
+            resume_url VARCHAR(500),
+            status VARCHAR(20) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول cooperation_requests:', err);
+        else console.log('✅ جدول cooperation_requests آماده است');
+    });
+
+    // ===== جدول جدید: پیام‌های تماس با ما =====
+    db.query(`
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            phone VARCHAR(20),
+            subject VARCHAR(255),
+            message TEXT NOT NULL,
+            status VARCHAR(20) DEFAULT 'unread',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول contact_messages:', err);
+        else console.log('✅ جدول contact_messages آماده است');
+    });
+
+    // ===== جدول جدید: دستیارهای هوشمند =====
+    db.query(`
+        CREATE TABLE IF NOT EXISTS assistants (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            icon VARCHAR(50),
+            link VARCHAR(255),
+            status VARCHAR(20) DEFAULT 'active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول assistants:', err);
+        else console.log('✅ جدول assistants آماده است');
+    });
+
+    // ===== جدول جدید: ایجنت‌های هوش مصنوعی =====
+    db.query(`
+        CREATE TABLE IF NOT EXISTS agents (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            icon VARCHAR(50),
+            tags VARCHAR(255),
+            link VARCHAR(255),
+            status VARCHAR(20) DEFAULT 'active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول agents:', err);
+        else console.log('✅ جدول agents آماده است');
+    });
+
+    // ===== جدول جدید: آمار بازدید =====
+    db.query(`
+        CREATE TABLE IF NOT EXISTS site_stats (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            page VARCHAR(100),
+            views INT DEFAULT 0,
+            last_visit TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) console.error('❌ خطا در ایجاد جدول site_stats:', err);
+        else console.log('✅ جدول site_stats آماده است');
+    });
 };
 
 createTables();
@@ -304,11 +422,14 @@ app.get('/dashboard.html', (req, res) => {
 app.get('/article.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'article.html'));
 });
+app.get('/cooperation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'cooperation.html'));
+});
 
 // ==================================================
-// ===== API آپلود =====
+// ===== API آپلود تصویر گالری =====
 // ==================================================
-app.post('/api/upload', upload.single('image'), (req, res) => {
+app.post('/api/upload', galleryUpload.single('image'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'هیچ تصویری انتخاب نشده است.' });
@@ -842,9 +963,10 @@ app.get('/api/admin/stats', (req, res) => {
         cart: 'SELECT COUNT(*) as count FROM cart',
         gallery: 'SELECT COUNT(*) as count FROM gallery',
         user_requests: 'SELECT COUNT(*) as count FROM user_requests',
-        chatbot_requests: 'SELECT COUNT(*) as count FROM chatbot_requests'
+        chatbot_requests: 'SELECT COUNT(*) as count FROM chatbot_requests',
+        cooperation: 'SELECT COUNT(*) as count FROM cooperation_requests'
     };
-    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0, user_requests: 0, chatbot_requests: 0 };
+    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0, user_requests: 0, chatbot_requests: 0, cooperation: 0 };
     let completed = 0;
     const totalQueries = Object.keys(queries).length;
     Object.keys(queries).forEach(key => {
@@ -1000,20 +1122,231 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 });
 
 // ==================================================
+// ===== API درخواست‌های همکاری =====
+// ==================================================
+
+// دریافت درخواست‌های همکاری (مدیریت)
+app.get('/api/admin/cooperation', (req, res) => {
+    db.query('SELECT * FROM cooperation_requests ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت درخواست‌های همکاری:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const requestsWithPersianDate = results.map(req => {
+            const persianDate = moment(req.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...req, created_at: persianDate };
+        });
+        res.json(requestsWithPersianDate);
+    });
+});
+
+// ثبت درخواست همکاری (عمومی)
+app.post('/api/cooperation', resumeUpload.single('resume'), (req, res) => {
+    const { fullName, email, phone, subject, experience, cooperationType, portfolio, description } = req.body;
+    
+    // اعتبارسنجی
+    if (!fullName || !email || !phone || !subject || !cooperationType || !description) {
+        return res.status(400).json({ error: 'تمام فیلدهای الزامی را پر کنید.' });
+    }
+    
+    let resumeUrl = null;
+    if (req.file) {
+        resumeUrl = '/uploads/resumes/' + req.file.filename;
+    }
+    
+    db.query(
+        `INSERT INTO cooperation_requests 
+        (full_name, email, phone, subject, experience, cooperation_type, portfolio, description, resume_url) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [fullName, email, phone, subject, experience || null, cooperationType, portfolio || null, description, resumeUrl],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره درخواست همکاری:', err);
+                return res.status(500).json({ error: 'خطا در ذخیره اطلاعات' });
+            }
+            res.json({ message: '✅ درخواست همکاری شما با موفقیت ثبت شد! به زودی با شما تماس می‌گیریم.', id: result.insertId });
+        }
+    );
+});
+
+// تغییر وضعیت درخواست همکاری
+app.put('/api/admin/cooperation/:id/status', (req, res) => {
+    const requestId = req.params.id;
+    const { status } = req.body;
+    
+    if (!status) {
+        return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
+    }
+    
+    db.query('UPDATE cooperation_requests SET status = ? WHERE id = ?', [status, requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
+            return res.status(500).json({ error: 'خطا در به‌روزرسانی وضعیت' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ وضعیت درخواست با موفقیت تغییر کرد!' });
+    });
+});
+
+// حذف درخواست همکاری
+app.delete('/api/admin/cooperation/:id', (req, res) => {
+    const requestId = req.params.id;
+    db.query('DELETE FROM cooperation_requests WHERE id = ?', [requestId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف درخواست:', err);
+            return res.status(500).json({ error: 'خطا در حذف درخواست' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'درخواست یافت نشد' });
+        }
+        res.json({ message: '✅ درخواست با موفقیت حذف شد!' });
+    });
+});
+
+// ==================================================
+// ===== API پیام‌های تماس با ما =====
+// ==================================================
+
+// دریافت پیام‌های تماس (مدیریت)
+app.get('/api/admin/contact', (req, res) => {
+    db.query('SELECT * FROM contact_messages ORDER BY id DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت پیام‌ها:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        const messagesWithPersianDate = results.map(msg => {
+            const persianDate = moment(msg.created_at).format('jYYYY/jMM/jDD HH:mm');
+            return { ...msg, created_at: persianDate };
+        });
+        res.json(messagesWithPersianDate);
+    });
+});
+
+// ثبت پیام تماس با ما
+app.post('/api/contact', (req, res) => {
+    const { name, email, phone, subject, message } = req.body;
+    
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: 'نام، ایمیل و متن پیام الزامی است.' });
+    }
+    
+    db.query(
+        `INSERT INTO contact_messages (name, email, phone, subject, message, status) 
+        VALUES (?, ?, ?, ?, ?, 'unread')`,
+        [name, email, phone || null, subject || null, message],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره پیام:', err);
+                return res.status(500).json({ error: 'خطا در ذخیره اطلاعات' });
+            }
+            res.json({ message: '✅ پیام شما با موفقیت ارسال شد! به زودی با شما تماس می‌گیریم.', id: result.insertId });
+        }
+    );
+});
+
+// تغییر وضعیت پیام
+app.put('/api/admin/contact/:id/status', (req, res) => {
+    const messageId = req.params.id;
+    const { status } = req.body;
+    
+    if (!status) {
+        return res.status(400).json({ error: 'وضعیت جدید الزامی است.' });
+    }
+    
+    db.query('UPDATE contact_messages SET status = ? WHERE id = ?', [status, messageId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در به‌روزرسانی وضعیت:', err);
+            return res.status(500).json({ error: 'خطا در به‌روزرسانی وضعیت' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'پیام یافت نشد' });
+        }
+        res.json({ message: '✅ وضعیت پیام با موفقیت تغییر کرد!' });
+    });
+});
+
+// حذف پیام
+app.delete('/api/admin/contact/:id', (req, res) => {
+    const messageId = req.params.id;
+    db.query('DELETE FROM contact_messages WHERE id = ?', [messageId], (err, result) => {
+        if (err) {
+            console.error('❌ خطا در حذف پیام:', err);
+            return res.status(500).json({ error: 'خطا در حذف پیام' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'پیام یافت نشد' });
+        }
+        res.json({ message: '✅ پیام با موفقیت حذف شد!' });
+    });
+});
+
+// ==================================================
+// ===== API ثبت بازدید صفحات =====
+// ==================================================
+app.post('/api/stats/visit', (req, res) => {
+    const { page } = req.body;
+    if (!page) {
+        return res.status(400).json({ error: 'نام صفحه الزامی است.' });
+    }
+    
+    db.query(
+        'INSERT INTO site_stats (page, views, last_visit) VALUES (?, 1, NOW()) ON DUPLICATE KEY UPDATE views = views + 1, last_visit = NOW()',
+        [page],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ثبت بازدید:', err);
+                return res.status(500).json({ error: 'خطا در ثبت بازدید' });
+            }
+            res.json({ message: '✅ بازدید ثبت شد' });
+        }
+    );
+});
+
+// دریافت آمار بازدید (مدیریت)
+app.get('/api/admin/stats/visits', (req, res) => {
+    db.query('SELECT * FROM site_stats ORDER BY views DESC', (err, results) => {
+        if (err) {
+            console.error('❌ خطا در دریافت آمار بازدید:', err);
+            return res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
+        }
+        res.json(results);
+    });
+});
+
+// ==================================================
 // ===== شروع سرور =====
 // ==================================================
 app.listen(port, '0.0.0.0', () => {
+    console.log(`\n🚀 ========================================`);
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
-    console.log(`📁 پوشه آپلود: ${galleryDir}`);
-    console.log(`📁 مسیر عمومی: ${publicDir}`);
+    console.log(`🚀 ========================================\n`);
+    console.log(`📁 پوشه گالری: ${galleryDir}`);
+    console.log(`📁 پوشه آپلود رزومه: ${resumesDir}`);
+    console.log(`\n📋 ===== لیست API ها =====`);
     console.log(`✅ API گالری: /api/gallery`);
-    console.log(`✅ API آپلود: /api/upload`);
+    console.log(`✅ API آپلود تصویر: /api/upload`);
     console.log(`✅ API مقالات عمومی: /api/articles`);
     console.log(`✅ API مقالات عمومی با ID: /api/articles/:id`);
     console.log(`✅ API مدیریت مقالات: /api/admin/articles`);
     console.log(`✅ API مدیریت مقالات با ID: /api/admin/articles/:id`);
-    console.log(`✅ API درخواست‌ها: /api/user-requests`);
+    console.log(`✅ API درخواست‌های کاربران: /api/user-requests`);
+    console.log(`✅ API مدیریت درخواست‌های کاربران: /api/admin/user-requests`);
     console.log(`✅ API چت‌بات: /api/chatbot-requests`);
     console.log(`✅ API سبد خرید: /api/cart`);
-    console.log(`📁 پوشه گالری: ${galleryDir}`);
+    console.log(`✅ API مدیریت سبد خرید: /api/admin/cart`);
+    console.log(`✅ API درخواست‌های همکاری: /api/cooperation`);
+    console.log(`✅ API مدیریت درخواست‌های همکاری: /api/admin/cooperation`);
+    console.log(`✅ API پیام‌های تماس: /api/contact`);
+    console.log(`✅ API مدیریت پیام‌های تماس: /api/admin/contact`);
+    console.log(`✅ API تنظیمات: /api/admin/settings`);
+    console.log(`✅ API آمار: /api/admin/stats`);
+    console.log(`✅ API ثبت بازدید: /api/stats/visit`);
+    console.log(`✅ API آمار بازدید: /api/admin/stats/visits`);
+    console.log(`\n📁 فایل‌های استاتیک:`);
+    console.log(`   📂 /images → public/images`);
+    console.log(`   📂 /images/gallery → public/images/gallery`);
+    console.log(`   📂 /uploads → public/uploads`);
+    console.log(`\n✅ سرور آماده به کار است!\n`);
 });
