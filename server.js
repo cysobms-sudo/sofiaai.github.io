@@ -25,7 +25,14 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// ===== سرویس فایل‌های استاتیک با CORS =====
+// ==================================================
+// ===== سرویس فایل‌های استاتیک (اصلاح شده) =====
+// ==================================================
+
+// مسیر عمومی برای همه فایل‌های استاتیک
+app.use(express.static(path.join(__dirname, 'public')));
+
+// مسیر اختصاصی برای تصاویر با CORS
 app.use('/images', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -36,7 +43,7 @@ app.use('/images', (req, res, next) => {
     next();
 }, express.static(path.join(__dirname, 'public', 'images')));
 
-// مسیر مستقیم گالری
+// مسیر مستقیم گالری (برای اطمینان)
 app.use('/images/gallery', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
@@ -45,19 +52,33 @@ app.use('/images/gallery', (req, res, next) => {
     next();
 }, express.static(path.join(__dirname, 'public', 'images', 'gallery')));
 
-app.use(express.static(path.join(__dirname, 'public')));
+// ==================================================
+// ===== اطمینان از وجود پوشه‌ها =====
+// ==================================================
 
-// ===== پوشه آپلود =====
-const uploadDir = path.join(__dirname, 'public', 'images', 'gallery');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-    console.log('📁 پوشه گالری ایجاد شد:', uploadDir);
+const publicDir = path.join(__dirname, 'public');
+const imagesDir = path.join(publicDir, 'images');
+const galleryDir = path.join(imagesDir, 'gallery');
+
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+    console.log('📁 پوشه public ایجاد شد:', publicDir);
+}
+if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir, { recursive: true });
+    console.log('📁 پوشه images ایجاد شد:', imagesDir);
+}
+if (!fs.existsSync(galleryDir)) {
+    fs.mkdirSync(galleryDir, { recursive: true });
+    console.log('📁 پوشه گالری ایجاد شد:', galleryDir);
 }
 
-// ===== تنظیمات Multer =====
+console.log('📁 مسیر گالری:', galleryDir);
+
+// ===== تنظیمات Multer برای آپلود =====
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, uploadDir);
+        cb(null, galleryDir);
     },
     filename: function(req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -294,6 +315,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
         }
         const imageUrl = '/images/gallery/' + req.file.filename;
         console.log('✅ تصویر آپلود شد:', imageUrl);
+        console.log('📁 مسیر فیزیکی:', path.join(galleryDir, req.file.filename));
         res.json({ 
             success: true, 
             url: imageUrl, 
@@ -348,6 +370,8 @@ app.delete('/api/gallery/:id', (req, res) => {
             fs.unlink(imagePath, (unlinkErr) => {
                 if (unlinkErr) {
                     console.log('⚠️ فایل تصویر پیدا نشد:', unlinkErr.message);
+                } else {
+                    console.log('🗑️ فایل تصویر حذف شد:', imagePath);
                 }
             });
         }
@@ -423,11 +447,10 @@ app.get('/api/admin/articles', (req, res) => {
     });
 });
 
-// ===== دریافت یک مقاله خاص برای مدیریت (ویرایش) - مسیر جدید اضافه شده =====
+// دریافت یک مقاله خاص برای مدیریت (ویرایش)
 app.get('/api/admin/articles/:id', (req, res) => {
     const articleId = req.params.id;
     
-    // اعتبارسنجی ID
     if (!articleId || isNaN(articleId)) {
         return res.status(400).json({ error: 'شناسه مقاله نامعتبر است' });
     }
@@ -981,14 +1004,16 @@ app.delete('/api/chatbot-requests/:id', (req, res) => {
 // ==================================================
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
-    console.log(`📁 پوشه آپلود: ${uploadDir}`);
+    console.log(`📁 پوشه آپلود: ${galleryDir}`);
+    console.log(`📁 مسیر عمومی: ${publicDir}`);
     console.log(`✅ API گالری: /api/gallery`);
     console.log(`✅ API آپلود: /api/upload`);
     console.log(`✅ API مقالات عمومی: /api/articles`);
     console.log(`✅ API مقالات عمومی با ID: /api/articles/:id`);
     console.log(`✅ API مدیریت مقالات: /api/admin/articles`);
-    console.log(`✅ API مدیریت مقالات با ID (جدید): /api/admin/articles/:id`);
+    console.log(`✅ API مدیریت مقالات با ID: /api/admin/articles/:id`);
     console.log(`✅ API درخواست‌ها: /api/user-requests`);
     console.log(`✅ API چت‌بات: /api/chatbot-requests`);
     console.log(`✅ API سبد خرید: /api/cart`);
+    console.log(`📁 پوشه گالری: ${galleryDir}`);
 });
