@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== استایل‌ها ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -18,14 +17,20 @@
             --bg-light: #FBF8FF;
             --text-dark: #1A0F2E;
             --text-muted: #5A4A7A;
+            --text-light: #9A8AB5;
+            --card-bg: #FFFFFF;
             --border-color: rgba(108, 60, 225, 0.08);
-            --shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
-            --shadow-hover: 0 12px 40px rgba(108, 60, 225, 0.10);
+            --shadow: 0 4px 24px rgba(108, 60, 225, 0.06);
+            --shadow-hover: 0 12px 48px rgba(108, 60, 225, 0.12);
             --radius: 24px;
-            --transition: 0.3s ease;
+            --radius-sm: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --success: #27ae60;
             --danger: #e74c3c;
             --warning: #f39c12;
+            --info: #3498db;
+            --web-gradient-1: #FF512F;
+            --web-gradient-2: #DD2475;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,20 +45,46 @@
         a { text-decoration: none; color: inherit; }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .fade-up { animation: fadeUp 0.8s ease; }
 
+        /* ===== نوار ناوبری ===== */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border-bottom: 2px solid var(--secondary);
-            padding: 14px 0;
+            padding: 12px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(108, 60, 225, 0.04);
+            box-shadow: 0 2px 24px rgba(108, 60, 225, 0.04);
         }
         .navbar .container {
             display: flex;
@@ -68,9 +99,9 @@
             gap: 14px;
         }
         .logo-image {
-            height: 90px;
+            height: 80px;
             width: auto;
-            max-width: 320px;
+            max-width: 280px;
             object-fit: contain;
             transition: transform var(--transition);
         }
@@ -81,28 +112,28 @@
             line-height: 1.2;
         }
         .logo-text .main {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--text-dark);
         }
         .logo-text .main .highlight { color: var(--primary); }
         .logo-text .sub {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             letter-spacing: 1px;
         }
 
         .nav-menu {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
             align-items: center;
         }
         .nav-menu a {
             color: var(--text-dark);
-            padding: 8px 18px;
+            padding: 6px 16px;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: var(--transition);
         }
@@ -114,7 +145,7 @@
             background: linear-gradient(145deg, var(--secondary), var(--secondary-dark));
             color: var(--text-dark) !important;
             font-weight: 700;
-            padding: 8px 28px;
+            padding: 6px 24px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(255, 184, 0, 0.25);
             border: none;
@@ -129,7 +160,7 @@
             background: var(--primary);
             color: #fff !important;
             font-weight: 700;
-            padding: 8px 28px;
+            padding: 6px 24px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.25);
             border: none;
@@ -145,7 +176,7 @@
             background: var(--danger);
             color: #fff !important;
             font-weight: 700;
-            padding: 8px 20px;
+            padding: 6px 18px;
             border-radius: 30px;
             border: none;
             cursor: pointer;
@@ -153,14 +184,18 @@
             font-family: 'Vazirmatn', sans-serif;
             display: none;
         }
+        .nav-menu .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(231, 76, 60, 0.3);
+        }
         .nav-menu .cart-link {
             background: var(--primary);
             color: #fff !important;
-            padding: 8px 20px !important;
+            padding: 6px 18px !important;
             border-radius: 30px !important;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-weight: 700 !important;
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.2);
         }
@@ -173,72 +208,241 @@
             color: var(--text-dark);
             border-radius: 50%;
             padding: 0 8px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 900;
             display: inline-block;
-            min-width: 24px;
+            min-width: 22px;
             text-align: center;
         }
         .user-name-display {
             font-weight: 700;
             color: var(--primary);
-            padding: 8px 16px;
-            font-size: 0.95rem;
+            padding: 6px 14px;
+            font-size: 0.9rem;
             display: none;
         }
         .user-name-display.show {
             display: inline-block;
         }
 
+        /* ===== هدر سرویس ===== */
         .service-hero {
-            padding: 60px 0 40px;
-            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
+            padding: 70px 0 50px;
+            background: linear-gradient(145deg, #FBF8FF 0%, #F0E8FF 50%, #FFF9E6 100%);
             border-bottom: 2px solid var(--secondary);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.05), transparent 60%);
+            pointer-events: none;
+        }
+        .service-hero .floating-icon {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.06;
+            color: var(--primary);
+        }
+        .service-hero .floating-icon:nth-child(1) { top: 10%; right: 5%; animation: float 6s ease-in-out infinite; }
+        .service-hero .floating-icon:nth-child(2) { bottom: 15%; left: 8%; animation: float 8s ease-in-out infinite reverse; }
+        .service-hero .floating-icon:nth-child(3) { top: 50%; left: 3%; font-size: 3rem; animation: float 7s ease-in-out infinite; }
+        .service-hero .floating-icon:nth-child(4) { top: 20%; right: 3%; font-size: 3rem; animation: float 5s ease-in-out infinite reverse; }
+
+        .service-hero .hero-badge {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.08);
+            color: var(--primary);
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
         .service-hero h1 {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 900;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: var(--text-dark);
+            position: relative;
+            z-index: 1;
         }
         .service-hero h1 .highlight {
-            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .service-hero p {
-            font-size: 1.2rem;
+        .service-hero h1 .emoji {
+            -webkit-text-fill-color: initial;
+        }
+        .service-hero .subtitle {
+            font-size: 1.15rem;
             color: var(--text-muted);
-            max-width: 750px;
-            margin: 0 auto 24px;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 2;
         }
         .service-hero .price-tag {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             background: var(--secondary);
-            padding: 8px 32px;
+            padding: 10px 36px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-dark);
-            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(255, 184, 0, 0.25);
+            position: relative;
+            z-index: 1;
+        }
+        .service-hero .price-tag i {
+            color: var(--primary);
+        }
+        .service-hero .price-tag .old-price {
+            text-decoration: line-through;
+            opacity: 0.5;
+            font-weight: 400;
+            font-size: 0.9rem;
         }
 
-        .features-section {
-            padding: 50px 0;
+        /* ===== استاتیک‌ها ===== */
+        .stats-bar {
+            padding: 30px 0;
             background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .stat-item .number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+        .stat-item .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== طراحی سایت چیست (با فلش‌های افقی) ===== */
+        .what-is-web {
+            padding: 60px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .web-explanation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .web-explanation .text h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        .web-explanation .text h2 .highlight {
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .web-explanation .text p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 2.1;
+            margin-bottom: 12px;
+        }
+        .web-explanation .visual {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* ===== فلش‌های افقی ===== */
+        .web-flow-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: var(--bg-light);
+            padding: 20px 24px;
+            border-radius: var(--radius);
+            border: 2px solid var(--border-color);
+            direction: ltr;
+        }
+        .web-flow-horizontal .step {
+            background: #fff;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--primary-light);
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            min-width: 90px;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
+        }
+        .web-flow-horizontal .step .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .web-flow-horizontal .arrow {
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            font-weight: 900;
+            padding: 0 4px;
+        }
+
+        @media (max-width: 768px) {
+            .web-flow-horizontal {
+                flex-direction: column;
+                padding: 16px;
+            }
+            .web-flow-horizontal .arrow {
+                transform: rotate(90deg);
+                padding: 2px 0;
+            }
+            .web-flow-horizontal .step {
+                min-width: 70px;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features-section {
+            padding: 60px 0;
+            background: var(--bg-light);
             border-bottom: 1px solid var(--border-color);
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
         }
         .feature-box {
             text-align: center;
-            padding: 24px;
+            padding: 30px 20px;
             border-radius: var(--radius);
+            background: #fff;
             border: 2px solid var(--border-color);
             transition: var(--transition);
         }
@@ -249,175 +453,446 @@
         }
         .feature-box .icon {
             font-size: 3rem;
-            color: var(--primary);
             display: block;
             margin-bottom: 12px;
         }
         .feature-box h4 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             margin-bottom: 6px;
         }
         .feature-box p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.8;
         }
 
-        .samples-section {
-            padding: 50px 0;
+        /* ===== مزایا ===== */
+        .benefits-section {
+            padding: 60px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .benefit-card {
+            text-align: center;
+            padding: 28px 20px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .benefit-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .benefit-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .benefit-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        /* ===== پکیج‌ها ===== */
+        .packages-section {
+            padding: 60px 0;
             background: var(--bg-light);
             border-bottom: 1px solid var(--border-color);
         }
-        .samples-grid {
+        .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 24px;
         }
-        .sample-card {
+        .package-card {
             background: #fff;
             border-radius: var(--radius);
-            padding: 28px;
+            padding: 32px 24px;
             border: 2px solid var(--border-color);
             transition: var(--transition);
-            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
-        .sample-card:hover {
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-gradient-1), var(--web-gradient-2));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .package-card:hover {
             transform: translateY(-6px);
-            border-color: var(--secondary);
             box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
         }
-        .sample-card .icon {
-            font-size: 4rem;
-            color: var(--primary-light);
-            margin-bottom: 12px;
+        .package-card:hover::before {
+            opacity: 1;
         }
-        .sample-card h4 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .sample-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-        .sample-card .sample-tag {
-            display: inline-block;
-            background: rgba(108, 60, 225, 0.06);
-            color: var(--primary);
-            padding: 4px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-top: 12px;
-        }
-        .add-to-cart-sample {
-            display: inline-block;
-            margin-top: 12px;
-            background: var(--secondary);
+        .package-card .package-name {
+            font-size: 1.3rem;
+            font-weight: 900;
             color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .package-card .package-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .package-card .package-price span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .package-card .package-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .package-card .package-features {
+            list-style: none;
+            padding: 0;
+            text-align: right;
+        }
+        .package-card .package-features li {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .package-card .package-features li:last-child {
+            border-bottom: none;
+        }
+        .package-card .package-features li i {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        .package-card .btn-select {
+            margin-top: 16px;
+            padding: 10px 32px;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #fff;
             border: none;
-            padding: 8px 20px;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
+            width: 100%;
         }
-        .add-to-cart-sample:hover {
-            transform: scale(1.04);
-            background: var(--secondary-light);
-            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2);
+        .package-card .btn-select:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.3);
+        }
+        .package-card.popular {
+            border-color: var(--secondary);
+        }
+        .package-card.popular::after {
+            content: '⭐ محبوب‌ترین';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--secondary);
+            color: var(--text-dark);
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 800;
         }
 
+        /* ===== نمونه کارها ===== */
+        .portfolio-section {
+            padding: 60px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .section-header h2 .highlight {
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .portfolio-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-gradient-1), var(--web-gradient-2));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+        .portfolio-card .card-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .portfolio-card .badge-status {
+            display: inline-block;
+            background: var(--success);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .portfolio-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+        .portfolio-card .industry-tag {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .portfolio-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .portfolio-card .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .portfolio-card .tech-tags span {
+            background: rgba(108, 60, 225, 0.06);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* ===== فرآیند کار ===== */
+        .process-section {
+            padding: 60px 0;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            position: relative;
+        }
+        .process-step {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: var(--radius);
+            border: 2px solid var(--border-color);
+            position: relative;
+            transition: var(--transition);
+        }
+        .process-step:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .process-step .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
+            color: #fff;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .process-step h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        /* ===== فرم درخواست ===== */
         .request-section {
-            padding: 50px 0;
+            padding: 60px 0;
             background: #fff;
             border-bottom: 1px solid var(--border-color);
         }
         .request-box {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
             background: var(--bg-light);
-            padding: 40px;
+            padding: 48px 52px;
             border-radius: var(--radius);
             border: 2px solid var(--secondary);
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
-        .request-box h2 {
+        .request-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-gradient-1), var(--web-gradient-2));
+        }
+        .request-box .form-header {
             text-align: center;
+            margin-bottom: 28px;
+        }
+        .request-box .form-header h2 {
             font-size: 1.8rem;
             font-weight: 900;
-            margin-bottom: 8px;
             color: var(--text-dark);
         }
-        .request-box .sub {
-            text-align: center;
+        .request-box .form-header h2 .highlight {
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .request-box .form-header p {
             color: var(--text-muted);
-            margin-bottom: 24px;
             font-size: 1rem;
+        }
+        .request-box .form-group {
+            margin-bottom: 18px;
         }
         .request-box label {
             display: block;
-            margin-top: 16px;
             font-weight: 600;
             color: var(--text-dark);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
         }
         .request-box label .required {
             color: var(--danger);
         }
         .request-box input,
-        .request-box textarea {
+        .request-box textarea,
+        .request-box select {
             width: 100%;
             padding: 12px 16px;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             border: 2px solid var(--border-color);
             font-size: 1rem;
-            margin-top: 6px;
             font-family: 'Vazirmatn', sans-serif;
             background: #fff;
             transition: var(--transition);
         }
         .request-box input:focus,
-        .request-box textarea:focus {
+        .request-box textarea:focus,
+        .request-box select:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.06);
+            box-shadow: 0 0 0 4px rgba(108, 60, 225, 0.06);
         }
         .request-box textarea {
-            min-height: 150px;
+            min-height: 140px;
             resize: vertical;
         }
         .request-box .btn-submit {
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
-            padding: 14px 32px;
+            padding: 16px 32px;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 20px;
             width: 100%;
             font-family: 'Vazirmatn', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         .request-box .btn-submit:hover {
             transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+            box-shadow: 0 6px 30px rgba(108, 60, 225, 0.3);
         }
         .request-box .btn-submit:disabled {
-            opacity: 0.7;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
         .request-box .message {
             text-align: center;
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 8px;
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: var(--radius-sm);
             display: none;
+            font-weight: 600;
         }
         .request-box .message.success {
             display: block;
@@ -433,34 +908,52 @@
         }
         .request-box .message.info {
             display: block;
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
         }
 
+        /* ===== CTA ===== */
         .cta-section {
             padding: 50px 0;
             text-align: center;
+            background: var(--bg-light);
         }
         .cta-box {
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            padding: 40px 30px;
+            padding: 48px 40px;
             border-radius: var(--radius);
             border: 2px solid var(--secondary);
             color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 184, 0, 0.08), transparent 60%);
+            pointer-events: none;
         }
         .cta-box h2 {
             font-size: 2rem;
             font-weight: 900;
             margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
         }
         .cta-box p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             opacity: 0.9;
             margin-bottom: 24px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            position: relative;
+            z-index: 1;
         }
         .btn-add-cart {
             background: var(--secondary);
@@ -469,32 +962,40 @@
             padding: 16px 48px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 4px 20px rgba(255, 184, 0, 0.2);
+            position: relative;
+            z-index: 1;
         }
         .btn-add-cart:hover {
             transform: scale(1.04);
             background: var(--secondary-light);
-            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.35);
         }
         .back-link {
             display: inline-block;
             margin-top: 16px;
-            color: #fff;
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
             font-weight: 600;
-            opacity: 0.8;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
         }
         .back-link:hover {
-            opacity: 1;
+            color: #fff;
+        }
+        .back-link i {
+            margin-left: 6px;
         }
 
+        /* ===== Toast ===== */
         .toast-container {
             position: fixed;
-            top: 20px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
@@ -505,30 +1006,23 @@
             direction: rtl;
         }
         .toast {
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
             color: #fff;
             font-weight: 600;
             font-family: 'Vazirmatn', sans-serif;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
             animation: slideDown 0.5s ease;
-            min-width: 200px;
+            min-width: 220px;
             text-align: center;
+            font-size: 0.95rem;
         }
         .toast.success { background: var(--success); }
         .toast.error { background: var(--danger); }
-        .toast.info { background: #3498db; }
+        .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes slideUp {
-            from { opacity: 1; transform: translateX(-50%) translateY(0); }
-            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-        }
-
+        /* ===== فوتر ===== */
         footer {
             padding: 40px 0 24px;
             border-top: 2px solid var(--secondary);
@@ -549,24 +1043,57 @@
             transition: var(--transition);
         }
         footer .footer-links a:hover { color: var(--primary); }
+        footer .footer-links .btn-register-footer {
+            background: var(--secondary);
+            color: var(--text-dark) !important;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+        footer .footer-links .btn-login-footer {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
 
+        .web-gradient-text {
+            background: linear-gradient(145deg, var(--web-gradient-1), var(--web-gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 992px) {
+            .web-explanation { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             .service-hero h1 { font-size: 2.2rem; }
-            .service-hero p { font-size: 1rem; }
+            .service-hero .subtitle { font-size: 1rem; }
             .navbar .container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; width: 100%; }
-            .logo-image { height: 70px; max-width: 240px; }
-            .request-box { padding: 24px 18px; }
+            .logo-image { height: 65px; max-width: 200px; }
+            .request-box { padding: 28px 20px; }
+            .cta-box { padding: 30px 20px; }
+            .cta-box h2 { font-size: 1.6rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .service-hero .floating-icon { display: none; }
+            .process-timeline { grid-template-columns: 1fr 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .packages-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .samples-grid { grid-template-columns: 1fr; }
-            .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
-            .logo-image { height: 60px; max-width: 200px; }
-            .cta-box { padding: 30px 20px; }
-            .btn-add-cart { padding: 14px 30px; font-size: 1rem; }
+            .nav-menu a { font-size: 0.75rem; padding: 4px 10px; }
+            .logo-image { height: 55px; max-width: 160px; }
+            .btn-add-cart { padding: 14px 30px; font-size: 0.95rem; }
             .request-box { padding: 18px 14px; }
+            .section-header h2 { font-size: 1.6rem; }
+            .stat-item .number { font-size: 1.6rem; }
+            .process-timeline { grid-template-columns: 1fr; }
+            .packages-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -599,127 +1126,414 @@
         </div>
     </nav>
 
+    <!-- ===== بخش قهرمان ===== -->
     <section class="service-hero fade-up">
+        <div class="floating-icon"><i class="fas fa-code"></i></div>
+        <div class="floating-icon"><i class="fas fa-palette"></i></div>
+        <div class="floating-icon"><i class="fas fa-rocket"></i></div>
+        <div class="floating-icon"><i class="fas fa-laptop-code"></i></div>
         <div class="container">
-            <h1>🌐 <span class="highlight">طراحی سایت هوشمند</span></h1>
-            <p>
-                طراحی سایت‌های حرفه‌ای، مدرن و بهینه‌شده برای SEO با استفاده از آخرین فناوری‌های روز. با هوش مصنوعی سوفیا، وب‌سایت شما هوشمند می‌شود.
+            <span class="hero-badge"><i class="fas fa-star"></i> طراحی سایت هوشمند و حرفه‌ای</span>
+            <h1>
+                <span class="emoji">🌐</span>
+                <span class="highlight">طراحی سایت</span>
+                <span style="-webkit-text-fill-color:initial;">هوشمند</span>
+            </h1>
+            <p class="subtitle">
+                طراحی سایت‌های حرفه‌ای، مدرن و بهینه‌شده برای SEO با استفاده از هوش مصنوعی. ویترین دیجیتال کسب‌وکار خود را به بهترین شکل ممکن بسازید.
             </p>
-            <span class="price-tag">💰 از ۵ میلیون تومان</span>
+            <div class="price-tag">
+                <i class="fas fa-gem"></i>
+                <span>از <strong>۳,۵۰۰,۰۰۰</strong> تومان</span>
+                <span class="old-price">۵,۰۰۰,۰۰۰</span>
+                <span style="background:#e74c3c;color:#fff;padding:2px 12px;border-radius:50px;font-size:0.7rem;">تخفیف ویژه</span>
+            </div>
         </div>
     </section>
 
+    <!-- ===== آمار ===== -->
+    <section class="stats-bar fade-up">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="number">۱۵۰+</span>
+                    <span class="label">سایت طراحی شده</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۹۸%</span>
+                    <span class="label">رضایت مشتریان</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۴.۹</span>
+                    <span class="label">میانگین امتیاز</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۲۰+</span>
+                    <span class="label">صنعت فعال</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== طراحی سایت چیست (با فلش‌های افقی) ===== -->
+    <section class="what-is-web fade-up">
+        <div class="container">
+            <div class="web-explanation">
+                <div class="text">
+                    <h2>🌐 طراحی سایت هوشمند چیست؟</h2>
+                    <p>
+                        <strong class="web-gradient-text">طراحی سایت هوشمند</strong> فرآیندی است که در آن یک وب‌سایت با استفاده از <strong>به‌روزترین تکنولوژی‌ها</strong> و <strong>بهینه‌سازی‌های هوش مصنوعی</strong> طراحی می‌شود تا نه تنها زیبا و جذاب باشد، بلکه <strong>سرعت بالا</strong>، <strong>سئو قوی</strong> و <strong>تجربه کاربری بی‌نظیر</strong> را نیز ارائه دهد.
+                    </p>
+                    <p>
+                        از <strong>طراحی اختصاصی</strong> و <strong>ریسپانسیو</strong> گرفته تا <strong>بهینه‌سازی سرعت</strong> و <strong>سئو</strong>، ما سایتی می‌سازیم که کسب‌وکار شما را به اوج برساند.
+                    </p>
+                    <p style="color:var(--primary); font-weight:700;">
+                        ✅ نتیجه: افزایش فروش، برندسازی قدرتمند و جذب مشتریان بیشتر
+                    </p>
+                </div>
+                <div class="visual">
+                    <div class="web-flow-horizontal">
+                        <div class="step">
+                            <span class="icon">🎨</span>
+                            طراحی
+                        </div>
+                        <span class="arrow">→</span>
+                        <div class="step">
+                            <span class="icon">💻</span>
+                            کدنویسی
+                        </div>
+                        <span class="arrow">→</span>
+                        <div class="step">
+                            <span class="icon">⚡</span>
+                            بهینه‌سازی
+                        </div>
+                        <span class="arrow">→</span>
+                        <div class="step">
+                            <span class="icon">🚀</span>
+                            راه‌اندازی
+                        </div>
+                    </div>
+                    <div style="text-align:center; padding:12px; background:rgba(108,60,225,0.04); border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+                        <span style="font-size:0.9rem; color:var(--text-muted);">
+                            <i class="fas fa-check-circle" style="color:var(--web-gradient-1);"></i>
+                            طراحی اختصاصی و ریسپانسیو با بهینه‌سازی هوش مصنوعی
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== مزایا ===== -->
+    <section class="benefits-section fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2>🌟 <span class="highlight">چرا</span> طراحی سایت هوشمند؟</h2>
+                <p>مزایای طراحی سایت با سوفیا AI</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <span class="icon">🎯</span>
+                    <h4>طراحی اختصاصی و منحصربه‌فرد</h4>
+                    <p>سایتی متناسب با برند و هویت کسب‌وکار شما، نه یک قالب تکراری</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="icon">📱</span>
+                    <h4>ریسپانسیو و سازگار با موبایل</h4>
+                    <p>نمایش عالی در تمام دستگاه‌ها از موبایل تا دسکتاپ</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="icon">⚡</span>
+                    <h4>سرعت بالا و بهینه‌سازی شده</h4>
+                    <p>بارگذاری سریع صفحات با استفاده از تکنیک‌های پیشرفته</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="icon">🔍</span>
+                    <h4>بهینه‌سازی برای موتورهای جستجو</h4>
+                    <p>سئو قوی برای دیده شدن در گوگل و جذب بازدیدکننده</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="icon">🧠</span>
+                    <h4>هوش مصنوعی یکپارچه</h4>
+                    <p>قابلیت‌های هوش مصنوعی مانند چت‌بات، تحلیل داده و پیشنهادات شخصی‌سازی‌شده</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="icon">🛡️</span>
+                    <h4>امنیت بالا</h4>
+                    <p>استفاده از پروتکل‌های امنیتی پیشرفته برای محافظت از داده‌ها</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ویژگی‌ها ===== -->
     <section class="features-section fade-up">
         <div class="container">
-            <h2 style="text-align:center; font-size:2rem; margin-bottom:30px;">✨ ویژگی‌های طراحی سایت</h2>
+            <div class="section-header">
+                <h2>✨ ویژگی‌های <span class="highlight">طراحی سایت هوشمند</span></h2>
+                <p>با قابلیت‌های پیشرفته‌ای که سایت شما را متمایز می‌کند</p>
+            </div>
             <div class="features-grid">
                 <div class="feature-box">
                     <span class="icon">🎨</span>
-                    <h4>طراحی اختصاصی</h4>
-                    <p>طراحی کاملاً اختصاصی و منحصربه‌فرد بر اساس هویت برند شما.</p>
+                    <h4>طراحی UI/UX حرفه‌ای</h4>
+                    <p>تجربه کاربری بی‌نظیر با طراحی جذاب و کاربرپسند</p>
+                </div>
+                <div class="feature-box">
+                    <span class="icon">⚡</span>
+                    <h4>سرعت بارگذاری بالا</h4>
+                    <p>بهینه‌سازی کامل برای بارگذاری در کمتر از ۲ ثانیه</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">📱</span>
-                    <h4>واکنش‌گرا (Responsive)</h4>
-                    <p>نمایش عالی در تمام دستگاه‌ها از موبایل تا دسکتاپ.</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">🚀</span>
-                    <h4>بهینه‌سازی سرعت</h4>
-                    <p>بارگذاری سریع با استفاده از تکنیک‌های بهینه‌سازی مدرن.</p>
+                    <h4>طراحی ریسپانسیو</h4>
+                    <p>نمایش عالی در تمام دستگاه‌ها و مرورگرها</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🔍</span>
-                    <h4>سئو (SEO) پیشرفته</h4>
-                    <p>بهینه‌سازی کامل برای موتورهای جستجو و افزایش بازدید.</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">🛡️</span>
-                    <h4>امنیت بالا</h4>
-                    <p>محافظت در برابر حملات سایبری و امنیت کامل داده‌ها.</p>
+                    <h4>سئو و بهینه‌سازی</h4>
+                    <p>بهینه‌سازی کامل برای موتورهای جستجو و رتبه‌بندی بالا</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🤖</span>
-                    <h4>هوش مصنوعی یکپارچه</h4>
-                    <p>قابلیت اتصال به چت‌بات و سیستم‌های هوشمند سوفیا.</p>
+                    <h4>یکپارچه‌سازی هوش مصنوعی</h4>
+                    <p>چت‌بات، تحلیل رفتار کاربر و پیشنهادات هوشمند</p>
+                </div>
+                <div class="feature-box">
+                    <span class="icon">🛒</span>
+                    <h4>سیستم فروشگاهی</h4>
+                    <p>امکان ایجاد فروشگاه اینترنتی با درگاه پرداخت امن</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="samples-section fade-up">
+    <!-- ===== پکیج‌های طراحی ===== -->
+    <section class="packages-section fade-up">
         <div class="container">
-            <h2 style="text-align:center; font-size:2rem; margin-bottom:30px;">📌 نمونه طراحی‌های سایت</h2>
-            <div class="samples-grid">
-                <div class="sample-card">
-                    <div class="icon">🏢</div>
-                    <h4>سایت شرکتی</h4>
-                    <p>طراحی حرفه‌ای برای شرکت‌های بزرگ و سازمان‌ها.</p>
-                    <span class="sample-tag">✨ مدرن و مینیمال</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('طراحی سایت شرکتی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
+            <div class="section-header">
+                <h2>📦 <span class="highlight">پکیج‌های</span> طراحی سایت</h2>
+                <p>انتخاب بهترین پکیج متناسب با نیاز شما</p>
+            </div>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-name">✨ استاندارد</div>
+                    <div class="package-price">۳,۵۰۰,۰۰۰ <span>تومان</span></div>
+                    <div class="package-desc">مناسب برای شروع کسب‌وکار</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> طراحی اختصاصی با قالب حرفه‌ای</li>
+                        <li><i class="fas fa-check"></i> ۵ صفحه داخلی</li>
+                        <li><i class="fas fa-check"></i> ریسپانسیو و سازگار با موبایل</li>
+                        <li><i class="fas fa-check"></i> فرم تماس با ما</li>
+                        <li><i class="fas fa-check"></i> یک سال هاستینگ</li>
+                    </ul>
+                    <button class="btn-select" onclick="selectPackage('پکیج استاندارد', '۳,۵۰۰,۰۰۰')">انتخاب این پکیج</button>
                 </div>
-                <div class="sample-card">
-                    <div class="icon">🛒</div>
-                    <h4>سایت فروشگاهی</h4>
-                    <p>فروشگاه اینترنتی با سیستم پرداخت و مدیریت سفارشات.</p>
-                    <span class="sample-tag">💰 درگاه پرداخت</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('طراحی سایت فروشگاهی', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
+
+                <div class="package-card popular">
+                    <div class="package-name">⭐ حرفه‌ای</div>
+                    <div class="package-price">۵,۵۰۰,۰۰۰ <span>تومان</span></div>
+                    <div class="package-desc">مناسب برای کسب‌وکارهای متوسط</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> طراحی اختصاصی و منحصربه‌فرد</li>
+                        <li><i class="fas fa-check"></i> ۱۰ صفحه داخلی</li>
+                        <li><i class="fas fa-check"></i> ریسپانسیو و بهینه‌سازی شده</li>
+                        <li><i class="fas fa-check"></i> چت‌بات هوشمند</li>
+                        <li><i class="fas fa-check"></i> سیستم مدیریت محتوا</li>
+                        <li><i class="fas fa-check"></i> بهینه‌سازی سئو</li>
+                        <li><i class="fas fa-check"></i> دو سال هاستینگ</li>
+                    </ul>
+                    <button class="btn-select" onclick="selectPackage('پکیج حرفه‌ای', '۵,۵۰۰,۰۰۰')">انتخاب این پکیج</button>
                 </div>
-                <div class="sample-card">
-                    <div class="icon">📰</div>
-                    <h4>سایت خبری/وبلاگ</h4>
-                    <p>سایت مدیریت محتوا با امکانات کامل انتشار مقاله.</p>
-                    <span class="sample-tag">📝 مدیریت محتوا</span>
-                    <br>
-                    <button class="add-to-cart-sample" onclick="addToCart('طراحی سایت خبری', 'رایگان')">
-                        <i class="fas fa-plus"></i> افزودن به سبد خرید
-                    </button>
+
+                <div class="package-card">
+                    <div class="package-name">🚀 فروشگاهی</div>
+                    <div class="package-price">۷,۵۰۰,۰۰۰ <span>تومان</span></div>
+                    <div class="package-desc">مناسب برای فروشگاه‌های اینترنتی</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> طراحی فروشگاهی کامل</li>
+                        <li><i class="fas fa-check"></i> ۱۵ صفحه داخلی</li>
+                        <li><i class="fas fa-check"></i> ریسپانسیو و بهینه‌سازی شده</li>
+                        <li><i class="fas fa-check"></i> چت‌بات + سیستم RAG</li>
+                        <li><i class="fas fa-check"></i> درگاه پرداخت امن</li>
+                        <li><i class="fas fa-check"></i> سیستم مدیریت فروش</li>
+                        <li><i class="fas fa-check"></i> بهینه‌سازی سئو پیشرفته</li>
+                        <li><i class="fas fa-check"></i> سه سال هاستینگ</li>
+                    </ul>
+                    <button class="btn-select" onclick="selectPackage('پکیج فروشگاهی', '۷,۵۰۰,۰۰۰')">انتخاب این پکیج</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== نمونه کارها ===== -->
+    <section class="portfolio-section fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2>🏆 <span class="highlight">نمونه کارهای</span> طراحی سایت</h2>
+                <p>برخی از پروژه‌های موفق طراحی سایت در صنایع مختلف</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <span class="card-icon">🛒</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>فروشگاه اینترنتی لباس</h4>
+                    <span class="industry-tag">🛒 خرده‌فروشی</span>
+                    <p>طراحی فروشگاه کامل با سیستم مدیریت محتوا، درگاه پرداخت و چت‌بات هوشمند</p>
+                    <div class="tech-tags"><span>React</span><span>Node.js</span><span>AI Chatbot</span></div>
+                </div>
+                <div class="portfolio-card">
+                    <span class="card-icon">🏥</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سایت کلینیک تخصصی</h4>
+                    <span class="industry-tag">🏥 سلامت</span>
+                    <p>طراحی سایت پزشکی با سیستم نوبت‌دهی آنلاین و پنل مدیریت پیشرفته</p>
+                    <div class="tech-tags"><span>Vue.js</span><span>PHP</span><span>RAG</span></div>
+                </div>
+                <div class="portfolio-card">
+                    <span class="card-icon">🏛️</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سایت سازمانی</h4>
+                    <span class="industry-tag">🏛️ سازمانی</span>
+                    <p>طراحی سایت سازمانی با سیستم مدیریت اسناد و پنل مدیریت پیشرفته</p>
+                    <div class="tech-tags"><span>Laravel</span><span>Vue.js</span><span>AI</span></div>
+                </div>
+                <div class="portfolio-card">
+                    <span class="card-icon">📚</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سایت آموزشی</h4>
+                    <span class="industry-tag">📚 آموزش</span>
+                    <p>طراحی سایت آموزشی با سیستم مدیریت دوره‌ها و کلاس‌های آنلاین</p>
+                    <div class="tech-tags"><span>Django</span><span>React</span><span>WebRTC</span></div>
+                </div>
+                <div class="portfolio-card">
+                    <span class="card-icon">🍽️</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سایت رستوران</h4>
+                    <span class="industry-tag">🍽️ رستوران</span>
+                    <p>طراحی سایت رستوران با سیستم سفارش آنلاین، منوی دیجیتال و چت‌بات</p>
+                    <div class="tech-tags"><span>Next.js</span><span>Python</span><span>AI</span></div>
+                </div>
+                <div class="portfolio-card">
+                    <span class="card-icon">💼</span>
+                    <span class="badge-status">✅ انجام شده</span>
+                    <h4>سایت شرکتی</h4>
+                    <span class="industry-tag">💼 شرکتی</span>
+                    <p>طراحی سایت شرکتی با پنل مدیریت، سیستم استخدام و فرم‌های پیشرفته</p>
+                    <div class="tech-tags"><span>WordPress</span><span>PHP</span><span>SEO</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== فرآیند کار ===== -->
+    <section class="process-section fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2>🔄 <span class="highlight">فرآیند</span> طراحی سایت</h2>
+                <p>چگونه سایت شما را طراحی و راه‌اندازی می‌کنیم</p>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="number">۱</div>
+                    <h4>تحلیل و برنامه‌ریزی</h4>
+                    <p>شناسایی نیازها و اهداف کسب‌وکار شما</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">۲</div>
+                    <h4>طراحی UI/UX</h4>
+                    <p>طراحی رابط کاربری جذاب و کاربرپسند</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">۳</div>
+                    <h4>توسعه و کدنویسی</h4>
+                    <p>پیاده‌سازی سایت با جدیدترین تکنولوژی‌ها</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">۴</div>
+                    <h4>تست و بهینه‌سازی</h4>
+                    <p>تست کامل و بهینه‌سازی سرعت و سئو</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">۵</div>
+                    <h4>راه‌اندازی و پشتیبانی</h4>
+                    <p>راه‌اندازی سایت و پشتیبانی مستمر</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== فرم درخواست ===== -->
     <section class="request-section fade-up" id="request">
         <div class="container">
             <div class="request-box">
-                <h2>✍️ درخواست طراحی سایت</h2>
-                <p class="sub">نیاز خود را توضیح دهید تا سایت اختصاصی شما طراحی شود.</p>
+                <div class="form-header">
+                    <h2>✍️ درخواست <span class="highlight">طراحی سایت هوشمند</span></h2>
+                    <p>نیاز خود را توضیح دهید تا بهترین سایت برای کسب‌وکار شما طراحی شود</p>
+                </div>
                 <form id="requestForm">
-                    <label>نام و نام خانوادگی <span class="required">*</span></label>
-                    <input type="text" id="requestName" placeholder="نام خود را وارد کنید" required />
-                    
-                    <label>شماره تماس <span class="required">*</span></label>
-                    <input type="tel" id="requestPhone" placeholder="شماره تماس خود را وارد کنید" required />
-                    
-                    <label>ایمیل</label>
-                    <input type="email" id="requestEmail" placeholder="ایمیل خود را وارد کنید" />
-                    
-                    <label>توضیحات نیاز شما <span class="required">*</span></label>
-                    <textarea id="requestDescription" placeholder="لطفاً توضیح دهید چه نوع سایتی نیاز دارید؟ (شرکتی، فروشگاهی، خبری، شخصی و...) چه ویژگی‌های خاصی مد نظر شماست؟" required></textarea>
-                    
-                    <button type="submit" class="btn-submit" id="submitBtn">📩 ارسال درخواست</button>
+                    <div class="form-group">
+                        <label>نام و نام خانوادگی <span class="required">*</span></label>
+                        <input type="text" id="requestName" placeholder="مثال: علی محمدی" required />
+                    </div>
+                    <div class="form-group">
+                        <label>شماره تماس <span class="required">*</span></label>
+                        <input type="tel" id="requestPhone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" required />
+                    </div>
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <input type="email" id="requestEmail" placeholder="example@email.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>نوع سایت مورد نظر <span class="required">*</span></label>
+                        <select id="siteType" required>
+                            <option value="">انتخاب کنید...</option>
+                            <option value="corporate">سایت شرکتی و سازمانی</option>
+                            <option value="shop">فروشگاه اینترنتی</option>
+                            <option value="landing">صفحه فرود (Landing Page)</option>
+                            <option value="blog">وبلاگ و خبری</option>
+                            <option value="portfolio">نمونه کارها و پورتفولیو</option>
+                            <option value="service">سایت خدماتی</option>
+                            <option value="custom">سایر / ترکیبی</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>پکیج مورد نظر <span class="required">*</span></label>
+                        <select id="packageType" required>
+                            <option value="">انتخاب کنید...</option>
+                            <option value="standard">✨ پکیج استاندارد (۳,۵۰۰,۰۰۰ تومان)</option>
+                            <option value="professional">⭐ پکیج حرفه‌ای (۵,۵۰۰,۰۰۰ تومان)</option>
+                            <option value="shop">🚀 پکیج فروشگاهی (۷,۵۰۰,۰۰۰ تومان)</option>
+                            <option value="custom">سفارشی (تماس بگیرید)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>توضیحات نیاز شما <span class="required">*</span></label>
+                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید چه نوع سایتی می‌خواهید؟ چه ویژگی‌هایی باید داشته باشد؟ چه محتوایی قرار است منتشر شود؟" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        ارسال درخواست
+                    </button>
                 </form>
                 <div id="requestMessage" class="message"></div>
             </div>
         </div>
     </section>
 
+    <!-- ===== CTA ===== -->
     <section class="cta-section fade-up">
         <div class="container">
             <div class="cta-box">
-                <h2>🚀 آماده‌اید یک سایت هوشمند برای کسب‌وکار خود داشته باشید؟</h2>
-                <p>همین حالا آن را به سبد خرید اضافه کنید و از مشاوره رایگان تیم سوفیا بهره‌مند شوید.</p>
-                <button class="btn-add-cart" onclick="addToCart('طراحی سایت هوشمند', 'رایگان')">
-                    <i class="fas fa-plus"></i> افزودن به سبد خرید
+                <h2>🚀 آماده‌اید سایت هوشمند خود را داشته باشید؟</h2>
+                <p>با طراحی سایت حرفه‌ای، کسب‌وکار خود را به سطح جدیدی ببرید.</p>
+                <button class="btn-add-cart" onclick="addToCart('طراحی سایت هوشمند', '۳,۵۰۰,۰۰۰ تومان')">
+                    <i class="fas fa-shopping-cart"></i> افزودن به سبد خرید
                 </button>
                 <br>
-                <a href="index.html" class="back-link">← بازگشت به صفحه اصلی</a>
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> بازگشت به صفحه اصلی
+                </a>
             </div>
         </div>
     </section>
@@ -733,8 +1547,8 @@
                 <a href="index.html#articles">مقالات</a>
                 <a href="index.html#gallery">گالری</a>
                 <a href="index.html#about">درباره ما</a>
-                <a href="register.html" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
-                <a href="login.html" style="background: var(--primary); color: #fff; padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ورود</a>
+                <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
+                <a href="login.html" class="btn-login-footer">ورود</a>
             </div>
             <p>© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
@@ -742,6 +1556,14 @@
 
     <script>
         const API_BASE = 'https://sofiaaisite.runflare.run';
+
+        // ===== انتخاب پکیج =====
+        function selectPackage(name, price) {
+            document.getElementById('packageType').value = name;
+            document.getElementById('packageType').style.borderColor = '#6C3CE1';
+            showToast('✅ پکیج ' + name + ' با قیمت ' + price + ' تومان انتخاب شد. لطفاً فرم را کامل کنید.', 'success');
+            document.getElementById('requestSection').scrollIntoView({ behavior: 'smooth' });
+        }
 
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
@@ -871,9 +1693,11 @@
             const name = document.getElementById('requestName').value.trim();
             const phone = document.getElementById('requestPhone').value.trim();
             const email = document.getElementById('requestEmail').value.trim();
+            const siteType = document.getElementById('siteType').value;
+            const packageType = document.getElementById('packageType').value;
             const description = document.getElementById('requestDescription').value.trim();
             
-            if (!name || !phone || !description) {
+            if (!name || !phone || !siteType || !packageType || !description) {
                 showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
                 return;
             }
@@ -882,7 +1706,7 @@
             const messageDiv = document.getElementById('requestMessage');
             
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ در حال ارسال...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
             messageDiv.className = 'message';
             messageDiv.style.display = 'none';
             
@@ -900,14 +1724,31 @@
                 }
             }
             
-            const title = `درخواست طراحی سایت - ${name}`;
+            const siteLabels = {
+                'corporate': 'سایت شرکتی و سازمانی',
+                'shop': 'فروشگاه اینترنتی',
+                'landing': 'صفحه فرود (Landing Page)',
+                'blog': 'وبلاگ و خبری',
+                'portfolio': 'نمونه کارها و پورتفولیو',
+                'service': 'سایت خدماتی',
+                'custom': 'سایر / ترکیبی'
+            };
+            
+            const packageLabels = {
+                'standard': 'پکیج استاندارد (۳,۵۰۰,۰۰۰ تومان)',
+                'professional': 'پکیج حرفه‌ای (۵,۵۰۰,۰۰۰ تومان)',
+                'shop': 'پکیج فروشگاهی (۷,۵۰۰,۰۰۰ تومان)',
+                'custom': 'سفارشی (تماس بگیرید)'
+            };
+            
+            const title = `درخواست طراحی سایت هوشمند - ${siteLabels[siteType] || 'سایر'}`;
             
             const requestBody = {
                 user_id: userId,
                 title: title,
-                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\n\n${description}`,
+                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\nنوع سایت: ${siteLabels[siteType] || 'سایر'}\nپکیج: ${packageLabels[packageType] || 'سایر'}\n\n${description}`,
                 priority: 'high',
-                category: 'webdesign'  // این مقدار باید در دیتابیس پذیرفته شود
+                category: 'webdesign'
             };
             
             console.log('📤 ارسال درخواست:', requestBody);
@@ -942,7 +1783,7 @@
                 showToast('❌ خطا در ارتباط با سرور', 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = '📩 ارسال درخواست';
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست';
             }
         });
 
