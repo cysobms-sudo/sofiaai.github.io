@@ -29,6 +29,9 @@
             --danger: #e74c3c;
             --warning: #f39c12;
             --info: #3498db;
+            --love: #FF6B81;
+            --love-light: #FF8A9E;
+            --love-dark: #E8435A;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,6 +57,16 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
         @keyframes slideDown {
             from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
             to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
@@ -61,10 +74,6 @@
         @keyframes slideUp {
             from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
             to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
         }
         .fade-up { animation: fadeUp 0.8s ease; }
 
@@ -308,27 +317,44 @@
             font-size: 0.9rem;
         }
 
-        /* ===== استاتیک‌ها ===== */
-        .stats-bar {
-            padding: 30px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
+        /* ===== دسته‌بندی نمونه‌ها ===== */
+        .examples-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
         }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-        .stat-item .number {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--primary);
-            display: block;
-        }
-        .stat-item .label {
-            color: var(--text-muted);
+        .examples-tabs .tab-btn-example {
+            padding: 8px 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            background: transparent;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+        .examples-tabs .tab-btn-example:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .examples-tabs .tab-btn-example.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .examples-tabs .tab-btn-example.love-tab {
+            border-color: var(--love);
+            color: var(--love);
+        }
+        .examples-tabs .tab-btn-example.love-tab:hover,
+        .examples-tabs .tab-btn-example.love-tab.active {
+            background: var(--love);
+            color: #fff;
+            border-color: var(--love);
         }
 
         /* ===== نمونه‌های دستیار مکالمه‌ای ===== */
@@ -349,6 +375,9 @@
         .section-header h2 .highlight {
             color: var(--primary);
         }
+        .section-header h2 .love-highlight {
+            color: var(--love);
+        }
         .section-header p {
             color: var(--text-muted);
             font-size: 1.05rem;
@@ -358,7 +387,7 @@
 
         .examples-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
         .example-card {
@@ -404,6 +433,10 @@
             font-weight: 700;
             margin-bottom: 8px;
         }
+        .example-card .badge-industry.love-badge {
+            background: rgba(255, 107, 129, 0.1);
+            color: var(--love);
+        }
         .example-card h4 {
             font-size: 1.1rem;
             font-weight: 700;
@@ -427,6 +460,19 @@
             padding: 2px 12px;
             border-radius: 50px;
             font-size: 0.7rem;
+        }
+        .example-card .feature-tags .love-tag {
+            background: rgba(255, 107, 129, 0.08);
+            color: var(--love);
+        }
+        .example-card.love-card {
+            border-color: rgba(255, 107, 129, 0.2);
+        }
+        .example-card.love-card::before {
+            background: linear-gradient(90deg, var(--love), var(--love-light), var(--love));
+        }
+        .example-card.love-card:hover {
+            border-color: var(--love);
         }
 
         /* ===== ویژگی‌ها ===== */
@@ -467,6 +513,29 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             line-height: 1.8;
+        }
+
+        /* ===== استاتیک‌ها ===== */
+        .stats-bar {
+            padding: 30px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .stat-item .number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+        .stat-item .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* ===== فرم درخواست ===== */
@@ -706,6 +775,7 @@
         .toast.error { background: var(--danger); }
         .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
+        .toast.love { background: var(--love); }
 
         /* ===== فوتر ===== */
         footer {
@@ -743,6 +813,12 @@
             font-weight: 700;
         }
 
+        .love-heart {
+            color: var(--love);
+            display: inline-block;
+            animation: heartBeat 1.5s infinite;
+        }
+
         @media (max-width: 992px) {
             .examples-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -758,6 +834,7 @@
             .cta-box h2 { font-size: 1.6rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .service-hero .floating-icon { display: none; }
+            .examples-tabs .tab-btn-example { font-size: 0.8rem; padding: 6px 16px; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
@@ -804,7 +881,7 @@
     <section class="service-hero fade-up">
         <div class="floating-icon"><i class="fas fa-comment-dots"></i></div>
         <div class="floating-icon"><i class="fas fa-robot"></i></div>
-        <div class="floating-icon"><i class="fas fa-microphone"></i></div>
+        <div class="floating-icon"><i class="fas fa-heart"></i></div>
         <div class="floating-icon"><i class="fas fa-brain"></i></div>
         <div class="container">
             <span class="hero-badge"><i class="fas fa-star"></i> پرفروش‌ترین سرویس سوفیا</span>
@@ -814,7 +891,7 @@
                 <span style="-webkit-text-fill-color:initial;">هوشمند</span>
             </h1>
             <p class="subtitle">
-                با استفاده از پیشرفته‌ترین مدل‌های هوش مصنوعی، یک دستیار مکالمه‌ای حرفه‌ای و هوشمند برای پشتیبانی ۲۴ ساعته، فروش خودکار و تعامل بی‌نظیر با مشتریان خود طراحی کنید.
+                با استفاده از پیشرفته‌ترین مدل‌های هوش مصنوعی، یک دستیار مکالمه‌ای حرفه‌ای و هوشمند برای پشتیبانی ۲۴ ساعته، فروش خودکار، تعامل بی‌نظیر با مشتریان و حتی <strong style="color:var(--love);">مکالمات عاشقانه</strong> طراحی کنید.
             </p>
             <div class="price-tag">
                 <i class="fas fa-gem"></i>
@@ -830,7 +907,7 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <span class="number">۱۵۰+</span>
+                    <span class="number">۲۰۰+</span>
                     <span class="label">دستیار طراحی شده</span>
                 </div>
                 <div class="stat-item">
@@ -842,7 +919,7 @@
                     <span class="label">پشتیبانی بی‌وقفه</span>
                 </div>
                 <div class="stat-item">
-                    <span class="number">۱۰+</span>
+                    <span class="number">۱۵+</span>
                     <span class="label">صنعت فعال</span>
                 </div>
             </div>
@@ -850,19 +927,141 @@
     </section>
 
     <!-- ===== نمونه‌های دستیار مکالمه‌ای ===== -->
-    <section class="examples-section fade-up">
+    <section class="examples-section fade-up" id="examples">
         <div class="container">
             <div class="section-header">
                 <h2>🔍 <span class="highlight">نمونه‌های</span> دستیارهای مکالمه‌ای</h2>
-                <p>بیش از ۱۰ نمونه واقعی از دستیارهای مکالمه‌ای که برای صنایع مختلف طراحی کرده‌ایم</p>
+                <p>بیش از ۲۰ نمونه واقعی از دستیارهای مکالمه‌ای که برای صنایع مختلف طراحی کرده‌ایم</p>
             </div>
-            <div class="examples-grid">
 
-                <div class="example-card">
+            <!-- تب‌های دسته‌بندی -->
+            <div class="examples-tabs">
+                <button class="tab-btn-example active" onclick="filterExamples('all')">🎯 همه</button>
+                <button class="tab-btn-example" onclick="filterExamples('business')">🏢 کسب‌وکار</button>
+                <button class="tab-btn-example" onclick="filterExamples('restaurant')">🍽️ رستوران</button>
+                <button class="tab-btn-example" onclick="filterExamples('legal')">⚖️ حقوقی</button>
+                <button class="tab-btn-example love-tab" onclick="filterExamples('love')">❤️ عاشقانه</button>
+            </div>
+
+            <div class="examples-grid" id="examplesGrid">
+
+                <!-- ===== دسته‌بندی: عاشقانه (LOVE) ===== -->
+                <div class="example-card love-card" data-category="love">
+                    <span class="card-icon">❤️</span>
+                    <span class="badge-industry love-badge">عاشقانه و روابط</span>
+                    <h4>دستیار عاشقانه و همدم</h4>
+                    <p>مکالمات صمیمی و دلنشین، مشاوره عاطفی، شعر و متن‌های عاشقانه، پیشنهاد هدیه برای مناسبت‌ها</p>
+                    <div class="feature-tags">
+                        <span class="love-tag">مکالمه عاشقانه</span>
+                        <span class="love-tag">مشاوره عاطفی</span>
+                        <span class="love-tag">شعر و ادبیات</span>
+                    </div>
+                </div>
+
+                <div class="example-card love-card" data-category="love">
+                    <span class="card-icon">💝</span>
+                    <span class="badge-industry love-badge">روابط و ازدواج</span>
+                    <h4>دستیار مشاوره ازدواج و روابط</h4>
+                    <p>مشاوره قبل از ازدواج، حل تعارضات، تقویت ارتباط عاطفی، راهنمایی برای زندگی مشترک موفق</p>
+                    <div class="feature-tags">
+                        <span class="love-tag">مشاوره ازدواج</span>
+                        <span class="love-tag">حل تعارض</span>
+                        <span class="love-tag">ارتباط عاطفی</span>
+                    </div>
+                </div>
+
+                <div class="example-card love-card" data-category="love">
+                    <span class="card-icon">🌹</span>
+                    <span class="badge-industry love-badge">مناسبت‌ها و هدیه</span>
+                    <h4>دستیار پیشنهاد هدیه و برنامه ریزی</h4>
+                    <p>پیشنهاد هدیه برای تولد، سالگرد، روز ولنتاین، جشن‌ها و مناسبت‌های خاص با توجه به سلیقه مخاطب</p>
+                    <div class="feature-tags">
+                        <span class="love-tag">پیشنهاد هدیه</span>
+                        <span class="love-tag">برنامه‌ریزی</span>
+                        <span class="love-tag">مناسبت‌ها</span>
+                    </div>
+                </div>
+
+                <div class="example-card love-card" data-category="love">
+                    <span class="card-icon">💌</span>
+                    <span class="badge-industry love-badge">ادبیات و هنر</span>
+                    <h4>دستیار شعر و داستان‌های عاشقانه</h4>
+                    <p>سرودن شعرهای عاشقانه، نوشتن نامه‌های عاشقانه، داستان‌های کوتاه رمانتیک و متن‌های احساسی</p>
+                    <div class="feature-tags">
+                        <span class="love-tag">شعر سرایی</span>
+                        <span class="love-tag">نامه عاشقانه</span>
+                        <span class="love-tag">داستان رمانتیک</span>
+                    </div>
+                </div>
+
+                <!-- ===== دسته‌بندی: رستوران ===== -->
+                <div class="example-card" data-category="restaurant">
+                    <span class="card-icon">🏛️</span>
+                    <span class="badge-industry">رستوران سنتی</span>
+                    <h4>دستیار رستوران شهرزاد</h4>
+                    <p>سفارش غذا، مدیریت میز، صورتحساب هوشمند، پرداخت آنلاین، پنل مدیریت و آشپزخانه</p>
+                    <div class="feature-tags">
+                        <span>سفارش آنلاین</span>
+                        <span>مدیریت میز</span>
+                        <span>پرداخت</span>
+                    </div>
+                </div>
+
+                <div class="example-card" data-category="restaurant">
+                    <span class="card-icon">🥪</span>
+                    <span class="badge-industry">فست‌فود</span>
+                    <h4>دستیار ساندویچی فدک مال</h4>
+                    <p>سفارش ساندویچ و خوراک، مدیریت سفارشات، اتصال به پیجر، پنل مدیریت و آشپزخانه</p>
+                    <div class="feature-tags">
+                        <span>سفارش سریع</span>
+                        <span>مدیریت سفارش</span>
+                        <span>پیجر</span>
+                    </div>
+                </div>
+
+                <div class="example-card" data-category="restaurant">
+                    <span class="card-icon">🌷</span>
+                    <span class="badge-industry">رستوران بیرون بر</span>
+                    <h4>دستیار رستوران بهار</h4>
+                    <p>سفارش با شیفت‌های کاری (صبحانه/ناهار/شام)، مدیریت هزینه ارسال، پنل مدیریت پیشرفته</p>
+                    <div class="feature-tags">
+                        <span>شیفت‌های کاری</span>
+                        <span>هزینه ارسال</span>
+                        <span>مدیریت پیشرفته</span>
+                    </div>
+                </div>
+
+                <!-- ===== دسته‌بندی: حقوقی ===== -->
+                <div class="example-card" data-category="legal">
+                    <span class="card-icon">⚖️</span>
+                    <span class="badge-industry">حقوقی و مشاوره</span>
+                    <h4>دستیار حقوقی سوفیا</h4>
+                    <p>مشاوره حقوقی تخصصی در ۲۰۰+ موضوع، تفکیک سمت‌ها (خواهان/خوانده/شاکی/مشتکی‌عنه)، راهنمای اقدام حقوقی</p>
+                    <div class="feature-tags">
+                        <span>مشاوره حقوقی</span>
+                        <span>راهنمای اقدام</span>
+                        <span>تفکیک سمت</span>
+                    </div>
+                </div>
+
+                <div class="example-card" data-category="legal">
+                    <span class="card-icon">📜</span>
+                    <span class="badge-industry">حقوقی</span>
+                    <h4>دستیار تنظیم قرارداد و اسناد</h4>
+                    <p>راهنمایی تنظیم قراردادهای حقوقی، اسناد تجاری، چک و برات، مشاوره حقوق قراردادها</p>
+                    <div class="feature-tags">
+                        <span>تنظیم قرارداد</span>
+                        <span>اسناد تجاری</span>
+                        <span>مشاوره حقوقی</span>
+                    </div>
+                </div>
+
+                <!-- ===== دسته‌بندی: کسب‌وکار ===== -->
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🛒</span>
-                    <span class="badge-industry">خرده‌فروشی و فروشگاه‌های آنلاین</span>
+                    <span class="badge-industry">خرده‌فروشی</span>
                     <h4>دستیار فروشگاه اینترنتی</h4>
-                    <p>راهنمایی مشتریان در خرید، پیشنهاد محصولات براساس سلیقه، پاسخ به سوالات درباره موجودی و ارسال</p>
+                    <p>راهنمایی مشتریان در خرید، پیشنهاد محصولات، پاسخ به سوالات درباره موجودی و ارسال</p>
                     <div class="feature-tags">
                         <span>پیشنهاد هوشمند</span>
                         <span>راهنمای خرید</span>
@@ -870,9 +1069,21 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
+                    <span class="card-icon">🏦</span>
+                    <span class="badge-industry">بانکداری و مالی</span>
+                    <h4>دستیار بانک هوشمند</h4>
+                    <p>پاسخ به سوالات مشتریان درباره حساب‌ها، انتقال وجه، کارت‌ها و خدمات بانکی ۲۴ ساعته</p>
+                    <div class="feature-tags">
+                        <span>اطلاعات حساب</span>
+                        <span>انتقال وجه</span>
+                        <span>امنیت بالا</span>
+                    </div>
+                </div>
+
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🏥</span>
-                    <span class="badge-industry">سلامت و درمان</span>
+                    <span class="badge-industry">سلامت</span>
                     <h4>دستیار سلامت و پزشکی</h4>
                     <p>راهنمایی اولیه بیماران، یادآوری نوبت‌ها، پاسخ به سوالات دارویی و مشاوره اولیه سلامت</p>
                     <div class="feature-tags">
@@ -882,21 +1093,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
-                    <span class="card-icon">🏦</span>
-                    <span class="badge-industry">بانکداری و مالی</span>
-                    <h4>دستیار بانک هوشمند</h4>
-                    <p>پاسخ به سوالات مشتریان درباره حساب‌ها، انتقال وجه، کارت‌ها و ارائه خدمات بانکی ۲۴ ساعته</p>
-                    <div class="feature-tags">
-                        <span>اطلاعات حساب</span>
-                        <span>انتقال وجه</span>
-                        <span>امنیت بالا</span>
-                    </div>
-                </div>
-
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🎓</span>
-                    <span class="badge-industry">آموزش و یادگیری</span>
+                    <span class="badge-industry">آموزش</span>
                     <h4>دستیار آموزشی و مدرس مجازی</h4>
                     <p>پاسخ به سوالات دانش‌آموزان، توضیح مفاهیم درسی، ارائه تمرین و رفع اشکال آنلاین</p>
                     <div class="feature-tags">
@@ -906,9 +1105,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">✈️</span>
-                    <span class="badge-industry">گردشگری و هتلداری</span>
+                    <span class="badge-industry">گردشگری</span>
                     <h4>دستیار رزرو و گردشگری</h4>
                     <p>راهنمایی مسافران، رزرو هتل و پرواز، پیشنهاد مقاصد گردشگری و خدمات سفر</p>
                     <div class="feature-tags">
@@ -918,9 +1117,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🚗</span>
-                    <span class="badge-industry">خودرو و حمل‌ونقل</span>
+                    <span class="badge-industry">خودرو</span>
                     <h4>دستیار خدمات خودرو</h4>
                     <p>راهنمایی تعمیرات، یادآوری سرویس‌های دوره‌ای، مشاوره خرید و فروش خودرو</p>
                     <div class="feature-tags">
@@ -930,9 +1129,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🏠</span>
-                    <span class="badge-industry">املاک و مسکن</span>
+                    <span class="badge-industry">املاک</span>
                     <h4>دستیار املاک هوشمند</h4>
                     <p>جستجوی ملک براساس نیاز، مشاوره خرید و فروش، ارزش‌گذاری ملک و راهنمایی حقوقی</p>
                     <div class="feature-tags">
@@ -942,9 +1141,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">👨‍💼</span>
-                    <span class="badge-industry">حقوقی و مشاوره</span>
+                    <span class="badge-industry">حقوقی</span>
                     <h4>دستیار حقوقی و وکالت</h4>
                     <p>پاسخ به سوالات حقوقی عمومی، راهنمایی تنظیم قراردادها و مشاوره اولیه حقوقی</p>
                     <div class="feature-tags">
@@ -954,9 +1153,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">📱</span>
-                    <span class="badge-industry">فناوری و نرم‌افزار</span>
+                    <span class="badge-industry">فناوری</span>
                     <h4>دستیار فناوری و پشتیبانی فنی</h4>
                     <p>پاسخ به سوالات فنی کاربران، راهنمایی نصب و استفاده از نرم‌افزارها و عیب‌یابی</p>
                     <div class="feature-tags">
@@ -966,9 +1165,9 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🍽️</span>
-                    <span class="badge-industry">غذا و رستوران</span>
+                    <span class="badge-industry">رستوران</span>
                     <h4>دستیار رستوران و سفارش غذا</h4>
                     <p>راهنمایی منو، ثبت سفارش آنلاین، رزرو میز و پیشنهاد غذا براساس سلیقه</p>
                     <div class="feature-tags">
@@ -978,10 +1177,10 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">💼</span>
-                    <span class="badge-industry">استخدام و منابع انسانی</span>
-                    <h4>دستیار استخدام و HR</h4>
+                    <span class="badge-industry">استخدام</span>
+                    <h4>دستیار استخدام و منابع انسانی</h4>
                     <p>راهنمایی متقاضیان کار، بررسی اولیه رزومه‌ها، اطلاع‌رسانی فرصت‌های شغلی</p>
                     <div class="feature-tags">
                         <span>بررسی رزومه</span>
@@ -990,7 +1189,7 @@
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-category="business">
                     <span class="card-icon">🎮</span>
                     <span class="badge-industry">بازی و سرگرمی</span>
                     <h4>دستیار بازی و سرگرمی</h4>
@@ -1045,9 +1244,9 @@
                     <p>رمزنگاری پیشرفته و حفظ کامل حریم خصوصی مکالمات</p>
                 </div>
                 <div class="feature-box">
-                    <span class="icon">📱</span>
-                    <h4>پشتیبانی از پیام‌رسان‌ها</h4>
-                    <p>اتصال به تلگرام، واتساپ، اینستاگرام و وب‌سایت شما</p>
+                    <span class="icon">❤️</span>
+                    <h4>حالت عاشقانه</h4>
+                    <p>دستیار با لحن صمیمی و عاطفی برای مکالمات دلنشین و مشاوره روابط</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">⚡</span>
@@ -1081,10 +1280,24 @@
                         <label>ایمیل</label>
                         <input type="email" id="requestEmail" placeholder="example@email.com" />
                     </div>
+
+                    <div class="form-group">
+                        <label>نوع دستیار مورد نظر <span class="required">*</span></label>
+                        <select id="assistantType" required>
+                            <option value="">انتخاب کنید...</option>
+                            <option value="business">دستیار کسب‌وکار و فروش</option>
+                            <option value="support">دستیار پشتیبانی مشتریان</option>
+                            <option value="restaurant">دستیار رستوران و سفارش غذا</option>
+                            <option value="legal">دستیار حقوقی و مشاوره</option>
+                            <option value="love">دستیار عاشقانه و همدم</option>
+                            <option value="education">دستیار آموزشی</option>
+                            <option value="custom">سایر (توضیح در ادامه)</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label>توضیحات نیاز شما <span class="required">*</span></label>
-                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید دستیار مکالمه‌ای شما چه کاربردی دارد؟ برای چه صنعتی؟ چه قابلیت‌هایی باید داشته باشد؟ مثال: من برای فروشگاه اینترنتی لباس نیاز به دستیاری دارم که به مشتریان در انتخاب سایز و رنگ کمک کند..." required></textarea>
+                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید دستیار مکالمه‌ای شما چه کاربردی دارد؟ برای چه صنعتی؟ چه قابلیت‌هایی باید داشته باشد؟" required></textarea>
                     </div>
                     
                     <button type="submit" class="btn-submit" id="submitBtn">
@@ -1133,6 +1346,42 @@
     <script>
         const API_BASE = 'https://sofiaaisite.runflare.run';
 
+        // ===== فیلتر نمونه‌ها =====
+        function filterExamples(category) {
+            const cards = document.querySelectorAll('.example-card');
+            const tabs = document.querySelectorAll('.tab-btn-example');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            const activeTab = document.querySelector(`.tab-btn-example[onclick="filterExamples('${category}')"]`);
+            if (activeTab) activeTab.classList.add('active');
+            
+            let visibleCount = 0;
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // اگر هیچ موردی نمایش داده نشد
+            const grid = document.getElementById('examplesGrid');
+            const noResult = grid.querySelector('.no-result');
+            if (visibleCount === 0) {
+                if (!noResult) {
+                    const msg = document.createElement('div');
+                    msg.className = 'no-result';
+                    msg.style.cssText = 'grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);';
+                    msg.innerHTML = '<i class="fas fa-search" style="font-size:2rem; display:block; margin-bottom:12px;"></i><p>هیچ نمونه‌ای در این دسته‌بندی یافت نشد.</p>';
+                    grid.appendChild(msg);
+                }
+            } else {
+                if (noResult) noResult.remove();
+            }
+        }
+
+        // ===== ثبت نام کاربر =====
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
@@ -1261,9 +1510,10 @@
             const name = document.getElementById('requestName').value.trim();
             const phone = document.getElementById('requestPhone').value.trim();
             const email = document.getElementById('requestEmail').value.trim();
+            const assistantType = document.getElementById('assistantType').value;
             const description = document.getElementById('requestDescription').value.trim();
             
-            if (!name || !phone || !description) {
+            if (!name || !phone || !assistantType || !description) {
                 showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
                 return;
             }
@@ -1290,12 +1540,22 @@
                 }
             }
             
-            const title = `درخواست دستیار مکالمه‌ای هوشمند - ${name}`;
+            const typeLabels = {
+                'business': 'دستیار کسب‌وکار و فروش',
+                'support': 'دستیار پشتیبانی مشتریان',
+                'restaurant': 'دستیار رستوران و سفارش غذا',
+                'legal': 'دستیار حقوقی و مشاوره',
+                'love': 'دستیار عاشقانه و همدم',
+                'education': 'دستیار آموزشی',
+                'custom': 'سایر'
+            };
+            
+            const title = `درخواست دستیار مکالمه‌ای هوشمند - ${typeLabels[assistantType] || 'سایر'}`;
             
             const requestBody = {
                 user_id: userId,
                 title: title,
-                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\n\n${description}`,
+                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\nنوع دستیار: ${typeLabels[assistantType] || 'سایر'}\n\n${description}`,
                 priority: 'high',
                 category: 'chatbot'
             };
@@ -1340,6 +1600,9 @@
             updateUserDisplay();
             updateCartBadge();
             setInterval(updateCartBadge, 30000);
+            
+            // نمایش همه نمونه‌ها در ابتدا
+            filterExamples('all');
         });
     </script>
 
