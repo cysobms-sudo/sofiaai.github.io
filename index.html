@@ -979,7 +979,7 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <a href="#cooperation">درخواست همکاری</a>
+                <a href="cooperation.html">درخواست همکاری</a>
                 <a href="admin.html" class="admin-link"><i class="fas fa-cog"></i> مدیریت</a>
                 <span id="userNameDisplay" class="user-name-display"></span>
                 <a href="register.html" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
@@ -1215,7 +1215,7 @@
             <div class="cooperation-box">
                 <h2>🤝 درخواست <span class="highlight">همکاری</span></h2>
                 <p>اگر به دنبال همکاری در زمینه هوش مصنوعی، توسعه نرم‌افزار یا مشاوره هستید، با ما در ارتباط باشید.</p>
-                <a href="#" class="btn-cooperation" id="cooperationBtn">
+                <a href="cooperation.html" class="btn-cooperation" id="cooperationBtn">
                     <i class="fas fa-handshake"></i>
                     درخواست همکاری
                 </a>
@@ -1242,7 +1242,7 @@
                 <a href="#articles">مقالات</a>
                 <a href="#gallery">گالری</a>
                 <a href="#about">درباره ما</a>
-                <a href="#cooperation">درخواست همکاری</a>
+                <a href="cooperation.html">درخواست همکاری</a>
                 <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
                 <a href="login.html" class="btn-login-footer">ورود</a>
             </div>
@@ -1657,14 +1657,6 @@
             if (e.key === 'Enter') {
                 document.querySelector('.search-box button').click();
             }
-        });
-
-        // =============================================
-        // ===== دکمه درخواست همکاری =====
-        // =============================================
-        document.getElementById('cooperationBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            showToast('🔜 صفحه درخواست همکاری به زودی ایجاد می‌شود.', 'info');
         });
 
         // =============================================
