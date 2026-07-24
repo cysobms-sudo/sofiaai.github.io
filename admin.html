@@ -238,7 +238,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -310,6 +310,8 @@
         .badge-pending { background: #fff3cd; color: #856404; }
         .badge-rejected { background: #f8d7da; color: #721c24; }
         .badge-processing { background: #cce5ff; color: #004085; }
+        .badge-unread { background: #cce5ff; color: #004085; }
+        .badge-read { background: #d4edda; color: #155724; }
 
         .btn {
             border: none;
@@ -423,7 +425,7 @@
         .modal {
             background: var(--bg-card);
             border-radius: var(--radius);
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -651,6 +653,8 @@
             <button class="tab-btn" data-tab="requests"><i class="fas fa-clipboard-list"></i> درخواست‌ها</button>
             <button class="tab-btn" data-tab="chatbot"><i class="fas fa-robot"></i> چت‌بات</button>
             <button class="tab-btn" data-tab="cart"><i class="fas fa-shopping-cart"></i> سبد خرید</button>
+            <button class="tab-btn" data-tab="cooperation"><i class="fas fa-handshake"></i> همکاری‌ها</button>
+            <button class="tab-btn" data-tab="contact"><i class="fas fa-envelope"></i> پیام‌ها</button>
             <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> تنظیمات</button>
         </div>
 
@@ -665,6 +669,8 @@
                 <div class="stat-card"><div class="stat-icon">🤖</div><div class="number" id="statsChatbot">0</div><div class="label">چت‌بات</div></div>
                 <div class="stat-card"><div class="stat-icon">🛒</div><div class="number" id="statsCart">0</div><div class="label">سبد خرید</div></div>
                 <div class="stat-card"><div class="stat-icon">🖼️</div><div class="number" id="statsGallery">0</div><div class="label">گالری</div></div>
+                <div class="stat-card"><div class="stat-icon">🤝</div><div class="number" id="statsCooperation">0</div><div class="label">همکاری‌ها</div></div>
+                <div class="stat-card"><div class="stat-icon">📩</div><div class="number" id="statsContact">0</div><div class="label">پیام‌ها</div></div>
             </div>
             <p style="color:var(--text-muted); text-align:center; font-size:0.85rem;">
                 <i class="fas fa-clock"></i> آخرین به‌روزرسانی: <span id="lastUpdate"></span>
@@ -717,7 +723,7 @@
             <div id="saveStatus" class="status-msg"></div>
         </div>
 
-        <!-- ===== تب گالری (اصلاح شده) ===== -->
+        <!-- ===== تب گالری ===== -->
         <div id="tab-gallery" class="tab-content">
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
                 <button class="btn btn-primary" onclick="showAddGallery()">
@@ -807,6 +813,30 @@
             </div>
         </div>
 
+        <!-- ===== تب درخواست‌های همکاری (جدید) ===== -->
+        <div id="tab-cooperation" class="tab-content">
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <button class="btn btn-secondary" onclick="loadCooperationRequests()">
+                    <i class="fas fa-sync"></i> بازخوانی
+                </button>
+            </div>
+            <div id="cooperationList">
+                <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>
+            </div>
+        </div>
+
+        <!-- ===== تب پیام‌های تماس (جدید) ===== -->
+        <div id="tab-contact" class="tab-content">
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <button class="btn btn-secondary" onclick="loadContactMessages()">
+                    <i class="fas fa-sync"></i> بازخوانی
+                </button>
+            </div>
+            <div id="contactList">
+                <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>
+            </div>
+        </div>
+
         <!-- ===== تب تنظیمات ===== -->
         <div id="tab-settings" class="tab-content">
             <h3 style="margin-bottom:16px; font-weight:800;">⚙️ تنظیمات سایت</h3>
@@ -892,11 +922,11 @@
         </div>
     </div>
 
-    <!-- ===== مودال مشاهده جزئیات درخواست ===== -->
+    <!-- ===== مودال مشاهده جزئیات ===== -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="detailModalTitle">📄 جزئیات درخواست</h3>
+                <h3 id="detailModalTitle">📄 جزئیات</h3>
                 <button class="close-modal" onclick="closeDetailModal()">&times;</button>
             </div>
             <div id="detailModalContent"></div>
@@ -1036,6 +1066,8 @@
                 case 'requests': loadUserRequests(); break;
                 case 'chatbot': loadChatbotRequests(); break;
                 case 'cart': loadCart(); break;
+                case 'cooperation': loadCooperationRequests(); break;
+                case 'contact': loadContactMessages(); break;
                 case 'settings': loadSettings(); break;
             }
         }
@@ -1050,6 +1082,8 @@
             loadUserRequests();
             loadChatbotRequests();
             loadCart();
+            loadCooperationRequests();
+            loadContactMessages();
             loadSettings();
             document.getElementById('lastUpdate').textContent = new Date().toLocaleString('fa-IR');
         }
@@ -1069,6 +1103,8 @@
                     document.getElementById('statsGallery').textContent = data.gallery || 0;
                     document.getElementById('statsRequests').textContent = data.user_requests || 0;
                     document.getElementById('statsChatbot').textContent = data.chatbot_requests || 0;
+                    document.getElementById('statsCooperation').textContent = data.cooperation || 0;
+                    document.getElementById('statsContact').textContent = data.contact_messages || 0;
                 })
                 .catch(err => console.error('❌ خطا در دریافت آمار:', err));
         }
@@ -1142,7 +1178,7 @@
         }
 
         // =============================================
-        // ===== گالری (اصلاح شده با API_BASE) =====
+        // ===== گالری =====
         // =============================================
         function loadGallery() {
             const container = document.getElementById('galleryList');
@@ -1370,7 +1406,6 @@
         // =============================================
         // ===== مقالات =====
         // =============================================
-        
         function loadArticles() {
             const container = document.getElementById('articlesList');
             container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
@@ -2115,6 +2150,321 @@
                 })
                 .catch(err => { console.error('❌ خطا:', err);
                     showToast('❌ خطا در حذف آیتم', 'error'); });
+        }
+
+        // =============================================
+        // ===== درخواست‌های همکاری =====
+        // =============================================
+        function loadCooperationRequests() {
+            const container = document.getElementById('cooperationList');
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
+
+            fetch(`${API_BASE}/api/admin/cooperation`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-handshake"></i>
+                                <h4>هیچ درخواست همکاری ثبت نشده است</h4>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    let html = `<div class="table-wrapper"><table>
+                            <thead><tr>
+                                <th>نام</th>
+                                <th>ایمیل</th>
+                                <th>تلفن</th>
+                                <th>موضوع</th>
+                                <th>نوع همکاری</th>
+                                <th>وضعیت</th>
+                                <th>تاریخ</th>
+                                <th>عملیات</th>
+                            </tr></thead><tbody>`;
+
+                    data.forEach(req => {
+                        const statusClass = req.status === 'pending' ? 'badge-pending' :
+                                           req.status === 'approved' ? 'badge-approved' : 'badge-rejected';
+                        const statusText = req.status === 'pending' ? 'در انتظار' :
+                                           req.status === 'approved' ? 'تایید شده' : 'رد شده';
+                        
+                        html += `
+                            <tr>
+                                <td><strong>${req.full_name}</strong></td>
+                                <td>${req.email}</td>
+                                <td>${req.phone}</td>
+                                <td>${req.subject}</td>
+                                <td>${req.cooperation_type}</td>
+                                <td><span class="badge ${statusClass}">${statusText}</span></td>
+                                <td>${req.created_at}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" onclick="showCooperationDetail(${req.id})">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    ${req.status === 'pending' ? `
+                                        <button class="btn btn-success btn-sm" onclick="updateCooperationStatus(${req.id}, 'approved')">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="updateCooperationStatus(${req.id}, 'rejected')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    ` : ''}
+                                    <button class="btn btn-danger btn-sm" onclick="deleteCooperationRequest(${req.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
+                            <h4>خطا در دریافت درخواست‌ها</h4>
+                            <button class="btn btn-primary" onclick="loadCooperationRequests()" style="margin-top:12px;">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
+                        </div>
+                    `;
+                });
+        }
+
+        function showCooperationDetail(id) {
+            fetch(`${API_BASE}/api/admin/cooperation`)
+                .then(res => res.json())
+                .then(data => {
+                    const req = data.find(r => r.id === id);
+                    if (!req) {
+                        showToast('❌ درخواست یافت نشد', 'error');
+                        return;
+                    }
+
+                    const statusText = req.status === 'pending' ? 'در انتظار' :
+                                       req.status === 'approved' ? 'تایید شده' : 'رد شده';
+                    
+                    const resumeLink = req.resume_url ? 
+                        `<a href="${API_BASE}${req.resume_url}" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fas fa-file-pdf"></i> مشاهده رزومه
+                        </a>` : 'رزومه آپلود نشده است';
+
+                    document.getElementById('detailModalTitle').textContent = '📄 جزئیات درخواست همکاری';
+                    document.getElementById('detailModalContent').innerHTML = `
+                        <div style="margin-bottom:12px;"><strong>نام:</strong> ${req.full_name}</div>
+                        <div style="margin-bottom:12px;"><strong>ایمیل:</strong> ${req.email}</div>
+                        <div style="margin-bottom:12px;"><strong>تلفن:</strong> ${req.phone}</div>
+                        <div style="margin-bottom:12px;"><strong>موضوع همکاری:</strong> ${req.subject}</div>
+                        <div style="margin-bottom:12px;"><strong>سطح تجربه:</strong> ${req.experience || 'نامشخص'}</div>
+                        <div style="margin-bottom:12px;"><strong>نوع همکاری:</strong> ${req.cooperation_type}</div>
+                        <div style="margin-bottom:12px;"><strong>وضعیت:</strong> ${statusText}</div>
+                        <div style="margin-bottom:12px;"><strong>تاریخ ثبت:</strong> ${req.created_at}</div>
+                        ${req.portfolio ? `<div style="margin-bottom:12px;"><strong>نمونه کارها:</strong> <a href="${req.portfolio}" target="_blank">${req.portfolio}</a></div>` : ''}
+                        <div style="margin-bottom:12px;"><strong>رزومه:</strong> ${resumeLink}</div>
+                        <hr style="margin:12px 0; border-color:var(--border-color);">
+                        <div style="background:var(--bg-body); padding:16px; border-radius:var(--radius-sm); white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto;">
+                            <strong>📝 توضیحات:</strong><br><br>
+                            ${req.description || 'توضیحاتی وارد نشده است.'}
+                        </div>
+                    `;
+                    document.getElementById('detailModal').classList.add('active');
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در دریافت اطلاعات', 'error');
+                });
+        }
+
+        function updateCooperationStatus(id, status) {
+            if (!confirm(`آیا از تغییر وضعیت این درخواست به "${status === 'approved' ? 'تایید شده' : 'رد شده'}" مطمئن هستید؟`)) return;
+
+            fetch(`${API_BASE}/api/admin/cooperation/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    loadCooperationRequests();
+                    loadStats();
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => { console.error('❌ خطا:', err);
+                showToast('❌ خطا در تغییر وضعیت', 'error'); });
+        }
+
+        function deleteCooperationRequest(id) {
+            if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
+
+            fetch(`${API_BASE}/api/admin/cooperation/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadCooperationRequests();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف درخواست', 'error'); });
+        }
+
+        // =============================================
+        // ===== پیام‌های تماس =====
+        // =============================================
+        function loadContactMessages() {
+            const container = document.getElementById('contactList');
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h4>در حال بارگذاری...</h4></div>';
+
+            fetch(`${API_BASE}/api/admin/contact`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-envelope"></i>
+                                <h4>هیچ پیامی دریافت نشده است</h4>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    let html = `<div class="table-wrapper"><table>
+                            <thead><tr>
+                                <th>نام</th>
+                                <th>ایمیل</th>
+                                <th>موضوع</th>
+                                <th>وضعیت</th>
+                                <th>تاریخ</th>
+                                <th>عملیات</th>
+                            </tr></thead><tbody>`;
+
+                    data.forEach(msg => {
+                        const statusClass = msg.status === 'unread' ? 'badge-unread' : 'badge-read';
+                        const statusText = msg.status === 'unread' ? 'خوانده نشده' : 'خوانده شده';
+                        
+                        html += `
+                            <tr>
+                                <td><strong>${msg.name}</strong></td>
+                                <td>${msg.email}</td>
+                                <td>${msg.subject || 'بدون موضوع'}</td>
+                                <td><span class="badge ${statusClass}">${statusText}</span></td>
+                                <td>${msg.created_at}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" onclick="showContactDetail(${msg.id})">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    ${msg.status === 'unread' ? `
+                                        <button class="btn btn-success btn-sm" onclick="updateContactStatus(${msg.id}, 'read')">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    ` : ''}
+                                    <button class="btn btn-danger btn-sm" onclick="deleteContactMessage(${msg.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `</tbody></table></div>`;
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle" style="color:var(--danger);"></i>
+                            <h4>خطا در دریافت پیام‌ها</h4>
+                            <button class="btn btn-primary" onclick="loadContactMessages()" style="margin-top:12px;">
+                                <i class="fas fa-redo"></i> تلاش مجدد
+                            </button>
+                        </div>
+                    `;
+                });
+        }
+
+        function showContactDetail(id) {
+            fetch(`${API_BASE}/api/admin/contact`)
+                .then(res => res.json())
+                .then(data => {
+                    const msg = data.find(m => m.id === id);
+                    if (!msg) {
+                        showToast('❌ پیام یافت نشد', 'error');
+                        return;
+                    }
+
+                    const statusText = msg.status === 'unread' ? 'خوانده نشده' : 'خوانده شده';
+
+                    document.getElementById('detailModalTitle').textContent = '📩 جزئیات پیام';
+                    document.getElementById('detailModalContent').innerHTML = `
+                        <div style="margin-bottom:12px;"><strong>نام:</strong> ${msg.name}</div>
+                        <div style="margin-bottom:12px;"><strong>ایمیل:</strong> ${msg.email}</div>
+                        ${msg.phone ? `<div style="margin-bottom:12px;"><strong>تلفن:</strong> ${msg.phone}</div>` : ''}
+                        <div style="margin-bottom:12px;"><strong>موضوع:</strong> ${msg.subject || 'بدون موضوع'}</div>
+                        <div style="margin-bottom:12px;"><strong>وضعیت:</strong> ${statusText}</div>
+                        <div style="margin-bottom:12px;"><strong>تاریخ:</strong> ${msg.created_at}</div>
+                        <hr style="margin:12px 0; border-color:var(--border-color);">
+                        <div style="background:var(--bg-body); padding:16px; border-radius:var(--radius-sm); white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto;">
+                            <strong>📝 متن پیام:</strong><br><br>
+                            ${msg.message || 'متن پیامی وجود ندارد.'}
+                        </div>
+                    `;
+                    document.getElementById('detailModal').classList.add('active');
+                })
+                .catch(err => {
+                    console.error('❌ خطا:', err);
+                    showToast('❌ خطا در دریافت اطلاعات', 'error');
+                });
+        }
+
+        function updateContactStatus(id, status) {
+            fetch(`${API_BASE}/api/admin/contact/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('✅ ' + data.message, 'success');
+                    loadContactMessages();
+                    loadStats();
+                } else {
+                    showToast('❌ ' + data.error, 'error');
+                }
+            })
+            .catch(err => { console.error('❌ خطا:', err);
+                showToast('❌ خطا در تغییر وضعیت', 'error'); });
+        }
+
+        function deleteContactMessage(id) {
+            if (!confirm('آیا از حذف این پیام مطمئن هستید؟')) return;
+
+            fetch(`${API_BASE}/api/admin/contact/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast('✅ ' + data.message, 'success');
+                        loadContactMessages();
+                        loadStats();
+                    } else {
+                        showToast('❌ ' + data.error, 'error');
+                    }
+                })
+                .catch(err => { console.error('❌ خطا:', err);
+                    showToast('❌ خطا در حذف پیام', 'error'); });
         }
 
         // =============================================
