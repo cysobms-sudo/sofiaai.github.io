@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== متغیرهای رنگی ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -44,7 +43,6 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         a { text-decoration: none; color: inherit; }
 
-        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -239,8 +237,8 @@
         }
 
         /* ============================================
-                   بخش قهرمان (Hero) – بزرگ و باشکوه
-                   ============================================ */
+           بخش قهرمان
+           ============================================ */
         .service-hero {
             padding: 80px 0 50px;
             background: linear-gradient(145deg, #FBF8FF 0%, #F0E8FF 50%, #FFF9E6 100%);
@@ -259,10 +257,7 @@
             background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.05), transparent 60%);
             pointer-events: none;
         }
-        .service-hero .hero-content {
-            position: relative;
-            z-index: 1;
-        }
+        .service-hero .hero-content { position: relative; z-index: 1; }
         .service-hero .hero-icon {
             font-size: 5rem;
             display: block;
@@ -328,9 +323,7 @@
             transform: scale(1.03);
             box-shadow: 0 8px 30px rgba(255, 184, 0, 0.35);
         }
-        .service-hero .price-tag i {
-            margin-left: 10px;
-        }
+        .service-hero .price-tag i { margin-left: 10px; }
         .service-hero .hero-actions {
             display: flex;
             justify-content: center;
@@ -380,8 +373,52 @@
         }
 
         /* ============================================
-                   بخش ویژگی‌ها – با کارت‌های زیبا
-                   ============================================ */
+           بخش آمار و ارقام
+           ============================================ */
+        .stats-section {
+            padding: 40px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .stat-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        .stat-item .number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+            line-height: 1.2;
+        }
+        .stat-item .label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ============================================
+           بخش ویژگی‌ها
+           ============================================ */
         .features-section {
             padding: 70px 0;
             background: #fff;
@@ -406,9 +443,7 @@
             font-weight: 900;
             color: var(--text-dark);
         }
-        .features-section .section-header h2 .highlight {
-            color: var(--primary);
-        }
+        .features-section .section-header h2 .highlight { color: var(--primary); }
         .features-section .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
@@ -477,8 +512,205 @@
         }
 
         /* ============================================
-                   بخش درخواست – طراحی ویژه و بی‌نظیر
-                   ============================================ */
+           بخش نمونه کارها و مثال‌ها
+           ============================================ */
+        .examples-section {
+            padding: 70px 0;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .examples-section .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .examples-section .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .examples-section .section-header h2 .highlight { color: var(--primary); }
+        .examples-section .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 8px auto 0;
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .example-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+        }
+        .example-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .example-card .example-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 12px;
+        }
+        .example-card .example-badge {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.08);
+            color: var(--primary);
+            padding: 2px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .example-card h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .example-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .example-card .example-result {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: var(--bg-light);
+            border-radius: var(--radius-sm);
+            border-right: 3px solid var(--secondary);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .example-card .example-result i {
+            color: var(--success);
+            margin-left: 6px;
+        }
+
+        /* ============================================
+           بخش قیمت‌گذاری
+           ============================================ */
+        .pricing-section {
+            padding: 70px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .pricing-section .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pricing-section .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .pricing-section .section-header h2 .highlight { color: var(--primary); }
+        .pricing-section .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 8px auto 0;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .pricing-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+        .pricing-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .pricing-card.popular {
+            border-color: var(--secondary);
+            box-shadow: 0 4px 30px rgba(255, 184, 0, 0.15);
+        }
+        .pricing-card.popular::before {
+            content: '⭐ محبوب‌ترین';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: var(--text-dark);
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .pricing-card .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .pricing-card .plan-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 12px 0 4px;
+        }
+        .pricing-card .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .pricing-card .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 24px;
+        }
+        .pricing-card .plan-features li {
+            padding: 6px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .pricing-card .plan-features li i {
+            color: var(--success);
+            margin-left: 8px;
+        }
+        .pricing-card .btn-select {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            width: 100%;
+        }
+        .pricing-card .btn-select:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
+        }
+        .pricing-card.popular .btn-select {
+            background: var(--secondary);
+            color: var(--text-dark);
+        }
+        .pricing-card.popular .btn-select:hover {
+            background: var(--secondary-light);
+        }
+
+        /* ============================================
+           بخش درخواست
+           ============================================ */
         .request-section {
             padding: 70px 0;
             background: linear-gradient(145deg, #FBF8FF, #F5EFFF);
@@ -503,19 +735,14 @@
             font-weight: 900;
             color: var(--text-dark);
         }
-        .request-section .section-header h2 .highlight {
-            color: var(--primary);
-        }
+        .request-section .section-header h2 .highlight { color: var(--primary); }
         .request-section .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
             max-width: 650px;
             margin: 8px auto 0;
         }
-        .request-wrapper {
-            max-width: 860px;
-            margin: 0 auto;
-        }
+        .request-wrapper { max-width: 860px; margin: 0 auto; }
         .request-box {
             background: #fff;
             padding: 56px 60px;
@@ -571,9 +798,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px 24px;
         }
-        .request-box .form-grid .full-width {
-            grid-column: 1 / -1;
-        }
+        .request-box .form-grid .full-width { grid-column: 1 / -1; }
         .request-box .form-group {
             display: flex;
             flex-direction: column;
@@ -663,9 +888,7 @@
             cursor: not-allowed;
             transform: none;
         }
-        .request-box .btn-submit i {
-            font-size: 1.2rem;
-        }
+        .request-box .btn-submit i { font-size: 1.2rem; }
         .request-box .message-box {
             grid-column: 1 / -1;
             margin-top: 12px;
@@ -720,8 +943,8 @@
         }
 
         /* ============================================
-                   بخش CTA – دعوت به اقدام
-                   ============================================ */
+           بخش CTA
+           ============================================ */
         .cta-section {
             padding: 60px 0;
             background: #fff;
@@ -747,10 +970,7 @@
             border-radius: 50%;
             pointer-events: none;
         }
-        .cta-box .cta-content {
-            position: relative;
-            z-index: 1;
-        }
+        .cta-box .cta-content { position: relative; z-index: 1; }
         .cta-box .cta-icon {
             font-size: 3.5rem;
             display: block;
@@ -804,13 +1024,11 @@
             opacity: 1;
             transform: translateX(-4px);
         }
-        .back-link i {
-            margin-left: 8px;
-        }
+        .back-link i { margin-left: 8px; }
 
         /* ============================================
-                   فوتر
-                   ============================================ */
+           فوتر
+           ============================================ */
         footer {
             padding: 40px 0 24px;
             border-top: 2px solid var(--secondary);
@@ -833,8 +1051,8 @@
         footer .footer-links a:hover { color: var(--primary); }
 
         /* ============================================
-                   Toast
-                   ============================================ */
+           Toast
+           ============================================ */
         .toast-container {
             position: fixed;
             top: 24px;
@@ -865,14 +1083,16 @@
         .toast.warning { background: var(--warning); }
 
         /* ============================================
-                   واکنش‌گرایی
-                   ============================================ */
+           واکنش‌گرایی
+           ============================================ */
         @media (max-width: 992px) {
             .request-box .form-grid { grid-template-columns: 1fr; }
             .request-box .form-grid .full-width { grid-column: 1; }
             .service-hero h1 { font-size: 2.8rem; }
             .features-section .section-header h2,
-            .request-section .section-header h2 { font-size: 2.2rem; }
+            .request-section .section-header h2,
+            .examples-section .section-header h2,
+            .pricing-section .section-header h2 { font-size: 2.2rem; }
         }
         @media (max-width: 768px) {
             .service-hero { padding: 50px 0 30px; }
@@ -889,15 +1109,20 @@
             .request-box { padding: 28px 20px; }
             .request-box .form-header { flex-direction: column; text-align: center; }
             .features-grid { grid-template-columns: 1fr 1fr; }
+            .examples-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
             .cta-box { padding: 32px 24px; }
             .cta-box h2 { font-size: 1.8rem; }
             .features-section .section-header h2,
-            .request-section .section-header h2 { font-size: 1.8rem; }
+            .request-section .section-header h2,
+            .examples-section .section-header h2,
+            .pricing-section .section-header h2 { font-size: 1.8rem; }
             .btn-add-cart { padding: 14px 36px; font-size: 1rem; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
             .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
             .request-box { padding: 18px 14px; }
@@ -941,7 +1166,7 @@
     </nav>
 
     <!-- ============================================
-    بخش قهرمان (Hero)
+    بخش قهرمان
     ============================================ -->
     <section class="service-hero fade-up">
         <div class="container">
@@ -962,6 +1187,32 @@
                     <button class="btn-secondary-hero" onclick="addToCart('دستیار مکالمه‌ای هوشمند', '۴,۰۰۰,۰۰۰ تومان')">
                         <i class="fas fa-shopping-cart"></i> افزودن به سبد خرید
                     </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    بخش آمار و ارقام
+    ============================================ -->
+    <section class="stats-section fade-up-delay-1">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="number">۱۰۰+</span>
+                    <span class="label">پروژه موفق</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۹۸%</span>
+                    <span class="label">رضایت مشتریان</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۲۴/۷</span>
+                    <span class="label">پشتیبانی هوشمند</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">۵۰+</span>
+                    <span class="label">صنعت مختلف</span>
                 </div>
             </div>
         </div>
@@ -1013,9 +1264,116 @@
     </section>
 
     <!-- ============================================
-    بخش درخواست – طراحی ویژه و بی‌نظیر
+    بخش نمونه کارها و مثال‌ها
     ============================================ -->
-    <section class="request-section fade-up-delay-2" id="request">
+    <section class="examples-section fade-up-delay-2">
+        <div class="container">
+            <div class="section-header">
+                <h2>نمونه‌های <span class="highlight">دستیار مکالمه‌ای</span></h2>
+                <p>مثال‌های واقعی از دستیارهای هوشمند طراحی شده برای صنایع مختلف</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <span class="example-icon">🍽️</span>
+                    <span class="example-badge">رستوران</span>
+                    <h4>دستیار رزرو و سفارش غذا</h4>
+                    <p>پذیرش سفارش، رزرو میز و پاسخ به سوالات مشتریان به صورت خودکار</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        افزایش ۴۰٪ سفارشات آنلاین در ۲ ماه
+                    </div>
+                </div>
+                <div class="example-card">
+                    <span class="example-icon">🛍️</span>
+                    <span class="example-badge">فروشگاهی</span>
+                    <h4>دستیار فروش و پشتیبانی</h4>
+                    <p>راهنمایی مشتریان، پاسخ به سوالات محصولات و پیگیری سفارشات</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        کاهش ۶۰٪ زمان پاسخگویی به مشتریان
+                    </div>
+                </div>
+                <div class="example-card">
+                    <span class="example-icon">🏥</span>
+                    <span class="example-badge">سلامت</span>
+                    <h4>دستیار نوبت‌دهی و مشاوره</h4>
+                    <p>تنظیم نوبت، یادآوری و پاسخ به سوالات اولیه بیماران</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        افزایش ۵۰٪ نوبت‌دهی اینترنتی
+                    </div>
+                </div>
+                <div class="example-card">
+                    <span class="example-icon">🏦</span>
+                    <span class="example-badge">مالی</span>
+                    <h4>دستیار مشاوره مالی</h4>
+                    <p>ارائه اطلاعات حساب، مشاوره اولیه و هدایت مشتریان به خدمات مناسب</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        کاهش ۳۰٪ تماس‌های تکراری با پشتیبانی
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    بخش قیمت‌گذاری
+    ============================================ -->
+    <section class="pricing-section fade-up-delay-2">
+        <div class="container">
+            <div class="section-header">
+                <h2>پلن‌های <span class="highlight">قیمت‌گذاری</span></h2>
+                <p>بسته مناسب کسب‌وکار خود را انتخاب کنید</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">شروع</div>
+                    <div class="plan-price">۲,۵۰۰ <span>میلیون تومان</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> ۵۰۰ مکالمه در ماه</li>
+                        <li><i class="fas fa-check"></i> یک زبان</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی پایه</li>
+                        <li><i class="fas fa-check"></i> گزارش ماهانه</li>
+                    </ul>
+                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن شروع', '۲,۵۰۰,۰۰۰ تومان')">انتخاب پلن</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="plan-name">حرفه‌ای</div>
+                    <div class="plan-price">۴,۰۰۰ <span>میلیون تومان</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> ۲,۰۰۰ مکالمه در ماه</li>
+                        <li><i class="fas fa-check"></i> دو زبان (فارسی و انگلیسی)</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی ۲۴/۷</li>
+                        <li><i class="fas fa-check"></i> گزارش هفتگی و تحلیلی</li>
+                        <li><i class="fas fa-check"></i> شخصی‌سازی کامل</li>
+                        <li><i class="fas fa-check"></i> اتصال به CRM</li>
+                    </ul>
+                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن حرفه‌ای', '۴,۰۰۰,۰۰۰ تومان')">انتخاب پلن</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="plan-name">سازمانی</div>
+                    <div class="plan-price">۷,۰۰۰ <span>میلیون تومان</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> مکالمه نامحدود</li>
+                        <li><i class="fas fa-check"></i> چندین زبان</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی اختصاصی</li>
+                        <li><i class="fas fa-check"></i> گزارش پیشرفته و داشبورد</li>
+                        <li><i class="fas fa-check"></i> API اختصاصی</li>
+                        <li><i class="fas fa-check"></i> میزبانی اختصاصی</li>
+                    </ul>
+                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن سازمانی', '۷,۰۰۰,۰۰۰ تومان')">انتخاب پلن</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    بخش درخواست – طراحی ویژه
+    ============================================ -->
+    <section class="request-section fade-up-delay-3" id="request">
         <div class="container">
             <div class="section-header">
                 <span class="section-badge">📝 فرم درخواست</span>
@@ -1025,7 +1383,6 @@
 
             <div class="request-wrapper">
                 <div class="request-box">
-                    <!-- هدر فرم -->
                     <div class="form-header">
                         <div class="form-icon"><i class="fas fa-pen-fancy"></i></div>
                         <div class="form-title">
@@ -1034,7 +1391,6 @@
                         </div>
                     </div>
 
-                    <!-- فرم -->
                     <form id="requestForm" class="form-grid">
                         <div class="form-group">
                             <label>
@@ -1089,23 +1445,20 @@
                                 <span class="required">*</span>
                             </label>
                             <textarea id="requestDescription" placeholder="لطفاً توضیح دهید:
-                            • دستیار مکالمه‌ای چه کاربردی دارد؟
-                            • برای چه صنعتی و چه مخاطبی؟
-                            • چه قابلیت‌هایی باید داشته باشد؟
-                            • چه انتظاری از آن دارید؟" required></textarea>
+• دستیار مکالمه‌ای چه کاربردی دارد؟
+• برای چه صنعتی و چه مخاطبی؟
+• چه قابلیت‌هایی باید داشته باشد؟
+• چه انتظاری از آن دارید؟" required></textarea>
                         </div>
 
-                        <!-- پیام وضعیت -->
                         <div id="requestMessage" class="message-box"></div>
 
-                        <!-- انیمیشن موفقیت -->
                         <div id="successAnimation" class="success-animation">
                             <span class="check-icon"><i class="fas fa-check-circle"></i></span>
                             <h4>✅ درخواست شما ثبت شد!</h4>
                             <p>تیم سوفیا به زودی با شما تماس خواهد گرفت.</p>
                         </div>
 
-                        <!-- دکمه ارسال -->
                         <button type="submit" class="btn-submit" id="submitBtn">
                             <i class="fas fa-paper-plane"></i>
                             ارسال درخواست طراحی
@@ -1335,7 +1688,8 @@
                 }
             }
 
-            const fullDescription = `🟣 درخواست طراحی دستیار مکالمه‌ای هوشمند
+            const fullDescription =
+                `🟣 درخواست طراحی دستیار مکالمه‌ای هوشمند
         ─────────────────────────────
         👤 نام: ${name}
         📱 تماس: ${phone}
