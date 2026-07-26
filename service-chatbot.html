@@ -18,21 +18,16 @@
             --text-dark: #1A0F2E;
             --text-muted: #5A4A7A;
             --text-light: #9A8AB5;
-            --card-bg: #FFFFFF;
-            --border-color: rgba(108, 60, 225, 0.08);
-            --shadow: 0 4px 24px rgba(108, 60, 225, 0.06);
-            --shadow-hover: 0 12px 48px rgba(108, 60, 225, 0.12);
+            --border-color: rgba(108, 60, 225, 0.10);
+            --shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
+            --shadow-hover: 0 12px 40px rgba(108, 60, 225, 0.12);
             --radius: 24px;
             --radius-sm: 12px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: 0.3s ease;
             --success: #27ae60;
             --danger: #e74c3c;
             --warning: #f39c12;
             --info: #3498db;
-            --love: #FF6B81;
-            --love-light: #FF8A9E;
-            --love-dark: #E8435A;
-            --demo-badge: #FF6B00;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,22 +42,12 @@
         a { text-decoration: none; color: inherit; }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.1); }
-            50% { transform: scale(1); }
-            75% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
         @keyframes slideDown {
             from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
@@ -72,18 +57,18 @@
             from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
             to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
         }
-        .fade-up { animation: fadeUp 0.8s ease; }
+        .fade-up { animation: fadeUp 0.7s ease; }
 
         /* ===== نوار ناوبری ===== */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
             border-bottom: 2px solid var(--secondary);
-            padding: 12px 0;
+            padding: 14px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 24px rgba(108, 60, 225, 0.04);
+            box-shadow: 0 2px 20px rgba(108, 60, 225, 0.04);
         }
         .navbar .container {
             display: flex;
@@ -98,9 +83,9 @@
             gap: 14px;
         }
         .logo-image {
-            height: 80px;
+            height: 90px;
             width: auto;
-            max-width: 280px;
+            max-width: 320px;
             object-fit: contain;
             transition: transform var(--transition);
         }
@@ -111,28 +96,27 @@
             line-height: 1.2;
         }
         .logo-text .main {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
             color: var(--text-dark);
         }
         .logo-text .main .highlight { color: var(--primary); }
         .logo-text .sub {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
             letter-spacing: 1px;
         }
-
         .nav-menu {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
             align-items: center;
         }
         .nav-menu a {
             color: var(--text-dark);
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: var(--transition);
         }
@@ -144,7 +128,7 @@
             background: linear-gradient(145deg, var(--secondary), var(--secondary-dark));
             color: var(--text-dark) !important;
             font-weight: 700;
-            padding: 6px 24px;
+            padding: 8px 28px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(255, 184, 0, 0.25);
             border: none;
@@ -159,7 +143,7 @@
             background: var(--primary);
             color: #fff !important;
             font-weight: 700;
-            padding: 6px 24px;
+            padding: 8px 28px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.25);
             border: none;
@@ -175,7 +159,7 @@
             background: var(--danger);
             color: #fff !important;
             font-weight: 700;
-            padding: 6px 18px;
+            padding: 8px 20px;
             border-radius: 30px;
             border: none;
             cursor: pointer;
@@ -190,11 +174,11 @@
         .nav-menu .cart-link {
             background: var(--primary);
             color: #fff !important;
-            padding: 6px 18px !important;
+            padding: 8px 20px !important;
             border-radius: 30px !important;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-weight: 700 !important;
             box-shadow: 0 4px 15px rgba(108, 60, 225, 0.2);
         }
@@ -207,27 +191,38 @@
             color: var(--text-dark);
             border-radius: 50%;
             padding: 0 8px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 900;
             display: inline-block;
-            min-width: 22px;
+            min-width: 24px;
             text-align: center;
         }
         .user-name-display {
             font-weight: 700;
             color: var(--primary);
-            padding: 6px 14px;
-            font-size: 0.9rem;
+            padding: 8px 16px;
+            font-size: 0.95rem;
             display: none;
         }
-        .user-name-display.show {
-            display: inline-block;
+        .user-name-display.show { display: inline-block; }
+        .admin-link {
+            color: var(--primary-dark) !important;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            padding: 6px 18px !important;
+            background: transparent;
+            transition: var(--transition);
+        }
+        .admin-link:hover {
+            background: var(--primary);
+            color: #fff !important;
         }
 
-        /* ===== هدر سرویس ===== */
+        /* ===== بخش قهرمان ===== */
         .service-hero {
-            padding: 70px 0 50px;
-            background: linear-gradient(145deg, #FBF8FF 0%, #F0E8FF 50%, #FFF9E6 100%);
+            padding: 60px 0 40px;
+            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
             border-bottom: 2px solid var(--secondary);
             text-align: center;
             position: relative;
@@ -240,324 +235,129 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.05), transparent 60%);
+            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.04), transparent 60%);
             pointer-events: none;
         }
-        .service-hero .floating-icon {
-            position: absolute;
-            font-size: 5rem;
-            opacity: 0.06;
-            color: var(--primary);
-        }
-        .service-hero .floating-icon:nth-child(1) { top: 10%; right: 5%; animation: float 6s ease-in-out infinite; }
-        .service-hero .floating-icon:nth-child(2) { bottom: 15%; left: 8%; animation: float 8s ease-in-out infinite reverse; }
-        .service-hero .floating-icon:nth-child(3) { top: 50%; left: 3%; font-size: 3rem; animation: float 7s ease-in-out infinite; }
-        .service-hero .floating-icon:nth-child(4) { top: 20%; right: 3%; font-size: 3rem; animation: float 5s ease-in-out infinite reverse; }
-
-        .service-hero .hero-badge {
-            display: inline-block;
-            background: rgba(108, 60, 225, 0.08);
-            color: var(--primary);
-            padding: 4px 20px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .service-hero h1 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-            color: var(--text-dark);
+        .service-hero .hero-content {
             position: relative;
             z-index: 1;
         }
+        .service-hero .hero-icon {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        .service-hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
         .service-hero h1 .highlight {
-            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            background: linear-gradient(145deg, var(--primary), var(--secondary-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .service-hero h1 .emoji {
-            -webkit-text-fill-color: initial;
-        }
-        .service-hero .subtitle {
-            font-size: 1.15rem;
+        .service-hero p {
+            font-size: 1.2rem;
             color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 20px;
-            position: relative;
-            z-index: 1;
-            line-height: 2;
+            max-width: 750px;
+            margin: 0 auto 24px;
         }
         .service-hero .price-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            display: inline-block;
             background: var(--secondary);
             padding: 10px 36px;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.15rem;
+            font-weight: 800;
+            font-size: 1.2rem;
             color: var(--text-dark);
-            box-shadow: 0 4px 20px rgba(255, 184, 0, 0.25);
-            position: relative;
-            z-index: 1;
+            box-shadow: 0 4px 20px rgba(255, 184, 0, 0.2);
+            border: 2px solid var(--secondary-dark);
         }
         .service-hero .price-tag i {
-            color: var(--primary);
-        }
-        .service-hero .price-tag .old-price {
-            text-decoration: line-through;
-            opacity: 0.5;
-            font-weight: 400;
-            font-size: 0.9rem;
-        }
-
-        /* ===== دسته‌بندی نمونه‌ها ===== */
-        .examples-tabs {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .examples-tabs .tab-btn-example {
-            padding: 8px 24px;
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
-            background: transparent;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-muted);
-        }
-        .examples-tabs .tab-btn-example:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        .examples-tabs .tab-btn-example.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .examples-tabs .tab-btn-example.love-tab {
-            border-color: var(--love);
-            color: var(--love);
-        }
-        .examples-tabs .tab-btn-example.love-tab:hover,
-        .examples-tabs .tab-btn-example.love-tab.active {
-            background: var(--love);
-            color: #fff;
-            border-color: var(--love);
-        }
-
-        /* ===== نمونه‌های دستیار مکالمه‌ای ===== */
-        .examples-section {
-            padding: 60px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .section-header h2 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--text-dark);
-        }
-        .section-header h2 .highlight {
-            color: var(--primary);
-        }
-        .section-header h2 .love-highlight {
-            color: var(--love);
-        }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 600px;
-            margin: 8px auto 0;
-        }
-
-        .examples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        .example-card {
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: block;
-            color: var(--text-dark);
-            text-decoration: none;
-        }
-        .example-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: var(--transition);
-        }
-        .example-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-light);
-        }
-        .example-card:hover::before {
-            opacity: 1;
-        }
-        .example-card .card-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .example-card .badge-industry {
-            display: inline-block;
-            background: rgba(108, 60, 225, 0.06);
-            color: var(--primary);
-            padding: 2px 14px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .example-card .badge-industry.love-badge {
-            background: rgba(255, 107, 129, 0.1);
-            color: var(--love);
-        }
-        .example-card .demo-badge {
-            display: inline-block;
-            background: var(--demo-badge);
-            color: #fff;
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            margin-right: 6px;
-        }
-        .example-card h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-dark);
-        }
-        .example-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-        .example-card .feature-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
-        }
-        .example-card .feature-tags span {
-            background: rgba(108, 60, 225, 0.04);
-            color: var(--text-muted);
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-        }
-        .example-card .feature-tags .love-tag {
-            background: rgba(255, 107, 129, 0.08);
-            color: var(--love);
-        }
-        .example-card.love-card {
-            border-color: rgba(255, 107, 129, 0.2);
-        }
-        .example-card.love-card::before {
-            background: linear-gradient(90deg, var(--love), var(--love-light), var(--love));
-        }
-        .example-card.love-card:hover {
-            border-color: var(--love);
+            margin-left: 8px;
         }
 
         /* ===== ویژگی‌ها ===== */
         .features-section {
             padding: 60px 0;
-            background: var(--bg-light);
+            background: #fff;
             border-bottom: 1px solid var(--border-color);
+        }
+        .features-section .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+        .features-section .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            font-size: 1.05rem;
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 24px;
         }
         .feature-box {
             text-align: center;
-            padding: 30px 20px;
+            padding: 30px 24px;
             border-radius: var(--radius);
-            background: #fff;
             border: 2px solid var(--border-color);
             transition: var(--transition);
+            background: var(--bg-light);
         }
         .feature-box:hover {
             border-color: var(--primary);
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
         }
         .feature-box .icon {
-            font-size: 3rem;
+            font-size: 3.2rem;
+            color: var(--primary);
             display: block;
             margin-bottom: 12px;
         }
         .feature-box h4 {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 700;
             margin-bottom: 6px;
         }
         .feature-box p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
+            font-size: 0.95rem;
         }
 
-        /* ===== استاتیک‌ها ===== */
-        .stats-bar {
-            padding: 30px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-        .stat-item .number {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--primary);
-            display: block;
-        }
-        .stat-item .label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ===== فرم درخواست ===== */
+        /* ===== بخش درخواست (طراحی زیبا) ===== */
         .request-section {
             padding: 60px 0;
-            background: #fff;
+            background: var(--bg-light);
             border-bottom: 1px solid var(--border-color);
         }
-        .request-box {
+        .request-section .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .request-section .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+        }
+        .request-wrapper {
             max-width: 820px;
             margin: 0 auto;
-            background: var(--bg-light);
+        }
+        .request-box {
+            background: #fff;
             padding: 48px 52px;
             border-radius: var(--radius);
             border: 2px solid var(--secondary);
@@ -572,105 +372,142 @@
             right: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
         }
         .request-box .form-header {
-            text-align: center;
-            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
         }
-        .request-box .form-header h2 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--text-dark);
-        }
-        .request-box .form-header h2 .highlight {
+        .request-box .form-header .form-icon {
+            font-size: 2.2rem;
             color: var(--primary);
-        }
-        .request-box .form-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-        .request-box .form-group {
-            margin-bottom: 18px;
-        }
-        .request-box label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
-        .request-box label .required {
-            color: var(--danger);
-        }
-        .request-box input,
-        .request-box textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-            font-size: 1rem;
-            font-family: 'Vazirmatn', sans-serif;
-            background: #fff;
-            transition: var(--transition);
-        }
-        .request-box input:focus,
-        .request-box textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(108, 60, 225, 0.06);
-        }
-        .request-box textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-        .request-box .btn-submit {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            font-family: 'Vazirmatn', sans-serif;
+            background: rgba(108, 60, 225, 0.08);
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            border-radius: 50%;
+        }
+        .request-box .form-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .request-box .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .request-box .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 20px;
+        }
+        .request-box .form-grid .full-width {
+            grid-column: 1 / -1;
+        }
+        .request-box .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .request-box .form-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .request-box .form-group label .required {
+            color: var(--danger);
+            font-size: 1.2rem;
+        }
+        .request-box .form-group label .label-icon {
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        .request-box .form-group input,
+        .request-box .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            transition: var(--transition);
+            outline: none;
+        }
+        .request-box .form-group input:focus,
+        .request-box .form-group textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(108, 60, 225, 0.06);
+        }
+        .request-box .form-group input::placeholder,
+        .request-box .form-group textarea::placeholder {
+            color: var(--text-light);
+        }
+        .request-box .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+        .request-box .btn-submit {
+            grid-column: 1 / -1;
+            padding: 16px 32px;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Vazirmatn', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 4px;
         }
         .request-box .btn-submit:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 30px rgba(108, 60, 225, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.3);
         }
         .request-box .btn-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
-        .request-box .message {
-            text-align: center;
-            margin-top: 16px;
-            padding: 14px;
-            border-radius: var(--radius-sm);
-            display: none;
-            font-weight: 600;
+        .request-box .btn-submit i {
+            font-size: 1.1rem;
         }
-        .request-box .message.success {
+        .request-box .message-box {
+            grid-column: 1 / -1;
+            margin-top: 8px;
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            display: none;
+            text-align: center;
+        }
+        .request-box .message-box.success {
             display: block;
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .request-box .message.error {
+        .request-box .message-box.error {
             display: block;
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        .request-box .message.info {
+        .request-box .message-box.info {
             display: block;
             background: #cce5ff;
             color: #004085;
@@ -680,8 +517,7 @@
         /* ===== CTA ===== */
         .cta-section {
             padding: 50px 0;
-            text-align: center;
-            background: var(--bg-light);
+            background: #fff;
         }
         .cta-box {
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
@@ -689,35 +525,20 @@
             border-radius: var(--radius);
             border: 2px solid var(--secondary);
             color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 70% 30%, rgba(255, 184, 0, 0.08), transparent 60%);
-            pointer-events: none;
+            text-align: center;
         }
         .cta-box h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
         }
         .cta-box p {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             opacity: 0.9;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            position: relative;
-            z-index: 1;
         }
         .btn-add-cart {
             background: var(--secondary);
@@ -726,35 +547,57 @@
             padding: 16px 48px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 4px 20px rgba(255, 184, 0, 0.2);
-            position: relative;
-            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
         .btn-add-cart:hover {
             transform: scale(1.04);
             background: var(--secondary-light);
-            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.35);
+            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.3);
         }
         .back-link {
             display: inline-block;
-            margin-top: 16px;
-            color: rgba(255,255,255,0.7);
+            margin-top: 20px;
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
-            position: relative;
-            z-index: 1;
         }
         .back-link:hover {
             color: #fff;
+            opacity: 1;
         }
         .back-link i {
             margin-left: 6px;
         }
+
+        /* ===== فوتر ===== */
+        footer {
+            padding: 40px 0 24px;
+            border-top: 2px solid var(--secondary);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer strong { color: var(--text-dark); }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        footer .footer-links a:hover { color: var(--primary); }
 
         /* ===== Toast ===== */
         .toast-container {
@@ -785,237 +628,40 @@
         .toast.error { background: var(--danger); }
         .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
-        .toast.love { background: var(--love); }
 
-        /* ===== فوتر ===== */
-        footer {
-            padding: 40px 0 24px;
-            border-top: 2px solid var(--secondary);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        footer strong { color: var(--text-dark); }
-        footer .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        footer .footer-links a {
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-        footer .footer-links a:hover { color: var(--primary); }
-        footer .footer-links .btn-register-footer {
-            background: var(--secondary);
-            color: var(--text-dark) !important;
-            padding: 4px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-        }
-        footer .footer-links .btn-login-footer {
-            background: var(--primary);
-            color: #fff !important;
-            padding: 4px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-        }
-
-        .love-heart {
-            color: var(--love);
-            display: inline-block;
-            animation: heartBeat 1.5s infinite;
-        }
-
-        /* ===== دکمه بازدید از نمونه ===== */
-        .btn-demo {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 20px;
-            background: var(--primary);
-            color: #fff;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .btn-demo:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-        .btn-demo.love-demo {
-            background: var(--love);
-        }
-        .btn-demo.love-demo:hover {
-            background: var(--love-dark);
-        }
-
-        /* ===== مدال نمایش نمونه ===== */
-        .demo-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .demo-modal-overlay.active {
-            display: flex;
-            animation: fadeUp 0.3s ease;
-        }
-        .demo-modal {
-            background: #fff;
-            border-radius: var(--radius);
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .demo-modal .close-btn {
-            position: absolute;
-            top: 16px;
-            left: 20px;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-        .demo-modal .close-btn:hover {
-            color: var(--danger);
-            transform: rotate(90deg);
-        }
-        .demo-modal h2 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-        .demo-modal .demo-meta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .demo-modal .demo-iframe-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 75%;
-            height: 0;
-            overflow: hidden;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border-color);
-        }
-        .demo-modal .demo-iframe-wrapper iframe {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .demo-modal .demo-description {
-            margin-top: 20px;
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 2;
-        }
-        .demo-modal .demo-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        .demo-modal .demo-actions .btn-visit {
-            padding: 10px 28px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            font-family: 'Vazirmatn', sans-serif;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .demo-modal .demo-actions .btn-visit:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-        .demo-modal .demo-actions .btn-close-modal {
-            padding: 10px 28px;
-            background: var(--bg-body);
-            color: var(--text-dark);
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            font-family: 'Vazirmatn', sans-serif;
-            transition: var(--transition);
-        }
-        .demo-modal .demo-actions .btn-close-modal:hover {
-            background: var(--border-color);
-        }
-
+        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
-            .examples-grid { grid-template-columns: repeat(2, 1fr); }
-            .demo-modal { padding: 24px; }
-            .demo-modal .demo-iframe-wrapper { padding-bottom: 100%; }
+            .request-box .form-grid { grid-template-columns: 1fr; }
+            .request-box .form-grid .full-width { grid-column: 1; }
         }
         @media (max-width: 768px) {
             .service-hero h1 { font-size: 2.2rem; }
-            .service-hero .subtitle { font-size: 1rem; }
+            .service-hero p { font-size: 1rem; }
+            .service-hero .hero-icon { font-size: 3.5rem; }
             .navbar .container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; width: 100%; }
-            .logo-image { height: 65px; max-width: 200px; }
-            .examples-grid { grid-template-columns: 1fr; }
+            .logo-image { height: 70px; max-width: 240px; }
             .request-box { padding: 28px 20px; }
-            .cta-box { padding: 30px 20px; }
-            .cta-box h2 { font-size: 1.6rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .service-hero .floating-icon { display: none; }
-            .examples-tabs .tab-btn-example { font-size: 0.8rem; padding: 6px 16px; }
-            .demo-modal { padding: 16px; }
-            .demo-modal h2 { font-size: 1.4rem; }
-            .demo-modal .demo-iframe-wrapper { padding-bottom: 130%; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .cta-box { padding: 32px 24px; }
+            .cta-box h2 { font-size: 1.8rem; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .nav-menu a { font-size: 0.75rem; padding: 4px 10px; }
-            .logo-image { height: 55px; max-width: 160px; }
-            .btn-add-cart { padding: 14px 30px; font-size: 0.95rem; }
-            .request-box { padding: 18px 14px; }
-            .section-header h2 { font-size: 1.6rem; }
-            .stat-item .number { font-size: 1.6rem; }
-            .demo-modal .demo-iframe-wrapper { padding-bottom: 150%; }
+            .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
+            .logo-image { height: 60px; max-width: 200px; }
+            .request-box { padding: 20px 14px; }
+            .request-box .form-header { flex-direction: column; text-align: center; }
+            .request-box .btn-submit { font-size: 1rem; padding: 14px 20px; }
+            .btn-add-cart { padding: 14px 28px; font-size: 1rem; }
+            .cta-box h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== نوار ناوبری ===== -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo-wrapper">
@@ -1030,6 +676,7 @@
                 <a href="index.html#assistant">دستیارهای هوشمند</a>
                 <a href="index.html#agents">ایجنت‌ها</a>
                 <a href="index.html#articles">مقالات</a>
+                <a href="admin.html" class="admin-link"><i class="fas fa-cog"></i> مدیریت</a>
                 <span id="userNameDisplay" class="user-name-display"></span>
                 <a href="register.html" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> ثبت‌نام</a>
                 <a href="login.html" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> ورود</a>
@@ -1045,370 +692,100 @@
 
     <!-- ===== بخش قهرمان ===== -->
     <section class="service-hero fade-up">
-        <div class="floating-icon"><i class="fas fa-comment-dots"></i></div>
-        <div class="floating-icon"><i class="fas fa-robot"></i></div>
-        <div class="floating-icon"><i class="fas fa-heart"></i></div>
-        <div class="floating-icon"><i class="fas fa-brain"></i></div>
         <div class="container">
-            <span class="hero-badge"><i class="fas fa-star"></i> پرفروش‌ترین سرویس سوفیا</span>
-            <h1>
-                <span class="emoji">💬</span>
-                <span class="highlight">دستیار مکالمه‌ای</span>
-                <span style="-webkit-text-fill-color:initial;">هوشمند</span>
-            </h1>
-            <p class="subtitle">
-                با استفاده از پیشرفته‌ترین مدل‌های هوش مصنوعی، یک دستیار مکالمه‌ای حرفه‌ای و هوشمند برای پشتیبانی ۲۴ ساعته، فروش خودکار، تعامل بی‌نظیر با مشتریان و حتی <strong style="color:var(--love);">مکالمات عاشقانه</strong> طراحی کنید.
-            </p>
-            <div class="price-tag">
-                <i class="fas fa-gem"></i>
-                <span>از <strong>۳,۹۰۰,۰۰۰</strong> تومان</span>
-                <span class="old-price">۵,۵۰۰,۰۰۰</span>
-                <span style="background:#e74c3c;color:#fff;padding:2px 12px;border-radius:50px;font-size:0.7rem;">تخفیف ویژه</span>
+            <div class="hero-content">
+                <span class="hero-icon">💬</span>
+                <h1>دستیار <span class="highlight">مکالمه‌ای</span> هوشمند</h1>
+                <p>
+                    با استفاده از هوش مصنوعی، یک دستیار مکالمه‌ای حرفه‌ای برای پشتیبانی ۲۴/۷، فروش و تعامل هوشمند با مشتریان خود طراحی کنید.
+                </p>
+                <span class="price-tag"><i class="fas fa-star"></i> از ۴ میلیون تومان</span>
             </div>
         </div>
     </section>
-
-    <!-- ===== آمار ===== -->
-    <section class="stats-bar fade-up">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="number">۲۰۰+</span>
-                    <span class="label">دستیار طراحی شده</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">۹۸%</span>
-                    <span class="label">رضایت مشتریان</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">۲۴/۷</span>
-                    <span class="label">پشتیبانی بی‌وقفه</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">۱۵+</span>
-                    <span class="label">صنعت فعال</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== نمونه‌های دستیار مکالمه‌ای با لینک‌های واقعی ===== -->
-    <section class="examples-section fade-up" id="examples">
-        <div class="container">
-            <div class="section-header">
-                <h2>🔍 <span class="highlight">نمونه‌های</span> دستیارهای مکالمه‌ای</h2>
-                <p>بیش از ۲۰ نمونه واقعی از دستیارهای مکالمه‌ای که برای صنایع مختلف طراحی کرده‌ایم</p>
-            </div>
-
-            <!-- تب‌های دسته‌بندی -->
-            <div class="examples-tabs">
-                <button class="tab-btn-example active" onclick="filterExamples('all')">🎯 همه</button>
-                <button class="tab-btn-example" onclick="filterExamples('business')">🏢 کسب‌وکار</button>
-                <button class="tab-btn-example" onclick="filterExamples('restaurant')">🍽️ رستوران</button>
-                <button class="tab-btn-example" onclick="filterExamples('legal')">⚖️ حقوقی</button>
-                <button class="tab-btn-example love-tab" onclick="filterExamples('love')">❤️ عاشقانه</button>
-            </div>
-
-            <div class="examples-grid" id="examplesGrid">
-
-                <!-- ===== نمونه‌های عملیاتی با لینک واقعی (رستوران) ===== -->
-                <a href="#" class="example-card" data-category="restaurant" onclick="openDemo('شهرزاد', 'رستوران سنتی شهرزاد - سیستم سفارش هوشمند', 'https://sofiaaishahrzad.runflare.run', '🏛️ رستوران سنتی شهرزاد', 'سیستم کامل سفارش غذا با چت‌بات هوشمند، مدیریت میز، صورتحساب خودکار، پنل مدیریت و آشپزخانه. نمونه‌ای کامل از پیاده‌سازی دستیار مکالمه‌ای در صنعت رستوران‌داری.')">
-                    <span class="card-icon">🏛️</span>
-                    <span class="badge-industry">رستوران سنتی</span>
-                    <span class="demo-badge">🔗 نمونه زنده</span>
-                    <h4>دستیار رستوران شهرزاد</h4>
-                    <p>سفارش غذا، مدیریت میز، صورتحساب هوشمند، پرداخت آنلاین، پنل مدیریت و آشپزخانه</p>
-                    <div class="feature-tags">
-                        <span>سفارش آنلاین</span>
-                        <span>مدیریت میز</span>
-                        <span>پرداخت</span>
-                    </div>
-                    <span class="btn-demo">👁️ مشاهده نمونه زنده</span>
-                </a>
-
-                <a href="#" class="example-card" data-category="restaurant" onclick="openDemo('فدک مال', 'ساندویچی فدک مال - سیستم سفارش هوشمند', 'https://sofiaaisandevic.runflare.run', '🥪 ساندویچی فدک مال', 'سیستم سفارش ساندویچ و خوراک با چت‌بات، مدیریت سفارشات، اتصال به پیجر و پنل‌های مدیریت و آشپزخانه.')">
-                    <span class="card-icon">🥪</span>
-                    <span class="badge-industry">فست‌فود</span>
-                    <span class="demo-badge">🔗 نمونه زنده</span>
-                    <h4>دستیار ساندویچی فدک مال</h4>
-                    <p>سفارش ساندویچ و خوراک، مدیریت سفارشات، اتصال به پیجر، پنل مدیریت و آشپزخانه</p>
-                    <div class="feature-tags">
-                        <span>سفارش سریع</span>
-                        <span>مدیریت سفارش</span>
-                        <span>پیجر</span>
-                    </div>
-                    <span class="btn-demo">👁️ مشاهده نمونه زنده</span>
-                </a>
-
-                <a href="#" class="example-card" data-category="restaurant" onclick="openDemo('بهار', 'رستوران بیرون بر بهار - سیستم سفارش با شیفت‌های کاری', 'https://sofiaaibahar.runflare.run', '🌷 رستوران بیرون بر بهار', 'سیستم سفارش هوشمند با پشتیبانی از شیفت‌های کاری مجزا (صبحانه/ناهار/شام)، مدیریت هزینه ارسال و پنل مدیریت پیشرفته.')">
-                    <span class="card-icon">🌷</span>
-                    <span class="badge-industry">رستوران بیرون بر</span>
-                    <span class="demo-badge">🔗 نمونه زنده</span>
-                    <h4>دستیار رستوران بهار</h4>
-                    <p>سفارش با شیفت‌های کاری (صبحانه/ناهار/شام)، مدیریت هزینه ارسال، پنل مدیریت پیشرفته</p>
-                    <div class="feature-tags">
-                        <span>شیفت‌های کاری</span>
-                        <span>هزینه ارسال</span>
-                        <span>مدیریت پیشرفته</span>
-                    </div>
-                    <span class="btn-demo">👁️ مشاهده نمونه زنده</span>
-                </a>
-
-                <!-- ===== نمونه عملیاتی حقوقی ===== -->
-                <a href="#" class="example-card" data-category="legal" onclick="openDemo('حقوقی سوفیا', 'دستیار حقوقی هوشمند - مشاوره تخصصی', 'https://sofiaailegal.runflare.run', '⚖️ دستیار حقوقی سوفیا', 'سیستم مشاوره حقوقی هوشمند با پوشش ۲۰۰+ موضوع حقوقی، تفکیک سمت‌ها (خواهان/خوانده/شاکی/مشتکی‌عنه) و راهنمای گام‌به‌گام اقدام حقوقی.')">
-                    <span class="card-icon">⚖️</span>
-                    <span class="badge-industry">حقوقی و مشاوره</span>
-                    <span class="demo-badge">🔗 نمونه زنده</span>
-                    <h4>دستیار حقوقی سوفیا</h4>
-                    <p>مشاوره حقوقی تخصصی در ۲۰۰+ موضوع، تفکیک سمت‌ها، راهنمای اقدام حقوقی گام‌به‌گام</p>
-                    <div class="feature-tags">
-                        <span>مشاوره حقوقی</span>
-                        <span>راهنمای اقدام</span>
-                        <span>تفکیک سمت</span>
-                    </div>
-                    <span class="btn-demo">👁️ مشاهده نمونه زنده</span>
-                </a>
-
-                <!-- ===== نمونه‌های عاشقانه ===== -->
-                <div class="example-card love-card" data-category="love">
-                    <span class="card-icon">❤️</span>
-                    <span class="badge-industry love-badge">عاشقانه و روابط</span>
-                    <h4>دستیار عاشقانه و همدم</h4>
-                    <p>مکالمات صمیمی و دلنشین، مشاوره عاطفی، شعر و متن‌های عاشقانه، پیشنهاد هدیه برای مناسبت‌ها</p>
-                    <div class="feature-tags">
-                        <span class="love-tag">مکالمه عاشقانه</span>
-                        <span class="love-tag">مشاوره عاطفی</span>
-                        <span class="love-tag">شعر و ادبیات</span>
-                    </div>
-                    <button class="btn-demo love-demo" onclick="showLoveDemo()">❤️ مشاهده نمونه</button>
-                </div>
-
-                <!-- ===== سایر نمونه‌ها ===== -->
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🛒</span>
-                    <span class="badge-industry">خرده‌فروشی</span>
-                    <h4>دستیار فروشگاه اینترنتی</h4>
-                    <p>راهنمایی مشتریان در خرید، پیشنهاد محصولات براساس سلیقه، پاسخ به سوالات درباره موجودی و ارسال</p>
-                    <div class="feature-tags">
-                        <span>پیشنهاد هوشمند</span>
-                        <span>راهنمای خرید</span>
-                        <span>پشتیبانی ۲۴/۷</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🏦</span>
-                    <span class="badge-industry">بانکداری</span>
-                    <h4>دستیار بانک هوشمند</h4>
-                    <p>پاسخ به سوالات مشتریان درباره حساب‌ها، انتقال وجه، کارت‌ها و خدمات بانکی ۲۴ ساعته</p>
-                    <div class="feature-tags">
-                        <span>اطلاعات حساب</span>
-                        <span>انتقال وجه</span>
-                        <span>امنیت بالا</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🏥</span>
-                    <span class="badge-industry">سلامت</span>
-                    <h4>دستیار سلامت و پزشکی</h4>
-                    <p>راهنمایی اولیه بیماران، یادآوری نوبت‌ها، پاسخ به سوالات دارویی و مشاوره اولیه سلامت</p>
-                    <div class="feature-tags">
-                        <span>مشاوره اولیه</span>
-                        <span>یادآوری نوبت</span>
-                        <span>راهنمای دارو</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🎓</span>
-                    <span class="badge-industry">آموزش</span>
-                    <h4>دستیار آموزشی و مدرس مجازی</h4>
-                    <p>پاسخ به سوالات دانش‌آموزان، توضیح مفاهیم درسی، ارائه تمرین و رفع اشکال آنلاین</p>
-                    <div class="feature-tags">
-                        <span>رفع اشکال</span>
-                        <span>تمرین هوشمند</span>
-                        <span>ارزیابی پیشرفت</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">✈️</span>
-                    <span class="badge-industry">گردشگری</span>
-                    <h4>دستیار رزرو و گردشگری</h4>
-                    <p>راهنمایی مسافران، رزرو هتل و پرواز، پیشنهاد مقاصد گردشگری و خدمات سفر</p>
-                    <div class="feature-tags">
-                        <span>رزرو هوشمند</span>
-                        <span>پیشنهاد سفر</span>
-                        <span>راهنمای گردشگری</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🚗</span>
-                    <span class="badge-industry">خودرو</span>
-                    <h4>دستیار خدمات خودرو</h4>
-                    <p>راهنمایی تعمیرات، یادآوری سرویس‌های دوره‌ای، مشاوره خرید و فروش خودرو</p>
-                    <div class="feature-tags">
-                        <span>مشاوره فنی</span>
-                        <span>یادآوری سرویس</span>
-                        <span>ارزیابی خودرو</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">🏠</span>
-                    <span class="badge-industry">املاک</span>
-                    <h4>دستیار املاک هوشمند</h4>
-                    <p>جستجوی ملک براساس نیاز، مشاوره خرید و فروش، ارزش‌گذاری ملک و راهنمایی حقوقی</p>
-                    <div class="feature-tags">
-                        <span>جستجوی ملک</span>
-                        <span>ارزش‌گذاری</span>
-                        <span>مشاوره حقوقی</span>
-                    </div>
-                </div>
-
-                <div class="example-card" data-category="business">
-                    <span class="card-icon">👨‍💼</span>
-                    <span class="badge-industry">حقوقی</span>
-                    <h4>دستیار حقوقی و وکالت</h4>
-                    <p>پاسخ به سوالات حقوقی عمومی، راهنمایی تنظیم قراردادها و مشاوره اولیه حقوقی</p>
-                    <div class="feature-tags">
-                        <span>مشاوره حقوقی</span>
-                        <span>تنظیم قرارداد</span>
-                        <span>راهنمایی قانونی</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== مدال نمایش نمونه ===== -->
-    <div class="demo-modal-overlay" id="demoModal">
-        <div class="demo-modal">
-            <button class="close-btn" onclick="closeDemo()">&times;</button>
-            <h2 id="demoTitle">عنوان نمونه</h2>
-            <div class="demo-meta">
-                <span id="demoSubtitle">زیر عنوان</span>
-                <span id="demoBadge" style="background:var(--demo-badge);color:#fff;padding:2px 12px;border-radius:50px;font-size:0.7rem;font-weight:700;">🔗 نمونه زنده</span>
-            </div>
-            <div class="demo-iframe-wrapper">
-                <iframe id="demoIframe" src="about:blank" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="demo-description" id="demoDescription">
-                توضیحات نمونه
-            </div>
-            <div class="demo-actions">
-                <a href="#" id="demoVisitBtn" class="btn-visit" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> بازدید از نمونه زنده
-                </a>
-                <button class="btn-close-modal" onclick="closeDemo()">بستن</button>
-            </div>
-        </div>
-    </div>
 
     <!-- ===== ویژگی‌ها ===== -->
     <section class="features-section fade-up">
         <div class="container">
-            <div class="section-header">
-                <h2>✨ ویژگی‌های <span class="highlight">دستیار مکالمه‌ای</span></h2>
-                <p>با قابلیت‌های پیشرفته‌ای که دستیار شما را از سایرین متمایز می‌کند</p>
-            </div>
+            <h2 class="section-title">✨ ویژگی‌های دستیار مکالمه‌ای</h2>
+            <p class="section-sub">با هوش مصنوعی پیشرفته، تجربه‌ای بی‌نظیر برای مشتریان خود خلق کنید</p>
             <div class="features-grid">
                 <div class="feature-box">
                     <span class="icon">🧠</span>
                     <h4>هوش مصنوعی پیشرفته</h4>
-                    <p>پاسخ‌های طبیعی و دقیق با استفاده از مدل‌های زبانی بزرگ و به‌روز</p>
+                    <p>پاسخ‌های طبیعی و دقیق با استفاده از مدل‌های زبانی بزرگ</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🎯</span>
                     <h4>شخصی‌سازی کامل</h4>
-                    <p>تنظیم لحن، سبک و شخصیت دستیار بر اساس برند و مخاطبان شما</p>
+                    <p>تنظیم لحن، سبک و شخصیت دستیار بر اساس برند شما</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🔌</span>
                     <h4>اتصال به سیستم‌ها</h4>
-                    <p>اتصال به CRM، دیتابیس، APIهای سازمانی و پیام‌رسان‌های مختلف</p>
+                    <p>اتصال به CRM، دیتابیس و APIهای سازمانی</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">📊</span>
                     <h4>تحلیل مکالمات</h4>
-                    <p>گزارش‌های تحلیلی از مکالمات، رضایت مشتریان و نقاط قوت و ضعف</p>
+                    <p>گزارش‌های تحلیلی از مکالمات و رضایت مشتریان</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🌐</span>
                     <h4>چندزبانه</h4>
-                    <p>پشتیبانی از زبان فارسی، انگلیسی و سایر زبان‌های پرکاربرد</p>
+                    <p>پشتیبانی از زبان فارسی، انگلیسی و سایر زبان‌ها</p>
                 </div>
                 <div class="feature-box">
                     <span class="icon">🔒</span>
-                    <h4>امنیت و حریم خصوصی</h4>
-                    <p>رمزنگاری پیشرفته و حفظ کامل حریم خصوصی مکالمات</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">❤️</span>
-                    <h4>حالت عاشقانه</h4>
-                    <p>دستیار با لحن صمیمی و عاطفی برای مکالمات دلنشین و مشاوره روابط</p>
-                </div>
-                <div class="feature-box">
-                    <span class="icon">⚡</span>
-                    <h4>پاسخ‌دهی آنی</h4>
-                    <p>پاسخ‌گویی کمتر از ۱ ثانیه برای تجربه کاربری بی‌نظیر</p>
+                    <h4>امنیت بالا</h4>
+                    <p>رمزنگاری و حفظ حریم خصوصی مکالمات</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== فرم درخواست ===== -->
+    <!-- ===== بخش درخواست (طراحی زیبا) ===== -->
     <section class="request-section fade-up" id="request">
         <div class="container">
-            <div class="request-box">
-                <div class="form-header">
-                    <h2>✍️ درخواست طراحی <span class="highlight">دستیار مکالمه‌ای</span></h2>
-                    <p>نیاز خود را توضیح دهید تا دستیار مکالمه‌ای اختصاصی شما طراحی شود</p>
-                </div>
-                <form id="requestForm">
-                    <div class="form-group">
-                        <label>نام و نام خانوادگی <span class="required">*</span></label>
-                        <input type="text" id="requestName" placeholder="مثال: علی محمدی" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>شماره تماس <span class="required">*</span></label>
-                        <input type="tel" id="requestPhone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>ایمیل</label>
-                        <input type="email" id="requestEmail" placeholder="example@email.com" />
+            <h2 class="section-title">✍️ درخواست طراحی دستیار مکالمه‌ای</h2>
+            <p class="section-sub">نیاز خود را توضیح دهید تا تیم ما دستیار اختصاصی شما را طراحی کند</p>
+            
+            <div class="request-wrapper">
+                <div class="request-box">
+                    <div class="form-header">
+                        <div class="form-icon"><i class="fas fa-pen-fancy"></i></div>
+                        <div>
+                            <h3>فرم درخواست</h3>
+                            <p>اطلاعات خود را وارد کنید تا در اسرع وقت با شما تماس بگیریم</p>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>نوع دستیار مورد نظر <span class="required">*</span></label>
-                        <select id="assistantType" required>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="business">دستیار کسب‌وکار و فروش</option>
-                            <option value="support">دستیار پشتیبانی مشتریان</option>
-                            <option value="restaurant">دستیار رستوران و سفارش غذا</option>
-                            <option value="legal">دستیار حقوقی و مشاوره</option>
-                            <option value="love">دستیار عاشقانه و همدم</option>
-                            <option value="education">دستیار آموزشی</option>
-                            <option value="custom">سایر (توضیح در ادامه)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>توضیحات نیاز شما <span class="required">*</span></label>
-                        <textarea id="requestDescription" placeholder="لطفاً توضیح دهید دستیار مکالمه‌ای شما چه کاربردی دارد؟ برای چه صنعتی؟ چه قابلیت‌هایی باید داشته باشد؟" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i>
-                        ارسال درخواست
-                    </button>
-                </form>
-                <div id="requestMessage" class="message"></div>
+                    <form id="requestForm" class="form-grid">
+                        <div class="form-group">
+                            <label><span class="label-icon"><i class="fas fa-user"></i></span> نام و نام خانوادگی <span class="required">*</span></label>
+                            <input type="text" id="requestName" placeholder="مثال: علی محمدی" required autofocus />
+                        </div>
+                        <div class="form-group">
+                            <label><span class="label-icon"><i class="fas fa-phone"></i></span> شماره تماس <span class="required">*</span></label>
+                            <input type="tel" id="requestPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required />
+                        </div>
+                        <div class="form-group full-width">
+                            <label><span class="label-icon"><i class="fas fa-envelope"></i></span> آدرس ایمیل</label>
+                            <input type="email" id="requestEmail" placeholder="example@email.com" />
+                        </div>
+                        <div class="form-group full-width">
+                            <label><span class="label-icon"><i class="fas fa-align-left"></i></span> توضیحات نیاز شما <span class="required">*</span></label>
+                            <textarea id="requestDescription" placeholder="لطفاً توضیح دهید دستیار مکالمه‌ای شما چه کاربردی دارد؟ برای چه صنعتی؟ چه قابلیت‌هایی باید داشته باشد؟" required></textarea>
+                        </div>
+                        
+                        <div id="requestMessage" class="message-box"></div>
+                        
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            ارسال درخواست
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1417,19 +794,18 @@
     <section class="cta-section fade-up">
         <div class="container">
             <div class="cta-box">
-                <h2>🚀 آماده‌اید یک دستیار مکالمه‌ای هوشمند برای کسب‌وکار خود داشته باشید؟</h2>
+                <h2>🚀 آماده‌اید یک دستیار مکالمه‌ای هوشمند داشته باشید؟</h2>
                 <p>همین حالا آن را به سبد خرید اضافه کنید و از مشاوره رایگان تیم سوفیا بهره‌مند شوید.</p>
-                <button class="btn-add-cart" onclick="addToCart('دستیار مکالمه‌ای هوشمند', '۳,۹۰۰,۰۰۰ تومان')">
-                    <i class="fas fa-shopping-cart"></i> افزودن به سبد خرید
+                <button class="btn-add-cart" onclick="addToCart('دستیار مکالمه‌ای هوشمند', '۴,۰۰۰,۰۰۰ تومان')">
+                    <i class="fas fa-plus"></i> افزودن به سبد خرید
                 </button>
                 <br>
-                <a href="index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i> بازگشت به صفحه اصلی
-                </a>
+                <a href="index.html" class="back-link"><i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی</a>
             </div>
         </div>
     </section>
 
+    <!-- ===== فوتر ===== -->
     <footer>
         <div class="container">
             <div class="footer-links">
@@ -1439,171 +815,23 @@
                 <a href="index.html#articles">مقالات</a>
                 <a href="index.html#gallery">گالری</a>
                 <a href="index.html#about">درباره ما</a>
-                <a href="register.html" class="btn-register-footer">ثبت‌نام</a>
-                <a href="login.html" class="btn-login-footer">ورود</a>
+                <a href="cooperation.html">درخواست همکاری</a>
+                <a href="register.html" style="background: var(--secondary); color: var(--text-dark); padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ثبت‌نام</a>
+                <a href="login.html" style="background: var(--primary); color: #fff; padding: 4px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer;">ورود</a>
             </div>
             <p>© ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند و ایجنت‌های هوش مصنوعی در ایران</p>
         </div>
     </footer>
 
     <script>
-        const API_BASE = 'https://sofiaaisite.runflare.run';
+        // =============================================
+        // ===== تنظیمات =====
+        // =============================================
+        const API_BASE = 'https://sofiaaisite.sofiaai.ir';
 
-        // ===== فیلتر نمونه‌ها =====
-        function filterExamples(category) {
-            const cards = document.querySelectorAll('.example-card');
-            const tabs = document.querySelectorAll('.tab-btn-example');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            const activeTab = document.querySelector(`.tab-btn-example[onclick="filterExamples('${category}')"]`);
-            if (activeTab) activeTab.classList.add('active');
-            
-            let visibleCount = 0;
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            const grid = document.getElementById('examplesGrid');
-            const noResult = grid.querySelector('.no-result');
-            if (visibleCount === 0) {
-                if (!noResult) {
-                    const msg = document.createElement('div');
-                    msg.className = 'no-result';
-                    msg.style.cssText = 'grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);';
-                    msg.innerHTML = '<i class="fas fa-search" style="font-size:2rem; display:block; margin-bottom:12px;"></i><p>هیچ نمونه‌ای در این دسته‌بندی یافت نشد.</p>';
-                    grid.appendChild(msg);
-                }
-            } else {
-                if (noResult) noResult.remove();
-            }
-        }
-
-        // ===== مدال نمایش نمونه =====
-        function openDemo(title, subtitle, url, badge, description) {
-            document.getElementById('demoTitle').textContent = title;
-            document.getElementById('demoSubtitle').textContent = subtitle;
-            document.getElementById('demoIframe').src = url;
-            document.getElementById('demoDescription').textContent = description;
-            document.getElementById('demoVisitBtn').href = url;
-            document.getElementById('demoModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDemo() {
-            document.getElementById('demoModal').classList.remove('active');
-            document.getElementById('demoIframe').src = 'about:blank';
-            document.body.style.overflow = '';
-        }
-
-        // نمایش نمونه عاشقانه (بدون لینک)
-        function showLoveDemo() {
-            openDemo(
-                '💕 دستیار عاشقانه سوفیا',
-                'سیستم مکالمه عاشقانه و مشاوره روابط',
-                'about:blank',
-                '❤️ نمونه عاشقانه',
-                'این یک نمونه از دستیار عاشقانه است که با لحن صمیمی و عاطفی به مکالمات کاربر پاسخ می‌دهد. قابلیت‌ها شامل مشاوره عاطفی، شعر و متن‌های عاشقانه، پیشنهاد هدیه و گفتگوهای دلنشین می‌باشد. برای مشاهده نسخه واقعی، با ما تماس بگیرید.'
-            );
-            // تنظیم iframe برای نمایش یک پیام زیبا
-            setTimeout(() => {
-                const iframe = document.getElementById('demoIframe');
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.open();
-                doc.write(`
-                    <html dir="rtl">
-                    <head><style>
-                        body {
-                            font-family: 'Vazirmatn', sans-serif;
-                            background: linear-gradient(135deg, #FFF5F7, #FFE8EC);
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            height: 100vh;
-                            margin: 0;
-                            padding: 20px;
-                            text-align: center;
-                            direction: rtl;
-                        }
-                        .love-box {
-                            background: white;
-                            border-radius: 24px;
-                            padding: 40px;
-                            max-width: 400px;
-                            box-shadow: 0 10px 40px rgba(255,107,129,0.2);
-                            border: 2px solid #FF6B81;
-                        }
-                        .love-box .heart {
-                            font-size: 4rem;
-                            animation: heartbeat 1.5s infinite;
-                            display: block;
-                            margin-bottom: 12px;
-                        }
-                        @keyframes heartbeat {
-                            0%, 100% { transform: scale(1); }
-                            25% { transform: scale(1.2); }
-                            50% { transform: scale(1); }
-                            75% { transform: scale(1.2); }
-                        }
-                        .love-box h2 {
-                            color: #E8435A;
-                            font-size: 1.8rem;
-                            margin-bottom: 8px;
-                        }
-                        .love-box p {
-                            color: #555;
-                            font-size: 1rem;
-                            line-height: 2;
-                        }
-                        .love-box .btn {
-                            display: inline-block;
-                            margin-top: 16px;
-                            padding: 10px 30px;
-                            background: #FF6B81;
-                            color: white;
-                            border: none;
-                            border-radius: 30px;
-                            font-weight: 700;
-                            font-size: 0.95rem;
-                            cursor: pointer;
-                            font-family: 'Vazirmatn', sans-serif;
-                            transition: 0.3s;
-                        }
-                        .love-box .btn:hover {
-                            transform: scale(1.05);
-                            background: #E8435A;
-                        }
-                    </style></head>
-                    <body>
-                        <div class="love-box">
-                            <span class="heart">❤️</span>
-                            <h2>دستیار عاشقانه</h2>
-                            <p>با لحنی صمیمی و دلنشین، همراه شما در مکالمات عاشقانه و مشاوره روابط.</p>
-                            <p style="font-size:0.9rem;color:#999;">برای مشاهده نسخه کامل، با ما تماس بگیرید</p>
-                            <button class="btn" onclick="window.top.closeDemo()">بستن</button>
-                        </div>
-                    </body>
-                    </html>
-                `);
-                doc.close();
-            }, 500);
-        }
-
-        // کلیک خارج از مدال
-        document.getElementById('demoModal').addEventListener('click', function(e) {
-            if (e.target === this) closeDemo();
-        });
-
-        // ESC برای بستن مدال
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeDemo();
-        });
-
-        // ===== ثبت نام کاربر =====
+        // =============================================
+        // ===== مدیریت کاربر =====
+        // =============================================
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
@@ -1645,6 +873,9 @@
             }
         }
 
+        // =============================================
+        // ===== سبد خرید =====
+        // =============================================
         function updateCartBadge() {
             const userData = localStorage.getItem('user');
             const badge = document.getElementById('cartCount');
@@ -1669,29 +900,6 @@
             } catch(e) {
                 if (badge) badge.textContent = '0';
             }
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer') || createToastContainer();
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideUp 0.5s ease';
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        function createToastContainer() {
-            const container = document.getElementById('toastContainer');
-            if (container) return container;
-            
-            const newContainer = document.createElement('div');
-            newContainer.id = 'toastContainer';
-            newContainer.className = 'toast-container';
-            document.body.appendChild(newContainer);
-            return newContainer;
         }
 
         async function addToCart(itemName, itemPrice) {
@@ -1726,16 +934,44 @@
             }
         }
 
+        // =============================================
+        // ===== Toast =====
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.getElementById('toastContainer');
+            if (container) return container;
+            
+            const newContainer = document.createElement('div');
+            newContainer.id = 'toastContainer';
+            newContainer.className = 'toast-container';
+            document.body.appendChild(newContainer);
+            return newContainer;
+        }
+
+        // =============================================
+        // ===== ارسال درخواست =====
+        // =============================================
         document.getElementById('requestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('requestName').value.trim();
             const phone = document.getElementById('requestPhone').value.trim();
             const email = document.getElementById('requestEmail').value.trim();
-            const assistantType = document.getElementById('assistantType').value;
             const description = document.getElementById('requestDescription').value.trim();
             
-            if (!name || !phone || !assistantType || !description) {
+            if (!name || !phone || !description) {
                 showToast('⚠️ لطفاً تمام فیلدهای الزامی را پر کنید.', 'warning');
                 return;
             }
@@ -1745,47 +981,32 @@
             
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
-            messageDiv.className = 'message';
+            messageDiv.className = 'message-box';
             messageDiv.style.display = 'none';
             
             const userData = localStorage.getItem('user');
-            let userId = 0;
             let userEmail = email;
             
             if (userData) {
                 try {
                     const user = JSON.parse(userData);
-                    userId = user.id || 0;
                     userEmail = user.email || email;
                 } catch(e) {
                     console.error('خطا در خواندن اطلاعات کاربر:', e);
                 }
             }
             
-            const typeLabels = {
-                'business': 'دستیار کسب‌وکار و فروش',
-                'support': 'دستیار پشتیبانی مشتریان',
-                'restaurant': 'دستیار رستوران و سفارش غذا',
-                'legal': 'دستیار حقوقی و مشاوره',
-                'love': 'دستیار عاشقانه و همدم',
-                'education': 'دستیار آموزشی',
-                'custom': 'سایر'
-            };
-            
-            const title = `درخواست دستیار مکالمه‌ای هوشمند - ${typeLabels[assistantType] || 'سایر'}`;
-            
             const requestBody = {
-                user_id: userId,
-                title: title,
-                description: `نام: ${name}\nشماره تماس: ${phone}\nایمیل: ${userEmail}\nنوع دستیار: ${typeLabels[assistantType] || 'سایر'}\n\n${description}`,
-                priority: 'high',
-                category: 'chatbot'
+                name: name,
+                phone: phone,
+                email: userEmail,
+                description: `🟣 درخواست طراحی دستیار مکالمه‌ای هوشمند\n\n${description}`
             };
             
             console.log('📤 ارسال درخواست:', requestBody);
             
             try {
-                const response = await fetch(`${API_BASE}/api/user-requests`, {
+                const response = await fetch(`${API_BASE}/api/chatbot-requests`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestBody)
@@ -1795,22 +1016,22 @@
                 console.log('📥 پاسخ سرور:', data);
                 
                 if (response.ok) {
-                    messageDiv.textContent = '✅ ' + data.message + ' تیم سوفیا به زودی با شما تماس خواهد گرفت.';
-                    messageDiv.className = 'message success';
+                    messageDiv.className = 'message-box success';
                     messageDiv.style.display = 'block';
+                    messageDiv.textContent = '✅ ' + data.message + ' تیم سوفیا به زودی با شما تماس خواهد گرفت.';
                     this.reset();
                     showToast('✅ درخواست شما با موفقیت ثبت شد!', 'success');
                 } else {
-                    messageDiv.textContent = '❌ ' + (data.error || 'خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.');
-                    messageDiv.className = 'message error';
+                    messageDiv.className = 'message-box error';
                     messageDiv.style.display = 'block';
+                    messageDiv.textContent = '❌ ' + (data.error || 'خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.');
                     showToast('❌ ' + (data.error || 'خطا در ثبت درخواست'), 'error');
                 }
             } catch (error) {
                 console.error('❌ خطا در ارسال درخواست:', error);
-                messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.';
-                messageDiv.className = 'message error';
+                messageDiv.className = 'message-box error';
                 messageDiv.style.display = 'block';
+                messageDiv.textContent = '❌ خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.';
                 showToast('❌ خطا در ارتباط با سرور', 'error');
             } finally {
                 submitBtn.disabled = false;
@@ -1818,13 +1039,13 @@
             }
         });
 
+        // =============================================
+        // ===== مقداردهی اولیه =====
+        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
             updateUserDisplay();
             updateCartBadge();
             setInterval(updateCartBadge, 30000);
-            
-            // نمایش همه نمونه‌ها در ابتدا
-            filterExamples('all');
         });
     </script>
 
