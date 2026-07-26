@@ -47,13 +47,13 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         @keyframes slideDown {
             from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
@@ -63,13 +63,9 @@
             from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
             to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         .fade-up { animation: fadeUp 0.8s ease; }
         .fade-up-delay-1 { animation: fadeUp 0.8s ease 0.1s both; }
@@ -373,7 +369,7 @@
         }
 
         /* ============================================
-           بخش آمار و ارقام
+           بخش آمار
            ============================================ */
         .stats-section {
             padding: 40px 0;
@@ -512,7 +508,7 @@
         }
 
         /* ============================================
-           بخش نمونه کارها و مثال‌ها
+           بخش نمونه کارها و مثال‌های عملی (۶ عدد)
            ============================================ */
         .examples-section {
             padding: 70px 0;
@@ -523,6 +519,16 @@
             text-align: center;
             margin-bottom: 40px;
         }
+        .examples-section .section-header .section-badge {
+            display: inline-block;
+            background: rgba(108, 60, 225, 0.08);
+            color: var(--primary);
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
         .examples-section .section-header h2 {
             font-size: 2.5rem;
             font-weight: 900;
@@ -532,7 +538,7 @@
         .examples-section .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
-            max-width: 600px;
+            max-width: 700px;
             margin: 8px auto 0;
         }
         .examples-grid {
@@ -592,120 +598,16 @@
             color: var(--success);
             margin-left: 6px;
         }
-
-        /* ============================================
-           بخش قیمت‌گذاری
-           ============================================ */
-        .pricing-section {
-            padding: 70px 0;
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
+        .example-card .example-detail {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .pricing-section .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .pricing-section .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--text-dark);
-        }
-        .pricing-section .section-header h2 .highlight { color: var(--primary); }
-        .pricing-section .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 8px auto 0;
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        .pricing-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 36px 28px;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-        }
-        .pricing-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-        }
-        .pricing-card.popular {
-            border-color: var(--secondary);
-            box-shadow: 0 4px 30px rgba(255, 184, 0, 0.15);
-        }
-        .pricing-card.popular::before {
-            content: '⭐ محبوب‌ترین';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--secondary);
-            color: var(--text-dark);
-            padding: 4px 20px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-        .pricing-card .plan-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-        .pricing-card .plan-price {
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 12px 0 4px;
-        }
-        .pricing-card .plan-price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .pricing-card .plan-features {
-            list-style: none;
-            padding: 0;
-            margin: 16px 0 24px;
-        }
-        .pricing-card .plan-features li {
-            padding: 6px 0;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-        .pricing-card .plan-features li i {
-            color: var(--success);
-            margin-left: 8px;
-        }
-        .pricing-card .btn-select {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', sans-serif;
-            width: 100%;
-        }
-        .pricing-card .btn-select:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 25px rgba(108, 60, 225, 0.3);
-        }
-        .pricing-card.popular .btn-select {
-            background: var(--secondary);
-            color: var(--text-dark);
-        }
-        .pricing-card.popular .btn-select:hover {
-            background: var(--secondary-light);
+        .example-card .example-detail i {
+            color: var(--primary-light);
         }
 
         /* ============================================
@@ -1089,10 +991,6 @@
             .request-box .form-grid { grid-template-columns: 1fr; }
             .request-box .form-grid .full-width { grid-column: 1; }
             .service-hero h1 { font-size: 2.8rem; }
-            .features-section .section-header h2,
-            .request-section .section-header h2,
-            .examples-section .section-header h2,
-            .pricing-section .section-header h2 { font-size: 2.2rem; }
         }
         @media (max-width: 768px) {
             .service-hero { padding: 50px 0 30px; }
@@ -1110,19 +1008,14 @@
             .request-box .form-header { flex-direction: column; text-align: center; }
             .features-grid { grid-template-columns: 1fr 1fr; }
             .examples-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr 1fr; }
             .cta-box { padding: 32px 24px; }
             .cta-box h2 { font-size: 1.8rem; }
-            .features-section .section-header h2,
-            .request-section .section-header h2,
-            .examples-section .section-header h2,
-            .pricing-section .section-header h2 { font-size: 1.8rem; }
             .btn-add-cart { padding: 14px 36px; font-size: 1rem; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
+            .examples-grid { grid-template-columns: 1fr; }
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
             .request-box { padding: 18px 14px; }
@@ -1193,7 +1086,7 @@
     </section>
 
     <!-- ============================================
-    بخش آمار و ارقام
+    بخش آمار
     ============================================ -->
     <section class="stats-section fade-up-delay-1">
         <div class="container">
@@ -1264,53 +1157,109 @@
     </section>
 
     <!-- ============================================
-    بخش نمونه کارها و مثال‌ها
+    بخش نمونه کارها و مثال‌های عملی (۶ عدد)
     ============================================ -->
     <section class="examples-section fade-up-delay-2">
         <div class="container">
             <div class="section-header">
-                <h2>نمونه‌های <span class="highlight">دستیار مکالمه‌ای</span></h2>
-                <p>مثال‌های واقعی از دستیارهای هوشمند طراحی شده برای صنایع مختلف</p>
+                <span class="section-badge">📌 نمونه‌های واقعی</span>
+                <h2>نمونه‌های عملی <span class="highlight">دستیار مکالمه‌ای</span></h2>
+                <p>مشاهده کنید که دستیارهای هوشمند چگونه صنایع مختلف را متحول کرده‌اند</p>
             </div>
             <div class="examples-grid">
+                <!-- مثال ۱: رستوران -->
                 <div class="example-card">
                     <span class="example-icon">🍽️</span>
-                    <span class="example-badge">رستوران</span>
+                    <span class="example-badge">رستوران و پذیرایی</span>
                     <h4>دستیار رزرو و سفارش غذا</h4>
-                    <p>پذیرش سفارش، رزرو میز و پاسخ به سوالات مشتریان به صورت خودکار</p>
+                    <p>پذیرش سفارش، رزرو میز و پاسخ به سوالات مشتریان به صورت خودکار و هوشمند</p>
                     <div class="example-result">
                         <i class="fas fa-check-circle"></i>
                         افزایش ۴۰٪ سفارشات آنلاین در ۲ ماه
                     </div>
+                    <div class="example-detail">
+                        <i class="fas fa-clock"></i>
+                        کاهش ۷۰٪ زمان انتظار مشتریان
+                    </div>
                 </div>
+
+                <!-- مثال ۲: فروشگاهی -->
                 <div class="example-card">
                     <span class="example-icon">🛍️</span>
-                    <span class="example-badge">فروشگاهی</span>
+                    <span class="example-badge">فروشگاهی و خرده‌فروشی</span>
                     <h4>دستیار فروش و پشتیبانی</h4>
                     <p>راهنمایی مشتریان، پاسخ به سوالات محصولات و پیگیری سفارشات</p>
                     <div class="example-result">
                         <i class="fas fa-check-circle"></i>
                         کاهش ۶۰٪ زمان پاسخگویی به مشتریان
                     </div>
+                    <div class="example-detail">
+                        <i class="fas fa-chart-line"></i>
+                        افزایش ۲۵٪ نرخ تبدیل فروش
+                    </div>
                 </div>
+
+                <!-- مثال ۳: سلامت -->
                 <div class="example-card">
                     <span class="example-icon">🏥</span>
-                    <span class="example-badge">سلامت</span>
+                    <span class="example-badge">سلامت و درمان</span>
                     <h4>دستیار نوبت‌دهی و مشاوره</h4>
                     <p>تنظیم نوبت، یادآوری و پاسخ به سوالات اولیه بیماران</p>
                     <div class="example-result">
                         <i class="fas fa-check-circle"></i>
                         افزایش ۵۰٪ نوبت‌دهی اینترنتی
                     </div>
+                    <div class="example-detail">
+                        <i class="fas fa-user-md"></i>
+                        کاهش ۴۵٪ تماس‌های تکراری
+                    </div>
                 </div>
+
+                <!-- مثال ۴: مالی -->
                 <div class="example-card">
                     <span class="example-icon">🏦</span>
-                    <span class="example-badge">مالی</span>
+                    <span class="example-badge">مالی و بانکی</span>
                     <h4>دستیار مشاوره مالی</h4>
                     <p>ارائه اطلاعات حساب، مشاوره اولیه و هدایت مشتریان به خدمات مناسب</p>
                     <div class="example-result">
                         <i class="fas fa-check-circle"></i>
                         کاهش ۳۰٪ تماس‌های تکراری با پشتیبانی
+                    </div>
+                    <div class="example-detail">
+                        <i class="fas fa-shield-alt"></i>
+                        افزایش ۲۰٪ اعتماد مشتریان
+                    </div>
+                </div>
+
+                <!-- مثال ۵: آموزش -->
+                <div class="example-card">
+                    <span class="example-icon">🎓</span>
+                    <span class="example-badge">آموزش و پرورش</span>
+                    <h4>دستیار آموزشی و راهنمای ثبت‌نام</h4>
+                    <p>پاسخ به سوالات دانش‌آموزان، راهنمایی ثبت‌نام و اطلاع‌رسانی</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        افزایش ۵۵٪ ثبت‌نام اینترنتی
+                    </div>
+                    <div class="example-detail">
+                        <i class="fas fa-users"></i>
+                        پوشش ۱۰۰۰+ دانش‌آموز در روز
+                    </div>
+                </div>
+
+                <!-- مثال ۶: گردشگری -->
+                <div class="example-card">
+                    <span class="example-icon">✈️</span>
+                    <span class="example-badge">گردشگری و هتل‌داری</span>
+                    <h4>دستیار رزرو هتل و راهنمای سفر</h4>
+                    <p>رزرو هتل، راهنمایی تورها و پاسخ به سوالات گردشگران</p>
+                    <div class="example-result">
+                        <i class="fas fa-check-circle"></i>
+                        افزایش ۳۵٪ رزرو آنلاین
+                    </div>
+                    <div class="example-detail">
+                        <i class="fas fa-star"></i>
+                        امتیاز ۴.۸ از ۵ از سوی کاربران
                     </div>
                 </div>
             </div>
@@ -1318,60 +1267,7 @@
     </section>
 
     <!-- ============================================
-    بخش قیمت‌گذاری
-    ============================================ -->
-    <section class="pricing-section fade-up-delay-2">
-        <div class="container">
-            <div class="section-header">
-                <h2>پلن‌های <span class="highlight">قیمت‌گذاری</span></h2>
-                <p>بسته مناسب کسب‌وکار خود را انتخاب کنید</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="plan-name">شروع</div>
-                    <div class="plan-price">۲,۵۰۰ <span>میلیون تومان</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> ۵۰۰ مکالمه در ماه</li>
-                        <li><i class="fas fa-check"></i> یک زبان</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی پایه</li>
-                        <li><i class="fas fa-check"></i> گزارش ماهانه</li>
-                    </ul>
-                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن شروع', '۲,۵۰۰,۰۰۰ تومان')">انتخاب پلن</button>
-                </div>
-
-                <div class="pricing-card popular">
-                    <div class="plan-name">حرفه‌ای</div>
-                    <div class="plan-price">۴,۰۰۰ <span>میلیون تومان</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> ۲,۰۰۰ مکالمه در ماه</li>
-                        <li><i class="fas fa-check"></i> دو زبان (فارسی و انگلیسی)</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی ۲۴/۷</li>
-                        <li><i class="fas fa-check"></i> گزارش هفتگی و تحلیلی</li>
-                        <li><i class="fas fa-check"></i> شخصی‌سازی کامل</li>
-                        <li><i class="fas fa-check"></i> اتصال به CRM</li>
-                    </ul>
-                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن حرفه‌ای', '۴,۰۰۰,۰۰۰ تومان')">انتخاب پلن</button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="plan-name">سازمانی</div>
-                    <div class="plan-price">۷,۰۰۰ <span>میلیون تومان</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> مکالمه نامحدود</li>
-                        <li><i class="fas fa-check"></i> چندین زبان</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی اختصاصی</li>
-                        <li><i class="fas fa-check"></i> گزارش پیشرفته و داشبورد</li>
-                        <li><i class="fas fa-check"></i> API اختصاصی</li>
-                        <li><i class="fas fa-check"></i> میزبانی اختصاصی</li>
-                    </ul>
-                    <button class="btn-select" onclick="addToCart('دستیار مکالمه‌ای - پلن سازمانی', '۷,۰۰۰,۰۰۰ تومان')">انتخاب پلن</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-    بخش درخواست – طراحی ویژه
+    بخش درخواست
     ============================================ -->
     <section class="request-section fade-up-delay-3" id="request">
         <div class="container">
@@ -1426,15 +1322,15 @@
                             </label>
                             <select id="requestIndustry">
                                 <option value="">انتخاب کنید...</option>
-                                <option value="restaurant">رستوران و پذیرایی</option>
-                                <option value="retail">فروشگاهی و خرده‌فروشی</option>
-                                <option value="health">سلامت و درمان</option>
-                                <option value="education">آموزش و پرورش</option>
-                                <option value="finance">مالی و بانکی</option>
-                                <option value="tech">فناوری اطلاعات</option>
-                                <option value="realestate">ملکی و مسکن</option>
-                                <option value="tourism">گردشگری و هتل‌داری</option>
-                                <option value="other">سایر</option>
+                                <option value="restaurant">🍽️ رستوران و پذیرایی</option>
+                                <option value="retail">🛍️ فروشگاهی و خرده‌فروشی</option>
+                                <option value="health">🏥 سلامت و درمان</option>
+                                <option value="education">🎓 آموزش و پرورش</option>
+                                <option value="finance">🏦 مالی و بانکی</option>
+                                <option value="tech">💻 فناوری اطلاعات</option>
+                                <option value="realestate">🏠 ملکی و مسکن</option>
+                                <option value="tourism">✈️ گردشگری و هتل‌داری</option>
+                                <option value="other">📌 سایر</option>
                             </select>
                         </div>
 
@@ -1513,14 +1409,8 @@
     اسکریپت‌ها
     ============================================ -->
     <script>
-        // =============================================
-        // ===== تنظیمات =====
-        // =============================================
         const API_BASE = 'https://sofiaaisite.sofiaai.ir';
 
-        // =============================================
-        // ===== مدیریت کاربر =====
-        // =============================================
         function updateUserDisplay() {
             const userData = localStorage.getItem('user');
             const display = document.getElementById('userNameDisplay');
@@ -1562,9 +1452,6 @@
             }
         }
 
-        // =============================================
-        // ===== سبد خرید =====
-        // =============================================
         function updateCartBadge() {
             const userData = localStorage.getItem('user');
             const badge = document.getElementById('cartCount');
@@ -1589,6 +1476,29 @@
             } catch (e) {
                 if (badge) badge.textContent = '0';
             }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer') || createToastContainer();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createToastContainer() {
+            const container = document.getElementById('toastContainer');
+            if (container) return container;
+
+            const newContainer = document.createElement('div');
+            newContainer.id = 'toastContainer';
+            newContainer.className = 'toast-container';
+            document.body.appendChild(newContainer);
+            return newContainer;
         }
 
         async function addToCart(itemName, itemPrice) {
@@ -1623,35 +1533,6 @@
             }
         }
 
-        // =============================================
-        // ===== Toast =====
-        // =============================================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer') || createToastContainer();
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideUp 0.5s ease';
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        function createToastContainer() {
-            const container = document.getElementById('toastContainer');
-            if (container) return container;
-
-            const newContainer = document.createElement('div');
-            newContainer.id = 'toastContainer';
-            newContainer.className = 'toast-container';
-            document.body.appendChild(newContainer);
-            return newContainer;
-        }
-
-        // =============================================
-        // ===== ارسال درخواست =====
-        // =============================================
         document.getElementById('requestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -1749,9 +1630,6 @@
             }
         });
 
-        // =============================================
-        // ===== مقداردهی اولیه =====
-        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
             updateUserDisplay();
             updateCartBadge();
