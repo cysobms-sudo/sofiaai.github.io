@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* ===== متغیرهای رنگی (همانند صفحه اصلی) ===== */
         :root {
             --primary: #6C3CE1;
             --primary-light: #8B6CE0;
@@ -18,16 +17,21 @@
             --bg-light: #FBF8FF;
             --text-dark: #1A0F2E;
             --text-muted: #5A4A7A;
+            --text-light: #9A8AB5;
             --card-bg: #FFFFFF;
             --border-color: rgba(108, 60, 225, 0.08);
             --shadow: 0 4px 20px rgba(108, 60, 225, 0.06);
-            --shadow-hover: 0 12px 40px rgba(108, 60, 225, 0.10);
+            --shadow-hover: 0 12px 40px rgba(108, 60, 225, 0.12);
+            --shadow-lg: 0 20px 60px rgba(108, 60, 225, 0.15);
             --radius: 24px;
-            --transition: 0.3s ease;
+            --radius-sm: 12px;
+            --radius-xs: 8px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --max-width: 1200px;
             --danger: #e74c3c;
             --success: #27ae60;
             --warning: #f39c12;
+            --info: #3498db;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,18 +46,30 @@
         a { text-decoration: none; color: inherit; }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
         }
         .fade-up { animation: fadeUp 0.8s ease; }
         .fade-up.delay-1 { animation-delay: 0.1s; }
         .fade-up.delay-2 { animation-delay: 0.2s; }
         .fade-up.delay-3 { animation-delay: 0.3s; }
 
-        /* ===== نوار ناوبری (همانند صفحه اصلی) ===== */
+        /* ===== نوار ناوبری ===== */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border-bottom: 2px solid var(--secondary);
             padding: 14px 0;
             position: sticky;
@@ -168,8 +184,8 @@
 
         /* ===== بخش قهرمان ===== */
         .hero {
-            padding: 40px 0 30px;
-            background: linear-gradient(145deg, #FBF8FF, #FFF9E6);
+            padding: 50px 0 35px;
+            background: linear-gradient(145deg, #FBF8FF 0%, #F0E8FF 50%, #FFF9E6 100%);
             border-bottom: 2px solid var(--secondary);
             position: relative;
             overflow: hidden;
@@ -181,7 +197,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.03), transparent 60%);
+            background: radial-gradient(circle at 70% 30%, rgba(108, 60, 225, 0.04), transparent 60%);
             pointer-events: none;
         }
         .hero .container {
@@ -201,9 +217,10 @@
             font-weight: 700;
             font-size: 0.9rem;
             margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.15);
         }
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 900;
             line-height: 1.3;
             margin-bottom: 4px;
@@ -211,40 +228,56 @@
         }
         .hero h1 .purple { color: var(--primary); }
         .hero h1 .yellow { color: var(--secondary-dark); }
+        .hero h1 .dark { color: var(--text-dark); }
         .hero p {
             font-size: 1.1rem;
             color: var(--text-muted);
             max-width: 650px;
+            line-height: 1.9;
         }
 
         /* ===== کارت‌های آمار ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
+            gap: 20px;
+            margin: 30px 0;
         }
         .stat-card {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 24px 20px;
             border-radius: var(--radius);
             text-align: center;
             border: 2px solid var(--border-color);
             transition: var(--transition);
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .stat-card:hover::before { opacity: 1; }
         .stat-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
             border-color: var(--secondary);
         }
         .stat-card .stat-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 4px;
         }
         .stat-card .number {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             color: var(--primary);
             line-height: 1.2;
@@ -256,7 +289,7 @@
 
         /* ===== بخش خدمات ===== */
         .services-section {
-            padding: 30px 0;
+            padding: 40px 0;
         }
         .section-header {
             display: flex;
@@ -266,15 +299,25 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-        .section-header h2 {
+        .section-header .title-group h2 {
             font-size: 1.8rem;
             font-weight: 900;
             color: var(--text-dark);
         }
-        .section-header h2 i { color: var(--primary); margin-left: 10px; }
-        .section-header .sub {
+        .section-header .title-group h2 i { color: var(--primary); margin-left: 10px; }
+        .section-header .title-group .sub {
             color: var(--text-muted);
             font-size: 0.95rem;
+        }
+        .section-header .see-all {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .section-header .see-all:hover {
+            color: var(--primary-dark);
+            transform: translateX(-4px);
         }
 
         .services-grid {
@@ -282,28 +325,41 @@
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
         }
-
         .service-card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 28px 24px;
             border: 2px solid var(--border-color);
             transition: var(--transition);
             cursor: pointer;
             display: block;
             color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
         }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .service-card:hover::before { opacity: 1; }
         .service-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-hover);
             border-color: var(--primary);
         }
-        .service-card .icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+        .service-card .icon { font-size: 2.8rem; display: block; margin-bottom: 10px; }
         .service-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
-        .service-card p { color: var(--text-muted); font-size: 0.9rem; }
+        .service-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; }
         .service-card .link-hint {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 12px;
             color: var(--primary);
             font-weight: 600;
             font-size: 0.85rem;
@@ -315,11 +371,13 @@
         .cart-section {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 28px 24px;
             border: 2px solid var(--border-color);
             margin-bottom: 24px;
             box-shadow: var(--shadow);
+            transition: var(--transition);
         }
+        .cart-section:hover { border-color: var(--secondary); }
         .cart-section .cart-header {
             display: flex;
             justify-content: space-between;
@@ -333,19 +391,28 @@
             font-weight: 700;
         }
         .cart-section .cart-header h3 i { color: var(--primary); margin-left: 8px; }
+        .cart-section .cart-header .cart-badge-count {
+            background: var(--primary);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
         .cart-section .empty-cart {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
             color: var(--text-muted);
         }
         .cart-section .empty-cart i {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--border-color);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
+        .cart-section .empty-cart p { font-size: 0.95rem; }
 
-        .table-wrapper { overflow-x: auto; }
+        .table-wrapper { overflow-x: auto; border-radius: var(--radius-sm); }
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         th {
             background: var(--bg-light);
@@ -353,9 +420,16 @@
             text-align: right;
             font-weight: 700;
             border-bottom: 2px solid var(--border-color);
+            color: var(--text-dark);
         }
-        td { padding: 10px 16px; border-bottom: 1px solid var(--border-color); }
+        td { padding: 10px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
         tr:hover td { background: rgba(108, 60, 225, 0.03); }
+        .cart-total-row {
+            background: var(--bg-light) !important;
+            font-weight: 700;
+            border-top: 2px solid var(--primary);
+        }
+        .cart-total-row td { padding: 12px 16px; }
 
         .btn {
             border: none;
@@ -372,11 +446,11 @@
         }
         .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
         .btn-danger { background: var(--danger); color: #fff; }
-        .btn-danger:hover { background: #c0392b; transform: scale(1.05); }
+        .btn-danger:hover { background: #c0392b; transform: scale(1.05); box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
         .btn-primary { background: var(--primary); color: #fff; }
         .btn-primary:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 4px 15px rgba(108,60,225,0.3); }
         .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover { background: #219a52; transform: scale(1.05); }
+        .btn-success:hover { background: #219a52; transform: scale(1.05); box-shadow: 0 4px 15px rgba(39,174,96,0.3); }
         .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
         .btn-outline:hover { background: var(--primary); color: #fff; }
 
@@ -384,11 +458,13 @@
         .requests-section {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 28px 24px;
             border: 2px solid var(--border-color);
             margin-bottom: 24px;
             box-shadow: var(--shadow);
+            transition: var(--transition);
         }
+        .requests-section:hover { border-color: var(--primary-light); }
         .requests-section .request-header {
             display: flex;
             justify-content: space-between;
@@ -403,16 +479,15 @@
         }
         .requests-section .request-header h3 i { color: var(--primary); margin-left: 8px; }
 
-        /* ===== فرم درخواست ===== */
         .request-form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 16px 20px;
             margin-bottom: 20px;
-            padding: 20px;
+            padding: 24px;
             background: var(--bg-light);
             border-radius: var(--radius);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
         }
         .request-form .full-width { grid-column: 1/-1; }
         .request-form label {
@@ -426,7 +501,7 @@
         .request-form input, .request-form textarea, .request-form select {
             width: 100%;
             padding: 10px 14px;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             border: 2px solid var(--border-color);
             font-size: 0.95rem;
             font-family: 'Vazirmatn', sans-serif;
@@ -436,17 +511,16 @@
         .request-form input:focus, .request-form textarea:focus, .request-form select:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(108,60,225,0.06);
+            box-shadow: 0 0 0 4px rgba(108, 60, 225, 0.06);
         }
         .request-form textarea { min-height: 80px; resize: vertical; }
         .request-form .btn-submit {
             grid-column: 1/-1;
-            padding: 12px;
+            padding: 14px;
             justify-content: center;
             font-size: 1rem;
         }
 
-        /* ===== بج‌ها ===== */
         .badge {
             padding: 4px 14px;
             border-radius: 50px;
@@ -465,46 +539,61 @@
 
         .empty-state {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
             color: var(--text-muted);
         }
         .empty-state i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--border-color);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
+        .empty-state h4 { color: var(--text-dark); font-size: 1.1rem; }
 
         /* ===== CTA ===== */
         .cta-section {
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            padding: 40px 30px;
+            padding: 48px 40px;
             border-radius: var(--radius);
             text-align: center;
             color: #fff;
             margin: 20px 0 30px;
             border: 2px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
         }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 184, 0, 0.06), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-section .cta-content { position: relative; z-index: 1; }
         .cta-section h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 900;
             margin-bottom: 8px;
         }
         .cta-section p {
             font-size: 1rem;
             opacity: 0.9;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.8;
         }
         .cta-section .btn-cta {
             background: var(--secondary);
             color: var(--text-dark);
-            padding: 14px 40px;
+            padding: 16px 48px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             transition: var(--transition);
             display: inline-block;
             box-shadow: 0 4px 20px rgba(255, 184, 0, 0.2);
@@ -512,6 +601,7 @@
         .cta-section .btn-cta:hover {
             transform: scale(1.04);
             background: var(--secondary-light);
+            box-shadow: 0 8px 35px rgba(255, 184, 0, 0.35);
         }
 
         /* ===== فوتر ===== */
@@ -539,7 +629,7 @@
         /* ===== Toast ===== */
         .toast-container {
             position: fixed;
-            top: 20px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
@@ -550,46 +640,44 @@
             direction: rtl;
         }
         .toast {
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
             color: #fff;
             font-weight: 600;
             font-family: 'Vazirmatn', sans-serif;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
             animation: slideDown 0.5s ease;
-            min-width: 200px;
+            min-width: 220px;
             text-align: center;
+            font-size: 0.95rem;
         }
         .toast.success { background: var(--success); }
         .toast.error { background: var(--danger); }
-        .toast.info { background: #3498db; }
+        .toast.info { background: var(--info); }
         .toast.warning { background: var(--warning); }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes slideUp {
-            from { opacity: 1; transform: translateX(-50%) translateY(0); }
-            to { opacity: 0; transform: translateX(-50%) translateY(-80px); }
-        }
 
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
             .navbar .container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; width: 100%; }
-            .hero h1 { font-size: 2rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
             .request-form { grid-template-columns: 1fr; }
             .request-form .full-width { grid-column: 1; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .logo-image { height: 70px; max-width: 240px; }
+            .cta-section h2 { font-size: 1.6rem; }
+            .section-header { flex-direction: column; align-items: flex-start; }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.6rem; }
+            .hero h1 { font-size: 1.8rem; }
             .stats-grid { grid-template-columns: 1fr; }
             .services-grid { grid-template-columns: 1fr; }
             .nav-menu a { font-size: 0.8rem; padding: 6px 12px; }
             .logo-image { height: 60px; max-width: 200px; }
+            .cta-section { padding: 30px 20px; }
+            .cta-section h2 { font-size: 1.4rem; }
+            .request-form { padding: 16px; }
         }
     </style>
 </head>
@@ -624,7 +712,7 @@
         </div>
     </nav>
 
-    <!-- ===== بخش قهرمان (سلام اختصاصی) ===== -->
+    <!-- ===== بخش قهرمان ===== -->
     <section class="hero fade-up">
         <div class="container">
             <span class="welcome-badge">👋 خوش آمدید</span>
@@ -667,32 +755,35 @@
     <section class="services-section fade-up delay-2" id="services">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-rocket"></i> خدمات سریع</h2>
-                <span class="sub">خدمات محبوب را مستقیماً درخواست دهید</span>
+                <div class="title-group">
+                    <h2><i class="fas fa-rocket"></i> خدمات سریع</h2>
+                    <span class="sub">خدمات محبوب را مستقیماً درخواست دهید</span>
+                </div>
+                <a href="index.html#assistant" class="see-all">مشاهده همه <i class="fas fa-arrow-left"></i></a>
             </div>
             <div class="services-grid">
-                <a href="#requestForm" class="service-card" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
+                <a href="service-chatbot.html" class="service-card" target="_blank">
                     <span class="icon">🤖</span>
                     <h4>دستیار مکالمه‌ای</h4>
-                    <p>پشتیبانی ۲۴/۷ و تعامل هوشمند</p>
+                    <p>پشتیبانی ۲۴/۷ و تعامل هوشمند با مشتریان</p>
                     <span class="link-hint">ثبت درخواست <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#requestForm" class="service-card" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
+                <a href="service-rag.html" class="service-card" target="_blank">
                     <span class="icon">🧠</span>
                     <h4>سیستم RAG</h4>
-                    <p>پرسش و پاسخ هوشمند از اسناد</p>
+                    <p>پرسش و پاسخ هوشمند از اسناد سازمانی</p>
                     <span class="link-hint">ثبت درخواست <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#requestForm" class="service-card" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
+                <a href="service-automation.html" class="service-card" target="_blank">
                     <span class="icon">⚙️</span>
                     <h4>اتوماسیون هوشمند</h4>
-                    <p>طراحی workflowهای خودکار</p>
+                    <p>طراحی workflowهای خودکار برای کسب‌وکار</p>
                     <span class="link-hint">ثبت درخواست <i class="fas fa-arrow-left"></i></span>
                 </a>
-                <a href="#requestForm" class="service-card" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
+                <a href="service-data.html" class="service-card" target="_blank">
                     <span class="icon">📊</span>
                     <h4>تحلیل داده</h4>
-                    <p>مدل‌های پیش‌بینی فروش</p>
+                    <p>مدل‌های پیش‌بینی فروش و تحلیل رفتار</p>
                     <span class="link-hint">ثبت درخواست <i class="fas fa-arrow-left"></i></span>
                 </a>
             </div>
@@ -704,7 +795,7 @@
         <div class="cart-section" id="cartSection">
             <div class="cart-header">
                 <h3><i class="fas fa-shopping-cart"></i> سبد خرید شما</h3>
-                <span class="sub" id="cartTotalItems">۰ آیتم</span>
+                <span class="cart-badge-count" id="cartTotalItems">۰ آیتم</span>
             </div>
             <div id="cartContainer">
                 <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>در حال بارگذاری...</p></div>
@@ -769,11 +860,13 @@
     <!-- ===== CTA ===== -->
     <section class="container fade-up delay-3">
         <div class="cta-section">
-            <h2>🚀 آماده‌اید کسب‌وکار خود را متحول کنید؟</h2>
-            <p>تیم سوفیا آماده ارائه مشاوره و اجرای پروژه‌های هوش مصنوعی شماست.</p>
-            <a href="#requestForm" class="btn-cta" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
-                ثبت درخواست مشاوره
-            </a>
+            <div class="cta-content">
+                <h2>🚀 آماده‌اید کسب‌وکار خود را متحول کنید؟</h2>
+                <p>تیم سوفیا آماده ارائه مشاوره و اجرای پروژه‌های هوش مصنوعی شماست.</p>
+                <a href="#requestForm" class="btn-cta" onclick="document.getElementById('requestForm').scrollIntoView({behavior:'smooth'})">
+                    ثبت درخواست مشاوره
+                </a>
+            </div>
         </div>
     </section>
 
@@ -816,37 +909,25 @@
         function displayUserInfo(user) {
             document.getElementById('userNameText').textContent = user.name;
             document.getElementById('welcomeName').textContent = user.name;
-            
-            // ===== محاسبه صحیح روزهای عضویت =====
             calculateAndDisplayMemberDays(user);
         }
 
-        // ===== تابع جداگانه برای محاسبه روزهای عضویت =====
         function calculateAndDisplayMemberDays(user) {
             const memberDaysElement = document.getElementById('memberDays');
-            
             try {
-                // اگر تاریخ عضویت وجود نداشته باشد
                 if (!user.created_at) {
                     memberDaysElement.textContent = '۱';
                     return;
                 }
-
-                // تبدیل تاریخ به شیء Date
                 let joinDate;
-                
-                // اگر تاریخ به فرمت شمسی است (jYYYY/jMM/jDD)
                 if (user.created_at.includes('/')) {
-                    // تاریخ را به میلادی تبدیل می‌کنیم
                     const parts = user.created_at.split(' ');
                     const dateParts = parts[0].split('/');
                     if (dateParts.length === 3) {
-                        // استفاده از moment-jalaali برای تبدیل
                         const jalaliDate = moment(dateParts.join('/'), 'jYYYY/jMM/jDD');
                         if (jalaliDate && jalaliDate.isValid()) {
                             joinDate = jalaliDate.toDate();
                         } else {
-                            // اگر تبدیل نشد، از تاریخ فعلی استفاده کن
                             memberDaysElement.textContent = '۱';
                             return;
                         }
@@ -855,24 +936,16 @@
                         return;
                     }
                 } else {
-                    // تاریخ میلادی معمولی
                     joinDate = new Date(user.created_at);
                 }
-
-                // بررسی اعتبار تاریخ
                 if (!joinDate || isNaN(joinDate.getTime())) {
                     memberDaysElement.textContent = '۱';
                     return;
                 }
-
-                // محاسبه تفاوت روزها
                 const now = new Date();
                 const diffTime = Math.abs(now.getTime() - joinDate.getTime());
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                // اگر کمتر از ۱ روز است، ۱ نمایش بده
                 memberDaysElement.textContent = diffDays < 1 ? '۱' : diffDays;
-                
             } catch (e) {
                 console.error('خطا در محاسبه روزهای عضویت:', e);
                 memberDaysElement.textContent = '۱';
@@ -933,7 +1006,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-shopping-cart"></i>
                                 <p>سبد خرید شما خالی است.</p>
-                                <a href="#services" class="btn btn-primary" style="margin-top:8px; text-decoration:none;">
+                                <a href="#services" class="btn btn-primary" style="margin-top:12px; text-decoration:none;">
                                     <i class="fas fa-plus"></i> افزودن خدمت
                                 </a>
                             </div>
@@ -954,9 +1027,7 @@
                     data.forEach((item, index) => {
                         const price = parseFloat(String(item.item_price || '0').replace(/[^0-9.]/g, ''));
                         if (!isNaN(price)) total += price;
-                        
                         const date = item.created_at ? new Date(item.created_at).toLocaleDateString('fa-IR') : '-';
-                        
                         html += `
                             <tr>
                                 <td>${index + 1}</td>
@@ -973,21 +1044,20 @@
                     });
 
                     html += `
-                            </tbody>
-                            <tfoot>
-                                <tr style="font-weight:700; background:var(--bg-light);">
-                                    <td colspan="2">مجموع</td>
-                                    <td>${total.toLocaleString()} تومان</td>
-                                    <td colspan="2"></td>
-                                </tr>
-                            </tfoot>
-                        </table></div>
-                        <div style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap;">
-                            <button class="btn btn-success" onclick="checkout()"><i class="fas fa-check"></i> ثبت سفارش</button>
-                            <a href="#services" class="btn btn-primary" style="text-decoration:none;">
-                                <i class="fas fa-plus"></i> افزودن خدمت
-                            </a>
-                        </div>
+                        </tbody>
+                        <tfoot>
+                            <tr class="cart-total-row">
+                                <td colspan="2">💰 مجموع</td>
+                                <td colspan="3">${total.toLocaleString()} تومان</td>
+                            </tr>
+                        </tfoot>
+                    </table></div>
+                    <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+                        <button class="btn btn-success" onclick="checkout()"><i class="fas fa-check"></i> ثبت سفارش</button>
+                        <a href="#services" class="btn btn-primary" style="text-decoration:none;">
+                            <i class="fas fa-plus"></i> افزودن خدمت
+                        </a>
+                    </div>
                     `;
 
                     container.innerHTML = html;
@@ -1006,9 +1076,6 @@
                 });
         }
 
-        // =============================================
-        // ===== حذف از سبد خرید =====
-        // =============================================
         function removeFromCart(cartId) {
             if (!confirm('آیا از حذف این آیتم مطمئن هستید؟')) return;
             const user = getUser();
@@ -1183,9 +1250,6 @@
             }
         });
 
-        // =============================================
-        // ===== حذف درخواست =====
-        // =============================================
         function deleteRequest(requestId) {
             if (!confirm('آیا از حذف این درخواست مطمئن هستید؟')) return;
             const user = getUser();
