@@ -916,7 +916,7 @@
             </button>
             <div id="settingsStatus" class="status-msg"></div>
 
-            <!-- ===== بخش تغییر رمز عبور مدیر ===== -->
+            <!-- ===== بخش تغییر رمز عبور مدیر (اصلاح‌شده) ===== -->
             <div style="margin-top:32px; padding-top:24px; border-top:2px solid var(--border-color);">
                 <h3 style="margin-bottom:16px; font-weight:800; color:var(--danger);">
                     <i class="fas fa-key"></i> تغییر رمز عبور مدیر
@@ -2605,7 +2605,7 @@
         }
 
         // =============================================
-        // ===== تغییر رمز عبور مدیر (با تایید رمز فعلی) =====
+        // ===== تغییر رمز عبور مدیر (اصلاح‌شده) =====
         // =============================================
         function changeAdminPassword() {
             const currentPassword = document.getElementById('adminCurrentPassword').value.trim();
@@ -2659,7 +2659,7 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال تغییر...';
 
-            // ارسال درخواست به سرور برای تغییر رمز عبور
+            // ارسال درخواست به سرور
             fetch(`${API_BASE}/api/admin/change-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -2668,7 +2668,14 @@
                     new_password: newPassword
                 })
             })
-            .then(res => res.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.message || 'خطا در تغییر رمز عبور');
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     messageDiv.textContent = '✅ رمز عبور با موفقیت تغییر کرد!';
@@ -2680,13 +2687,6 @@
                     document.getElementById('adminCurrentPassword').value = '';
                     document.getElementById('adminNewPassword').value = '';
                     document.getElementById('adminConfirmPassword').value = '';
-                    
-                    // به‌روزرسانی متغیر ADMIN_PASSWORD با رمز جدید
-                    // (در برنامه واقعی، رمز جدید در سرور ذخیره می‌شود و نیازی به تغییر متغیر در کلاینت نیست)
-                    // اما برای عملکرد صحیح در این نسخه، متغیر را به‌روز می‌کنیم
-                    // توجه: در حالت واقعی، این کار در سرور انجام می‌شود
-                    // و فقط برای نمایش در اینجاست
-                    // ADMIN_PASSWORD = newPassword;
                 } else {
                     messageDiv.textContent = '❌ ' + (data.message || 'خطا در تغییر رمز عبور');
                     messageDiv.className = 'pass-message error';
@@ -2696,10 +2696,10 @@
             })
             .catch(err => {
                 console.error('❌ خطا:', err);
-                messageDiv.textContent = '❌ خطا در ارتباط با سرور';
+                messageDiv.textContent = '❌ ' + err.message;
                 messageDiv.className = 'pass-message error';
                 messageDiv.style.display = 'block';
-                showToast('❌ خطا در ارتباط با سرور', 'error');
+                showToast('❌ ' + err.message, 'error');
             })
             .finally(() => {
                 btn.disabled = false;
