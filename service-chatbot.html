@@ -672,6 +672,27 @@
             font-weight: 700;
             border: 1px solid rgba(255,184,0,0.2);
         }
+        .showcase-card .card-footer .btn-demo-direct {
+            background: var(--secondary);
+            color: var(--text-dark);
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 4px 15px rgba(255,184,0,0.2);
+        }
+        .showcase-card .card-footer .btn-demo-direct:hover {
+            transform: scale(1.05);
+            background: var(--secondary-light);
+            box-shadow: 0 6px 25px rgba(255,184,0,0.35);
+        }
 
         /* ===== موارد استفاده ===== */
         .use-cases-section {
@@ -1105,7 +1126,7 @@
             margin-left: 6px;
         }
 
-        /* ===== مودال نمایش نمونه کار با دکمه بازگشت ===== */
+        /* ===== مودال نمایش نمونه کار ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1290,7 +1311,7 @@
             .modal-content .modal-footer .btn-cart { justify-content: center; }
         }
 
-        /* ===== اگر کاربر در دمو باشد، یک نوار بازگشت نشان می‌دهیم ===== */
+        /* ===== نوار بازگشت از دمو ===== */
         .demo-return-bar {
             display: none;
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
@@ -1657,11 +1678,14 @@
                         <button class="demo-link" onclick="openModal('restaurant')">
                             <i class="fas fa-external-link-alt"></i> مشاهده جزئیات
                         </button>
+                        <button class="btn-demo-direct" onclick="openDemo('https://shahrzad.sofiaai.ir', 'دستیار سفارش‌گیری هوشمند رستوران')">
+                            <i class="fas fa-play"></i> مشاهده دمو
+                        </button>
                         <span class="result-badge">📈 افزایش ۴۰٪ سفارشات آنلاین</span>
                     </div>
                 </div>
 
-                <!-- کارت دوم: دستیار حقوقی -->
+                <!-- کارت دوم: دستیار حقوقی با توضیحات ویژه -->
                 <div class="showcase-card">
                     <div class="card-header">
                         <span class="icon-badge">⚖️</span>
@@ -1686,7 +1710,74 @@
                         <button class="demo-link" onclick="openModal('legal')">
                             <i class="fas fa-external-link-alt"></i> مشاهده جزئیات
                         </button>
+                        <button class="btn-demo-direct" onclick="openDemo('https://legal.sofiaai.ir', 'دستیار مشاور حقوقی هوشمند')">
+                            <i class="fas fa-play"></i> مشاهده دمو
+                        </button>
                         <span class="result-badge">📈 کاهش ۴۰٪ مراجعات حضوری</span>
+                    </div>
+                </div>
+
+                <!-- کارت سوم: دستیار روانشناسی -->
+                <div class="showcase-card">
+                    <div class="card-header">
+                        <span class="icon-badge">🧠</span>
+                        <span class="status-badge">✅ فعال و عملیاتی</span>
+                        <h3>دستیار مشاوره روانشناسی هوشمند</h3>
+                        <span class="industry-tag">🏥 مرکز روانشناسی آرامش</span>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            یک دستیار هوشمند برای مشاوره اولیه روانشناسی، غربالگری سلامت روان و ارائه محتوای آرامش‌بخش.
+                            این سیستم به مراجعین کمک می‌کند تا در محیطی امن و محرمانه، مشکلات خود را مطرح کنند و راهنمایی‌های اولیه دریافت نمایند.
+                        </p>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> مشاوره اولیه روانشناسی</li>
+                            <li><i class="fas fa-check-circle"></i> غربالگری سلامت روان</li>
+                            <li><i class="fas fa-check-circle"></i> ارائه محتوای آرامش‌بخش</li>
+                            <li><i class="fas fa-check-circle"></i> تعیین وقت مشاوره حضوری</li>
+                            <li><i class="fas fa-check-circle"></i> پیگیری وضعیت مراجعین</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="demo-link" onclick="openModal('psychology')">
+                            <i class="fas fa-external-link-alt"></i> مشاهده جزئیات
+                        </button>
+                        <button class="btn-demo-direct" onclick="openDemo('https://psychology.sofiaai.ir', 'دستیار مشاوره روانشناسی هوشمند')">
+                            <i class="fas fa-play"></i> مشاهده دمو
+                        </button>
+                        <span class="result-badge">📈 افزایش ۵۰٪ مراجعات آنلاین</span>
+                    </div>
+                </div>
+
+                <!-- کارت چهارم: دستیار آموزش -->
+                <div class="showcase-card">
+                    <div class="card-header">
+                        <span class="icon-badge">🎓</span>
+                        <span class="status-badge">✅ فعال و عملیاتی</span>
+                        <h3>دستیار آموزش هوشمند</h3>
+                        <span class="industry-tag">🏫 موسسه آموزشی نوین</span>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            یک دستیار هوشمند برای پاسخ به سوالات دانش‌آموزان، راهنمایی ثبت‌نام و اطلاع‌رسانی رویدادهای آموزشی.
+                            این سیستم با استفاده از هوش مصنوعی، تجربه یادگیری را برای دانش‌آموزان و والدین ساده‌تر می‌کند.
+                        </p>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> پاسخ به سوالات درسی</li>
+                            <li><i class="fas fa-check-circle"></i> راهنمایی ثبت‌نام</li>
+                            <li><i class="fas fa-check-circle"></i> اطلاع‌رسانی رویدادها</li>
+                            <li><i class="fas fa-check-circle"></i> پیگیری پیشرفت تحصیلی</li>
+                            <li><i class="fas fa-check-circle"></i> ارائه محتوای آموزشی</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="demo-link" onclick="openModal('education')">
+                            <i class="fas fa-external-link-alt"></i> مشاهده جزئیات
+                        </button>
+                        <button class="btn-demo-direct" onclick="openDemo('https://education.sofiaai.ir', 'دستیار آموزش هوشمند')">
+                            <i class="fas fa-play"></i> مشاهده دمو
+                        </button>
+                        <span class="result-badge">📈 افزایش ۳۰٪ رضایت دانش‌آموزان</span>
                     </div>
                 </div>
             </div>
@@ -1769,6 +1860,18 @@
                     <h4>شرکتی و سازمانی</h4>
                     <p>دستیار داخلی برای پاسخ به سوالات کارمندان و راهنمایی‌های سازمانی</p>
                     <span class="badge-case">🏢 سازمانی</span>
+                </div>
+                <div class="use-case-card">
+                    <span class="icon">🧠</span>
+                    <h4>روانشناسی و مشاوره</h4>
+                    <p>مشاوره اولیه، غربالگری سلامت روان و ارائه محتوای آرامش‌بخش</p>
+                    <span class="badge-case">🧘 آرامش</span>
+                </div>
+                <div class="use-case-card">
+                    <span class="icon">🏋️</span>
+                    <h4>تناسب اندام و سلامت</h4>
+                    <p>برنامه‌های ورزشی، رژیم غذایی و پیگیری وضعیت سلامتی</p>
+                    <span class="badge-case">💪 سلامت</span>
                 </div>
             </div>
         </div>
@@ -1889,6 +1992,8 @@
                             <option value="tech">فناوری و نرم‌افزار</option>
                             <option value="industry">صنعتی و تولیدی</option>
                             <option value="energy">انرژی و نفت</option>
+                            <option value="psychology">روانشناسی و مشاوره</option>
+                            <option value="fitness">تناسب اندام و سلامت</option>
                             <option value="custom">سایر</option>
                         </select>
                     </div>
@@ -1901,6 +2006,7 @@
                             <option value="internal">داخلی سازمانی</option>
                             <option value="order">سفارش‌گیری و رزرو</option>
                             <option value="info">اطلاع‌رسانی و راهنمایی</option>
+                            <option value="consulting">مشاوره و راهنمایی</option>
                             <option value="other">سایر</option>
                         </select>
                     </div>
@@ -1990,17 +2096,55 @@
                 title: 'دستیار مشاور حقوقی هوشمند',
                 status: 'فعال و عملیاتی',
                 industry: 'خدمات حقوقی و قضایی',
-                description: 'یک دستیار هوشمند تخصصی برای ارائه مشاوره اولیه حقوقی، پاسخ به سوالات رایج و راهنمایی مراجعان. این سیستم با بهره‌گیری از هوش مصنوعی، اطلاعات حقوقی را به زبانی ساده و قابل‌فهم ارائه می‌دهد و به کاهش مراجعات حضوری کمک شایانی کرده است.',
+                description: 'یک دستیار هوشمند تخصصی برای ارائه مشاوره اولیه حقوقی، پاسخ به سوالات رایج و راهنمایی مراجعان. این سیستم با بهره‌گیری از هوش مصنوعی، اطلاعات حقوقی را به زبانی ساده و قابل‌فهم ارائه می‌دهد و به کاهش مراجعات حضوری کمک شایانی کرده است. شما می‌توانید موکل بیشتری جذب کنید و موکلان خود را در یک پنل مدیریت با ریز جزییات موضوع حقوقی و شماره تماس ببینید. این دستیار به شما کمک می‌کند تا پرونده‌های خود را به صورت سازمان‌یافته مدیریت کنید و پاسخگویی به موکلان را با سرعت بیشتری انجام دهید.',
                 features: [
                     'پاسخ به سوالات حقوقی رایج',
                     'راهنمایی مراجعان در موضوعات مختلف',
                     'مشاوره اولیه در زمینه دعاوی',
                     'اطلاع‌رسانی از قوانین و مقررات',
                     'ارائه نمونه قراردادها',
-                    'تعیین وقت مشاوره حضوری'
+                    'تعیین وقت مشاوره حضوری',
+                    'پنل مدیریت موکلان با جزئیات کامل',
+                    'پیگیری وضعیت پرونده‌ها'
                 ],
-                result: 'کاهش ۴۰٪ مراجعات حضوری',
+                result: 'کاهش ۴۰٪ مراجعات حضوری و افزایش ۳۰٪ جذب موکل جدید',
                 demoUrl: 'https://legal.sofiaai.ir'
+            },
+            psychology: {
+                icon: '🧠',
+                title: 'دستیار مشاوره روانشناسی هوشمند',
+                status: 'فعال و عملیاتی',
+                industry: 'مرکز روانشناسی آرامش',
+                description: 'یک دستیار هوشمند برای مشاوره اولیه روانشناسی، غربالگری سلامت روان و ارائه محتوای آرامش‌بخش. این سیستم به مراجعین کمک می‌کند تا در محیطی امن و محرمانه، مشکلات خود را مطرح کنند و راهنمایی‌های اولیه دریافت نمایند. همچنین روانشناسان می‌توانند از طریق پنل مدیریت، وضعیت مراجعین را پیگیری کرده و برنامه درمانی مناسبی برای آنها تدوین کنند.',
+                features: [
+                    'مشاوره اولیه روانشناسی',
+                    'غربالگری سلامت روان',
+                    'ارائه محتوای آرامش‌بخش',
+                    'تعیین وقت مشاوره حضوری و آنلاین',
+                    'پیگیری وضعیت مراجعین',
+                    'پنل مدیریت روانشناسان',
+                    'گزارش‌گیری از وضعیت مراجعین'
+                ],
+                result: 'افزایش ۵۰٪ مراجعات آنلاین و کاهش ۳۵٪ هزینه‌های اداری',
+                demoUrl: 'https://psychology.sofiaai.ir'
+            },
+            education: {
+                icon: '🎓',
+                title: 'دستیار آموزش هوشمند',
+                status: 'فعال و عملیاتی',
+                industry: 'موسسه آموزشی نوین',
+                description: 'یک دستیار هوشمند برای پاسخ به سوالات دانش‌آموزان، راهنمایی ثبت‌نام و اطلاع‌رسانی رویدادهای آموزشی. این سیستم با استفاده از هوش مصنوعی، تجربه یادگیری را برای دانش‌آموزان و والدین ساده‌تر می‌کند و به مدیران آموزشی کمک می‌کند تا فرآیندهای آموزشی را بهینه‌سازی کنند.',
+                features: [
+                    'پاسخ به سوالات درسی',
+                    'راهنمایی ثبت‌نام',
+                    'اطلاع‌رسانی رویدادها',
+                    'پیگیری پیشرفت تحصیلی',
+                    'ارائه محتوای آموزشی',
+                    'پنل مدیریت معلمان',
+                    'گزارش‌گیری از عملکرد دانش‌آموزان'
+                ],
+                result: 'افزایش ۳۰٪ رضایت دانش‌آموزان و کاهش ۲۵٪ زمان پاسخگویی',
+                demoUrl: 'https://education.sofiaai.ir'
             }
         };
 
@@ -2302,6 +2446,8 @@
                 'tech': 'فناوری و نرم‌افزار',
                 'industry': 'صنعتی و تولیدی',
                 'energy': 'انرژی و نفت',
+                'psychology': 'روانشناسی و مشاوره',
+                'fitness': 'تناسب اندام و سلامت',
                 'custom': 'سایر'
             };
             
@@ -2311,6 +2457,7 @@
                 'internal': 'داخلی سازمانی',
                 'order': 'سفارش‌گیری و رزرو',
                 'info': 'اطلاع‌رسانی و راهنمایی',
+                'consulting': 'مشاوره و راهنمایی',
                 'other': 'سایر'
             };
             
