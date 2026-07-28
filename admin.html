@@ -583,7 +583,6 @@
         .priority-low { color: var(--success); font-weight: 700; }
         .priority-urgent { color: #e74c3c; font-weight: 700; }
 
-        /* ===== بخش تغییر رمز عبور در تب تنظیمات ===== */
         .password-change-box {
             background: var(--bg-body);
             padding: 24px 28px;
@@ -916,7 +915,7 @@
             </button>
             <div id="settingsStatus" class="status-msg"></div>
 
-            <!-- ===== بخش تغییر رمز عبور مدیر (اصلاح‌شده) ===== -->
+            <!-- ===== بخش تغییر رمز عبور مدیر ===== -->
             <div style="margin-top:32px; padding-top:24px; border-top:2px solid var(--border-color);">
                 <h3 style="margin-bottom:16px; font-weight:800; color:var(--danger);">
                     <i class="fas fa-key"></i> تغییر رمز عبور مدیر
@@ -1027,7 +1026,7 @@
     <script>
         // ===== تنظیمات =====
         const API_BASE = 'https://sofiaaisite.sofiaai.ir';
-        const ADMIN_PASSWORD = 'Ard$447100';
+        let ADMIN_PASSWORD_HASH = null; // رمز هش‌شده از سرور
 
         const categoryLabels = {
             'general': 'عمومی',
@@ -1055,37 +1054,86 @@
         };
 
         // =============================================
+        // ===== دریافت رمز عبور از سرور =====
+        // =============================================
+        async function getAdminPassword() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/password`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    ADMIN_PASSWORD_HASH = data.hashed_password;
+                    console.log('✅ رمز عبور مدیر از سرور دریافت شد');
+                    return true;
+                } else {
+                    console.error('❌ خطا در دریافت رمز عبور:', data.error);
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ خطا در دریافت رمز عبور:', error);
+                return false;
+            }
+        }
+
+        // =============================================
         // ===== ورود =====
         // =============================================
-        function checkLogin() {
+        async function checkLogin() {
             const passwordInput = document.getElementById('adminPassword');
             const errorDiv = document.getElementById('loginError');
             const password = passwordInput.value.trim();
 
-            if (password === ADMIN_PASSWORD) {
-                errorDiv.style.display = 'none';
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAllData();
-                showToast('✅ ورود موفق!', 'success');
-            } else {
+            if (!password) {
+                errorDiv.textContent = '❌ لطفاً رمز عبور را وارد کنید!';
                 errorDiv.style.display = 'block';
-                passwordInput.value = '';
                 passwordInput.focus();
-                showToast('❌ رمز عبور اشتباه است!', 'error');
+                return;
+            }
+
+            // اگر هنوز رمز از سرور دریافت نشده، دریافت کن
+            if (!ADMIN_PASSWORD_HASH) {
+                const loaded = await getAdminPassword();
+                if (!loaded) {
+                    errorDiv.textContent = '❌ خطا در ارتباط با سرور!';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+            }
+
+            // ارسال رمز به سرور برای بررسی
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/verify-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    errorDiv.style.display = 'none';
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('adminPanel').style.display = 'block';
+                    loadAllData();
+                    showToast('✅ ورود موفق!', 'success');
+                } else {
+                    errorDiv.textContent = '❌ رمز عبور اشتباه است!';
+                    errorDiv.style.display = 'block';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    showToast('❌ رمز عبور اشتباه است!', 'error');
+                }
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                errorDiv.textContent = '❌ خطا در ارتباط با سرور!';
+                errorDiv.style.display = 'block';
+                showToast('❌ خطا در ارتباط با سرور', 'error');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('adminPassword');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') checkLogin();
-                });
-            }
-            initTabs();
-        });
-
+        // =============================================
+        // ===== خروج =====
+        // =============================================
         function logout() {
             if (confirm('آیا مطمئن هستید؟')) {
                 document.getElementById('adminPanel').style.display = 'none';
@@ -2605,16 +2653,15 @@
         }
 
         // =============================================
-        // ===== تغییر رمز عبور مدیر (اصلاح‌شده) =====
+        // ===== تغییر رمز عبور مدیر =====
         // =============================================
-        function changeAdminPassword() {
+        async function changeAdminPassword() {
             const currentPassword = document.getElementById('adminCurrentPassword').value.trim();
             const newPassword = document.getElementById('adminNewPassword').value.trim();
             const confirmPassword = document.getElementById('adminConfirmPassword').value.trim();
             const messageDiv = document.getElementById('adminPassMessage');
             const btn = document.getElementById('changeAdminPasswordBtn');
 
-            // reset message
             messageDiv.className = 'pass-message';
             messageDiv.style.display = 'none';
 
@@ -2622,16 +2669,6 @@
             if (!currentPassword) {
                 showToast('⚠️ لطفاً رمز عبور فعلی را وارد کنید', 'warning');
                 document.getElementById('adminCurrentPassword').focus();
-                return;
-            }
-
-            if (currentPassword !== ADMIN_PASSWORD) {
-                messageDiv.textContent = '❌ رمز عبور فعلی اشتباه است!';
-                messageDiv.className = 'pass-message error';
-                messageDiv.style.display = 'block';
-                document.getElementById('adminCurrentPassword').value = '';
-                document.getElementById('adminCurrentPassword').focus();
-                showToast('❌ رمز عبور فعلی اشتباه است!', 'error');
                 return;
             }
 
@@ -2647,7 +2684,7 @@
                 return;
             }
 
-            if (newPassword === ADMIN_PASSWORD) {
+            if (currentPassword === newPassword) {
                 showToast('⚠️ رمز عبور جدید نمی‌تواند با رمز فعلی یکسان باشد', 'warning');
                 document.getElementById('adminNewPassword').value = '';
                 document.getElementById('adminConfirmPassword').value = '';
@@ -2655,28 +2692,21 @@
                 return;
             }
 
-            // غیرفعال کردن دکمه
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال تغییر...';
 
-            // ارسال درخواست به سرور
-            fetch(`${API_BASE}/api/admin/change-password`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    current_password: currentPassword,
-                    new_password: newPassword
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => {
-                        throw new Error(data.message || 'خطا در تغییر رمز عبور');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/change-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        current_password: currentPassword,
+                        new_password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
                 if (data.success) {
                     messageDiv.textContent = '✅ رمز عبور با موفقیت تغییر کرد!';
                     messageDiv.className = 'pass-message success';
@@ -2687,28 +2717,48 @@
                     document.getElementById('adminCurrentPassword').value = '';
                     document.getElementById('adminNewPassword').value = '';
                     document.getElementById('adminConfirmPassword').value = '';
+                    
+                    // به‌روزرسانی رمز هش‌شده در کلاینت
+                    ADMIN_PASSWORD_HASH = data.hashed_password;
+                    
+                    // پیشنهاد خروج و ورود مجدد با رمز جدید
+                    setTimeout(() => {
+                        if (confirm('🔐 رمز عبور با موفقیت تغییر کرد. برای ادامه باید با رمز جدید وارد شوید. آیا می‌خواهید خارج شوید و دوباره وارد شوید؟')) {
+                            logout();
+                        }
+                    }, 1500);
                 } else {
                     messageDiv.textContent = '❌ ' + (data.message || 'خطا در تغییر رمز عبور');
                     messageDiv.className = 'pass-message error';
                     messageDiv.style.display = 'block';
                     showToast('❌ ' + (data.message || 'خطا در تغییر رمز عبور'), 'error');
                 }
-            })
-            .catch(err => {
-                console.error('❌ خطا:', err);
-                messageDiv.textContent = '❌ ' + err.message;
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                messageDiv.textContent = '❌ خطا در ارتباط با سرور: ' + error.message;
                 messageDiv.className = 'pass-message error';
                 messageDiv.style.display = 'block';
-                showToast('❌ ' + err.message, 'error');
-            })
-            .finally(() => {
+                showToast('❌ خطا در ارتباط با سرور', 'error');
+            } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-save"></i> تغییر رمز عبور';
-            });
+            }
         }
 
-        // ===== اضافه کردن قابلیت enter برای فیلدهای تغییر رمز =====
+        // ===== مقداردهی اولیه =====
         document.addEventListener('DOMContentLoaded', function() {
+            // دریافت رمز عبور از سرور هنگام بارگذاری صفحه
+            getAdminPassword();
+            
+            const passwordInput = document.getElementById('adminPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') checkLogin();
+                });
+            }
+            initTabs();
+
+            // اضافه کردن قابلیت enter برای فیلدهای تغییر رمز
             const inputs = ['adminCurrentPassword', 'adminNewPassword', 'adminConfirmPassword'];
             inputs.forEach(id => {
                 const input = document.getElementById(id);
