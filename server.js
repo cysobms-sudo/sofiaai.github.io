@@ -939,9 +939,10 @@ app.get('/api/admin/stats', (req, res) => {
         gallery: 'SELECT COUNT(*) as count FROM gallery',
         user_requests: 'SELECT COUNT(*) as count FROM user_requests',
         chatbot_requests: 'SELECT COUNT(*) as count FROM chatbot_requests',
-        cooperation: 'SELECT COUNT(*) as count FROM cooperation_requests'
+        cooperation: 'SELECT COUNT(*) as count FROM cooperation_requests',
+        contact_messages: 'SELECT COUNT(*) as count FROM contact_messages'
     };
-    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0, user_requests: 0, chatbot_requests: 0, cooperation: 0 };
+    let results = { articles: 0, comments: 0, pending: 0, users: 0, cart: 0, gallery: 0, user_requests: 0, chatbot_requests: 0, cooperation: 0, contact_messages: 0 };
     let completed = 0;
     const totalQueries = Object.keys(queries).length;
     Object.keys(queries).forEach(key => {
@@ -1281,13 +1282,81 @@ app.get('/api/admin/stats/visits', (req, res) => {
 });
 
 // ==================================================
-// ===== شروع سرور =====
+// ===== API مدیریت رمز عبور مدیر =====
 // ==================================================
-// ==================================================
-// ===== API تغییر رمز عبور مدیر =====
-// ==================================================
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync('Ard$447100', 10);
 
+// ===== دریافت رمز عبور مدیر =====
+app.get('/api/admin/password', (req, res) => {
+    db.query(
+        "SELECT setting_value FROM site_settings WHERE setting_key = 'admin_password_hash'",
+        (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت رمز عبور:', err);
+                return res.status(500).json({ success: false, error: 'خطا در دریافت اطلاعات' });
+            }
+            
+            if (results.length > 0) {
+                res.json({ success: true, hashed_password: results[0].setting_value });
+            } else {
+                // رمز پیش‌فرض: Ard$447100
+                const defaultHash = bcrypt.hashSync('Ard$447100', 10);
+                db.query(
+                    "INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)",
+                    ['admin_password_hash', defaultHash],
+                    (err) => {
+                        if (err) {
+                            console.error('❌ خطا در ذخیره رمز پیش‌فرض:', err);
+                            return res.status(500).json({ success: false, error: 'خطا در ذخیره رمز' });
+                        }
+                        console.log('✅ رمز پیش‌فرض مدیر در دیتابیس ذخیره شد');
+                        res.json({ success: true, hashed_password: defaultHash });
+                    }
+                );
+            }
+        }
+    );
+});
+
+// ===== بررسی رمز عبور برای ورود =====
+app.post('/api/admin/verify-password', async (req, res) => {
+    const { password } = req.body;
+    
+    if (!password) {
+        return res.status(400).json({ success: false, message: 'رمز عبور الزامی است.' });
+    }
+    
+    db.query(
+        "SELECT setting_value FROM site_settings WHERE setting_key = 'admin_password_hash'",
+        async (err, results) => {
+            if (err) {
+                console.error('❌ خطا در دریافت رمز عبور:', err);
+                return res.status(500).json({ success: false, message: 'خطا در بررسی رمز عبور' });
+            }
+            
+            let hashedPassword;
+            if (results.length > 0) {
+                hashedPassword = results[0].setting_value;
+            } else {
+                // رمز پیش‌فرض
+                hashedPassword = bcrypt.hashSync('Ard$447100', 10);
+                db.query(
+                    "INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)",
+                    ['admin_password_hash', hashedPassword]
+                );
+            }
+            
+            const isMatch = await bcrypt.compare(password, hashedPassword);
+            
+            if (isMatch) {
+                res.json({ success: true });
+            } else {
+                res.status(401).json({ success: false, message: 'رمز عبور اشتباه است!' });
+            }
+        }
+    );
+});
+
+// ===== تغییر رمز عبور مدیر =====
 app.post('/api/admin/change-password', async (req, res) => {
     const { current_password, new_password } = req.body;
     
@@ -1299,27 +1368,56 @@ app.post('/api/admin/change-password', async (req, res) => {
         return res.status(400).json({ success: false, message: 'رمز عبور جدید باید حداقل ۶ کاراکتر باشد.' });
     }
     
-    const isMatch = await bcrypt.compare(current_password, ADMIN_PASSWORD_HASH);
-    
-    if (!isMatch) {
-        return res.status(401).json({ success: false, message: 'رمز عبور فعلی اشتباه است!' });
-    }
-    
-    const newHashedPassword = await bcrypt.hash(new_password, 10);
-    
     db.query(
-        'INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)',
-        ['admin_password_hash', newHashedPassword],
-        (err, result) => {
+        "SELECT setting_value FROM site_settings WHERE setting_key = 'admin_password_hash'",
+        async (err, results) => {
             if (err) {
-                console.error('❌ خطا در ذخیره رمز عبور جدید:', err);
-                return res.status(500).json({ success: false, message: 'خطا در ذخیره رمز عبور جدید' });
+                console.error('❌ خطا در دریافت رمز عبور:', err);
+                return res.status(500).json({ success: false, message: 'خطا در بررسی رمز عبور' });
             }
-            console.log('✅ رمز عبور مدیر با موفقیت تغییر کرد!');
-            res.json({ success: true, message: '✅ رمز عبور با موفقیت تغییر کرد!' });
+            
+            let hashedPassword;
+            if (results.length > 0) {
+                hashedPassword = results[0].setting_value;
+            } else {
+                hashedPassword = bcrypt.hashSync('Ard$447100', 10);
+                db.query(
+                    "INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)",
+                    ['admin_password_hash', hashedPassword]
+                );
+            }
+            
+            const isMatch = await bcrypt.compare(current_password, hashedPassword);
+            
+            if (!isMatch) {
+                return res.status(401).json({ success: false, message: 'رمز عبور فعلی اشتباه است!' });
+            }
+            
+            const newHashedPassword = await bcrypt.hash(new_password, 10);
+            
+            db.query(
+                "UPDATE site_settings SET setting_value = ? WHERE setting_key = 'admin_password_hash'",
+                [newHashedPassword],
+                (err, result) => {
+                    if (err) {
+                        console.error('❌ خطا در ذخیره رمز عبور جدید:', err);
+                        return res.status(500).json({ success: false, message: 'خطا در ذخیره رمز عبور جدید' });
+                    }
+                    console.log('✅ رمز عبور مدیر با موفقیت تغییر کرد!');
+                    res.json({ 
+                        success: true, 
+                        message: '✅ رمز عبور با موفقیت تغییر کرد!',
+                        hashed_password: newHashedPassword
+                    });
+                }
+            );
         }
     );
 });
+
+// ==================================================
+// ===== شروع سرور =====
+// ==================================================
 app.listen(port, '0.0.0.0', () => {
     console.log(`\n🚀 ========================================`);
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
@@ -1346,6 +1444,10 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`✅ API آمار: /api/admin/stats`);
     console.log(`✅ API ثبت بازدید: /api/stats/visit`);
     console.log(`✅ API آمار بازدید: /api/admin/stats/visits`);
+    console.log(`\n🔐 ===== API های مدیریت رمز عبور =====`);
+    console.log(`✅ دریافت رمز عبور: /api/admin/password (GET)`);
+    console.log(`✅ بررسی رمز عبور: /api/admin/verify-password (POST)`);
+    console.log(`✅ تغییر رمز عبور: /api/admin/change-password (POST)`);
     console.log(`\n📁 فایل‌های استاتیک:`);
     console.log(`   📂 /images → public/images`);
     console.log(`   📂 /images/gallery → public/images/gallery`);
