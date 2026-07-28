@@ -68,6 +68,10 @@
             from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
             to { opacity: 0; transform: translateX(-50%) translateY(-80px) scale(0.95); }
         }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
         .fade-up { animation: fadeUp 0.8s ease; }
         .fade-up-delay-1 { animation: fadeUp 0.8s ease 0.1s both; }
         .fade-up-delay-2 { animation: fadeUp 0.8s ease 0.2s both; }
@@ -528,85 +532,141 @@
             margin-top: 8px;
         }
 
-        /* ===== نمونه کارها (12 عدد) ===== */
-        .portfolio-section {
-            padding: 60px 0;
-            background: var(--bg-light);
+        /* ===== نمونه کارهای عملی (نمایش ویژه) ===== */
+        .portfolio-showcase {
+            padding: 70px 0;
+            background: linear-gradient(145deg, #FBF8FF, #F0E8FF);
             border-bottom: 1px solid var(--border-color);
         }
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+        .portfolio-showcase .section-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
-        .portfolio-card {
+        .portfolio-showcase .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+        .portfolio-showcase .section-header h2 .highlight {
+            color: var(--primary);
+        }
+        .portfolio-showcase .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 8px auto 0;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+        }
+
+        .showcase-card {
             background: #fff;
             border-radius: var(--radius);
-            padding: 28px 24px;
+            overflow: hidden;
             border: 2px solid var(--border-color);
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
         }
-        .portfolio-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--assistant-gradient-1), var(--assistant-gradient-2));
-            opacity: 0;
-            transition: var(--transition);
-        }
-        .portfolio-card:hover {
-            transform: translateY(-6px);
+        .showcase-card:hover {
+            transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
-            border-color: var(--primary-light);
+            border-color: var(--primary);
         }
-        .portfolio-card:hover::before {
-            opacity: 1;
+
+        .showcase-card .card-header {
+            padding: 28px 28px 16px;
+            position: relative;
         }
-        .portfolio-card .card-icon {
-            font-size: 2rem;
+        .showcase-card .card-header .icon-badge {
+            font-size: 2.8rem;
             display: block;
             margin-bottom: 8px;
         }
-        .portfolio-card .badge-status {
+        .showcase-card .card-header .status-badge {
             display: inline-block;
             background: var(--success);
             color: #fff;
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .portfolio-card h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .portfolio-card .industry-tag {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            display: block;
-        }
-        .portfolio-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-        .portfolio-card .result-badge {
-            display: inline-block;
-            background: rgba(255, 184, 0, 0.15);
-            color: var(--secondary-dark);
-            padding: 4px 14px;
+            padding: 2px 14px;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
-            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .showcase-card .card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .showcase-card .card-header .industry-tag {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .showcase-card .card-body {
+            padding: 0 28px 20px;
+        }
+        .showcase-card .card-body p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+        .showcase-card .card-body .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 16px;
+        }
+        .showcase-card .card-body .features-list li {
+            padding: 4px 0;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .showcase-card .card-body .features-list li i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .showcase-card .card-footer {
+            padding: 16px 28px 28px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .showcase-card .card-footer .demo-link {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .showcase-card .card-footer .demo-link:hover {
+            background: var(--primary-dark);
+            transform: scale(1.04);
+            box-shadow: 0 4px 20px rgba(108, 60, 225, 0.3);
+        }
+        .showcase-card .card-footer .result-badge {
+            background: rgba(255, 184, 0, 0.15);
+            color: var(--secondary-dark);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
         /* ===== فرآیند کار ===== */
@@ -922,8 +982,10 @@
             background-clip: text;
         }
 
+        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 992px) {
             .assistant-explanation { grid-template-columns: 1fr; }
+            .showcase-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             .service-hero h1 { font-size: 2.2rem; }
@@ -937,7 +999,8 @@
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .service-hero .floating-icon { display: none; }
             .process-timeline { grid-template-columns: 1fr 1fr; }
-            .portfolio-grid { grid-template-columns: 1fr; }
+            .showcase-card .card-footer { flex-direction: column; align-items: stretch; }
+            .showcase-card .card-footer .demo-link { justify-content: center; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
@@ -950,6 +1013,7 @@
             .stat-item .number { font-size: 1.6rem; }
             .process-timeline { grid-template-columns: 1fr; }
             .use-cases-grid { grid-template-columns: 1fr; }
+            .showcase-card .card-header h3 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -1185,121 +1249,71 @@
         </div>
     </section>
 
-    <!-- ===== نمونه کارها (12 عدد) ===== -->
-    <section class="portfolio-section fade-up">
+    <!-- ===== نمونه کارهای عملی (نمایش ویژه) ===== -->
+    <section class="portfolio-showcase fade-up-delay-2">
         <div class="container">
             <div class="section-header">
-                <h2>🏆 <span class="highlight">نمونه کارهای</span> دستیارهای هوشمند</h2>
-                <p>برخی از پروژه‌های موفق دستیارهای هوشمند در صنایع مختلف</p>
+                <h2>🏆 نمونه‌های عملی <span class="highlight">دستیارهای هوشمند</span></h2>
+                <p>مشاهده کنید که دستیارهای هوشمند چگونه صنایع مختلف را متحول کرده‌اند</p>
             </div>
-            <div class="portfolio-grid">
-                <!-- 1 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🍽️</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار سفارش‌گیری رستوران</h4>
-                    <span class="industry-tag">رستوران و پذیرایی</span>
-                    <p>سیستم سفارش‌گیری خودکار با قابلیت رزرو میز و پاسخ به سوالات</p>
-                    <span class="result-badge">📈 افزایش ۴۰٪ سفارشات آنلاین</span>
+
+            <div class="showcase-grid">
+                <!-- کارت اول: دستیار رستوران -->
+                <div class="showcase-card">
+                    <div class="card-header">
+                        <span class="icon-badge">🍽️</span>
+                        <span class="status-badge">✅ فعال و عملیاتی</span>
+                        <h3>دستیار سفارش‌گیری هوشمند رستوران</h3>
+                        <span class="industry-tag">🏛️ رستوران سنتی شهرزاد</span>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            یک دستیار هوشمند کامل برای مدیریت فرآیند سفارش‌گیری، پرداخت و پیگیری سفارشات رستوران‌ها.
+                            این سیستم با استفاده از چت‌بات هوشمند، تجربه‌ای بی‌نظیر برای مشتریان و مدیریت آسان برای رستوران‌داران فراهم می‌کند.
+                        </p>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> ثبت سفارش از طریق چت‌بات هوشمند</li>
+                            <li><i class="fas fa-check-circle"></i> مدیریت منو و قیمت‌ها به صورت پویا</li>
+                            <li><i class="fas fa-check-circle"></i> پنل مدیریت و آشپزخانه جداگانه</li>
+                            <li><i class="fas fa-check-circle"></i> اتصال به درگاه پرداخت آنلاین</li>
+                            <li><i class="fas fa-check-circle"></i> گزارش‌گیری و تحلیل فروش</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://shahrzad.sofiaai.ir" target="_blank" class="demo-link">
+                            <i class="fas fa-external-link-alt"></i> مشاهده دمو
+                        </a>
+                        <span class="result-badge">📈 افزایش ۴۰٪ سفارشات آنلاین</span>
+                    </div>
                 </div>
-                <!-- 2 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🛍️</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار فروشگاه اینترنتی</h4>
-                    <span class="industry-tag">فروشگاهی و خرده‌فروشی</span>
-                    <p>راهنمایی مشتریان، پیشنهاد محصولات و پیگیری سفارشات</p>
-                    <span class="result-badge">📈 کاهش ۶۰٪ زمان پاسخگویی</span>
-                </div>
-                <!-- 3 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🏥</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار نوبت‌دهی پزشکی</h4>
-                    <span class="industry-tag">سلامت و درمان</span>
-                    <p>تنظیم نوبت، یادآوری و پاسخ به سوالات اولیه بیماران</p>
-                    <span class="result-badge">📈 افزایش ۵۰٪ نوبت‌دهی اینترنتی</span>
-                </div>
-                <!-- 4 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🏦</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار خدمات بانکی</h4>
-                    <span class="industry-tag">مالی و بانکی</span>
-                    <p>ارائه اطلاعات حساب، مشاوره اولیه و هدایت مشتریان</p>
-                    <span class="result-badge">📈 کاهش ۳۰٪ تماس‌های تکراری</span>
-                </div>
-                <!-- 5 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🎓</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار آموزشی دانشگاه</h4>
-                    <span class="industry-tag">آموزش و پرورش</span>
-                    <p>پاسخ به سوالات دانشجویان، راهنمایی ثبت‌نام و اطلاع‌رسانی</p>
-                    <span class="result-badge">📈 افزایش ۵۵٪ ثبت‌نام اینترنتی</span>
-                </div>
-                <!-- 6 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">✈️</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار هتل و گردشگری</h4>
-                    <span class="industry-tag">گردشگری و هتل‌داری</span>
-                    <p>رزرو هتل، راهنمایی تورها و پاسخ به سوالات گردشگران</p>
-                    <span class="result-badge">📈 افزایش ۳۵٪ رزرو آنلاین</span>
-                </div>
-                <!-- 7 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">⚖️</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار حقوقی</h4>
-                    <span class="industry-tag">حقوقی و قضایی</span>
-                    <p>پاسخ به سوالات حقوقی و راهنمایی مراجعان</p>
-                    <span class="result-badge">📈 کاهش ۴۰٪ مراجعات حضوری</span>
-                </div>
-                <!-- 8 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">💼</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار داخلی سازمان</h4>
-                    <span class="industry-tag">شرکتی و سازمانی</span>
-                    <p>پاسخ به سوالات کارمندان و راهنمایی‌های سازمانی</p>
-                    <span class="result-badge">📈 افزایش ۴۵٪ بهره‌وری</span>
-                </div>
-                <!-- 9 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🏛️</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار شهرداری</h4>
-                    <span class="industry-tag">دولتی و سازمانی</span>
-                    <p>پاسخ به سوالات شهروندان و اطلاع‌رسانی خدمات شهری</p>
-                    <span class="result-badge">📈 کاهش ۵۰٪ مراجعات</span>
-                </div>
-                <!-- 10 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">📱</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار پشتیبانی فنی</h4>
-                    <span class="industry-tag">فناوری و نرم‌افزار</span>
-                    <p>پاسخ به سوالات فنی و راهنمایی کاربران</p>
-                    <span class="result-badge">📈 کاهش ۵۵٪ تیکت‌های پشتیبانی</span>
-                </div>
-                <!-- 11 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">🏭</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار صنعتی</h4>
-                    <span class="industry-tag">صنعتی و تولیدی</span>
-                    <p>پاسخ به سوالات فنی کارکنان و راهنمایی‌های ایمنی</p>
-                    <span class="result-badge">📈 افزایش ۳۰٪ سرعت پاسخگویی</span>
-                </div>
-                <!-- 12 -->
-                <div class="portfolio-card">
-                    <span class="card-icon">⚡</span>
-                    <span class="badge-status">✅ انجام شده</span>
-                    <h4>دستیار انرژی</h4>
-                    <span class="industry-tag">انرژی و نفت</span>
-                    <p>پاسخ به سوالات فنی و راهنمایی کارکنان</p>
-                    <span class="result-badge">📈 کاهش ۲۵٪ خطاهای انسانی</span>
+
+                <!-- کارت دوم: دستیار حقوقی -->
+                <div class="showcase-card">
+                    <div class="card-header">
+                        <span class="icon-badge">⚖️</span>
+                        <span class="status-badge">✅ فعال و عملیاتی</span>
+                        <h3>دستیار مشاور حقوقی هوشمند</h3>
+                        <span class="industry-tag">🏛️ خدمات حقوقی و قضایی</span>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            یک دستیار هوشمند تخصصی برای ارائه مشاوره اولیه حقوقی، پاسخ به سوالات رایج و راهنمایی مراجعان.
+                            این سیستم با بهره‌گیری از هوش مصنوعی، اطلاعات حقوقی را به زبانی ساده و قابل‌فهم ارائه می‌دهد.
+                        </p>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> پاسخ به سوالات حقوقی رایج</li>
+                            <li><i class="fas fa-check-circle"></i> راهنمایی مراجعان در موضوعات مختلف</li>
+                            <li><i class="fas fa-check-circle"></i> مشاوره اولیه در زمینه دعاوی</li>
+                            <li><i class="fas fa-check-circle"></i> اطلاع‌رسانی از قوانین و مقررات</li>
+                            <li><i class="fas fa-check-circle"></i> کاهش ۴۰٪ مراجعات حضوری</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://legal.sofiaai.ir" target="_blank" class="demo-link">
+                            <i class="fas fa-external-link-alt"></i> مشاهده دمو
+                        </a>
+                        <span class="result-badge">📈 کاهش ۴۰٪ مراجعات حضوری</span>
+                    </div>
                 </div>
             </div>
         </div>
