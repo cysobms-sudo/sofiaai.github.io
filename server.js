@@ -1283,6 +1283,43 @@ app.get('/api/admin/stats/visits', (req, res) => {
 // ==================================================
 // ===== شروع سرور =====
 // ==================================================
+// ==================================================
+// ===== API تغییر رمز عبور مدیر =====
+// ==================================================
+const ADMIN_PASSWORD_HASH = bcrypt.hashSync('Ard$447100', 10);
+
+app.post('/api/admin/change-password', async (req, res) => {
+    const { current_password, new_password } = req.body;
+    
+    if (!current_password || !new_password) {
+        return res.status(400).json({ success: false, message: 'رمز عبور فعلی و جدید الزامی است.' });
+    }
+    
+    if (new_password.length < 6) {
+        return res.status(400).json({ success: false, message: 'رمز عبور جدید باید حداقل ۶ کاراکتر باشد.' });
+    }
+    
+    const isMatch = await bcrypt.compare(current_password, ADMIN_PASSWORD_HASH);
+    
+    if (!isMatch) {
+        return res.status(401).json({ success: false, message: 'رمز عبور فعلی اشتباه است!' });
+    }
+    
+    const newHashedPassword = await bcrypt.hash(new_password, 10);
+    
+    db.query(
+        'INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)',
+        ['admin_password_hash', newHashedPassword],
+        (err, result) => {
+            if (err) {
+                console.error('❌ خطا در ذخیره رمز عبور جدید:', err);
+                return res.status(500).json({ success: false, message: 'خطا در ذخیره رمز عبور جدید' });
+            }
+            console.log('✅ رمز عبور مدیر با موفقیت تغییر کرد!');
+            res.json({ success: true, message: '✅ رمز عبور با موفقیت تغییر کرد!' });
+        }
+    );
+});
 app.listen(port, '0.0.0.0', () => {
     console.log(`\n🚀 ========================================`);
     console.log(`🚀 سرور در حال اجرا روی پورت ${port}`);
