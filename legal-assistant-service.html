@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دستیار حقوقی هوشمند | سوفیا AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #6C3CE1;
+            --primary-dark: #4A1F9E;
+            --primary-light: #8B6CE0;
+            --gold: #d4a843;
+            --gold-light: #f5e6b8;
+            --gold-dark: #b8952e;
+            --secondary: #FFB800;
+            --bg-dark: #1a1a2e;
+            --bg-card: #2d2d44;
+            --text-light: #f0f2f8;
+            --text-muted: #aaa;
+            --bg-light: #fdf8ee;
+            --card-white: #ffffff;
+            --shadow: 0 20px 60px rgba(0,0,0,0.3);
+            --shadow-gold: 0 10px 40px rgba(212, 168, 67, 0.25);
+            --radius: 24px;
+            --radius-sm: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            direction: rtl;
+            line-height: 1.9;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ===== انیمیشن‌ها ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes borderGlow {
+            0%, 100% { border-color: var(--gold); box-shadow: 0 0 30px rgba(212,168,67,0.15); }
+            50% { border-color: var(--gold-light); box-shadow: 0 0 60px rgba(212,168,67,0.25); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.95); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.95); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .fade-up { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+        .fade-up-d1 { animation: fadeUp 0.8s ease 0.1s forwards; opacity: 0; }
+        .fade-up-d2 { animation: fadeUp 0.8s ease 0.2s forwards; opacity: 0; }
+        .fade-up-d3 { animation: fadeUp 0.8s ease 0.3s forwards; opacity: 0; }
+        .fade-up-d4 { animation: fadeUp 0.8s ease 0.4s forwards; opacity: 0; }
+        .fade-up-d5 { animation: fadeUp 0.8s ease 0.5s forwards; opacity: 0; }
+
+        /* ===== نوار بالایی ===== */
+        .top-bar {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(212, 168, 67, 0.15);
+            padding: 8px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .top-bar .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .top-bar .logo-area .logo-text {
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .top-bar .logo-area .logo-sub {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+        .top-bar .nav-links {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .top-bar .nav-links a {
+            color: var(--text-light);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+        .top-bar .nav-links a:hover {
+            opacity: 1;
+            background: rgba(212, 168, 67, 0.1);
+            color: var(--gold);
+        }
+        .top-bar .nav-links .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark) !important;
+            font-weight: 700;
+            padding: 6px 24px;
+            border-radius: 30px;
+            opacity: 1;
+            box-shadow: 0 4px 20px rgba(212, 168, 67, 0.25);
+        }
+        .top-bar .nav-links .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(212, 168, 67, 0.35);
+            opacity: 1;
+        }
+        .top-bar .nav-links .btn-cart {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 6px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            opacity: 1;
+            box-shadow: 0 4px 15px rgba(108, 60, 225, 0.2);
+        }
+        .top-bar .nav-links .btn-cart:hover {
+            background: var(--primary-dark);
+            transform: scale(1.04);
+            opacity: 1;
+        }
+        .cart-badge {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            padding: 0 8px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            min-width: 22px;
+            text-align: center;
+        }
+
+        /* ===== هدر اصلی ===== */
+        .hero-section {
+            padding: 60px 0 40px;
+            background: linear-gradient(160deg, #1a1a2e 0%, #2d1b0e 40%, #1a0f07 100%);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(212, 168, 67, 0.06), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-section .floating-icon {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.05;
+            color: var(--gold);
+            pointer-events: none;
+        }
+        .hero-section .floating-icon:nth-child(1) { top: 10%; right: 5%; animation: float 7s ease-in-out infinite; }
+        .hero-section .floating-icon:nth-child(2) { bottom: 15%; left: 5%; animation: float 9s ease-in-out infinite reverse; }
+        .hero-section .floating-icon:nth-child(3) { top: 40%; left: 2%; font-size: 3.5rem; animation: float 8s ease-in-out infinite; }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-text .badge {
+            display: inline-block;
+            background: rgba(212, 168, 67, 0.15);
+            color: var(--gold);
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(212, 168, 67, 0.2);
+            margin-bottom: 16px;
+        }
+        .hero-text .lawyer-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.04);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(212, 168, 67, 0.1);
+        }
+        .hero-text .lawyer-info .name {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold-light);
+        }
+        .hero-text .lawyer-info .phone-link {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1rem;
+            background: rgba(212, 168, 67, 0.1);
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 168, 67, 0.2);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hero-text .lawyer-info .phone-link:hover {
+            background: rgba(212, 168, 67, 0.2);
+            transform: scale(1.04);
+        }
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .hero-text h1 .highlight {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-text .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+            margin-bottom: 24px;
+            max-width: 550px;
+        }
+        .hero-text .price-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(212, 168, 67, 0.08);
+            padding: 14px 32px;
+            border-radius: 60px;
+            border: 2px solid rgba(212, 168, 67, 0.2);
+            backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+        }
+        .hero-text .price-box .price {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+        .hero-text .price-box .price .daily {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .hero-text .price-box .free-badge {
+            background: var(--success);
+            color: #fff;
+            padding: 4px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        .hero-text .price-box .old-price {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 1rem;
+            opacity: 0.5;
+        }
+
+        .hero-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .hero-visual .chat-preview {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            border: 2px solid rgba(212, 168, 67, 0.2);
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: var(--transition);
+            animation: borderGlow 3s infinite;
+        }
+        .hero-visual .chat-preview:hover {
+            transform: translateY(-4px);
+        }
+        .hero-visual .chat-preview .msg-bot {
+            text-align: right;
+            margin-bottom: 12px;
+        }
+        .hero-visual .chat-preview .msg-bot .bubble {
+            display: inline-block;
+            background: rgba(255,255,255,0.06);
+            padding: 10px 16px;
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            max-width: 85%;
+        }
+        .hero-visual .chat-preview .msg-user {
+            text-align: left;
+            margin-bottom: 12px;
+        }
+        .hero-visual .chat-preview .msg-user .bubble {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            padding: 10px 16px;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--bg-dark);
+            font-weight: 700;
+            max-width: 85%;
+        }
+        .hero-visual .chat-preview .msg-time {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+            display: block;
+            margin-top: 4px;
+        }
+        .hero-visual .chat-preview .typing {
+            display: inline-flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.06);
+            padding: 8px 16px;
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+        }
+        .hero-visual .chat-preview .typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .hero-visual .chat-preview .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .hero-visual .chat-preview .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            padding: 16px 40px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 30px rgba(212, 168, 67, 0.25);
+        }
+        .btn-primary:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 45px rgba(212, 168, 67, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-light);
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border: 2px solid rgba(212, 168, 67, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-secondary:hover {
+            background: rgba(212, 168, 67, 0.08);
+            border-color: var(--gold);
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 2.4rem; }
+            .hero-visual .chat-preview { max-width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-text .price-box { flex-direction: column; align-items: stretch; text-align: center; }
+            .hero-buttons { flex-direction: column; }
+            .btn-primary, .btn-secondary { justify-content: center; width: 100%; }
+            .top-bar .container { flex-direction: column; align-items: center; }
+            .top-bar .nav-links { justify-content: center; width: 100%; flex-wrap: wrap; }
+            .hero-text .lawyer-info { flex-direction: column; align-items: stretch; text-align: center; }
+            .hero-text .lawyer-info .phone-link { justify-content: center; }
+        }
+
+        /* ===== بخش مزایا ===== */
+        .benefits-section {
+            padding: 60px 0;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .section-header h2 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--text-light);
+        }
+        .section-header h2 .highlight {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 8px auto 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 28px;
+        }
+        .benefit-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 34px 26px;
+            border: 2px solid rgba(212, 168, 67, 0.06);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+        .benefit-card:hover {
+            border-color: rgba(212, 168, 67, 0.2);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+        .benefit-card .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .benefit-card h4 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text-light);
+        }
+        .benefit-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        /* ===== نمایش پنل مدیریت ===== */
+        .panel-showcase {
+            padding: 60px 0;
+            background: linear-gradient(160deg, #1a1a2e, #2d1b0e);
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+        .panel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .panel-text h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .panel-text h2 .highlight {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .panel-text p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 2.2;
+            margin-bottom: 16px;
+        }
+        .panel-text .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .panel-text .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.95rem;
+        }
+        .panel-text .feature-list li:last-child { border-bottom: none; }
+        .panel-text .feature-list li i {
+            color: var(--gold);
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .panel-visual {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 2px solid rgba(212, 168, 67, 0.1);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .panel-visual:hover {
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+        .panel-visual .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(212, 168, 67, 0.06);
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--gold);
+        }
+        .panel-visual .panel-header .title {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        .panel-visual .panel-header .stats {
+            display: flex;
+            gap: 16px;
+        }
+        .panel-visual .panel-header .stats span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .panel-visual .panel-header .stats span strong {
+            color: var(--gold);
+        }
+        .panel-visual .panel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .panel-visual .panel-table th {
+            text-align: right;
+            padding: 10px 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .panel-visual .panel-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: var(--text-light);
+        }
+        .panel-visual .panel-table .tag {
+            background: rgba(212, 168, 67, 0.12);
+            color: var(--gold);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .panel-visual .panel-table .tag-right {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .panel-visual .panel-table .action-btn {
+            background: rgba(212, 168, 67, 0.1);
+            color: var(--gold);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: var(--transition);
+        }
+        .panel-visual .panel-table .action-btn:hover {
+            background: rgba(212, 168, 67, 0.2);
+        }
+
+        @media (max-width: 992px) {
+            .panel-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .panel-visual .panel-table { font-size: 0.75rem; }
+            .panel-visual .panel-table th, .panel-visual .panel-table td { padding: 6px 8px; }
+            .panel-visual .panel-header { flex-direction: column; gap: 8px; }
+            .panel-visual .panel-header .stats { flex-wrap: wrap; justify-content: center; }
+        }
+
+        /* ===== فرآیند کار ===== */
+        .process-section {
+            padding: 60px 0;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 28px;
+            position: relative;
+        }
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: 10%;
+            left: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            opacity: 0.15;
+            border-radius: 10px;
+            display: none;
+        }
+        @media (min-width: 992px) {
+            .process-steps::before { display: block; }
+        }
+        .process-step {
+            text-align: center;
+            padding: 24px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 2px solid rgba(212, 168, 67, 0.06);
+            transition: var(--transition);
+            position: relative;
+        }
+        .process-step:hover {
+            border-color: rgba(212, 168, 67, 0.2);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-gold);
+        }
+        .process-step .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            border-radius: 50%;
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(212, 168, 67, 0.2);
+        }
+        .process-step h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-light);
+        }
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        /* ===== قیمت‌گذاری ===== */
+        .pricing-section {
+            padding: 60px 0;
+            background: linear-gradient(160deg, #1a1a2e, #2d1b0e);
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+        .pricing-card {
+            max-width: 550px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 48px 40px;
+            border: 2px solid rgba(212, 168, 67, 0.1);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+        }
+        .pricing-card:hover {
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+        .pricing-card .badge-free {
+            display: inline-block;
+            background: var(--success);
+            color: #fff;
+            padding: 4px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .pricing-card .price-main {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.2;
+        }
+        .pricing-card .price-main .currency {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .pricing-card .price-main .daily {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .pricing-card .price-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin: 8px 0 20px;
+        }
+        .pricing-card .price-sub .free-month {
+            color: var(--success);
+            font-weight: 700;
+        }
+        .pricing-card .features-pricing {
+            list-style: none;
+            padding: 0;
+            text-align: right;
+            margin: 20px 0 28px;
+        }
+        .pricing-card .features-pricing li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        .pricing-card .features-pricing li:last-child { border-bottom: none; }
+        .pricing-card .features-pricing li i {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+        .pricing-card .btn-purchase {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            padding: 18px 48px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            width: 100%;
+            box-shadow: 0 4px 30px rgba(212, 168, 67, 0.2);
+        }
+        .pricing-card .btn-purchase:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 45px rgba(212, 168, 67, 0.35);
+        }
+        .pricing-card .note {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 12px;
+            opacity: 0.6;
+        }
+
+        /* ===== سوالات متداول ===== */
+        .faq-section {
+            padding: 60px 0;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            border: 1px solid rgba(212, 168, 67, 0.06);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .faq-item:hover {
+            border-color: rgba(212, 168, 67, 0.15);
+        }
+        .faq-item .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        .faq-item .question i {
+            color: var(--gold);
+            transition: var(--transition);
+        }
+        .faq-item .answer {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.9;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.active .answer {
+            max-height: 300px;
+            padding-top: 12px;
+        }
+        .faq-item.active .question i {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== CTA نهایی ===== */
+        .cta-section {
+            padding: 60px 0;
+            background: linear-gradient(160deg, #1a1a2e, #2d1b0e);
+        }
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(212, 168, 67, 0.08), rgba(212, 168, 67, 0.02));
+            border-radius: var(--radius);
+            padding: 48px 56px;
+            border: 2px solid rgba(212, 168, 67, 0.1);
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(212, 168, 67, 0.04), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-box h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .cta-box h2 .highlight {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cta-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+            line-height: 2.2;
+        }
+        .cta-box .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .cta-box .cta-buttons .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            padding: 16px 48px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 30px rgba(212, 168, 67, 0.25);
+        }
+        .cta-box .cta-buttons .btn-gold:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 45px rgba(212, 168, 67, 0.4);
+        }
+        .cta-box .cta-buttons .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border: 2px solid rgba(212, 168, 67, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .cta-box .cta-buttons .btn-outline:hover {
+            background: rgba(212, 168, 67, 0.06);
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .cta-box { padding: 28px 20px; }
+            .cta-box h2 { font-size: 1.6rem; }
+            .cta-box .cta-buttons { flex-direction: column; align-items: stretch; }
+            .cta-box .cta-buttons .btn-gold, .cta-box .cta-buttons .btn-outline { justify-content: center; width: 100%; }
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            padding: 40px 0 24px;
+            background: var(--bg-dark);
+            border-top: 2px solid rgba(212, 168, 67, 0.08);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer strong { color: var(--text-light); }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        footer .footer-links a:hover { color: var(--gold); }
+        footer .footer-phone {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin: 8px 0;
+            text-decoration: none;
+        }
+        footer .footer-phone:hover {
+            color: var(--gold-light);
+        }
+
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            direction: rtl;
+        }
+        .toast {
+            padding: 16px 36px;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+            animation: slideDown 0.5s ease;
+            min-width: 250px;
+            text-align: center;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+        }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.info { background: var(--info); }
+        .toast.warning { background: var(--warning); }
+
+        @media (max-width: 480px) {
+            .toast { min-width: auto; width: 90%; font-size: 0.85rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== نوار بالایی ===== -->
+    <nav class="top-bar">
+        <div class="container">
+            <div class="logo-area">
+                <div>
+                    <div class="logo-text">⚖️ دستیار حقوقی هوشمند</div>
+                    <div class="logo-sub">توسعه‌دهنده هوش مصنوعی سوفیا</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#benefits">مزایا</a>
+                <a href="#panel">پنل مدیریت</a>
+                <a href="#pricing">قیمت‌گذاری</a>
+                <a href="#faq">سوالات</a>
+                <a href="#cta" class="btn-gold"><i class="fas fa-shopping-cart"></i> خرید</a>
+                <a href="login.html" class="btn-cart">
+                    <i class="fas fa-user"></i>
+                    ورود
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== هدر اصلی ===== -->
+    <section class="hero-section">
+        <div class="floating-icon"><i class="fas fa-robot"></i></div>
+        <div class="floating-icon"><i class="fas fa-gavel"></i></div>
+        <div class="floating-icon"><i class="fas fa-balance-scale"></i></div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text fade-up">
+                    <div class="badge">🔥 ماه اول کاملاً رایگان</div>
+                    <div class="lawyer-info">
+                        <span class="name">👩‍⚖️ وکیل پایه یک دادگستری — دکتر نسترن امامی</span>
+                        <a href="tel:09130771128" class="phone-link">
+                            <i class="fas fa-phone"></i> ۰۹۱۳۰۷۷۱۱۲۸
+                        </a>
+                    </div>
+                    <h1>
+                        <span class="highlight">دستیار حقوقی</span> هوشمند
+                    </h1>
+                    <p class="subtitle">
+                        کارمند دیجیتال ۲۴/۷ که برای شما موکل جذب می‌کند، 
+                        اطلاعات تماس و جزئیات پرونده را جمع‌آوری کرده و 
+                        شما فقط حرفه‌ای‌ترین مشاوره را ارائه دهید.
+                    </p>
+                    <div class="price-box">
+                        <span class="price">
+                            <span class="daily">هزینه روزانه</span>
+                            ۱۰۰,۰۰۰
+                            <span class="daily">تومان</span>
+                        </span>
+                        <span class="free-badge">🎁 ماه اول رایگان</span>
+                        <span class="old-price">۳,۰۰۰,۰۰۰ ماهانه</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="addToCart()">
+                            <i class="fas fa-shopping-cart"></i> همین حالا سفارش دهید
+                        </button>
+                        <a href="#panel" class="btn-secondary">
+                            <i class="fas fa-play-circle"></i> مشاهده دمو
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-up-d1">
+                    <div class="chat-preview">
+                        <div class="msg-bot">
+                            <div class="bubble">
+                                سلام! 👋 دستیار حقوقی هوشمند در خدمت شماست
+                                <span class="msg-time">۱۷:۵۲</span>
+                            </div>
+                        </div>
+                        <div class="msg-bot">
+                            <div class="bubble">
+                                لطفا نام و نام خانوادگی خود را وارد کنید
+                                <span class="msg-time">۱۷:۵۲</span>
+                            </div>
+                        </div>
+                        <div class="msg-user">
+                            <div class="bubble">
+                                علی محمدی
+                                <span class="msg-time">۱۷:۵۳</span>
+                            </div>
+                        </div>
+                        <div class="msg-bot">
+                            <div class="bubble">
+                                📱 لطفا شماره موبایل خود را وارد کنید
+                                <span class="msg-time">۱۷:۵۳</span>
+                            </div>
+                        </div>
+                        <div class="msg-user">
+                            <div class="bubble">
+                                ۰۹۱۲۳۴۵۶۷۸۹
+                                <span class="msg-time">۱۷:۵۳</span>
+                            </div>
+                        </div>
+                        <div class="msg-bot">
+                            <div class="typing">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="msg-time">۱۷:۵۳</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== بخش مزایا ===== -->
+    <section class="benefits-section" id="benefits">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>✨ چرا <span class="highlight">دستیار حقوقی هوشمند</span>؟</h2>
+                <p>مزایایی که کسب‌وکار حقوقی شما را متحول می‌کند</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-up-d1">
+                    <span class="icon">🤖</span>
+                    <h4>کارمند ۲۴/۷ همیشه در دسترس</h4>
+                    <p>شبانه‌روز پاسخگوی سوالات موکلان است و هرگز خسته نمی‌شود</p>
+                </div>
+                <div class="benefit-card fade-up-d2">
+                    <span class="icon">📊</span>
+                    <h4>جذب خودکار مشتری</h4>
+                    <p>موکلان جدید از طریق مشاوره اولیه رایگان جذب می‌شوند</p>
+                </div>
+                <div class="benefit-card fade-up-d3">
+                    <span class="icon">📋</span>
+                    <h4>پنل مدیریت اختصاصی</h4>
+                    <p>همه اطلاعات موکلان شامل نام، شماره تماس و جزئیات پرونده به صورت منظم ذخیره می‌شود</p>
+                </div>
+                <div class="benefit-card fade-up-d4">
+                    <span class="icon">🎯</span>
+                    <h4>شخصی‌سازی مطابق با برند شما</h4>
+                    <p>رنگ‌بندی، لوگو و لحن گفت‌وگو مطابق با سلیقه شما تنظیم می‌شود</p>
+                </div>
+                <div class="benefit-card fade-up-d5">
+                    <span class="icon">⚡</span>
+                    <h4>صرفه‌جویی در زمان</h4>
+                    <p>تمرکز خود را بر روی پرونده‌های اصلی بگذارید، پاسخ‌گویی را به دستیار بسپارید</p>
+                </div>
+                <div class="benefit-card fade-up-d5">
+                    <span class="icon">📈</span>
+                    <h4>افزایش اعتبار و حرفه‌ای‌سازی</h4>
+                    <p>با یک وب‌سایت هوشمند، مجموعه خود را مدرن‌تر و حرفه‌ای‌تر نشان دهید</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== نمایش پنل مدیریت ===== -->
+    <section class="panel-showcase" id="panel">
+        <div class="container">
+            <div class="panel-grid">
+                <div class="panel-text fade-up">
+                    <h2>📊 <span class="highlight">پنل مدیریت</span> اختصاصی</h2>
+                    <p>
+                        تمام اطلاعات موکلان به صورت منظم در پنل شما ذخیره می‌شود:
+                    </p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-user"></i> نام و نام خانوادگی موکل</li>
+                        <li><i class="fas fa-phone"></i> شماره تماس (لینک مستقیم به تماس)</li>
+                        <li><i class="fas fa-folder"></i> موضوع دقیق پرونده</li>
+                        <li><i class="fas fa-tag"></i> نوع پرونده (حقوقی / کیفری)</li>
+                        <li><i class="fas fa-calendar"></i> تاریخ ثبت درخواست</li>
+                        <li><i class="fas fa-clock"></i> وضعیت پیگیری</li>
+                    </ul>
+                    <p style="margin-top:12px; color:var(--gold); font-weight:700;">
+                        <i class="fas fa-check-circle"></i> کافی است با موکلان تماس بگیرید و پیشنهاد حق‌الوکاله بدهید
+                    </p>
+                </div>
+                <div class="panel-visual fade-up-d1">
+                    <div class="panel-header">
+                        <span class="title">📋 لیست موکلان</span>
+                        <div class="stats">
+                            <span>👥 <strong>۱۲</strong> موکل جدید</span>
+                            <span>📅 امروز: <strong>۳</strong></span>
+                        </div>
+                    </div>
+                    <table class="panel-table">
+                        <thead>
+                            <tr>
+                                <th>نام</th>
+                                <th>شماره تماس</th>
+                                <th>نوع پرونده</th>
+                                <th>موضوع</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>علی محمدی</td>
+                                <td>۰۹۱۲۳۴۵۶۷۸۹</td>
+                                <td><span class="tag">حقوقی</span></td>
+                                <td>مهریه</td>
+                                <td><button class="action-btn"><i class="fas fa-phone"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>سارا احمدی</td>
+                                <td>۰۹۱۲۳۴۵۶۷۸۰</td>
+                                <td><span class="tag-right">کیفری</span></td>
+                                <td>کلاهبرداری</td>
+                                <td><button class="action-btn"><i class="fas fa-phone"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>رضا کریمی</td>
+                                <td>۰۹۱۲۳۴۵۶۷۷۱</td>
+                                <td><span class="tag">حقوقی</span></td>
+                                <td>طلاق</td>
+                                <td><button class="action-btn"><i class="fas fa-phone"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>مریم حسینی</td>
+                                <td>۰۹۱۲۳۴۵۶۷۶۲</td>
+                                <td><span class="tag">حقوقی</span></td>
+                                <td>ارث</td>
+                                <td><button class="action-btn"><i class="fas fa-phone"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align:center; margin-top:12px; color:var(--text-muted); font-size:0.8rem; border-top:1px solid rgba(255,255,255,0.04); padding-top:12px;">
+                        <i class="fas fa-arrow-left"></i> برای مشاهده کامل، روی دکمه دمو کلیک کنید
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== فرآیند کار ===== -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>🔄 <span class="highlight">چگونه کار</span> می‌کند؟</h2>
+                <p>در ۴ مرحله ساده، دستیار حقوقی هوشمند خود را دریافت کنید</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step fade-up-d1">
+                    <div class="num">۱</div>
+                    <h4>ثبت سفارش</h4>
+                    <p>فرم سفارش را پر کنید یا با ما تماس بگیرید</p>
+                </div>
+                <div class="process-step fade-up-d2">
+                    <div class="num">۲</div>
+                    <h4>شخصی‌سازی</h4>
+                    <p>رنگ‌بندی، لوگو و لحن دستیار تنظیم می‌شود</p>
+                </div>
+                <div class="process-step fade-up-d3">
+                    <div class="num">۳</div>
+                    <h4>راه‌اندازی</h4>
+                    <p>دستیار روی وب‌سایت شما نصب می‌شود</p>
+                </div>
+                <div class="process-step fade-up-d4">
+                    <div class="num">۴</div>
+                    <h4>شروع جذب موکل</h4>
+                    <p>موکلان جدید وارد پنل شما می‌شوند</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== قیمت‌گذاری ===== -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>💰 <span class="highlight">قیمت‌گذاری</span> شفاف و منصفانه</h2>
+                <p>هزینه‌ای مناسب برای هر دفتر حقوقی</p>
+            </div>
+            <div class="pricing-card fade-up-d2">
+                <span class="badge-free">🎁 ماه اول کاملاً رایگان</span>
+                <div class="price-main">
+                    ۱۰۰,۰۰۰ <span class="currency">تومان</span>
+                    <span class="daily">/ روز</span>
+                </div>
+                <div class="price-sub">
+                    هزینه ماهانه: <strong style="color:var(--gold);">۳,۰۰۰,۰۰۰</strong> تومان
+                    <span style="opacity:0.5; text-decoration:line-through; margin-right:8px;">۴,۵۰۰,۰۰۰</span>
+                    <span style="color:var(--success); font-weight:700; margin-right:8px;">-۳۳%</span>
+                    <br>
+                    <span class="free-month">✅ ماه اول کاملاً رایگان</span>
+                </div>
+                <ul class="features-pricing">
+                    <li><i class="fas fa-check-circle"></i> دستیار هوشمند ۲۴/۷</li>
+                    <li><i class="fas fa-check-circle"></i> پنل مدیریت اختصاصی</li>
+                    <li><i class="fas fa-check-circle"></i> ذخیره اطلاعات موکلان</li>
+                    <li><i class="fas fa-check-circle"></i> شخصی‌سازی کامل برند</li>
+                    <li><i class="fas fa-check-circle"></i> پشتیبانی و بروزرسانی رایگان</li>
+                    <li><i class="fas fa-check-circle"></i> آموزش کامل استفاده</li>
+                </ul>
+                <button class="btn-purchase" onclick="addToCart()">
+                    <i class="fas fa-shopping-cart"></i> همین حالا سفارش دهید
+                </button>
+                <div class="note">
+                    <i class="fas fa-shield-alt"></i> بدون هیچ هزینه پنهان یا اضافی
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== سوالات متداول ===== -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>❓ <span class="highlight">سوالات</span> متداول</h2>
+                <p>پاسخ به سوالات رایج شما</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item active fade-up-d1">
+                    <div class="question">
+                        <span>دستیار حقوقی هوشمند دقیقاً چیست؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        یک نرم‌افزار مبتنی بر هوش مصنوعی که به سوالات حقوقی پاسخ می‌دهد، اطلاعات موکلان را جمع‌آوری کرده و به شما در پنل مدیریت تحویل می‌دهد. انگار یک کارمند شبانه‌روزی برای دفتر شما استخدام کرده‌اید.
+                    </div>
+                </div>
+                <div class="faq-item fade-up-d2">
+                    <div class="question">
+                        <span>آیا دستیار حقوقی جایگزین وکیل می‌شود؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        خیر، این دستیار فقط مشاوره اولیه و جمع‌آوری اطلاعات انجام می‌دهد و هرگز جایگزین مشاوره تخصصی وکیل نمی‌شود. هدف آن جذب موکل و صرفه‌جویی در زمان شماست.
+                    </div>
+                </div>
+                <div class="faq-item fade-up-d3">
+                    <div class="question">
+                        <span>چقدر طول می‌کشد تا دستیار راه‌اندازی شود؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        پس از ثبت سفارش، معمولاً ۲ تا ۳ روز کاری زمان نیاز است تا دستیار شما شخصی‌سازی و روی وب‌سایتتان نصب شود.
+                    </div>
+                </div>
+                <div class="faq-item fade-up-d4">
+                    <div class="question">
+                        <span>آیا می‌توانم ظاهر دستیار را تغییر دهم؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        بله، رنگ‌بندی، لوگو، عکس پروفایل و لحن گفت‌وگو مطابق با برند و سلیقه شما شخصی‌سازی می‌شود.
+                    </div>
+                </div>
+                <div class="faq-item fade-up-d5">
+                    <div class="question">
+                        <span>آیا اطلاعات موکلان محرمانه می‌ماند؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        بله، تمام اطلاعات با بالاترین سطح امنیت رمزنگاری شده و فقط شما به پنل مدیریت دسترسی دارید.
+                    </div>
+                </div>
+                <div class="faq-item fade-up-d5">
+                    <div class="question">
+                        <span>چگونه می‌توانم سفارش دهم؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="answer">
+                        کافی است روی دکمه "همین حالا سفارش دهید" کلیک کنید، فرم را پر کنید یا با شماره ۰۹۱۳۰۷۷۱۱۲۸ تماس بگیرید.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA نهایی ===== -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="cta-box fade-up">
+                <h2>🚀 آماده‌اید دنیای حقوقی خود را <span class="highlight">هوشمند</span> کنید؟</h2>
+                <p>
+                    تصور کنید یک کارمند شبانه‌روزی، همیشه هوشیار و بی‌نهایت دقیق، 
+                    برای شما موکل جذب کند، شماره تماس و موضوع پرونده‌اش را بیدرنگ تحویل شما دهد 
+                    و شما فقط بنشینید و حرفه‌ای‌ترین مشاوره را ارائه دهید.
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn-gold" onclick="addToCart()">
+                        <i class="fas fa-shopping-cart"></i> همین حالا سفارش دهید
+                    </button>
+                    <a href="tel:09130771128" class="btn-outline">
+                        <i class="fas fa-phone"></i> تماس بگیرید
+                    </a>
+                </div>
+                <div style="margin-top:20px; color:var(--text-muted); font-size:0.9rem; position:relative; z-index:1;">
+                    <i class="fas fa-check-circle" style="color:var(--gold);"></i>
+                    ماه اول کاملاً رایگان · پشتیبانی ۲۴/۷ · بدون هزینه پنهان
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== فوتر ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#benefits">مزایا</a>
+                <a href="#panel">پنل مدیریت</a>
+                <a href="#pricing">قیمت‌گذاری</a>
+                <a href="#faq">سوالات</a>
+                <a href="#cta">خرید</a>
+            </div>
+            <a href="tel:09130771128" class="footer-phone">
+                <i class="fas fa-phone"></i> ۰۹۱۳۰۷۷۱۱۲۸
+            </a>
+            <p style="margin-top:12px;">
+                © ۲۰۲۶ <strong>توسعه‌دهنده هوش مصنوعی سوفیا</strong> — مرجع تخصصی دستیارهای هوشمند حقوقی
+            </p>
+            <p style="font-size:0.8rem; opacity:0.5; margin-top:4px;">
+                🌐 <a href="https://www.sofiaai.ir" style="color:var(--gold);">www.sofiaai.ir</a>
+            </p>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        const API_BASE = 'https://sofiaaisite.sofiaai.ir';
+
+        // ===== توابع Toast =====
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3500);
+        }
+
+        // ===== افزودن به سبد خرید =====
+        async function addToCart() {
+            const userData = localStorage.getItem('user');
+            if (!userData) {
+                showToast('⚠️ لطفاً ابتدا وارد حساب کاربری خود شوید.', 'warning');
+                // هدایت به صفحه ورود
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userData);
+                const userId = user.id;
+                const itemName = 'دستیار حقوقی هوشمند - اشتراک ماهانه';
+                const itemPrice = '۳,۰۰۰,۰۰۰ تومان';
+
+                const response = await fetch(`${API_BASE}/api/cart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, item_name: itemName, item_price: itemPrice })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('✅ دستیار حقوقی هوشمند به سبد خرید اضافه شد!', 'success');
+                    // به روز رسانی تعداد سبد خرید
+                    updateCartBadge();
+                } else {
+                    showToast('❌ ' + (data.error || 'خطا در افزودن به سبد خرید'), 'error');
+                }
+            } catch (error) {
+                console.error('❌ خطا:', error);
+                showToast('❌ خطا در ارتباط با سرور', 'error');
+            }
+        }
+
+        // ===== به روز رسانی نشان سبد خرید =====
+        function updateCartBadge() {
+            const userData = localStorage.getItem('user');
+            const badge = document.querySelector('.cart-badge');
+            if (!badge) return;
+
+            if (!userData) {
+                badge.textContent = '0';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userData);
+                const userId = user.id;
+
+                fetch(`${API_BASE}/api/cart/${userId}`)
+                    .then(res => res.json())
+                    .then(cart => {
+                        badge.textContent = cart.length || 0;
+                    })
+                    .catch(() => {
+                        badge.textContent = '0';
+                    });
+            } catch(e) {
+                badge.textContent = '0';
+            }
+        }
+
+        // ===== FAQ =====
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // ===== مقداردهی اولیه =====
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartBadge();
+            // هر ۳۰ ثانیه یک بار به روز رسانی
+            setInterval(updateCartBadge, 30000);
+        });
+    </script>
+
+</body>
+</html>
