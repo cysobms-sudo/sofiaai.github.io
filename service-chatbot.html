@@ -687,7 +687,6 @@
             cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
             box-shadow: 0 4px 15px rgba(255,184,0,0.2);
-            text-decoration: none;
         }
         .showcase-card .card-footer .btn-demo-direct:hover {
             transform: scale(1.05);
@@ -779,18 +778,6 @@
             font-weight: 700;
             margin-top: 10px;
             border: 1px solid rgba(108,60,225,0.08);
-        }
-        .use-case-card .more-link {
-            display: inline-block;
-            margin-top: 12px;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-        .use-case-card .more-link:hover {
-            color: var(--primary-dark);
-            transform: translateX(-4px);
         }
 
         /* ===== ویژگی‌ها ===== */
@@ -1101,14 +1088,6 @@
             z-index: 1;
             line-height: 1.9;
         }
-        .cta-box .cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
         .btn-add-cart {
             background: var(--secondary);
             color: var(--text-dark);
@@ -1128,29 +1107,6 @@
             transform: scale(1.06);
             background: var(--secondary-light);
             box-shadow: 0 8px 45px rgba(255, 184, 0, 0.45);
-        }
-        .btn-demo-legal {
-            background: transparent;
-            color: #fff;
-            border: 2px solid rgba(255,255,255,0.2);
-            padding: 16px 40px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            position: relative;
-            z-index: 1;
-        }
-        .btn-demo-legal:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--secondary);
-            transform: scale(1.03);
         }
         .back-link {
             display: inline-block;
@@ -1309,7 +1265,6 @@
             border: none;
             cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
-            text-decoration: none;
         }
         .modal-content .modal-footer .btn-demo:hover {
             transform: scale(1.04);
@@ -1542,8 +1497,6 @@
             .demo-return-bar { padding: 12px 16px; font-size: 0.85rem; flex-direction: column; gap: 10px; }
             .demo-return-bar .btn-return-site { width: 100%; justify-content: center; }
             .demo-return-bar .btn-close-demo { width: 100%; justify-content: center; }
-            .cta-box .cta-buttons { flex-direction: column; align-items: stretch; }
-            .btn-add-cart, .btn-demo-legal { justify-content: center; width: 100%; }
         }
         @media (max-width: 480px) {
             .service-hero h1 { font-size: 1.8rem; }
@@ -1575,7 +1528,6 @@
             <div class="nav-menu">
                 <a href="index.html">خانه</a>
                 <a href="index.html#assistant">دستیارهای هوشمند</a>
-                <a href="legal-assistant-service.html" style="color: #6C3CE1; font-weight: 700; background: rgba(108,60,225,0.06);">⚖️ دستیار حقوقی</a>
                 <a href="index.html#agents">ایجنت‌ها</a>
                 <a href="index.html#articles">مقالات</a>
                 <span id="userNameDisplay" class="user-name-display"></span>
@@ -1733,7 +1685,7 @@
                     </div>
                 </div>
 
-                <!-- کارت دوم: دستیار حقوقی با لینک به صفحه جدید -->
+                <!-- کارت دوم: دستیار حقوقی با توضیحات ویژه -->
                 <div class="showcase-card">
                     <div class="card-header">
                         <span class="icon-badge">⚖️</span>
@@ -1758,9 +1710,9 @@
                         <button class="demo-link" onclick="openModal('legal')">
                             <i class="fas fa-external-link-alt"></i> مشاهده جزئیات
                         </button>
-                        <a href="legal-assistant-service.html" class="btn-demo-direct" target="_blank">
+                        <button class="btn-demo-direct" onclick="openDemo('https://legal.sofiaai.ir', 'دستیار مشاور حقوقی هوشمند')">
                             <i class="fas fa-play"></i> مشاهده دمو
-                        </a>
+                        </button>
                         <span class="result-badge">📈 کاهش ۴۰٪ مراجعات حضوری</span>
                     </div>
                 </div>
@@ -1901,9 +1853,6 @@
                     <span class="icon">⚖️</span>
                     <h4>حقوقی و قضایی</h4>
                     <p>پاسخ به سوالات حقوقی، راهنمایی مراجعان و اطلاع‌رسانی</p>
-                    <a href="legal-assistant-service.html" class="more-link">
-                        <i class="fas fa-arrow-left"></i> مشاهده بیشتر
-                    </a>
                     <span class="badge-case">⚖️ حقوقی</span>
                 </div>
                 <div class="use-case-card">
@@ -2085,14 +2034,9 @@
             <div class="cta-box">
                 <h2>🚀 آماده‌اید یک دستیار هوشمند برای کسب‌وکار خود داشته باشید؟</h2>
                 <p>همین حالا آن را به سبد خرید اضافه کنید و از مشاوره رایگان تیم سوفیا بهره‌مند شوید.</p>
-                <div class="cta-buttons">
-                    <button class="btn-add-cart" onclick="addToCart('دستیار هوشمند', '۳,۵۰۰,۰۰۰ تومان')">
-                        <i class="fas fa-shopping-cart"></i> افزودن به سبد خرید
-                    </button>
-                    <a href="legal-assistant-service.html" class="btn-demo-legal" target="_blank">
-                        <i class="fas fa-gavel"></i> مشاهده دستیار حقوقی
-                    </a>
-                </div>
+                <button class="btn-add-cart" onclick="addToCart('دستیار هوشمند', '۳,۵۰۰,۰۰۰ تومان')">
+                    <i class="fas fa-shopping-cart"></i> افزودن به سبد خرید
+                </button>
                 <br>
                 <a href="index.html" class="back-link">
                     <i class="fas fa-arrow-left"></i> بازگشت به صفحه اصلی
@@ -2106,7 +2050,6 @@
             <div class="footer-links">
                 <a href="index.html">خانه</a>
                 <a href="index.html#assistant">دستیارهای هوشمند</a>
-                <a href="legal-assistant-service.html" style="color: #6C3CE1; font-weight: 700;">⚖️ دستیار حقوقی</a>
                 <a href="index.html#agents">ایجنت‌ها</a>
                 <a href="index.html#articles">مقالات</a>
                 <a href="index.html#gallery">گالری</a>
@@ -2165,7 +2108,7 @@
                     'پیگیری وضعیت پرونده‌ها'
                 ],
                 result: 'کاهش ۴۰٪ مراجعات حضوری و افزایش ۳۰٪ جذب موکل جدید',
-                demoUrl: 'legal-assistant-service.html'
+                demoUrl: 'https://legal.sofiaai.ir'
             },
             psychology: {
                 icon: '🧠',
@@ -2237,9 +2180,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="${data.demoUrl}" class="btn-demo" target="_blank">
+                    <button class="btn-demo" onclick="openDemo('${data.demoUrl}', '${data.title}')">
                         <i class="fas fa-external-link-alt"></i> مشاهده دمو
-                    </a>
+                    </button>
                     <button class="btn-back" onclick="closeModal()">
                         <i class="fas fa-arrow-left"></i> بازگشت
                     </button>
@@ -2270,14 +2213,18 @@
 
         function openDemo(url, title) {
             demoTitle = title;
+            // بستن مودال
             closeModal();
             
+            // نمایش نوار بازگشت
             const returnBar = document.getElementById('demoReturnBar');
             document.getElementById('demoTitle').textContent = title;
             returnBar.classList.add('active');
             
+            // باز کردن دمو در پنجره جدید
             demoWindow = window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
             
+            // اگر پنجره بسته شد، نوار را مخفی کن
             if (demoWindow) {
                 const checkWindow = setInterval(() => {
                     if (demoWindow.closed) {
@@ -2291,17 +2238,21 @@
 
         function returnFromDemo() {
             if (demoWindow && !demoWindow.closed) {
+                // اگر پنجره دمو باز است، آن را ببند و مجدداً با همان آدرس باز کن تا refresh شود
                 demoWindow.close();
+                // باز کردن مجدد با همان آدرس
                 const data = Object.values(portfolioData).find(d => d.title === demoTitle);
                 if (data) {
                     demoWindow = window.open(data.demoUrl, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
                 }
             } else {
+                // اگر بسته شده بود، دوباره باز کن
                 const data = Object.values(portfolioData).find(d => d.title === demoTitle);
                 if (data) {
                     demoWindow = window.open(data.demoUrl, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
                 }
             }
+            // مخفی کردن نوار پس از بازگشت
             document.getElementById('demoReturnBar').classList.remove('active');
         }
 
@@ -2314,6 +2265,7 @@
             showToast('✅ دمو بسته شد', 'info');
         }
 
+        // بستن نوار بازگشت با دکمه Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
